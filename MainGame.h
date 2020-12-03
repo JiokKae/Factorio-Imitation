@@ -1,7 +1,13 @@
 #pragma once
 #include "GameNode.h"
+
+class Image;
 class MainGame : public GameNode
 {
+private:
+	HDC hdc;
+	Image* backBuffer;
+
 public:
 	HRESULT Init();				// 멤버 변수 초기화, 메모리 할당
 	void Release();				// 메모리 해제

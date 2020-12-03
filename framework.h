@@ -8,7 +8,7 @@
 // 이전 Windows 플랫폼용 애플리케이션을 빌드하려는 경우에는 SDKDDKVer.h를 포함하기 전에
 // WinSDKVer.h를 포함하고 _WIN32_WINNT를 지원하려는 플랫폼으로 설정합니다.
 #include <SDKDDKVer.h>
-#define WIN32_LEAN_AND_MEAN             // 거의 사용되지 않는 내용을 Windows 헤더에서 제외합니다.
+//#define WIN32_LEAN_AND_MEAN             // 거의 사용되지 않는 내용을 Windows 헤더에서 제외합니다.
 // Windows 헤더 파일
 #include <windows.h>
 // C 런타임 헤더 파일입니다.
@@ -16,5 +16,19 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
+#include <gl/GL.h>
+#include <string>
+#include <vector>
+#include <map>
+using namespace std;
 
-#include "resource.h"
+#include "TimerManager.h"
+#include "SceneManager.h"
+
+#define WINSIZE_X	1600
+#define WINSIZE_Y	900
+
+extern HWND			g_hWnd;
+extern HINSTANCE	g_hInstance;
+extern POINT		g_ptMouse;
+extern float		g_time;
