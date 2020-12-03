@@ -1,0 +1,10 @@
+{ 
+  filename = "__base__/graphics/entity/TODO\OUTPUT-bilinear/assembling-machine-0/assembling-machine-0.png",
+  line_length = 8,
+  width = 108,
+  height = 114,
+  frame_count = 32,
+  axially_symmetrical = false,
+  direction_count = 1,
+  shift = util.by_pixel(0, 2),
+}

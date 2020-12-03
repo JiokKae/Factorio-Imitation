@@ -22,13 +22,50 @@
 #include <map>
 using namespace std;
 
+#include "KeyManager.h"
 #include "TimerManager.h"
+#include "ImageManager.h"
 #include "SceneManager.h"
+#include "SoundManager.h"
 
 #define WINSIZE_X	1600
 #define WINSIZE_Y	900
+#define WINSIZE_TILE_MAP_X	1600
+#define WINSIZE_TILE_MAP_Y	900
+#define SAFE_DELETE(p) 		{if (p) delete p, p = nullptr; }
+#define SAFE_ARR_DELETE(p) 	{if (p) delete[] p, p = nullptr; }
+#define SAFE_RELEASE(p) 	{if (p) p->Release(), delete p, p = nullptr; }
+
+struct Argument {
+	string a;
+	string b;
+};
 
 extern HWND			g_hWnd;
 extern HINSTANCE	g_hInstance;
 extern POINT		g_ptMouse;
 extern float		g_time;
+
+inline void SetWindowSize(int startX, int startY, int sizeX, int sizeY)
+{
+	// 윈도우 작업영역 지정
+	RECT rc;
+	rc.left = 0;
+	rc.top = 0;
+	rc.right = sizeX;
+	rc.bottom = sizeY;
+
+	// 실제 윈도우 크기 받아오기
+	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
+
+	// 이동
+	MoveWindow(g_hWnd, startX, startY, rc.right - rc.left, rc.bottom - rc.top, true);
+}
+
+template <typename T>
+inline T Clamp(T value, T min, T max)
+{
+	if (value > max) return max;
+	else if (value < min) return min;
+	return value;
+}

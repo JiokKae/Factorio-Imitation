@@ -1,5 +1,8 @@
 #include "MainGame.h"
 #include "Image.h"
+#include "TitleScene.h"
+#include "TileMapToolScene.h"
+#include "LoadingScene1.h"
 
 HRESULT MainGame::Init()
 {
@@ -11,13 +14,24 @@ HRESULT MainGame::Init()
 	backBuffer = new Image();
 	backBuffer->Init(WINSIZE_X, WINSIZE_Y);
 
+	// ¾À Ãß°¡
+	SceneManager::GetSingleton()->AddScene("TitleScene", new TitleScene());
+	SceneManager::GetSingleton()->AddScene("TileMapToolScene", new TileMapToolScene());
+	SceneManager::GetSingleton()->AddLoadingScene("LoadingScene1", new LoadingScene1());
+
+	SceneManager::GetSingleton()->ChangeScene("TitleScene");
+
 	return S_OK;
 }
 
 void MainGame::Release()
 {
+	SAFE_RELEASE(backBuffer);
+
 	SceneManager::GetSingleton()->Release();
 	TimerManager::GetSingleton()->Release();
+
+	ReleaseDC(g_hWnd, hdc);
 }
 
 void MainGame::Update()
@@ -32,7 +46,7 @@ void MainGame::Render()
 	HDC backDC = backBuffer->GetMemDC();
 
 	SceneManager::GetSingleton()->Render(backDC);
-
+	
 	char szText[128];
 
 	wsprintf(szText, "X : %d, Y : %d", g_ptMouse.x, g_ptMouse.y);
