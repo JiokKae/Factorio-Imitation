@@ -1,11 +1,13 @@
 #pragma once
 #include "GameNode.h"
-
+#include "framework.h"
 class Image;
 class MainGame : public GameNode
 {
 private:
 	HDC hdc;
+	HDC backDC;
+	HGLRC hrc;
 	Image* backBuffer;
 
 public:

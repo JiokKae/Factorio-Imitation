@@ -17,9 +17,11 @@
 #include <memory.h>
 #include <tchar.h>
 #include <gl/GL.h>
+#include <gl/GLU.h>
 #include <string>
 #include <vector>
 #include <map>
+
 using namespace std;
 
 #include "KeyManager.h"

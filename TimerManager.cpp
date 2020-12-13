@@ -23,7 +23,7 @@ void TimerManager::Update()
 void TimerManager::Render(HDC hdc)
 {
 	wsprintf(szText, "FPS : %d", timer->GetFPS());
-	TextOut(hdc, WINSIZE_X - 100, 20, szText, strlen(szText));
+	TextOut(hdc, WINSIZE_X - 300, 40, szText, strlen(szText));
 }
 
 float TimerManager::GetTimeElapsed()
