@@ -5,6 +5,9 @@
 // FMOD ฐüทร
 //#pragma comment(lib, "lib/fmodex_vc.lib")
 #pragma comment(lib, "lib/fmodex64_vc.lib")
+#pragma comment(lib, "lib/fmodex64_vc.lib")
+
+
 #include "inc/fmod.hpp"
 
 using namespace FMOD;

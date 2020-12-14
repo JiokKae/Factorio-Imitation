@@ -3,6 +3,8 @@
 #include "TitleScene.h"
 #include "TileMapToolScene.h"
 #include "LoadingScene1.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "lib/stb_image.h"
 
 HRESULT MainGame::Init()
 {
@@ -31,15 +33,38 @@ HRESULT MainGame::Init()
 	TimerManager::GetSingleton()->Init();
 	SceneManager::GetSingleton()->Init();
 
-	
-
-	
 	// 씬 추가
 	SceneManager::GetSingleton()->AddScene("TitleScene", new TitleScene());
 	SceneManager::GetSingleton()->AddScene("TileMapToolScene", new TileMapToolScene());
 	SceneManager::GetSingleton()->AddLoadingScene("LoadingScene1", new LoadingScene1());
 
 	SceneManager::GetSingleton()->ChangeScene("TitleScene");
+
+
+
+
+	
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	// 텍스처 wrapping/filtering 옵션 설정(현재 바인딩된 텍스처 객체에 대해)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	data = stbi_load("graphics/entity/assembling-machine-1/assembling-machine-1.png", &width, &height, &nrChannels, 0);
+	if (data)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		//glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		;//std::cout << "Failed to load texture" << std::endl;
+	}
+	stbi_image_free(data);
+
 
 	return S_OK;
 }
@@ -80,6 +105,20 @@ void MainGame::Render()
 
 	TimerManager::GetSingleton()->Render(hdc);
 
+
+	float vertices[] = {
+		// 위치              // 컬러             // 텍스처 좌표
+		0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // 우측 상단
+		0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // 우측 하단
+	   -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // 좌측 하단
+	   -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // 좌측 상단
+	};
+
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
+
+
+
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glColor3f(0.5 + sin(g_time) * 0.5f, 1.0, 1.0);
@@ -90,6 +129,17 @@ void MainGame::Render()
 		glVertex3f(0.75, 0.75, 0.0);
 		glVertex3f(0.25, 0.75, 0.0);
 	}
+
+
+
+	// bind textures on corresponding texture units
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
 	glEnd();
 
 	glFlush();

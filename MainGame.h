@@ -10,6 +10,12 @@ private:
 	HGLRC hrc;
 	Image* backBuffer;
 
+
+
+	int width, height, nrChannels;
+	unsigned char* data;
+	unsigned int texture;
+
 public:
 	HRESULT Init();				// 멤버 변수 초기화, 메모리 할당
 	void Release();				// 메모리 해제
