@@ -71,3 +71,9 @@ inline T Clamp(T value, T min, T max)
 	else if (value < min) return min;
 	return value;
 }
+
+template <typename T>
+inline T Lerp(T a, T b, float v)
+{
+	return a + (b - a) * v;
+}

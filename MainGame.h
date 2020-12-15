@@ -10,12 +10,21 @@ private:
 	HGLRC hrc;
 	Image* backBuffer;
 
-
+	GLubyte* data; 
+	int Width, Height;
+	GLfloat xAngle, yAngle, zAngle; 
+	GLint EnvMode = GL_REPLACE; 
+	GLint TexFilter = GL_LINEAR;
 
 	int width, height, nrChannels;
-	unsigned char* data;
-	unsigned int texture;
+	unsigned char* data2;
 
+	unsigned int VBO;
+	unsigned int VAO;
+	float vertices[9];
+	GLuint programID;
+
+	unsigned int texture;
 public:
 	HRESULT Init();				// 멤버 변수 초기화, 메모리 할당
 	void Release();				// 메모리 해제

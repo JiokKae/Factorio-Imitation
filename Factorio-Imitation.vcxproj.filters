@@ -37,6 +37,9 @@
     <Filter Include="2DFrameWork\Button">
       <UniqueIdentifier>{ace42f44-cca2-4ce8-953c-8f1f3050c554}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DFrameWork\Shader">
+      <UniqueIdentifier>{a7678590-22cc-4b01-88a6-2a932c625ca4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -140,5 +143,13 @@
     <ClCompile Include="LoadingScene1.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SimpleVertexShader.vertexshader">
+      <Filter>2DFrameWork\Shader</Filter>
+    </None>
+    <None Include="SimpleFragmentShader.fragmentshader">
+      <Filter>2DFrameWork\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>
