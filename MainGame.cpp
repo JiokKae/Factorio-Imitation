@@ -185,6 +185,7 @@ HRESULT MainGame::Init()
 	vertices[8] = 0.0f;
 	// 1. Vertex Array Object 바인딩
 	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
 	glBindVertexArray(VAO);
 	// 2. OpenGL이 사용하기 위해 vertex 리스트를 복사
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -196,25 +197,29 @@ HRESULT MainGame::Init()
 	programID = LoadShaders("SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader");
 	glUseProgram(programID);
 
-	/*
-	unsigned char* data2 = stbi_load("graphics/entity/assembling-machine-1/assembling-machine-1.png", &width, &height, &nrChannels, 0);
+	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
+	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
+	glBindVertexArray(0);
+	
+	data = stbi_load("graphics/entity/assembling-machine-1/assembling-machine-1.png", &width, &height, &nrChannels, 0);
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data2);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	stbi_image_free(data);
-	*/
+	
 	return S_OK;
 }
 
 void MainGame::Release()
 {
-	free(data);
-
 	#pragma region Win OpenGL Release
 	wglMakeCurrent(hdc, NULL);
 	wglDeleteContext(hrc);
@@ -310,8 +315,9 @@ void MainGame::Render()
 	TextOut(hdc, WINSIZE_X - 400, 60, szText, strlen(szText));
 	TimerManager::GetSingleton()->Render(hdc);
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 	/*
+	* glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glShadeModel(GL_FLAT);
 	glEnable(GL_DEPTH_TEST);
 	
@@ -355,6 +361,7 @@ void MainGame::Render()
 	glEnd(); 
 	glPopMatrix();
 	*/
+	glClear(GL_COLOR_BUFFER_BIT);
 	glPushMatrix();
 
 	glUseProgram(programID);

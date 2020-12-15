@@ -10,14 +10,13 @@ private:
 	HGLRC hrc;
 	Image* backBuffer;
 
-	GLubyte* data; 
 	int Width, Height;
 	GLfloat xAngle, yAngle, zAngle; 
 	GLint EnvMode = GL_REPLACE; 
 	GLint TexFilter = GL_LINEAR;
 
 	int width, height, nrChannels;
-	unsigned char* data2;
+	unsigned char* data;
 
 	unsigned int VBO;
 	unsigned int VAO;
