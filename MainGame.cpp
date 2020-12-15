@@ -105,20 +105,6 @@ void MainGame::Render()
 
 	TimerManager::GetSingleton()->Render(hdc);
 
-
-	float vertices[] = {
-		// 위치              // 컬러             // 텍스처 좌표
-		0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // 우측 상단
-		0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // 우측 하단
-	   -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // 좌측 하단
-	   -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // 좌측 상단
-	};
-
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
-
-
-
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glColor3f(0.5 + sin(g_time) * 0.5f, 1.0, 1.0);
@@ -129,18 +115,18 @@ void MainGame::Render()
 		glVertex3f(0.75, 0.75, 0.0);
 		glVertex3f(0.25, 0.75, 0.0);
 	}
-
-
-
-	// bind textures on corresponding texture units
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture);
-
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glEnd();
+
+	static GLubyte bitmap[] = { 0x07, 0xe0, 0x18, 0x18, 0x20, 0x04, 0x43, 0xc2, 0x44, 0x22, 0x88, 0x11, 0x81, 0x81, 0x81, 0x81, 0x80, 0x01, 0x80, 0x01, 0x92, 0x49, 0x4c, 0x32, 0x40, 0x02, 0x20, 0x04, 0x18, 0x18, 0x07, 0xe0 };
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 2);
+	glRasterPos2f(0, 0);
+	glBitmap(16, 16, 0, 0, 20, 0, bitmap);
+	glBitmap(16, 16, 0, 0, 20, 0, bitmap);
+	glBitmap(16, 16, 0, 10, 20, 0, bitmap);
+
+	
 
 	glFlush();
 
