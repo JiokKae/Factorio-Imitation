@@ -173,7 +173,7 @@ HRESULT MainGame::Init()
 
 	glewInit();
 	glEnable(GL_TEXTURE_2D);
-
+	/*
 	vertices[0] = -0.5f;
 	vertices[1] = -0.5f;
 	vertices[2] = 0.0f;
@@ -183,19 +183,51 @@ HRESULT MainGame::Init()
 	vertices[6] = 0.0f;
 	vertices[7] = 0.5f;
 	vertices[8] = 0.0f;
-	// 1. Vertex Array Object 바인딩
+	*/
+	float vertices[] = {
+	 0.5f,  0.5f, 0.0f,  // 우측 상단
+	 0.5f, -0.5f, 0.0f,  // 우측 하단
+	-0.5f, -0.5f, 0.0f,  // 좌측 하단
+	-0.5f,  0.5f, 0.0f   // 좌측 상단
+	};
+	unsigned int indices[] = {  // 0부터 시작한다는 것을 명심하세요!
+	0, 1, 3,   // 첫 번째 삼각형
+	1, 2, 3    // 두 번째 삼각형
+	};
+	
+	/*
+	float vertices[] = {
+		// 위치              // 컬러
+		 0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // 우측 하단
+		-0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // 좌측 하단
+		 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // 위 
+	};
+	*/
 	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
+	// 1. Vertex Array Object 바인딩
 	glBindVertexArray(VAO);
-	// 2. OpenGL이 사용하기 위해 vertex 리스트를 복사
+
+	
+	glGenBuffers(1, &VBO);
+	// 2. OpenGL이 사용하기 위해 vertex 리스트를 vertex 버퍼에 복사
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	// 3. 그런 다음 vertex 속성 포인터를 세팅
+
+	glGenBuffers(1, &EBO);
+	// 3. OpenGL이 사용하기 위해 인덱스 리스트를 element 버퍼에 복사
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	
+	// 4. 그런 다음 vertex 속성 포인터를 세팅
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	// 4. 오브젝트를 그리고 싶을 때 우리가 생성한 shader program을 사용
-	programID = LoadShaders("SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader");
+
+	// 5. 오브젝트를 그리고 싶을 때 우리가 생성한 shader program을 사용
+	programID = LoadShaders("SimpleVertexShader.glsl", "SimpleFragmentShader.glsl");
 	glUseProgram(programID);
+
+	// uncomment this call to draw in wireframe polygons.
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -303,6 +335,7 @@ void MainGame::Render()
 	//SceneManager::GetSingleton()->Render(backDC);
 	char szText[128];
 
+	/*
 	wsprintf(szText, "X : %d, Y : %d", g_ptMouse.x, g_ptMouse.y);
 	TextOut(hdc, 10, 5, szText, strlen(szText));
 	wsprintf(szText, "g_time : %d", (int)g_time);
@@ -314,7 +347,7 @@ void MainGame::Render()
 	wsprintf(szText, "zAngle : %d", (int)(zAngle));
 	TextOut(hdc, WINSIZE_X - 400, 60, szText, strlen(szText));
 	TimerManager::GetSingleton()->Render(hdc);
-
+	*/
 	
 	/*
 	* glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -361,12 +394,26 @@ void MainGame::Render()
 	glEnd(); 
 	glPopMatrix();
 	*/
+
+	// ..:: 드로잉 코드 (렌더링 루프 내부) :: ..
+
+	// colorbuffer 비우기
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glPushMatrix();
-
+	
+	// shader를 활성화
 	glUseProgram(programID);
+
+	// uniform 컬러 수정
+	float timeValue = timeGetTime()/1000.0f;
+	float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
+	int vertexColorLocation = glGetUniformLocation(programID, "ourColor");
+	glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+
 	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	glBindVertexArray(0);
 
 	glPopMatrix();
 	glFlush();

@@ -145,10 +145,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SimpleVertexShader.vertexshader">
+    <None Include="SimpleFragmentShader.glsl">
       <Filter>2DFrameWork\Shader</Filter>
     </None>
-    <None Include="SimpleFragmentShader.fragmentshader">
+    <None Include="SimpleVertexShader.glsl">
       <Filter>2DFrameWork\Shader</Filter>
     </None>
   </ItemGroup>

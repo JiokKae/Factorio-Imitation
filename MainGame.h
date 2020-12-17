@@ -20,8 +20,11 @@ private:
 
 	unsigned int VBO;
 	unsigned int VAO;
-	float vertices[9];
+	unsigned int EBO;
+
 	GLuint programID;
+
+
 
 	unsigned int texture;
 public:
