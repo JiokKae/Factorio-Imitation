@@ -15,6 +15,7 @@ HRESULT MainGame::Init()
 	backBuffer->Init(WINSIZE_X, WINSIZE_Y);
 
 	SetWindowSize((1920 - WINSIZE_X)/2, (1080 - WINSIZE_Y) / 2,  WINSIZE_X, WINSIZE_Y);
+	ShowCursor(false);
 
 	#pragma region Win OpenGL Init
 	PIXELFORMATDESCRIPTOR pfd;
@@ -148,6 +149,7 @@ HRESULT MainGame::Init()
 	*/
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);	// 축소시 작업
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);	// 확대시 작업 GL_NEAREST
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);	// 확대시 작업
 
 	// 텍스처 로드 및 생성
@@ -213,7 +215,7 @@ void MainGame::Update()
 {
 	SceneManager::GetSingleton()->Update();
 
-	float cameraSpeed = 0.05f; // adjust accordingly
+	float cameraSpeed = 1.0f * TimerManager::GetSingleton()->GetTimeElapsed(); // adjust accordingly
 
 	if (KeyManager::GetSingleton()->IsStayKeyDown('W'))
 		cameraPos += cameraSpeed * cameraFront;
@@ -223,12 +225,17 @@ void MainGame::Update()
 		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 	if (KeyManager::GetSingleton()->IsStayKeyDown('D'))
 		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+
 	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_UP))
-		ourShader->setFloat("radio", Clamp(radio + 0.1f, 0.0f, 1.0f));
-
+	{
+		radio = Clamp(radio + 0.1f, 0.0f, 1.0f);
+		ourShader->setFloat("radio", radio);
+	}
 	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_DOWN))
-		ourShader->setFloat("radio", Clamp(radio - 0.1f, 0.0f, 1.0f));
-
+	{
+		radio = Clamp(radio - 0.1f, 0.0f, 1.0f);
+		ourShader->setFloat("radio", radio);
+	}
 	if (KeyManager::GetSingleton()->IsStayKeyDown(VK_F1))
 	{
 		EnvMode = GL_REPLACE; 
@@ -261,23 +268,45 @@ void MainGame::Update()
 	projection = glm::perspective(glm::radians(45.0f), float(WINSIZE_X) / WINSIZE_Y, 0.1f, 100.0f);
 
 	// camera vecs
-	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-	glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-	glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
-	
-	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-	glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
-
-	glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
-
 	glm::mat4 view;
 	view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
-
-	//ourShader->setMat4("model", model);
 	ourShader->setMat4("view", view);
 	ourShader->setMat4("projection", projection);
+	
+	RECT rc2;
+	POINT lt, rb;
+	GetClientRect(g_hWnd, &rc2);
+	// 클라이언트 크기를 받아옴
+	lt.x = rc2.left;
+	lt.y = rc2.top;
+	rb.x = rc2.right;
+	rb.y = rc2.bottom; 
+	// 받아온 클라이언트 크기를좌표로 입력
+	ClientToScreen(g_hWnd, &lt);
+	ClientToScreen(g_hWnd, &rb);
+	// 클라이언트 내 좌표를 윈도우상 좌표로 변환
+	rc2.left = lt.x; 
+	rc2.top = lt.y; 
+	rc2.right = rb.x; 
+	rc2.bottom = rb.y;
 
+	float xoffset = g_ptMouse.x - WINSIZE_X / 2;
+	float yoffset = - g_ptMouse.y + WINSIZE_Y / 2; // y 좌표의 범위는 밑에서부터 위로가기 때문에 반대로 바꿉니다.
+	SetCursorPos(lt.x + WINSIZE_X / 2, lt.y + WINSIZE_Y / 2);
+	float sensitivity = 0.01f;
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+	
+	yaw += xoffset;
+	pitch = Clamp(pitch + yoffset, -89.0f, 89.0f);
+
+	glm::vec3 front;
+	front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
+	front.y = sin(glm::radians(pitch));
+	front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
+	cameraFront = glm::normalize(front);
+	
 	InvalidateRect(g_hWnd, NULL, false);
 }
 
@@ -302,7 +331,10 @@ void MainGame::Render()
 	TextOut(hdc, WINSIZE_X - 400, 60, szText, strlen(szText));
 	
 	*/
+	wsprintf(szText, "g_mousezDelta : %d", int(g_mousezDelta));
+	TextOut(hdc, WINSIZE_X - 400, 60, szText, strlen(szText));
 	
+
 	/*
 	* glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glShadeModel(GL_FLAT);
@@ -433,6 +465,9 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 
 		break;
 
+	case WM_MOUSEWHEEL:
+		g_mousezDelta += GET_WHEEL_DELTA_WPARAM(wParam);
+		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;

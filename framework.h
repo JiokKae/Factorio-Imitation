@@ -50,6 +50,7 @@ extern HWND			g_hWnd;
 extern HINSTANCE	g_hInstance;
 extern POINT		g_ptMouse;
 extern float		g_time;
+extern float		g_mousezDelta;
 
 inline void SetWindowSize(int startX, int startY, int sizeX, int sizeY)
 {

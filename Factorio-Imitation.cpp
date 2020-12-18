@@ -10,6 +10,7 @@ HWND		g_hWnd;
 MainGame	g_mainGame;
 LPSTR		g_lpszClass = (LPSTR)TEXT("Factorio-Imitation");
 POINT		g_ptMouse;
+float		g_mousezDelta;
 float		g_time;
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
