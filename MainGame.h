@@ -12,7 +12,6 @@ private:
 	Image* backBuffer;
 
 	int Width, Height;
-	GLfloat xAngle, yAngle, zAngle; 
 	GLint EnvMode = GL_REPLACE; 
 	GLint TexFilter = GL_LINEAR;
 
@@ -25,6 +24,10 @@ private:
 	unsigned int texture1;
 	unsigned int texture2;
 	float radio = 0.5;
+
+	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 public:
 	HRESULT Init();				// 멤버 변수 초기화, 메모리 할당

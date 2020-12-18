@@ -14,7 +14,7 @@ HRESULT MainGame::Init()
 	backBuffer = new Image();
 	backBuffer->Init(WINSIZE_X, WINSIZE_Y);
 
-	SetWindowSize((1920 - WINSIZE_X)/2, (1080 - Height) / 2,  WINSIZE_X, WINSIZE_Y);
+	SetWindowSize((1920 - WINSIZE_X)/2, (1080 - WINSIZE_Y) / 2,  WINSIZE_X, WINSIZE_Y);
 
 	#pragma region Win OpenGL Init
 	PIXELFORMATDESCRIPTOR pfd;
@@ -213,39 +213,22 @@ void MainGame::Update()
 {
 	SceneManager::GetSingleton()->Update();
 
+	float cameraSpeed = 0.05f; // adjust accordingly
+
+	if (KeyManager::GetSingleton()->IsStayKeyDown('W'))
+		cameraPos += cameraSpeed * cameraFront;
+	if (KeyManager::GetSingleton()->IsStayKeyDown('S'))
+		cameraPos -= cameraSpeed * cameraFront;
 	if (KeyManager::GetSingleton()->IsStayKeyDown('A'))
-	{
-		yAngle += 30 * TimerManager::GetSingleton()->GetTimeElapsed();
-	}
+		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 	if (KeyManager::GetSingleton()->IsStayKeyDown('D'))
-	{
-		yAngle -= 30 * TimerManager::GetSingleton()->GetTimeElapsed();
-	}
-	if (KeyManager::GetSingleton()->IsOnceKeyDown('W'))
-	{
-		radio = Clamp(radio + 0.1f, 0.0f, 1.0f);
-		
-		ourShader->setFloat("radio", radio);
-		xAngle += 30 * TimerManager::GetSingleton()->GetTimeElapsed();
-	}
-	if (KeyManager::GetSingleton()->IsOnceKeyDown('S'))
-	{
-		radio = Clamp(radio - 0.1f, 0.0f, 1.0f);
-		ourShader->setFloat("radio", radio);
-		xAngle -= 30 * TimerManager::GetSingleton()->GetTimeElapsed();
-	}
-	if (KeyManager::GetSingleton()->IsStayKeyDown('Q'))
-	{
-		zAngle += 30 * TimerManager::GetSingleton()->GetTimeElapsed();
-	}
-	if (KeyManager::GetSingleton()->IsStayKeyDown('E'))
-	{
-		zAngle -= 30 * TimerManager::GetSingleton()->GetTimeElapsed();
-	}
-	if (KeyManager::GetSingleton()->IsStayKeyDown('Z'))
-	{
-		xAngle = yAngle = zAngle = 0.0;
-	}
+		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_UP))
+		ourShader->setFloat("radio", Clamp(radio + 0.1f, 0.0f, 1.0f));
+
+	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_DOWN))
+		ourShader->setFloat("radio", Clamp(radio - 0.1f, 0.0f, 1.0f));
+
 	if (KeyManager::GetSingleton()->IsStayKeyDown(VK_F1))
 	{
 		EnvMode = GL_REPLACE; 
@@ -287,12 +270,8 @@ void MainGame::Update()
 
 	glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
 
-	float radius = 10.0f;
-	float camX = sin(timeGetTime() / 1000.0f) * radius;
-	float camZ = cos(timeGetTime() / 1000.0f) * radius;
-
 	glm::mat4 view;
-	view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+	view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
 
 	//ourShader->setMat4("model", model);
