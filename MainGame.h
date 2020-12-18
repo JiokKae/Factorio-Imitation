@@ -2,6 +2,7 @@
 #include "GameNode.h"
 #include "framework.h"
 class Image;
+class Shader;
 class MainGame : public GameNode
 {
 private:
@@ -15,18 +16,16 @@ private:
 	GLint EnvMode = GL_REPLACE; 
 	GLint TexFilter = GL_LINEAR;
 
-	int width, height, nrChannels;
-	unsigned char* data;
-
 	unsigned int VBO;
 	unsigned int VAO;
 	unsigned int EBO;
 
-	GLuint programID;
+	Shader* ourShader;
 
+	unsigned int texture1;
+	unsigned int texture2;
+	float radio = 0.5;
 
-
-	unsigned int texture;
 public:
 	HRESULT Init();				// 멤버 변수 초기화, 메모리 할당
 	void Release();				// 메모리 해제

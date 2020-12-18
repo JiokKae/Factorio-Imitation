@@ -5,136 +5,7 @@
 #include "LoadingScene1.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "lib/stb_image.h"
-#include <iostream>
-#include <fstream>
-#include <sstream>
-
-GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path) {
-
-	// 쉐이더들 생성
-	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-
-	// 버텍스 쉐이더 코드를 파일에서 읽기
-	std::string VertexShaderCode;
-	std::ifstream VertexShaderStream(vertex_file_path, std::ios::in);
-	if (VertexShaderStream.is_open()) {
-		std::stringstream sstr;
-		sstr << VertexShaderStream.rdbuf();
-		VertexShaderCode = sstr.str();
-		VertexShaderStream.close();
-	}
-	else {
-		printf("파일 %s 를 읽을 수 없음. 정확한 디렉토리를 사용 중입니까 ? FAQ 를 우선 읽어보는 걸 잊지 마세요!\n", vertex_file_path);
-		getchar();
-		return 0;
-	}
-
-	// 프래그먼트 쉐이더 코드를 파일에서 읽기
-	std::string FragmentShaderCode;
-	std::ifstream FragmentShaderStream(fragment_file_path, std::ios::in);
-	if (FragmentShaderStream.is_open()) {
-		std::stringstream sstr;
-		sstr << FragmentShaderStream.rdbuf();
-		FragmentShaderCode = sstr.str();
-		FragmentShaderStream.close();
-	}
-
-	GLint Result = GL_FALSE;
-	int InfoLogLength;
-
-
-	// 버텍스 쉐이더를 컴파일
-	printf("Compiling shader : %s\n", vertex_file_path);
-	char const* VertexSourcePointer = VertexShaderCode.c_str();
-	glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
-	glCompileShader(VertexShaderID);
-
-	// 버텍스 쉐이더를 검사
-	glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
-	glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-	if (InfoLogLength > 0) {
-		std::vector<char> VertexShaderErrorMessage(InfoLogLength + 1);
-		glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
-		printf("%s\n", &VertexShaderErrorMessage[0]);
-	}
-
-
-
-	// 프래그먼트 쉐이더를 컴파일
-	printf("Compiling shader : %s\n", fragment_file_path);
-	char const* FragmentSourcePointer = FragmentShaderCode.c_str();
-	glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
-	glCompileShader(FragmentShaderID);
-
-	// 프래그먼트 쉐이더를 검사
-	glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
-	glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-	if (InfoLogLength > 0) {
-		std::vector<char> FragmentShaderErrorMessage(InfoLogLength + 1);
-		glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
-		printf("%s\n", &FragmentShaderErrorMessage[0]);
-	}
-
-
-
-	// 프로그램에 링크
-	printf("Linking program\n");
-	GLuint ProgramID = glCreateProgram();
-	glAttachShader(ProgramID, VertexShaderID);
-	glAttachShader(ProgramID, FragmentShaderID);
-	glLinkProgram(ProgramID);
-
-	// 프로그램 검사
-	glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
-	glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-	if (InfoLogLength > 0) {
-		std::vector<char> ProgramErrorMessage(InfoLogLength + 1);
-		glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
-		printf("%s\n", &ProgramErrorMessage[0]);
-	}
-
-
-	glDetachShader(ProgramID, VertexShaderID);
-	glDetachShader(ProgramID, FragmentShaderID);
-
-	glDeleteShader(VertexShaderID);
-	glDeleteShader(FragmentShaderID);
-
-	return ProgramID;
-}
-
-GLubyte* LoadBmp(const char* Path, int* Width, int* Height) 
-{
-	HANDLE hFile; 
-	DWORD FileSize, dwRead; 
-	BITMAPFILEHEADER* fh = NULL; 
-	BITMAPINFOHEADER* ih; 
-	BYTE* pRaster; 
-	hFile = CreateFileA(Path, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL); 
-	if (hFile == INVALID_HANDLE_VALUE) 
-	{ 
-		return NULL; 
-	} 
-	FileSize = GetFileSize(hFile, NULL); 
-	fh = (BITMAPFILEHEADER*)malloc(FileSize); 
-	ReadFile(hFile, fh, FileSize, &dwRead, NULL); 
-	CloseHandle(hFile);
-	int len = FileSize - fh->bfOffBits; 
-	pRaster = (GLubyte*)malloc(len); 
-	memcpy(pRaster, (BYTE*)fh + fh->bfOffBits, len); // RGB로 순서를 바꾼다. 
-	for (BYTE * p = pRaster; p < pRaster + len - 3; p += 3) 
-	{
-		BYTE b = * p; *p = * (p + 2); *(p + 2) = b; 
-	} 
-	ih = (BITMAPINFOHEADER *)((PBYTE)fh + sizeof(BITMAPFILEHEADER)); 
-	*Width = ih -> biWidth;
-	*Height = ih -> biHeight;
-	free(fh); 
-
-	return pRaster; 
-}
-//출처: https://202psj.tistory.com/1456?category=273755 [알레폰드의 IT 이모저모]
+#include "Shader.h"
 
 HRESULT MainGame::Init()
 {
@@ -142,6 +13,8 @@ HRESULT MainGame::Init()
 	
 	backBuffer = new Image();
 	backBuffer->Init(WINSIZE_X, WINSIZE_Y);
+
+	SetWindowSize((1920 - WINSIZE_X)/2, (1080 - Height) / 2,  WINSIZE_X, WINSIZE_Y);
 
 	#pragma region Win OpenGL Init
 	PIXELFORMATDESCRIPTOR pfd;
@@ -173,40 +46,66 @@ HRESULT MainGame::Init()
 
 	glewInit();
 	glEnable(GL_TEXTURE_2D);
-	/*
-	vertices[0] = -0.5f;
-	vertices[1] = -0.5f;
-	vertices[2] = 0.0f;
-	vertices[3] = 0.5f;
-	vertices[4] = -0.5f;
-	vertices[5] = 0.0f;
-	vertices[6] = 0.0f;
-	vertices[7] = 0.5f;
-	vertices[8] = 0.0f;
-	*/
-	float vertices[] = {
-	 0.5f,  0.5f, 0.0f,  // 우측 상단
-	 0.5f, -0.5f, 0.0f,  // 우측 하단
-	-0.5f, -0.5f, 0.0f,  // 좌측 하단
-	-0.5f,  0.5f, 0.0f   // 좌측 상단
-	};
+	glEnable(GL_DEPTH_TEST);
+
 	unsigned int indices[] = {  // 0부터 시작한다는 것을 명심하세요!
 	0, 1, 3,   // 첫 번째 삼각형
 	1, 2, 3    // 두 번째 삼각형
 	};
 	
-	/*
 	float vertices[] = {
-		// 위치              // 컬러
-		 0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // 우측 하단
-		-0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // 좌측 하단
-		 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // 위 
+	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
-	*/
+	
+	float texCoords[] = {
+	0.0f, 0.0f,  // 좌측 하단 모서리  
+	1.0f, 0.0f,  // 우측 하단 모서리
+	0.5f, 1.0f   // 꼭대기 모서리
+	};
+
 	glGenVertexArrays(1, &VAO);
 	// 1. Vertex Array Object 바인딩
 	glBindVertexArray(VAO);
-
 	
 	glGenBuffers(1, &VBO);
 	// 2. OpenGL이 사용하기 위해 vertex 리스트를 vertex 버퍼에 복사
@@ -218,13 +117,15 @@ HRESULT MainGame::Init()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 	
-	// 4. 그런 다음 vertex 속성 포인터를 세팅
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	// 위치 attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+	// 텍스쳐 attribute
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	// 5. 오브젝트를 그리고 싶을 때 우리가 생성한 shader program을 사용
-	programID = LoadShaders("SimpleVertexShader.glsl", "SimpleFragmentShader.glsl");
-	glUseProgram(programID);
+	ourShader = new Shader("SimpleVertexShader.glsl", "SimpleFragmentShader.glsl");
 
 	// uncomment this call to draw in wireframe polygons.
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -235,23 +136,66 @@ HRESULT MainGame::Init()
 	// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
 	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
 	glBindVertexArray(0);
-	
-	data = stbi_load("graphics/entity/assembling-machine-1/assembling-machine-1.png", &width, &height, &nrChannels, 0);
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-	glGenerateMipmap(GL_TEXTURE_2D);
+
+	// 텍스처 wrapping/filtering 옵션 설정(현재 바인딩된 텍스처 객체에 대해)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+
+	// 만약 GL_CLAMP_TO_BORDER 옵션을 선택하면 테두리의 색을 정해줘야함
+	/* 
+	float borderColor[] = { 1.0f, 1.0f, 0.0f, 1.0f };
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+	*/
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);	// 축소시 작업
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);	// 확대시 작업
+
+	// 텍스처 로드 및 생성
+	glEnable(GL_BLEND);
+	glBlendEquation(GL_FUNC_ADD); // this is default
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	int width, height, nrChannels;
+	stbi_set_flip_vertically_on_load(true);
+
+	glGenTextures(1, &texture1);
+	glBindTexture(GL_TEXTURE_2D, texture1);
+	unsigned char* data = stbi_load("graphics/entity/assembling-machine-1/assembling-machine-1.png", &width, &height, &nrChannels, STBI_rgb_alpha);
+	if (data)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		std::cout << "Failed to load texture" << std::endl;
+	}
+	glGenTextures(1, &texture2);
+	glBindTexture(GL_TEXTURE_2D, texture2);
+	data = stbi_load("graphics/entity/artillery-turret/hr-artillery-turret-base.png", &width, &height, &nrChannels, STBI_rgb_alpha);
+	if (data)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		std::cout << "Failed to load texture" << std::endl;
+	}
+
+	ourShader->use(); // uniform을 설정하기 전에 shader를 활성화해야 한다는 것을 잊지마세요!  
+	glUniform1i(glGetUniformLocation(ourShader->ID, "texture1"), 0); // 직접 설정
+	ourShader->setInt("texture2", 1); // 혹은 shader 클래스를 활용
+	ourShader->setFloat("radio", radio);
 	stbi_image_free(data);
-	
+
 	return S_OK;
 }
 
 void MainGame::Release()
 {
+	delete ourShader;
+
 	#pragma region Win OpenGL Release
 	wglMakeCurrent(hdc, NULL);
 	wglDeleteContext(hrc);
@@ -277,12 +221,17 @@ void MainGame::Update()
 	{
 		yAngle -= 30 * TimerManager::GetSingleton()->GetTimeElapsed();
 	}
-	if (KeyManager::GetSingleton()->IsStayKeyDown('W'))
+	if (KeyManager::GetSingleton()->IsOnceKeyDown('W'))
 	{
+		radio = Clamp(radio + 0.1f, 0.0f, 1.0f);
+		
+		ourShader->setFloat("radio", radio);
 		xAngle += 30 * TimerManager::GetSingleton()->GetTimeElapsed();
 	}
-	if (KeyManager::GetSingleton()->IsStayKeyDown('S'))
+	if (KeyManager::GetSingleton()->IsOnceKeyDown('S'))
 	{
+		radio = Clamp(radio - 0.1f, 0.0f, 1.0f);
+		ourShader->setFloat("radio", radio);
 		xAngle -= 30 * TimerManager::GetSingleton()->GetTimeElapsed();
 	}
 	if (KeyManager::GetSingleton()->IsStayKeyDown('Q'))
@@ -325,6 +274,31 @@ void MainGame::Update()
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, TexFilter);
 	}
 
+	glm::mat4 projection;
+	projection = glm::perspective(glm::radians(45.0f), float(WINSIZE_X) / WINSIZE_Y, 0.1f, 100.0f);
+
+	// camera vecs
+	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+	glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
+	
+	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+	glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
+
+	glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
+
+	float radius = 10.0f;
+	float camX = sin(timeGetTime() / 1000.0f) * radius;
+	float camZ = cos(timeGetTime() / 1000.0f) * radius;
+
+	glm::mat4 view;
+	view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+
+
+	//ourShader->setMat4("model", model);
+	ourShader->setMat4("view", view);
+	ourShader->setMat4("projection", projection);
+
 	InvalidateRect(g_hWnd, NULL, false);
 }
 
@@ -333,6 +307,7 @@ void MainGame::Render()
 	//HDC backDC = backBuffer->GetMemDC();
 
 	//SceneManager::GetSingleton()->Render(backDC);
+	TimerManager::GetSingleton()->Render(hdc);
 	char szText[128];
 
 	/*
@@ -346,7 +321,7 @@ void MainGame::Render()
 	TextOut(hdc, WINSIZE_X - 400, 40, szText, strlen(szText));
 	wsprintf(szText, "zAngle : %d", (int)(zAngle));
 	TextOut(hdc, WINSIZE_X - 400, 60, szText, strlen(szText));
-	TimerManager::GetSingleton()->Render(hdc);
+	
 	*/
 	
 	/*
@@ -399,20 +374,56 @@ void MainGame::Render()
 
 	// colorbuffer 비우기
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glPushMatrix();
 	
-	// shader를 활성화
-	glUseProgram(programID);
+	// bind textures on corresponding texture units
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture1);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, texture2);
 
+	// shader를 활성화
+	ourShader->use();
+
+	/*
 	// uniform 컬러 수정
 	float timeValue = timeGetTime()/1000.0f;
 	float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
 	int vertexColorLocation = glGetUniformLocation(programID, "ourColor");
 	glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+	*/
+
+	glm::vec3 cubePositions[] = 
+	{
+		glm::vec3(0.0f,  0.0f,  0.0f),
+		glm::vec3(2.0f,  5.0f, -15.0f),
+		glm::vec3(-1.5f, -2.2f, -2.5f),
+		glm::vec3(-3.8f, -2.0f, -12.3f),
+		glm::vec3(2.4f, -0.4f, -3.5f),
+		glm::vec3(-1.7f,  3.0f, -7.5f),
+		glm::vec3(1.3f, -2.0f, -2.5f),
+		glm::vec3(1.5f,  2.0f, -2.5f),
+		glm::vec3(1.5f,  0.2f, -1.5f),
+		glm::vec3(-1.3f,  1.0f, -1.5f)
+	};
+	glBindVertexArray(VAO);
+	for (unsigned int i = 0; i < 10; i++)
+	{
+		glm::mat4 model;
+		model = glm::translate(model, cubePositions[i]);
+		float angle = 20.0f * i;
+		model = glm::rotate(model, glm::radians(angle) * (float)timeGetTime() / 1000.0f, glm::vec3(1.0f, 0.3f, 0.5f));
+		ourShader->setMat4("model", model);
+
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+	}
+
 
 	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	// glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	// glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 
 	glPopMatrix();

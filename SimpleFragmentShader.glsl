@@ -2,9 +2,14 @@
 #version 330 core
 out vec4 FragColor;
   
-uniform vec4 ourColor; // OpenGL 코드에서 이 변수를 설정할 것입니다.
+in vec3 ourColor;
+in vec2 TexCoord;
 
+uniform sampler2D texture1;
+uniform sampler2D texture2;
+uniform float radio;
 void main()
 {
-    FragColor = ourColor;
-} 
+    vec4 a = {1,0,0,1};
+    FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), radio);
+}

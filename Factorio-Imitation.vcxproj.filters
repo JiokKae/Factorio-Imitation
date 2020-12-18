@@ -93,6 +93,9 @@
     <ClInclude Include="LoadingScene1.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>2DFrameWork\Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factorio-Imitation.cpp">
@@ -142,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="LoadingScene1.cpp">
       <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>2DFrameWork\Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
