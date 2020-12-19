@@ -10,6 +10,5 @@ uniform sampler2D texture2;
 uniform float radio;
 void main()
 {
-    vec4 a = {1,0,0,1};
     FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), radio);
 }
