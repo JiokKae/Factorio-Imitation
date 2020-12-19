@@ -11,7 +11,10 @@ public:
 	virtual void Update()		 override;
 	virtual void Render(HDC hdc) override;
 
-	LoadingScene1() {};
+	LoadingScene1(int width, int height)
+		: Scene(width, height)
+		, img(nullptr)
+	{};
 	virtual ~LoadingScene1() {};
 };
 

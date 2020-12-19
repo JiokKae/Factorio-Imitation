@@ -9,9 +9,6 @@ HRESULT MainGame::Init()
 {
 	hdc = GetDC(g_hWnd);
 
-	SetWindowSize((1920 - WINSIZE_X)/2, (1080 - WINSIZE_Y) / 2,  WINSIZE_X, WINSIZE_Y);
-	//ShowCursor(false);
-
 	#pragma region Win OpenGL Init
 	PIXELFORMATDESCRIPTOR pfd;
 	int nPixelFormat;
@@ -31,16 +28,24 @@ HRESULT MainGame::Init()
 	glewInit();
 	#pragma endregion
 	
+	// Singleton Init
 	TimerManager::GetSingleton()->Init();
 	SceneManager::GetSingleton()->Init();
+	SoundManager::GetSingleton()->Init();
 
-	// ¾À Ãß°¡
-	SceneManager::GetSingleton()->AddScene("TitleScene", new TitleScene());
-	SceneManager::GetSingleton()->AddScene("TileMapToolScene", new TileMapToolScene());
-	SceneManager::GetSingleton()->AddScene("TenCubeSpaceScene", new TenCubeSpaceScene());
-	SceneManager::GetSingleton()->AddLoadingScene("LoadingScene1", new LoadingScene1());
+	// Add Sound
+	SoundManager::GetSingleton()->AddSound("DarkWaltz", "Sound/Dark Waltz.mp3", true, false);
 
-	SceneManager::GetSingleton()->ChangeScene("TileMapToolScene");
+	// Add Scene
+	SceneManager::GetSingleton()->AddScene("TitleScene", new TitleScene(1600, 900));
+	SceneManager::GetSingleton()->AddScene("TileMapToolScene", new TileMapToolScene(1600, 900));
+	SceneManager::GetSingleton()->AddScene("TenCubeSpaceScene", new TenCubeSpaceScene(900, 900));
+	SceneManager::GetSingleton()->AddLoadingScene("LoadingScene1", new LoadingScene1(1600, 900));
+
+	ImageLoad();
+
+	// Change StartScene
+	SceneManager::GetSingleton()->ChangeScene("TitleScene");
 
 	TimerManager::GetSingleton()->SetTargetFPS(120);
 
@@ -49,8 +54,10 @@ HRESULT MainGame::Init()
 
 void MainGame::Release()
 {
+	// Singleton Release
 	SceneManager::GetSingleton()->Release();
 	TimerManager::GetSingleton()->Release();
+	SoundManager::GetSingleton()->Release();
 
 	#pragma region Win OpenGL Release
 	wglMakeCurrent(hdc, NULL);
@@ -69,6 +76,17 @@ void MainGame::Update()
 void MainGame::Render()
 {
 	SceneManager::GetSingleton()->Render(hdc);
+}
+
+void MainGame::ImageLoad()
+{
+	ImageManager::GetSingleton()->AddImage("TitleSceneImage", "Image/bin.bmp", WINSIZE_TITLE_X, WINSIZE_TITLE_Y);
+	ImageManager::GetSingleton()->AddImage("Button1", "Image/button.bmp", 122, 62, 1, 2, true, RGB(255, 0, 255));
+	ImageManager::GetSingleton()->AddImage("Loading Scene Image", "Image/loading.bmp", WINSIZE_TITLE_X, WINSIZE_TITLE_Y);
+
+	ImageManager::GetSingleton()->AddImage("SelectTileEdge", "Image/selectTileEdge.bmp", 64, 64, 2, 2, true, RGB(255, 0, 255));
+	ImageManager::GetSingleton()->AddImage("SampleTile", "Image/maptiles.bmp", 640, 288, SAMPLE_TILE_X, SAMPLE_TILE_Y);
+	ImageManager::GetSingleton()->AddImage("SaveLoadButton", "Image/button2.bmp", 300, 140, 2, 2);
 }
 
 LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)

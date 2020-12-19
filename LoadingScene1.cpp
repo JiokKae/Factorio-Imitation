@@ -5,7 +5,7 @@ HRESULT LoadingScene1::Init()
 {
 	this->SetUseBackBuffer(true);
 
-	img = ImageManager::GetSingleton()->AddImage("Loading Scene Image", "Image/loading.bmp", WINSIZE_X, WINSIZE_Y);
+	img = ImageManager::GetSingleton()->FindImage("Loading Scene Image");
 
 	return S_OK;
 }
@@ -21,5 +21,5 @@ void LoadingScene1::Update()
 void LoadingScene1::Render(HDC hdc)
 {
 	if (img)
-		img->Render(hdc, 0, 0, WINSIZE_X, WINSIZE_Y);
+		img->Render(hdc, 0, 0, width, height);
 }

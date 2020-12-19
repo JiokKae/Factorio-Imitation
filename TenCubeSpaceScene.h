@@ -1,9 +1,9 @@
 #pragma once
-#include "GameNode.h"
+#include "Scene.h"
 
 class Shader;
 class Camera;
-class TenCubeSpaceScene : public GameNode
+class TenCubeSpaceScene : public Scene
 {
 private:
 	int Width, Height;
@@ -12,14 +12,13 @@ private:
 
 	unsigned int VBO;
 	unsigned int VAO;
-	unsigned int EBO;
 
 	unsigned int texture1;
 	unsigned int texture2;
 	float radio = 0.5;
 
-	Shader* ourShader = nullptr;
-	Camera* camera = nullptr;
+	Shader* ourShader;
+	Camera* camera;
 
 public:
 	virtual HRESULT Init();
@@ -27,7 +26,12 @@ public:
 	virtual void Update();
 	virtual void Render(HDC hdc);
 
-	TenCubeSpaceScene();
+	TenCubeSpaceScene(int width, int height)
+		: Scene(width, height)
+		, ourShader(nullptr)
+		, camera(nullptr)
+	{};
+
 	virtual ~TenCubeSpaceScene();
 };
 

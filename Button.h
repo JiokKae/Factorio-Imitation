@@ -22,6 +22,7 @@ private:
 
 	// 버튼 기능 (함수 포인터)
 	void (*buttonFunc)(void*);
+	Argument_Kind kind;
 	void* arg;
 	
 public:
@@ -31,9 +32,10 @@ public:
 	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
 
-	void SetButtonFunc(void (*buttonFunc)(void*), void* arg) { 
-		this->buttonFunc = buttonFunc; 
-		this->arg = arg; 
+	void SetButtonFunc(void (*buttonFunc)(void*), Argument_Kind kind = Argument_Kind::None, void* arg = nullptr) {
+		this->buttonFunc = buttonFunc;
+		this->kind = kind;
+		this->arg = arg;
 	}
 	void ButtonFunc() { buttonFunc(arg); }
 

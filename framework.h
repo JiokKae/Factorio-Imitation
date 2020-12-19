@@ -43,16 +43,40 @@ using namespace std;
 #define SAFE_ARR_DELETE(p) 	{if (p) delete[] p, p = nullptr; }
 #define SAFE_RELEASE(p) 	{if (p) p->Release(), delete p, p = nullptr; }
 
-struct Argument {
-	string a;
-	string b;
-};
-
 extern HWND			g_hWnd;
 extern HINSTANCE	g_hInstance;
 extern POINT		g_ptMouse;
 extern float		g_time;
 extern float		g_mousezDelta;
+
+enum class Argument_Kind {
+	None,
+	ChangeSceneArgument,
+	TileInfoArgument,
+};
+
+struct ChangeSceneArgument
+{
+	string sceneName;
+	string loadingSceneName;
+
+	ChangeSceneArgument(string sceneName, string loadingSceneName)
+	{
+		this->sceneName = sceneName;
+		this->loadingSceneName = loadingSceneName;
+	}
+};
+
+typedef struct tagTile TILE_INFO;
+struct TileInfoArgument
+{
+	TILE_INFO* tileInfo;
+
+	TileInfoArgument(TILE_INFO* lpTileInfo)
+	{
+		this->tileInfo = lpTileInfo;
+	}
+};
 
 inline void SetWindowSize(int startX, int startY, int sizeX, int sizeY)
 {

@@ -8,6 +8,7 @@ class TitleScene : public Scene
 private:
 	Image* img;
 	Button* button1;
+	Button* TenCubeButton;
 	Button* quitButton;
 
 public:
@@ -16,7 +17,9 @@ public:
 	virtual void Update()		 override;
 	virtual void Render(HDC hdc) override;
 
-	TitleScene() {};
+	TitleScene(int width, int height)
+		: Scene(width, height)
+	{};
 	virtual ~TitleScene() {};
 };
 

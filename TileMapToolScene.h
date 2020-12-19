@@ -59,7 +59,10 @@ public:
 	virtual void Update()		 override;
 	virtual void Render(HDC hdc) override;
 
-	TileMapToolScene() : sampleSelectStart(false) {};
+	TileMapToolScene(int width, int height)
+		: Scene(width, height)
+		, sampleSelectStart(false) 
+	{};
 	virtual ~TileMapToolScene() {};
 };
 

@@ -9,18 +9,17 @@ HRESULT TileMapToolScene::Init()
 	this->SetUseBackBuffer(true);
 
 	// 이미지 등록
-	sampleTile = ImageManager::GetSingleton()->AddImage("SampleTile", "Image/maptiles.bmp", 640, 288, SAMPLE_TILE_X, SAMPLE_TILE_Y);
-	selectTileEdge = ImageManager::GetSingleton()->AddImage("SelectTileEdge", "Image/selectTileEdge.bmp", 64, 64, 2, 2, true, RGB(255, 0, 255));
-	ImageManager::GetSingleton()->AddImage("SaveLoadButton", "Image/button2.bmp", 300, 140, 2, 2);
+	sampleTile = ImageManager::GetSingleton()->FindImage("SampleTile");
+	selectTileEdge = ImageManager::GetSingleton()->FindImage("SelectTileEdge");
 
 	// 세이브, 로드 버튼
 	saveButton = new Button();
 	saveButton->Init("SaveLoadButton", WINSIZE_TILE_MAP_X - sampleTile->GetWidth(), sampleTile->GetHeight() + 400, {0, 0}, {0, 1});
-	saveButton->SetButtonFunc(ButtonFunction::TileInfoSave, tileInfo);
+	saveButton->SetButtonFunc(ButtonFunction::TileInfoSave, Argument_Kind::TileInfoArgument, new TileInfoArgument(tileInfo));
 
 	loadButton = new Button();
 	loadButton->Init("SaveLoadButton", WINSIZE_TILE_MAP_X - sampleTile->GetWidth() + 200, sampleTile->GetHeight() + 400, { 1, 0 }, { 1, 1 });
-	loadButton->SetButtonFunc(ButtonFunction::TileInfoLoad, tileInfo);
+	loadButton->SetButtonFunc(ButtonFunction::TileInfoLoad, Argument_Kind::TileInfoArgument, new TileInfoArgument(tileInfo));
 
 	// 셀렉트 영역 초기화
 	selectTileInfo.frame.left = 0;
@@ -70,6 +69,8 @@ HRESULT TileMapToolScene::Init()
 		}
 	}
 
+	Sleep(250);
+
 	return S_OK;
 }
 
@@ -81,7 +82,7 @@ void TileMapToolScene::Update()
 {
 	if (KeyManager::GetSingleton()->IsStayKeyDown(VK_ESCAPE))
 	{
-		SceneManager::GetSingleton()->ChangeScene("TitleScene");
+		SceneManager::GetSingleton()->ChangeScene("TitleScene", "LoadingScene1");
 		return;
 	}
 

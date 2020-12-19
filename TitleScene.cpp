@@ -6,26 +6,25 @@
 HRESULT TitleScene::Init()
 {
 	this->SetUseBackBuffer(true);
-	SetWindowSize(50, 50, WINSIZE_TITLE_X, WINSIZE_TITLE_Y);
+	SetWindowSize(50, 50, width, height);
 
-	img = ImageManager::GetSingleton()->AddImage("TitleSceneImage", "Image/bin.bmp", WINSIZE_X, WINSIZE_Y);
+	img = ImageManager::GetSingleton()->FindImage("TitleSceneImage");
+
 	SoundManager::GetSingleton()->Play("DarkWaltz", 0.6f);
 
 	button1 = new Button();
-	ImageManager::GetSingleton()->AddImage("Button1", "Image/button.bmp", 122, 62, 1, 2, true, RGB(255,0,255));
-	button1->Init("Button1", WINSIZE_X / 2, WINSIZE_Y - 300, { 0, 1 }, { 0, 0 });
-	
+	button1->Init("Button1", width / 2, height - 300, { 0, 1 }, { 0, 0 });
+	button1->SetButtonFunc(ButtonFunction::ChangeScene, Argument_Kind::ChangeSceneArgument, new ChangeSceneArgument("TileMapToolScene", "LoadingScene1"));
+
+	TenCubeButton = new Button();
+	TenCubeButton->Init("Button1", width / 2, height - 200, { 0, 1 }, { 0, 0 });
+	TenCubeButton->SetButtonFunc(ButtonFunction::ChangeScene, Argument_Kind::ChangeSceneArgument, new ChangeSceneArgument("TenCubeSpaceScene", "LoadingScene1"));
+
 	quitButton = new Button();
-	quitButton->Init("Button1", WINSIZE_X / 2, WINSIZE_Y - 100, { 0, 1 }, { 0, 0 });
+	quitButton->Init("Button1", width / 2, height - 100, { 0, 1 }, { 0, 0 });
+	quitButton->SetButtonFunc(ButtonFunction::QuitProgram);
 
-	Argument* arg = new Argument;
-	arg->a = string("TileMapToolScene");
-	arg->b = string("LoadingScene1");
-
-	button1->SetButtonFunc(ButtonFunction::ChangeScene, (void*)arg);
-	quitButton->SetButtonFunc(ButtonFunction::QuitProgram, nullptr);
-
-	Sleep(300);
+	Sleep(350);
 
 	return S_OK;
 }
@@ -35,13 +34,19 @@ void TitleScene::Release()
 	SoundManager::GetSingleton()->Stop("DarkWaltz");
 
 	SAFE_RELEASE(button1);
+	SAFE_RELEASE(TenCubeButton);
 	SAFE_RELEASE(quitButton);
 }
 
 void TitleScene::Update()
 {
+	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_ESCAPE))
+		SendMessage(g_hWnd, WM_DESTROY, 0, 0);
+
 	if (button1)
 		button1->Update();
+	if (TenCubeButton)
+		TenCubeButton->Update();
 	if (quitButton)
 		quitButton->Update();
 }
@@ -49,9 +54,11 @@ void TitleScene::Update()
 void TitleScene::Render(HDC hdc)
 {
 	if (img)
-		img->Render(hdc, 0, 0, WINSIZE_X, WINSIZE_Y);
+		img->Render(hdc, 0, 0, WINSIZE_TITLE_X, WINSIZE_TITLE_Y);
 	if (button1)
 		button1->Render(hdc);
+	if (TenCubeButton)
+		TenCubeButton->Render(hdc);
 	if (quitButton)
 		quitButton->Render(hdc);
 }

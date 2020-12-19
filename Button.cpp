@@ -25,7 +25,19 @@ HRESULT Button::Init()
 
 void Button::Release()
 {
-	SAFE_DELETE(arg);
+	if (arg)
+	{
+		switch (kind)
+		{
+		case Argument_Kind::ChangeSceneArgument:
+			delete (ChangeSceneArgument*)arg;
+			arg = nullptr;
+			break;
+		default:
+			MessageBox(g_hWnd, "버튼 릴리즈 처리가 되지 않았습니다", "실패", MB_OK);
+			break;
+		}
+	}
 }
 
 void Button::Update()
