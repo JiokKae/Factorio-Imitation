@@ -6,6 +6,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "lib/stb_image.h"
 #include "Shader.h"
+#include "Camera.h"
 
 HRESULT MainGame::Init()
 {
@@ -15,7 +16,7 @@ HRESULT MainGame::Init()
 	backBuffer->Init(WINSIZE_X, WINSIZE_Y);
 
 	SetWindowSize((1920 - WINSIZE_X)/2, (1080 - WINSIZE_Y) / 2,  WINSIZE_X, WINSIZE_Y);
-	ShowCursor(false);
+	//ShowCursor(false);
 
 	#pragma region Win OpenGL Init
 	PIXELFORMATDESCRIPTOR pfd;
@@ -192,12 +193,16 @@ HRESULT MainGame::Init()
 	ourShader->setFloat("radio", radio);
 	stbi_image_free(data);
 
+	camera = new Camera();
+	camera->Init();
+
 	return S_OK;
 }
 
 void MainGame::Release()
 {
-	delete ourShader;
+	SAFE_RELEASE(camera);
+	SAFE_DELETE(ourShader);
 
 	#pragma region Win OpenGL Release
 	wglMakeCurrent(hdc, NULL);
@@ -215,17 +220,6 @@ void MainGame::Release()
 void MainGame::Update()
 {
 	SceneManager::GetSingleton()->Update();
-
-	float cameraSpeed = 1.0f * TimerManager::GetSingleton()->GetTimeElapsed(); // adjust accordingly
-
-	if (KeyManager::GetSingleton()->IsStayKeyDown('W'))
-		cameraPos += cameraSpeed * cameraFront;
-	if (KeyManager::GetSingleton()->IsStayKeyDown('S'))
-		cameraPos -= cameraSpeed * cameraFront;
-	if (KeyManager::GetSingleton()->IsStayKeyDown('A'))
-		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-	if (KeyManager::GetSingleton()->IsStayKeyDown('D'))
-		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 
 	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_UP))
 	{
@@ -275,45 +269,12 @@ void MainGame::Update()
 	}
 
 	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(45.0f), float(WINSIZE_X) / WINSIZE_Y, 0.1f, 100.0f);
+	projection = glm::perspective(glm::radians(camera->GetFov()), float(WINSIZE_X) / WINSIZE_Y, 0.1f, 100.0f);
 
 	// camera vecs
+	camera->Update();
 	glm::mat4 view;
-	
-	RECT rc2;
-	POINT lt, rb;
-	GetClientRect(g_hWnd, &rc2);
-	// 클라이언트 크기를 받아옴
-	lt.x = rc2.left;
-	lt.y = rc2.top;
-	rb.x = rc2.right;
-	rb.y = rc2.bottom; 
-	// 받아온 클라이언트 크기를좌표로 입력
-	ClientToScreen(g_hWnd, &lt);
-	ClientToScreen(g_hWnd, &rb);
-	// 클라이언트 내 좌표를 윈도우상 좌표로 변환
-	rc2.left = lt.x; 
-	rc2.top = lt.y; 
-	rc2.right = rb.x; 
-	rc2.bottom = rb.y;
-
-	float xoffset = g_ptMouse.x - WINSIZE_X / 2;
-	float yoffset = - g_ptMouse.y + WINSIZE_Y / 2; // y 좌표의 범위는 밑에서부터 위로가기 때문에 반대로 바꿉니다.
-	SetCursorPos(lt.x + WINSIZE_X / 2, lt.y + WINSIZE_Y / 2);
-	float sensitivity = 0.03f;
-	xoffset *= sensitivity;
-	yoffset *= sensitivity;
-	
-	yaw += xoffset;
-	pitch = Clamp(pitch + yoffset, -89.0f, 89.0f);
-
-	glm::vec3 front;
-	front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
-	front.y = sin(glm::radians(pitch));
-	front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
-	cameraFront = glm::normalize(front);
-	
-	view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+	view = camera->GetViewMatrix();
 
 	ourShader->setMat4("view", view);
 	ourShader->setMat4("projection", projection);
@@ -334,7 +295,6 @@ void MainGame::Render()
 	// colorbuffer 비우기
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glPushMatrix();
 	
 	// bind textures on corresponding texture units
 	glActiveTexture(GL_TEXTURE0);
@@ -370,12 +330,8 @@ void MainGame::Render()
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
 
-	// glDrawArrays(GL_TRIANGLES, 0, 3);
+	glBindVertexArray(0);
 
-	// glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
-	//glBindVertexArray(0);
-
-	glPopMatrix();
 	glFlush();
 
 	// 백버퍼 복사(출력)

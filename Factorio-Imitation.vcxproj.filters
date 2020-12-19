@@ -40,6 +40,9 @@
     <Filter Include="2DFrameWork\Shader">
       <UniqueIdentifier>{a7678590-22cc-4b01-88a6-2a932c625ca4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DFrameWork\Camera">
+      <UniqueIdentifier>{e07ffde3-429b-46d6-9104-c74635b73841}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -96,6 +99,9 @@
     <ClInclude Include="Shader.h">
       <Filter>2DFrameWork\Shader</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>2DFrameWork\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factorio-Imitation.cpp">
@@ -148,6 +154,9 @@
     </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>2DFrameWork\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>2DFrameWork\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
