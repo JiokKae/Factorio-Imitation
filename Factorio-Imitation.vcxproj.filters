@@ -111,6 +111,9 @@
     <ClInclude Include="Scene.h">
       <Filter>2DFrameWork\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="LightingScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factorio-Imitation.cpp">
@@ -173,12 +176,27 @@
     <ClCompile Include="Scene.cpp">
       <Filter>2DFrameWork\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="LightingScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="SimpleFragmentShader.glsl">
       <Filter>2DFrameWork\Shader</Filter>
     </None>
     <None Include="SimpleVertexShader.glsl">
+      <Filter>2DFrameWork\Shader</Filter>
+    </None>
+    <None Include="1.colors.vert">
+      <Filter>2DFrameWork\Shader</Filter>
+    </None>
+    <None Include="1.colors.frag">
+      <Filter>2DFrameWork\Shader</Filter>
+    </None>
+    <None Include="1.light_cube.vert">
+      <Filter>2DFrameWork\Shader</Filter>
+    </None>
+    <None Include="1.light_cube.frag">
       <Filter>2DFrameWork\Shader</Filter>
     </None>
   </ItemGroup>

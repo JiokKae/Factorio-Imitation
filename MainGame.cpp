@@ -3,6 +3,7 @@
 #include "TitleScene.h"
 #include "TileMapToolScene.h"
 #include "TenCubeSpaceScene.h"
+#include "LightingScene.h"
 #include "LoadingScene1.h"
 
 HRESULT MainGame::Init()
@@ -40,12 +41,14 @@ HRESULT MainGame::Init()
 	SceneManager::GetSingleton()->AddScene("TitleScene", new TitleScene(1600, 900));
 	SceneManager::GetSingleton()->AddScene("TileMapToolScene", new TileMapToolScene(1600, 900));
 	SceneManager::GetSingleton()->AddScene("TenCubeSpaceScene", new TenCubeSpaceScene(900, 900));
+	SceneManager::GetSingleton()->AddScene("LightingScene", new LightingScene(900, 900));
+	
 	SceneManager::GetSingleton()->AddLoadingScene("LoadingScene1", new LoadingScene1(1600, 900));
 
 	ImageLoad();
 
 	// Change StartScene
-	SceneManager::GetSingleton()->ChangeScene("TitleScene");
+	SceneManager::GetSingleton()->ChangeScene("LightingScene");
 
 	TimerManager::GetSingleton()->SetTargetFPS(120);
 
@@ -103,7 +106,7 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
-		glOrtho(-1, 1, -1, 1, 1, -1);
+		glOrtho(-2, 2, -1, 1, 1, -1);
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();

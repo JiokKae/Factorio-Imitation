@@ -26,5 +26,6 @@ public:
 	void Update();
 
     float GetFov() { return fov; }
+    glm::vec3 GetPosition() { return position; }
     glm::mat4 GetViewMatrix();
 };

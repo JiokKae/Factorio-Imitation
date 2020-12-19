@@ -18,7 +18,7 @@ HRESULT TitleScene::Init()
 
 	TenCubeButton = new Button();
 	TenCubeButton->Init("Button1", width / 2, height - 200, { 0, 1 }, { 0, 0 });
-	TenCubeButton->SetButtonFunc(ButtonFunction::ChangeScene, Argument_Kind::ChangeSceneArgument, new ChangeSceneArgument("TenCubeSpaceScene", "LoadingScene1"));
+	TenCubeButton->SetButtonFunc(ButtonFunction::ChangeScene, Argument_Kind::ChangeSceneArgument, new ChangeSceneArgument("LightingScene", "LoadingScene1"));
 
 	quitButton = new Button();
 	quitButton->Init("Button1", width / 2, height - 100, { 0, 1 }, { 0, 0 });

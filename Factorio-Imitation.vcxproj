@@ -160,6 +160,7 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="KeyManager.h" />
+    <ClInclude Include="LightingScene.h" />
     <ClInclude Include="LoadingScene1.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Scene.h" />
@@ -183,6 +184,7 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
+    <ClCompile Include="LightingScene.cpp" />
     <ClCompile Include="LoadingScene1.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -196,6 +198,10 @@
     <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="1.colors.frag" />
+    <None Include="1.colors.vert" />
+    <None Include="1.light_cube.frag" />
+    <None Include="1.light_cube.vert" />
     <None Include="SimpleFragmentShader.glsl" />
     <None Include="SimpleVertexShader.glsl" />
   </ItemGroup>
