@@ -35,7 +35,9 @@ using namespace std;
 
 #define WINSIZE_X	900
 #define WINSIZE_Y	900
-#define WINSIZE_TILE_MAP_X	900
+#define WINSIZE_TITLE_X		1600
+#define WINSIZE_TITLE_Y		900
+#define WINSIZE_TILE_MAP_X	1600
 #define WINSIZE_TILE_MAP_Y	900
 #define SAFE_DELETE(p) 		{if (p) delete p, p = nullptr; }
 #define SAFE_ARR_DELETE(p) 	{if (p) delete[] p, p = nullptr; }

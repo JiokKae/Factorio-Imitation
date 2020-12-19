@@ -5,6 +5,9 @@
 
 HRESULT TitleScene::Init()
 {
+	this->SetUseBackBuffer(true);
+	SetWindowSize(50, 50, WINSIZE_TITLE_X, WINSIZE_TITLE_Y);
+
 	img = ImageManager::GetSingleton()->AddImage("TitleSceneImage", "Image/bin.bmp", WINSIZE_X, WINSIZE_Y);
 	SoundManager::GetSingleton()->Play("DarkWaltz", 0.6f);
 

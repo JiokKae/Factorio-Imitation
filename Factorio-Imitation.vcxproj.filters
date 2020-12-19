@@ -43,6 +43,9 @@
     <Filter Include="2DFrameWork\Camera">
       <UniqueIdentifier>{e07ffde3-429b-46d6-9104-c74635b73841}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DFrameWork\Scene">
+      <UniqueIdentifier>{d35c4b11-88bd-4258-86dd-22b1bd68cda4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -102,6 +105,12 @@
     <ClInclude Include="Camera.h">
       <Filter>2DFrameWork\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="TenCubeSpaceScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>2DFrameWork\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factorio-Imitation.cpp">
@@ -157,6 +166,12 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>2DFrameWork\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="TenCubeSpaceScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>2DFrameWork\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

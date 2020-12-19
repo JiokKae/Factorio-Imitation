@@ -6,6 +6,7 @@
 HRESULT TileMapToolScene::Init()
 {
 	SetWindowSize(50, 50, WINSIZE_TILE_MAP_X, WINSIZE_TILE_MAP_Y);
+	this->SetUseBackBuffer(true);
 
 	// 이미지 등록
 	sampleTile = ImageManager::GetSingleton()->AddImage("SampleTile", "Image/maptiles.bmp", 640, 288, SAMPLE_TILE_X, SAMPLE_TILE_Y);
@@ -78,6 +79,12 @@ void TileMapToolScene::Release()
 
 void TileMapToolScene::Update()
 {
+	if (KeyManager::GetSingleton()->IsStayKeyDown(VK_ESCAPE))
+	{
+		SceneManager::GetSingleton()->ChangeScene("TitleScene");
+		return;
+	}
+
 	#pragma region 선택 영역
 	// 샘플 타일 영역 안 인지 확인
 	if (sampleSelectStart)
@@ -181,7 +188,6 @@ void TileMapToolScene::Render(HDC hdc)
 {
 	PatBlt(hdc, 0, 0, WINSIZE_TILE_MAP_X, WINSIZE_TILE_MAP_Y, WHITENESS);
 
-	
 	if (sampleTile)
 	{
 		// 샘플 타일	

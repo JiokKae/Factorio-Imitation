@@ -3,6 +3,8 @@
 
 HRESULT LoadingScene1::Init()
 {
+	this->SetUseBackBuffer(true);
+
 	img = ImageManager::GetSingleton()->AddImage("Loading Scene Image", "Image/loading.bmp", WINSIZE_X, WINSIZE_Y);
 
 	return S_OK;

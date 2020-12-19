@@ -1,5 +1,5 @@
 #pragma once
-#include "GameNode.h"
+#include "Scene.h"
 
 #define	TILE_SIZE		32
 #define	SAMPLE_TILE_X	20
@@ -32,7 +32,7 @@ typedef struct tagSelectTile
 
 class Image;
 class Button;
-class TileMapToolScene : public GameNode
+class TileMapToolScene : public Scene
 {
 private:
 	Image* sampleTile;
@@ -49,7 +49,6 @@ private:
 	SELECT_TILE_INFO selectTileInfo;
 	POINT selectStartFrame;
 	bool sampleSelectStart;
-
 
 	// 세이브 로드 버튼
 	Button* saveButton;

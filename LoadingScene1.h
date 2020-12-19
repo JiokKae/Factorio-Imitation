@@ -1,6 +1,6 @@
 #pragma once
-#include "GameNode.h"
-class LoadingScene1 : public GameNode
+#include "Scene.h"
+class LoadingScene1 : public Scene
 {
 private:
 	Image* img;

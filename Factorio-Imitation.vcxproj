@@ -162,10 +162,12 @@
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="LoadingScene1.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="TenCubeSpaceScene.h" />
     <ClInclude Include="TileMapToolScene.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimerManager.h" />
@@ -183,9 +185,11 @@
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="LoadingScene1.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="TenCubeSpaceScene.cpp" />
     <ClCompile Include="TileMapToolScene.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerManager.cpp" />

@@ -1,9 +1,9 @@
 #pragma once
-#include "GameNode.h"
+#include "Scene.h"
 
 class Image;
 class Button;
-class TitleScene : public GameNode
+class TitleScene : public Scene
 {
 private:
 	Image* img;

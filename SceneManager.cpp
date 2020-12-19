@@ -1,5 +1,7 @@
 #include "SceneManager.h"
 #include "GameNode.h"
+#include "Scene.h"
+#include "Image.h"
 
 DWORD CALLBACK LoadingThread(LPVOID pvParam);
 
@@ -9,6 +11,10 @@ GameNode* SceneManager::readyScene = nullptr;
 
 HRESULT SceneManager::Init()
 {
+	backBuffer = new Image();
+	backBuffer->Init(1920, 1080);
+	backDC = backBuffer->GetMemDC();
+
 	return S_OK;
 }
 
@@ -44,6 +50,9 @@ void SceneManager::Release()
 		}
 	}
 	mapLoadingSceneData.clear();
+
+	SAFE_RELEASE(backBuffer);
+
 	ReleaseSingleton();
 }
 
@@ -56,7 +65,21 @@ void SceneManager::Update()
 void SceneManager::Render(HDC hdc)
 {
 	if (currScene)
-		currScene->Render(hdc);
+	{
+		if (((Scene*)currScene)->IsUseBackBuffer())
+		{
+			currScene->Render(backDC);
+			TimerManager::GetSingleton()->Render(backDC);
+			// 백버퍼 복사(출력)
+			backBuffer->Render(hdc, 0, 0, WINSIZE_X, WINSIZE_Y);
+		}
+		else
+		{
+			currScene->Render(hdc);
+			TimerManager::GetSingleton()->Render(hdc);
+		}
+	}
+		
 }
 
 GameNode * SceneManager::AddScene(string key, GameNode * scene)
