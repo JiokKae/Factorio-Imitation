@@ -46,6 +46,7 @@ HRESULT MainGame::Init()
 	SceneManager::GetSingleton()->ChangeScene("TitleScene");
 
 	glewInit();
+	TimerManager::GetSingleton()->SetTargetFPS(120);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
 
@@ -264,15 +265,20 @@ void MainGame::Update()
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, TexFilter);
 	}
 
+	if (KeyManager::GetSingleton()->IsStayKeyDown(VK_F6))
+	{
+		TimerManager::GetSingleton()->SetTargetFPS(60);
+	}
+	if (KeyManager::GetSingleton()->IsStayKeyDown(VK_ESCAPE))
+	{
+		SendMessage(g_hWnd, WM_DESTROY, 0, 0);
+	}
+
 	glm::mat4 projection;
 	projection = glm::perspective(glm::radians(45.0f), float(WINSIZE_X) / WINSIZE_Y, 0.1f, 100.0f);
 
 	// camera vecs
 	glm::mat4 view;
-	view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-
-	ourShader->setMat4("view", view);
-	ourShader->setMat4("projection", projection);
 	
 	RECT rc2;
 	POINT lt, rb;
@@ -294,7 +300,7 @@ void MainGame::Update()
 	float xoffset = g_ptMouse.x - WINSIZE_X / 2;
 	float yoffset = - g_ptMouse.y + WINSIZE_Y / 2; // y 좌표의 범위는 밑에서부터 위로가기 때문에 반대로 바꿉니다.
 	SetCursorPos(lt.x + WINSIZE_X / 2, lt.y + WINSIZE_Y / 2);
-	float sensitivity = 0.01f;
+	float sensitivity = 0.03f;
 	xoffset *= sensitivity;
 	yoffset *= sensitivity;
 	
@@ -307,79 +313,21 @@ void MainGame::Update()
 	front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
 	cameraFront = glm::normalize(front);
 	
+	view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+
+	ourShader->setMat4("view", view);
+	ourShader->setMat4("projection", projection);
+
 	InvalidateRect(g_hWnd, NULL, false);
 }
 
 void MainGame::Render()
 {
-	//HDC backDC = backBuffer->GetMemDC();
-
-	//SceneManager::GetSingleton()->Render(backDC);
 	TimerManager::GetSingleton()->Render(hdc);
-	char szText[128];
 
-	/*
-	wsprintf(szText, "X : %d, Y : %d", g_ptMouse.x, g_ptMouse.y);
-	TextOut(hdc, 10, 5, szText, strlen(szText));
-	wsprintf(szText, "g_time : %d", (int)g_time);
-	TextOut(hdc, WINSIZE_X - 400, 0, szText, strlen(szText));
-	wsprintf(szText, "xAngle : %d", (int)(xAngle));
-	TextOut(hdc, WINSIZE_X - 400, 20, szText, strlen(szText));
-	wsprintf(szText, "yAngle : %d", (int)(yAngle));
-	TextOut(hdc, WINSIZE_X - 400, 40, szText, strlen(szText));
-	wsprintf(szText, "zAngle : %d", (int)(zAngle));
-	TextOut(hdc, WINSIZE_X - 400, 60, szText, strlen(szText));
-	
-	*/
+	char szText[128];
 	wsprintf(szText, "g_mousezDelta : %d", int(g_mousezDelta));
 	TextOut(hdc, WINSIZE_X - 400, 60, szText, strlen(szText));
-	
-
-	/*
-	* glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glShadeModel(GL_FLAT);
-	glEnable(GL_DEPTH_TEST);
-	
-	glPushMatrix();
-	glRotatef(xAngle, 1.0f, 0.0f, 0.0f); 
-	glRotatef(yAngle, 0.0f, 1.0f, 0.0f); 
-	glRotatef(zAngle, 0.0f, 0.0f, 1.0f);
-	// 아랫면 흰 바닥 
-	glBegin(GL_QUADS); 
-	glColor3f(1, 1, 1); 
-	glTexCoord2f(0.0, 1.0); 
-	glVertex2f(-0.5, 0.5); 
-	glTexCoord2f(1.0, 1.0);
-	glVertex2f(0.5, 0.5); 
-	glTexCoord2f(1.0, 0.0); 
-	glVertex2f(0.5, -0.5);
-	glTexCoord2f(0.0, 0.0); 
-	glVertex2f(-0.5, -0.5); 
-	glEnd(); 
-	// 위쪽 빨간 변
-	glBegin(GL_TRIANGLE_FAN); 
-	glColor3f(1, 0, 0);
-	glTexCoord2f(0.5, 0.5);
-	glVertex3f(0.0, 0.0, -0.8);
-	glTexCoord2f(1.0, 1.0);
-	glVertex2f(0.5, 0.5);
-	glTexCoord2f(0.0, 1.0);
-	glVertex2f(-0.5, 0.5); 
-	// 왼쪽 노란 변
-	glColor3f(1, 1, 0); 
-	glTexCoord2f(0.0, 0.0);
-	glVertex2f(-0.5, -0.5); 
-	// 아래쪽 초록 변 
-	glColor3f(0, 1, 0); 
-	glTexCoord2f(1.0, 0.0); 
-	glVertex2f(0.5, -0.5); 
-	// 오른쪽 파란 변 
-	glColor3f(0, 0, 1);
-	glTexCoord2f(1.0, 1.0); 
-	glVertex2f(0.5, 0.5); 
-	glEnd(); 
-	glPopMatrix();
-	*/
 
 	// ..:: 드로잉 코드 (렌더링 루프 내부) :: ..
 
@@ -396,14 +344,6 @@ void MainGame::Render()
 
 	// shader를 활성화
 	ourShader->use();
-
-	/*
-	// uniform 컬러 수정
-	float timeValue = timeGetTime()/1000.0f;
-	float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
-	int vertexColorLocation = glGetUniformLocation(programID, "ourColor");
-	glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
-	*/
 
 	glm::vec3 cubePositions[] = 
 	{
@@ -430,12 +370,10 @@ void MainGame::Render()
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
 
-
-	glBindVertexArray(VAO);
 	// glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
+
 	// glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
-	glBindVertexArray(0);
+	//glBindVertexArray(0);
 
 	glPopMatrix();
 	glFlush();

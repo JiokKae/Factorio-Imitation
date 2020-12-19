@@ -53,10 +53,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 		else
 		{
-			TimerManager::GetSingleton()->Update();
-
-			g_mainGame.Update();
-			g_mainGame.Render();
+			if (TimerManager::GetSingleton()->Update())
+			{
+				g_mainGame.Update();
+				g_mainGame.Render();
+			}
 
 			g_time += TimerManager::GetSingleton()->GetTimeElapsed();
 		}

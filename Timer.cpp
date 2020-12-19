@@ -7,7 +7,7 @@ HRESULT Timer::Init()
 
 	fpsTimeElapsed = 0.0f;
 	fpsFrameCount = 0;
-
+	targetFps = 0;
 	if (QueryPerformanceFrequency((LARGE_INTEGER*)&periodFrequency))
 	{
 		isHardware = true;
@@ -24,7 +24,7 @@ HRESULT Timer::Init()
 	return S_OK;
 }
 
-void Timer::Tick()
+bool Timer::Tick()
 {
 	if (isHardware)
 	{
@@ -36,15 +36,19 @@ void Timer::Tick()
 	}
 
 	timeElapsed = (currTime - lastTime) * timeScale;
-
-	fpsFrameCount++;
-	fpsTimeElapsed += timeElapsed;
-	if (fpsTimeElapsed >= 1.0f)
+	if (targetFps == 0 || timeElapsed > 1.0f / targetFps)
 	{
-		fpsTimeElapsed = 0.0f;
-		fps = fpsFrameCount;
-		fpsFrameCount = 0;
-	}
+		fpsFrameCount++;
+		fpsTimeElapsed += timeElapsed;
+		if (fpsTimeElapsed >= 1.0f)
+		{
+			fpsTimeElapsed = 0.0f;
+			fps = fpsFrameCount;
+			fpsFrameCount = 0;
+		}
 
-	lastTime = currTime;
+		lastTime = currTime;
+		return true;
+	}
+	return false;
 }

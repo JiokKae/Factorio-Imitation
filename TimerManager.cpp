@@ -15,9 +15,9 @@ void TimerManager::Release()
 	ReleaseSingleton();
 }
 
-void TimerManager::Update()
+bool TimerManager::Update()
 {
-	timer->Tick();
+	return timer->Tick();
 }
 
 void TimerManager::Render(HDC hdc)
@@ -29,4 +29,9 @@ void TimerManager::Render(HDC hdc)
 float TimerManager::GetTimeElapsed()
 {
 	return timer->GetTimeElapsed();
+}
+
+void TimerManager::SetTargetFPS(ULONG targetFPS)
+{
+	timer->SetTargetFPS(targetFPS);
 }

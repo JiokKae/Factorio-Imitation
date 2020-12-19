@@ -13,8 +13,10 @@ private:
 public:
 	HRESULT Init();
 	void Release();
-	void Update();
+	bool Update();
 	void Render(HDC hdc);
 	float GetTimeElapsed();
+
+	void SetTargetFPS(ULONG targetFPS);
 };
 
