@@ -13,12 +13,16 @@ HRESULT TitleScene::Init()
 	SoundManager::GetSingleton()->Play("DarkWaltz", 0.6f);
 
 	button1 = new Button();
-	button1->Init("Button1", width / 2, height - 300, { 0, 1 }, { 0, 0 });
+	button1->Init("Button1", width / 2, height - 400, { 0, 1 }, { 0, 0 });
 	button1->SetButtonFunc(ButtonFunction::ChangeScene, Argument_Kind::ChangeSceneArgument, new ChangeSceneArgument("TileMapToolScene", "LoadingScene1"));
 
 	TenCubeButton = new Button();
-	TenCubeButton->Init("Button1", width / 2, height - 200, { 0, 1 }, { 0, 0 });
-	TenCubeButton->SetButtonFunc(ButtonFunction::ChangeScene, Argument_Kind::ChangeSceneArgument, new ChangeSceneArgument("LightingScene", "LoadingScene1"));
+	TenCubeButton->Init("Button1", width / 2, height - 300, { 0, 1 }, { 0, 0 });
+	TenCubeButton->SetButtonFunc(ButtonFunction::ChangeScene, Argument_Kind::ChangeSceneArgument, new ChangeSceneArgument("TenCubeSpaceScene",""));
+
+	lightingButton = new Button();
+	lightingButton->Init("Button1", width / 2, height - 200, { 0, 1 }, { 0, 0 });
+	lightingButton->SetButtonFunc(ButtonFunction::ChangeScene, Argument_Kind::ChangeSceneArgument, new ChangeSceneArgument("LightingScene", ""));
 
 	quitButton = new Button();
 	quitButton->Init("Button1", width / 2, height - 100, { 0, 1 }, { 0, 0 });
@@ -33,6 +37,7 @@ void TitleScene::Release()
 {
 	SoundManager::GetSingleton()->Stop("DarkWaltz");
 
+	SAFE_RELEASE(lightingButton);
 	SAFE_RELEASE(button1);
 	SAFE_RELEASE(TenCubeButton);
 	SAFE_RELEASE(quitButton);
@@ -47,6 +52,8 @@ void TitleScene::Update()
 		button1->Update();
 	if (TenCubeButton)
 		TenCubeButton->Update();
+	if (lightingButton)
+		lightingButton->Update();
 	if (quitButton)
 		quitButton->Update();
 }
@@ -59,6 +66,8 @@ void TitleScene::Render(HDC hdc)
 		button1->Render(hdc);
 	if (TenCubeButton)
 		TenCubeButton->Render(hdc);
+	if (lightingButton)
+		lightingButton->Render(hdc);
 	if (quitButton)
 		quitButton->Render(hdc);
 }

@@ -1,8 +1,7 @@
 #include "TenCubeSpaceScene.h"
-#define STB_IMAGE_IMPLEMENTATION
-#include "lib/stb_image.h"
 #include "Shader.h"
 #include "Camera.h"
+#include "Texture.h"
 
 HRESULT TenCubeSpaceScene::Init()
 {
@@ -80,62 +79,14 @@ HRESULT TenCubeSpaceScene::Init()
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	// 텍스처 로드 및 생성
-	int width, height, nrChannels;
-	stbi_set_flip_vertically_on_load(true);
-
-	glGenTextures(1, &texture1);
-	glBindTexture(GL_TEXTURE_2D, texture1);
-
-	// 텍스처 wrapping/filtering 옵션 설정(현재 바인딩된 텍스처 객체에 대해)
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-
-	// 만약 GL_CLAMP_TO_BORDER 옵션을 선택하면 테두리의 색을 정해줘야함
-	/*
-	float borderColor[] = { 1.0f, 1.0f, 0.0f, 1.0f };
-	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
-	*/
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);	// 축소시 작업
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);	// 확대시 작업
-
-	unsigned char* data = stbi_load("graphics/entity/assembling-machine-1/assembling-machine-1.png", &width, &height, &nrChannels, STBI_rgb_alpha);
-	if (data)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Failed to load texture" << std::endl;
-	}
-	stbi_image_free(data);
-
-	glGenTextures(1, &texture2);
-	glBindTexture(GL_TEXTURE_2D, texture2);
-
-	// 텍스처 wrapping/filtering 옵션 설정(현재 바인딩된 텍스처 객체에 대해)
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);	// 축소시 작업
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);	// 확대시 작업
-
-	data = stbi_load("graphics/entity/artillery-turret/hr-artillery-turret-base.png", &width, &height, &nrChannels, STBI_rgb_alpha);
-	if (data)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Failed to load texture" << std::endl;
-	}
-	stbi_image_free(data);
+	texture1 = new Texture();
+	texture1->Init("graphics/entity/assembling-machine-1/assembling-machine-1.png");
+	texture2 = new Texture();
+	texture2->Init("graphics/entity/artillery-turret/hr-artillery-turret-base.png");
 
 	ourShader->use(); // uniform을 설정하기 전에 shader를 활성화해야 한다는 것을 잊지마세요!  
-	ourShader->setInt("texture1", 0);
-	ourShader->setInt("texture2", 1); // 혹은 shader 클래스를 활용
+	ourShader->setInt("texture1", texture1->GetID() - 1);
+	ourShader->setInt("texture2", texture2->GetID() - 1);
 	ourShader->setFloat("radio", radio);
 
 	camera = new Camera();
@@ -156,6 +107,8 @@ void TenCubeSpaceScene::Release()
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 
+	SAFE_RELEASE(texture1);
+	SAFE_RELEASE(texture2);
 	SAFE_RELEASE(camera);
 	SAFE_DELETE(ourShader);
 }
@@ -234,9 +187,9 @@ void TenCubeSpaceScene::Render(HDC hdc)
 
 	// bind textures on corresponding texture units
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture1);
+	glBindTexture(GL_TEXTURE_2D, texture1->GetID());
 	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, texture2);
+	glBindTexture(GL_TEXTURE_2D, texture2->GetID());
 
 	// shader를 활성화
 	ourShader->use();

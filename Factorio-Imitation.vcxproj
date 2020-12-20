@@ -157,6 +157,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameNode.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="KeyManager.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="TenCubeSpaceScene.h" />
+    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TileMapToolScene.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimerManager.h" />
@@ -181,6 +183,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Factorio-Imitation.cpp" />
     <ClCompile Include="GameNode.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
@@ -192,6 +195,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="TenCubeSpaceScene.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TileMapToolScene.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerManager.cpp" />

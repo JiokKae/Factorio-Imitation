@@ -3,6 +3,7 @@
 
 class Shader;
 class Camera;
+class Texture;
 class TenCubeSpaceScene : public Scene
 {
 private:
@@ -13,8 +14,8 @@ private:
 	unsigned int VBO;
 	unsigned int VAO;
 
-	unsigned int texture1;
-	unsigned int texture2;
+	Texture* texture1;
+	Texture* texture2;
 	float radio = 0.5;
 
 	Shader* ourShader;

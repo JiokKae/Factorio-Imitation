@@ -4,6 +4,7 @@
 
 class Camera;
 class Shader;
+class Texture;
 class LightingScene : public Scene
 {
 	glm::vec3 lightPos;
@@ -13,6 +14,8 @@ class LightingScene : public Scene
 
 	unsigned int VBO, cubeVAO;
 	unsigned int lightCubeVAO;
+
+	Texture* diffuseMap;
 public:
 	virtual HRESULT Init();
 	virtual void Release();

@@ -46,6 +46,9 @@
     <Filter Include="2DFrameWork\Scene">
       <UniqueIdentifier>{d35c4b11-88bd-4258-86dd-22b1bd68cda4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DFrameWork\Texture">
+      <UniqueIdentifier>{ca62b113-7fec-46c3-97aa-85f124a34488}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -114,6 +117,12 @@
     <ClInclude Include="LightingScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>2DFrameWork\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>2DFrameWork\Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factorio-Imitation.cpp">
@@ -178,6 +187,12 @@
     </ClCompile>
     <ClCompile Include="LightingScene.cpp">
       <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>2DFrameWork\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>2DFrameWork\Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -10,7 +10,7 @@ private:
 	Button* button1;
 	Button* TenCubeButton;
 	Button* quitButton;
-
+	Button* lightingButton;
 public:
 	virtual HRESULT Init()		 override;
 	virtual void Release()		 override;
