@@ -60,9 +60,6 @@
     <ClInclude Include="MainGame.h">
       <Filter>MainGame</Filter>
     </ClInclude>
-    <ClInclude Include="TimerManager.h">
-      <Filter>2DFrameWork\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Singleton.h">
       <Filter>2DFrameWork\Manager</Filter>
     </ClInclude>
@@ -71,9 +68,6 @@
     </ClInclude>
     <ClInclude Include="Image.h">
       <Filter>2DFrameWork\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>2DFrameWork\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>2DFrameWork\Animation</Filter>
@@ -86,9 +80,6 @@
     </ClInclude>
     <ClInclude Include="ButtonFunction.h">
       <Filter>2DFrameWork\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageManager.h">
-      <Filter>2DFrameWork\Manager</Filter>
     </ClInclude>
     <ClInclude Include="KeyManager.h">
       <Filter>2DFrameWork\Manager</Filter>
@@ -123,6 +114,15 @@
     <ClInclude Include="TextureManager.h">
       <Filter>2DFrameWork\Texture</Filter>
     </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>2DFrameWork\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>2DFrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerManager.h">
+      <Filter>2DFrameWork\Timer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factorio-Imitation.cpp">
@@ -134,17 +134,11 @@
     <ClCompile Include="MainGame.cpp">
       <Filter>MainGame</Filter>
     </ClCompile>
-    <ClCompile Include="TimerManager.cpp">
-      <Filter>2DFrameWork\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>2DFrameWork\Timer</Filter>
     </ClCompile>
     <ClCompile Include="Image.cpp">
       <Filter>2DFrameWork\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>2DFrameWork\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>2DFrameWork\Animation</Filter>
@@ -157,9 +151,6 @@
     </ClCompile>
     <ClCompile Include="ButtonFunction.cpp">
       <Filter>2DFrameWork\Button</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageManager.cpp">
-      <Filter>2DFrameWork\Manager</Filter>
     </ClCompile>
     <ClCompile Include="KeyManager.cpp">
       <Filter>2DFrameWork\Manager</Filter>
@@ -193,6 +184,15 @@
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
       <Filter>2DFrameWork\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageManager.cpp">
+      <Filter>2DFrameWork\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>2DFrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerManager.cpp">
+      <Filter>2DFrameWork\Timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

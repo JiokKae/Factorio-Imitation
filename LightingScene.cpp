@@ -102,6 +102,13 @@ HRESULT LightingScene::Init()
     // 텍스처 로드 및 생성
     diffuseMap = new Texture();
     diffuseMap->Init("graphics/entity/wooden-chest/hr-wooden-chest.png");
+    specularMap = new Texture();
+    specularMap->Init("graphics/entity/wooden-chest/hr-wooden-chest_specular.png");
+    // shader configuration
+    // --------------------
+    lightingShader->use();
+    lightingShader->setInt("material.diffuse", diffuseMap->GetID() - 1);
+    lightingShader->setInt("material.specular", specularMap->GetID() - 1);
 
 	return S_OK;
 }
@@ -114,6 +121,7 @@ void LightingScene::Release()
     glDeleteVertexArrays(1, &lightCubeVAO);
     glDeleteBuffers(1, &VBO);
 
+    SAFE_RELEASE(specularMap);
     SAFE_RELEASE(diffuseMap);
     SAFE_DELETE(lightCubeShader);
     SAFE_DELETE(lightingShader);
@@ -136,30 +144,20 @@ void LightingScene::Render(HDC hdc)
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    // be sure to activate shader when setting uniforms/drawing objects
+    lightingShader->use();
+
     // change the light's position values over time (can be done anywhere in the render loop actually, but try to do it at least before using the light source positions)
     lightPos.x = 1.0f + sin(timeGetTime() / 1000.0f);
     lightPos.y = cos(timeGetTime() / 1000.0f);
-
-    // be sure to activate shader when setting uniforms/drawing objects
-    lightingShader->use();
-    lightingShader->setVec3("material.ambient", { 1.0f, 0.5f, 0.31f });
-    lightingShader->setVec3("material.diffuse", { 1.0f, 0.5f, 0.31f });
-    lightingShader->setVec3("material.specular", { 0.5f, 0.5f, 0.5f });
-    lightingShader->setFloat("material.shininess", 32.0f);
-
-    glm::vec3 lightColor;
-    lightColor.x = sin(timeGetTime() / 1000.0f * 2.0f);
-    lightColor.y = sin(timeGetTime() / 1000.0f * 0.7f);
-    lightColor.z = sin(timeGetTime() / 1000.0f * 1.3f);
-
-    glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
-    glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
-
-    lightingShader->setVec3("light.ambient", ambientColor);
-    lightingShader->setVec3("light.diffuse", diffuseColor); // Scene에 맞는 어두운 빛
-    lightingShader->setVec3("light.specular", { 1.0f, 1.0f, 1.0f });
-    lightingShader->setVec3("lightPos", lightPos);
+    lightingShader->setVec3("light.position", lightPos);
     lightingShader->setVec3("viewPos", camera->GetPosition());
+
+    lightingShader->setVec3("light.ambient", { 0.2f, 0.2f, 0.2f });
+    lightingShader->setVec3("light.diffuse", { 0.5f, 0.5f, 0.5f }); // Scene에 맞는 어두운 빛
+    lightingShader->setVec3("light.specular", { 1.0f, 1.0f, 1.0f });
+
+    lightingShader->setFloat("material.shininess", 64.0f);
 
     // view/projection transformations
     glm::mat4 projection = glm::perspective(glm::radians(camera->GetFov()), (float)width / (float)height, 0.1f, 100.0f);
@@ -170,6 +168,13 @@ void LightingScene::Render(HDC hdc)
     // world transformation
     glm::mat4 model = glm::mat4(1.0f);
     lightingShader->setMat4("model", model);
+
+    // bind diffuse map
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, diffuseMap->GetID());
+    // bind specular map
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, specularMap->GetID());
 
     // render the cube
     glBindVertexArray(cubeVAO);

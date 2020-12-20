@@ -16,6 +16,7 @@ class LightingScene : public Scene
 	unsigned int lightCubeVAO;
 
 	Texture* diffuseMap;
+	Texture* specularMap;
 public:
 	virtual HRESULT Init();
 	virtual void Release();
@@ -24,6 +25,11 @@ public:
 
 	LightingScene(int width, int height)
 		: Scene(width, height)
+		, camera(nullptr)
+		, lightingShader(nullptr)
+		, lightCubeShader(nullptr)
+		, diffuseMap(nullptr)
+		, specularMap(nullptr)
 	{};
 	virtual ~LightingScene();
 };

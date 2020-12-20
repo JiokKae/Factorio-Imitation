@@ -48,7 +48,7 @@ HRESULT MainGame::Init()
 	ImageLoad();
 
 	// Change StartScene
-	SceneManager::GetSingleton()->ChangeScene("TenCubeSpaceScene");
+	SceneManager::GetSingleton()->ChangeScene("LightingScene");
 
 	TimerManager::GetSingleton()->SetTargetFPS(120);
 
