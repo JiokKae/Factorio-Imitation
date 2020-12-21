@@ -1,0 +1,60 @@
+cbuffer _49
+{
+    row_major float4x4 _49_projection : packoffset(c0);
+    row_major float4x4 _49_model : packoffset(c4);
+    float2 _49_regionStart : packoffset(c8);
+    float2 _49_regionSize : packoffset(c8.z);
+    float4 _49_coeff0 : packoffset(c9);
+    float4 _49_coeff1234 : packoffset(c10);
+    float2 _49_direction : packoffset(c11);
+};
+Texture2D<float4> tex : register(t0);
+SamplerState _tex_sampler : register(s0);
+
+static float4 fragColor;
+static float2 vUV;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+float4 blur9(Texture2D<float4> image, SamplerState _image_sampler, float2 uv, float2 direction)
+{
+    float4 color = 0.0f.xxxx;
+    float2 off1 = 1.0f.xx * direction;
+    float2 off2 = 2.0f.xx * direction;
+    float2 off3 = 3.0f.xx * direction;
+    float2 off4 = 4.0f.xx * direction;
+    color += (image.Sample(_image_sampler, uv) * _49_coeff0);
+    color += (image.Sample(_image_sampler, uv + off1) * _49_coeff1234.x);
+    color += (image.Sample(_image_sampler, uv - off1) * _49_coeff1234.x);
+    color += (image.Sample(_image_sampler, uv + off2) * _49_coeff1234.y);
+    color += (image.Sample(_image_sampler, uv - off2) * _49_coeff1234.y);
+    color += (image.Sample(_image_sampler, uv + off3) * _49_coeff1234.z);
+    color += (image.Sample(_image_sampler, uv - off3) * _49_coeff1234.z);
+    color += (image.Sample(_image_sampler, uv + off4) * _49_coeff1234.w);
+    color += (image.Sample(_image_sampler, uv - off4) * _49_coeff1234.w);
+    return color;
+}
+
+void frag_main()
+{
+    float2 param = vUV;
+    float2 param_1 = _49_direction;
+    fragColor = blur9(tex, _tex_sampler, param, param_1);
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    vUV = stage_input.vUV;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

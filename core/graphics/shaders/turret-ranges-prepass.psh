@@ -1,0 +1,54 @@
+cbuffer _47
+{
+    uint _47_dataSize : packoffset(c0);
+    float4 _47_color : packoffset(c1);
+};
+Texture2D<float4> pretest : register(t0);
+SamplerState _pretest_sampler : register(s0);
+
+static float2 vUV;
+static float4 fragColor;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+void frag_main()
+{
+    float a = pretest.Sample(_pretest_sampler, vUV).w;
+    if (a == 0.0f)
+    {
+        fragColor = 0.0f.xxxx;
+        return;
+    }
+    if (a == 1.0f)
+    {
+        float4 _40;
+        if (false)
+        {
+            _40 = float4(1.0f, 1.0f, 0.0f, 1.0f);
+        }
+        else
+        {
+            _40 = _47_color;
+        }
+        fragColor = _40;
+        return;
+    }
+    discard;
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    vUV = stage_input.vUV;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

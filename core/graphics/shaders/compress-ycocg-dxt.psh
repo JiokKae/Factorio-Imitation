@@ -1,0 +1,287 @@
+cbuffer _136
+{
+    int2 _136_texOffset : packoffset(c0);
+    int _136_unusedLevel : packoffset(c0.z);
+    uint _136_unusedFromRGBA : packoffset(c0.w);
+};
+Texture2D<float4> tex : register(t0);
+SamplerState _tex_sampler : register(s0);
+Texture2D<float4> tex2 : register(t1);
+SamplerState _tex2_sampler : register(s1);
+
+static float4 gl_FragCoord;
+static uint4 fragColor;
+static float2 vUV;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+    float4 gl_FragCoord : SV_Position;
+};
+
+struct SPIRV_Cross_Output
+{
+    uint4 fragColor : SV_Target0;
+};
+
+static float3 block[16];
+
+float3 toYCoCg(float3 c)
+{
+    float Y = ((c.x + (2.0f * c.y)) + c.z) * 0.25f;
+    float Co = (((2.0f * c.x) - (2.0f * c.z)) * 0.25f) + 0.501960813999176025390625f;
+    float Cg = ((((-c.x) + (2.0f * c.y)) - c.z) * 0.25f) + 0.501960813999176025390625f;
+    return float3(Y, Co, Cg);
+}
+
+void fetchBlock()
+{
+    int2 baseCoord = (int2(4, 4) * int2(gl_FragCoord.xy)) + _136_texOffset;
+    for (int by = 0; by < 4; by++)
+    {
+        for (int bx = 0; bx < 4; bx++)
+        {
+            int2 coord = baseCoord + int2(bx, by);
+            float3 color = tex.Load(int3(coord, 0)).xyz;
+            float3 param = color;
+            block[(by * 4) + bx] = toYCoCg(param);
+        }
+    }
+}
+
+void FindMinMaxColorsBox(inout float3 mincol, inout float3 maxcol)
+{
+    mincol = 1.0f.xxx;
+    maxcol = 0.0f.xxx;
+    for (int i = 0; i < 16; i++)
+    {
+        mincol = min(mincol, block[i]);
+        maxcol = max(maxcol, block[i]);
+    }
+}
+
+void SelectYCoCgDiagonal(inout float2 minColor, inout float2 maxColor)
+{
+    float2 mid = (maxColor + minColor) * 0.5f;
+    float cov = 0.0f;
+    for (int i = 0; i < 16; i++)
+    {
+        float2 t = block[i].yz - mid;
+        cov += (t.x * t.y);
+    }
+    if (cov < 0.0f)
+    {
+        float tmp = maxColor.y;
+        maxColor.y = minColor.y;
+        minColor.y = tmp;
+    }
+}
+
+int GetYCoCgScale(float2 minColor, float2 maxColor)
+{
+    float2 m0 = abs(minColor - 0.501960813999176025390625f.xx);
+    float2 m1 = abs(maxColor - 0.501960813999176025390625f.xx);
+    float m = max(max(m0.x, m0.y), max(m1.x, m1.y));
+    int scale = 1;
+    if (m < 0.2509804069995880126953125f)
+    {
+        scale = 2;
+    }
+    if (m < 0.12549020349979400634765625f)
+    {
+        scale = 4;
+    }
+    return scale;
+}
+
+void InsetCoCgBBox(inout float2 mincol, inout float2 maxcol)
+{
+    float2 inset = ((maxcol - mincol) / 16.0f.xx) - 0.00196078442968428134918212890625f.xx;
+    mincol = clamp(mincol + inset, 0.0f.xx, 1.0f.xx);
+    maxcol = clamp(maxcol - inset, 0.0f.xx, 1.0f.xx);
+}
+
+uint EmitEndPointsYCoCgDXT5(inout float2 mincol, inout float2 maxcol, int scale)
+{
+    maxcol = ((maxcol - 0.501960813999176025390625f.xx) * float(scale)) + 0.501960813999176025390625f.xx;
+    mincol = ((mincol - 0.501960813999176025390625f.xx) * float(scale)) + 0.501960813999176025390625f.xx;
+    float2 param = mincol;
+    float2 param_1 = maxcol;
+    InsetCoCgBBox(param, param_1);
+    mincol = param;
+    maxcol = param_1;
+    maxcol = round(maxcol * float2(31.0f, 63.0f));
+    mincol = round(mincol * float2(31.0f, 63.0f));
+    int2 imaxcol = int2(maxcol);
+    int2 imincol = int2(mincol);
+    uint2 result;
+    result.x = uint(((imaxcol.x << 11) | (imaxcol.y << 5)) | (scale - 1));
+    result.y = uint(((imincol.x << 11) | (imincol.y << 5)) | (scale - 1));
+    imaxcol.x = (imaxcol.x << 3) | (imaxcol.x >> 2);
+    imaxcol.y = (imaxcol.y << 2) | (imaxcol.y >> 4);
+    imincol.x = (imincol.x << 3) | (imincol.x >> 2);
+    imincol.y = (imincol.y << 2) | (imincol.y >> 4);
+    maxcol = float2(imaxcol) * 0.0039215688593685626983642578125f;
+    mincol = float2(imincol) * 0.0039215688593685626983642578125f;
+    maxcol = ((maxcol - 0.501960813999176025390625f.xx) / float(scale).xx) + 0.501960813999176025390625f.xx;
+    mincol = ((mincol - 0.501960813999176025390625f.xx) / float(scale).xx) + 0.501960813999176025390625f.xx;
+    return result.x | (result.y << uint(16));
+}
+
+float colorDistance(float2 c0, float2 c1)
+{
+    return dot(c0 - c1, c0 - c1);
+}
+
+uint EmitIndicesYCoCgDXT5(float2 mincol, float2 maxcol)
+{
+    float2 c[4];
+    c[0] = maxcol;
+    c[1] = mincol;
+    c[2] = lerp(c[0], c[1], 0.3333333432674407958984375f.xx);
+    c[3] = lerp(c[0], c[1], 0.666666686534881591796875f.xx);
+    uint indices = 0u;
+    for (int i = 0; i < 16; i++)
+    {
+        float2 param = block[i].yz;
+        float2 param_1 = c[0];
+        float4 dist;
+        dist.x = colorDistance(param, param_1);
+        float2 param_2 = block[i].yz;
+        float2 param_3 = c[1];
+        dist.y = colorDistance(param_2, param_3);
+        float2 param_4 = block[i].yz;
+        float2 param_5 = c[2];
+        dist.z = colorDistance(param_4, param_5);
+        float2 param_6 = block[i].yz;
+        float2 param_7 = c[3];
+        dist.w = colorDistance(param_6, param_7);
+        bool4 _545 = bool4(dist.xyxy.x > dist.wzzw.x, dist.xyxy.y > dist.wzzw.y, dist.xyxy.z > dist.wzzw.z, dist.xyxy.w > dist.wzzw.w);
+        uint4 b = uint4(_545.x ? uint4(1u, 1u, 1u, 1u).x : uint4(0u, 0u, 0u, 0u).x, _545.y ? uint4(1u, 1u, 1u, 1u).y : uint4(0u, 0u, 0u, 0u).y, _545.z ? uint4(1u, 1u, 1u, 1u).z : uint4(0u, 0u, 0u, 0u).z, _545.w ? uint4(1u, 1u, 1u, 1u).w : uint4(0u, 0u, 0u, 0u).w);
+        uint b4 = uint(dist.z > dist.w);
+        uint index = (b.x & b4) | (((b.y & b.z) | (b.x & b.w)) << uint(1));
+        indices |= (index << uint(i * 2));
+    }
+    return indices;
+}
+
+void InsetYBBox(inout float mincol, inout float maxcol)
+{
+    float inset = ((maxcol - mincol) / 32.0f) - 0.00196078442968428134918212890625f;
+    mincol = clamp(mincol + inset, 0.0f, 1.0f);
+    maxcol = clamp(maxcol - inset, 0.0f, 1.0f);
+}
+
+uint EmitAlphaEndPointsYCoCgDXT5(inout float mincol, inout float maxcol)
+{
+    float param = mincol;
+    float param_1 = maxcol;
+    InsetYBBox(param, param_1);
+    mincol = param;
+    maxcol = param_1;
+    uint c0 = uint(round(mincol * 255.0f));
+    uint c1 = uint(round(maxcol * 255.0f));
+    return (c0 << uint(8)) | c1;
+}
+
+uint2 EmitAlphaIndicesYCoCgDXT5(float minAlpha, float maxAlpha)
+{
+    float mid = (maxAlpha - minAlpha) / 14.0f;
+    float ab1 = minAlpha + mid;
+    float ab2 = (((6.0f * maxAlpha) + (1.0f * minAlpha)) * 0.14285714924335479736328125f) + mid;
+    float ab3 = (((5.0f * maxAlpha) + (2.0f * minAlpha)) * 0.14285714924335479736328125f) + mid;
+    float ab4 = (((4.0f * maxAlpha) + (3.0f * minAlpha)) * 0.14285714924335479736328125f) + mid;
+    float ab5 = (((3.0f * maxAlpha) + (4.0f * minAlpha)) * 0.14285714924335479736328125f) + mid;
+    float ab6 = (((2.0f * maxAlpha) + (5.0f * minAlpha)) * 0.14285714924335479736328125f) + mid;
+    float ab7 = (((1.0f * maxAlpha) + (6.0f * minAlpha)) * 0.14285714924335479736328125f) + mid;
+    uint2 indices = uint2(0u, 0u);
+    uint index = 0u;
+    for (int i = 0; i < 6; i++)
+    {
+        float a = block[i].x;
+        index = 1u;
+        index += uint(a <= ab1);
+        index += uint(a <= ab2);
+        index += uint(a <= ab3);
+        index += uint(a <= ab4);
+        index += uint(a <= ab5);
+        index += uint(a <= ab6);
+        index += uint(a <= ab7);
+        index &= 7u;
+        index ^= uint(2u > index);
+        indices.x |= (index << uint((3 * i) + 16));
+    }
+    indices.y = index >> uint(1);
+    for (int i_1 = 6; i_1 < 16; i_1++)
+    {
+        float a_1 = block[i_1].x;
+        index = 1u;
+        index += uint(a_1 <= ab1);
+        index += uint(a_1 <= ab2);
+        index += uint(a_1 <= ab3);
+        index += uint(a_1 <= ab4);
+        index += uint(a_1 <= ab5);
+        index += uint(a_1 <= ab6);
+        index += uint(a_1 <= ab7);
+        index &= 7u;
+        index ^= uint(2u > index);
+        indices.y |= (index << uint((3 * i_1) - 16));
+    }
+    return indices;
+}
+
+uint4 compress_YCoCg_DXT_fp()
+{
+    float3 param;
+    float3 param_1;
+    FindMinMaxColorsBox(param, param_1);
+    float3 mincol = param;
+    float3 maxcol = param_1;
+    float2 param_2 = mincol.yz;
+    float2 param_3 = maxcol.yz;
+    SelectYCoCgDiagonal(param_2, param_3);
+    mincol = float3(mincol.x, param_2.x, param_2.y);
+    maxcol = float3(maxcol.x, param_3.x, param_3.y);
+    float2 param_4 = mincol.yz;
+    float2 param_5 = maxcol.yz;
+    int scale = GetYCoCgScale(param_4, param_5);
+    float2 param_6 = mincol.yz;
+    float2 param_7 = maxcol.yz;
+    int param_8 = scale;
+    uint _887 = EmitEndPointsYCoCgDXT5(param_6, param_7, param_8);
+    mincol = float3(mincol.x, param_6.x, param_6.y);
+    maxcol = float3(maxcol.x, param_7.x, param_7.y);
+    uint4 result;
+    result.z = _887;
+    float2 param_9 = mincol.yz;
+    float2 param_10 = maxcol.yz;
+    result.w = EmitIndicesYCoCgDXT5(param_9, param_10);
+    float param_11 = mincol.x;
+    float param_12 = maxcol.x;
+    uint _909 = EmitAlphaEndPointsYCoCgDXT5(param_11, param_12);
+    mincol.x = param_11;
+    maxcol.x = param_12;
+    result.x = _909;
+    float param_13 = mincol.x;
+    float param_14 = maxcol.x;
+    uint2 indices = EmitAlphaIndicesYCoCgDXT5(param_13, param_14);
+    result.x |= indices.x;
+    result.y = indices.y;
+    return result;
+}
+
+void frag_main()
+{
+    fetchBlock();
+    fragColor = compress_YCoCg_DXT_fp();
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    gl_FragCoord = stage_input.gl_FragCoord;
+    vUV = stage_input.vUV;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

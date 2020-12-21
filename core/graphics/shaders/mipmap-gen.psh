@@ -1,0 +1,47 @@
+cbuffer _27
+{
+    int2 _27_offset : packoffset(c0);
+    int _27_unusedLevel : packoffset(c0.z);
+};
+Texture2D<float4> tex : register(t0);
+SamplerState _tex_sampler : register(s0);
+
+static float4 gl_FragCoord;
+static float4 fragColor;
+static float2 vUV;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+    float4 gl_FragCoord : SV_Position;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+void frag_main()
+{
+    float4 color = 0.0f.xxxx;
+    int2 coord = (int2(2, 2) * int2(gl_FragCoord.xy)) + _27_offset;
+    for (int y = 0; y < 2; y++)
+    {
+        for (int x = 0; x < 2; x++)
+        {
+            float4 t1 = tex.Load(int3(coord + int2(x, y), 0));
+            color += t1;
+        }
+    }
+    fragColor = color * 0.25f;
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    gl_FragCoord = stage_input.gl_FragCoord;
+    vUV = stage_input.vUV;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

@@ -7,7 +7,6 @@ class Shader;
 class Texture;
 class LightingScene : public Scene
 {
-	glm::vec3 lightPos;
 	Camera* camera;
 	Shader* lightingShader;
 	Shader* lightCubeShader;

@@ -1,0 +1,109 @@
+cbuffer _150
+{
+    float4 _150_specularLightness : packoffset(c0);
+    float4 _150_foamColor : packoffset(c1);
+    float2 _150_texSize : packoffset(c2);
+    float _150_animationSpeed : packoffset(c2.z);
+    float _150_animationScale : packoffset(c2.w);
+    float _150_darkThreshold : packoffset(c3);
+    float _150_reflectionThreshold : packoffset(c3.y);
+    float _150_specularThreshold : packoffset(c3.z);
+    float _150_time : packoffset(c3.w);
+};
+Texture2D<float4> waterNoiseTexture : register(t0);
+SamplerState _waterNoiseTexture_sampler : register(s0);
+Texture2D<float4> waterMaskTexture : register(t1);
+SamplerState _waterMaskTexture_sampler : register(s1);
+
+static float4 gl_FragCoord;
+static float2 vUV;
+static float4 vColor;
+static float4 fragColor;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+    float4 vColor : TEXCOORD1;
+    float4 gl_FragCoord : SV_Position;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+float noise_func(float2 uv)
+{
+    return waterNoiseTexture.Sample(_waterNoiseTexture_sampler, uv).x;
+}
+
+float2 mul(float2 v, float2x2 m)
+{
+    return mul(m, v);
+}
+
+float2 rotate(inout float2 uv)
+{
+    float2 param = uv * 2.0f;
+    uv += (noise_func(param) * 0.0199999995529651641845703125f).xx;
+    float angle = 3.0f;
+    float sinRot = sin(angle);
+    float cosRot = cos(angle);
+    float2x2 rotation = float2x2(float2(cosRot, -sinRot), float2(sinRot, cosRot));
+    float2 param_1 = uv;
+    float2x2 param_2 = rotation;
+    return mul(param_1, param_2);
+}
+
+float fbm(inout float2 uv, float t)
+{
+    float f = 0.0f;
+    float total = 0.0f;
+    float mul_1 = 1.0f;
+    for (int i = 0; i < 3; i++)
+    {
+        float2 param = uv + ((t * 0.0024999999441206455230712890625f) * (1.0f - mul_1)).xx;
+        f += (noise_func(param) * mul_1);
+        total += mul_1;
+        float2 param_1 = uv * 1.10000002384185791015625f;
+        float2 _125 = rotate(param_1);
+        uv = _125;
+        mul_1 *= 0.75f;
+    }
+    return f / total;
+}
+
+float4 MainPS()
+{
+    float2 uv = vUV;
+    uv.y *= 1.414000034332275390625f;
+    float2 param = (sin(_150_time * _150_animationSpeed) * _150_animationScale).xx + uv;
+    float param_1 = _150_time;
+    float _170 = fbm(param, param_1);
+    float value = _170 + 0.100000001490116119384765625f;
+    float3 mask = waterMaskTexture.Load(int3(int2(gl_FragCoord.xy), 0)).xyz;
+    float darks = 1.0f - ceil(value + _150_darkThreshold);
+    float reflection = smoothstep(0.0f, _150_reflectionThreshold, ((1.0f - (value * 0.800000011920928955078125f)) - 0.60000002384185791015625f) + (mask.x * 0.25f));
+    float specular = ceil((value + _150_specularThreshold) - mask.x);
+    float4 color = float4(vColor.xyz * ((value + (specular * 0.189999997615814208984375f)) - (mask.z * 0.300000011920928955078125f)), vColor.w);
+    color = lerp(color, _150_specularLightness, ((reflection * 0.64999997615814208984375f) + (darks * 0.10999999940395355224609375f)).xxxx);
+    color *= (1.0f - mask.y);
+    color = lerp(color, _150_foamColor, smoothstep(-0.3499999940395355224609375f, 0.300000011920928955078125f, mask.z - (value * 2.150000095367431640625f)).xxxx);
+    return color;
+}
+
+void frag_main()
+{
+    fragColor = MainPS();
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    gl_FragCoord = stage_input.gl_FragCoord;
+    vUV = stage_input.vUV;
+    vColor = stage_input.vColor;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

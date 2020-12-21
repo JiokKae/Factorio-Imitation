@@ -1,0 +1,42 @@
+cbuffer _18
+{
+    float _18_width : packoffset(c0);
+    float _18_height : packoffset(c0.y);
+    float _18_minIntensity : packoffset(c0.z);
+    float _18_maxIntensity : packoffset(c0.w);
+    float _18_uMul : packoffset(c1);
+    float _18_vMul : packoffset(c1.y);
+};
+
+static float2 vUV;
+static float4 fragColor;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+void frag_main()
+{
+    float2 a = (vUV - 0.5f.xx) * float2(_18_uMul, _18_vMul);
+    float d = length(a) * 2.0f;
+    d = clamp(1.0f - d, 0.0f, 1.0f);
+    d = lerp(_18_minIntensity, _18_maxIntensity, d);
+    float3 vDither = dot(float2(171.0f, 231.0f), vUV * float2(_18_width, _18_height)).xxx;
+    vDither = frac(vDither / float3(103.0f, 71.0f, 97.0f)) - 0.5f.xxx;
+    fragColor = float4((vDither / 196.0f.xxx) + d.xxx, 1.0f);
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    vUV = stage_input.vUV;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

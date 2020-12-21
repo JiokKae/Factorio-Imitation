@@ -1,0 +1,65 @@
+cbuffer _85
+{
+    int2 _85_offset : packoffset(c0);
+    int _85_unusedLevel : packoffset(c0.z);
+};
+Texture2D<float4> tex : register(t0);
+SamplerState _tex_sampler : register(s0);
+Texture2D<float4> tex2 : register(t1);
+SamplerState _tex2_sampler : register(s1);
+
+static float4 gl_FragCoord;
+static float4 fragColor;
+static float2 vUV;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+    float4 gl_FragCoord : SV_Position;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+float4 YCoCgToRGB(float4 ycocg, float alpha)
+{
+    float Y = ycocg.w;
+    float scale = 1.0f / ((31.875f * ycocg.z) + 1.0f);
+    float Co = (ycocg.x - 0.501960813999176025390625f) * scale;
+    float Cg = (ycocg.y - 0.501960813999176025390625f) * scale;
+    float R = (Y + Co) - Cg;
+    float G = Y + Cg;
+    float B = (Y - Co) - Cg;
+    return float4(R, G, B, alpha);
+}
+
+void frag_main()
+{
+    float4 color = 0.0f.xxxx;
+    int2 coord = (int2(2, 2) * int2(gl_FragCoord.xy)) + _85_offset;
+    for (int y = 0; y < 2; y++)
+    {
+        for (int x = 0; x < 2; x++)
+        {
+            float4 t1 = tex.Load(int3(coord + int2(x, y), 0));
+            float a1 = tex2.Load(int3(coord + int2(x, y), 0)).x;
+            float4 param = t1;
+            float param_1 = a1;
+            t1 = YCoCgToRGB(param, param_1);
+            color += t1;
+        }
+    }
+    fragColor = color * 0.25f;
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    gl_FragCoord = stage_input.gl_FragCoord;
+    vUV = stage_input.vUV;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

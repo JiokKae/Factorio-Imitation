@@ -1,0 +1,115 @@
+cbuffer _98
+{
+    float2 _98_invLeafTexSize : packoffset(c0);
+    float2 _98_strength : packoffset(c0.z);
+    float2 _98_distort : packoffset(c1);
+    float2 _98_speed : packoffset(c1.z);
+    float _98_time : packoffset(c2);
+    float _98_inverseExpectedUVDerivative : packoffset(c2.y);
+    uint _98_debug : packoffset(c2.z);
+};
+Texture2D<float4> texDistortion : register(t2);
+SamplerState _texDistortion_sampler : register(s2);
+Texture2D<float4> texYCoCg : register(t0);
+SamplerState _texYCoCg_sampler : register(s0);
+Texture2D<float4> texAlpha : register(t1);
+SamplerState _texAlpha_sampler : register(s1);
+
+static float2 vUVTexture;
+static float2 vUVDistortion;
+static float4 vTint;
+static float4 fragColor;
+
+struct SPIRV_Cross_Input
+{
+    float4 vTint : TEXCOORD0;
+    float2 vUVTexture : TEXCOORD1;
+    float2 vUVDistortion : TEXCOORD2;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+uint2 SPIRV_Cross_textureSize(Texture2D<float4> Tex, uint Level, out uint Param)
+{
+    uint2 ret;
+    Tex.GetDimensions(Level, ret.x, ret.y, Param);
+    return ret;
+}
+
+float4 YCoCgToRGB(float4 ycocg, float alpha)
+{
+    float Y = ycocg.w;
+    float scale = 1.0f / ((31.875f * ycocg.z) + 1.0f);
+    float Co = (ycocg.x - 0.501960813999176025390625f) * scale;
+    float Cg = (ycocg.y - 0.501960813999176025390625f) * scale;
+    float R = (Y + Co) - Cg;
+    float G = Y + Cg;
+    float B = (Y - Co) - Cg;
+    return float4(R, G, B, alpha);
+}
+
+void frag_main()
+{
+    float2 localUV = vUVTexture;
+    float2 distortion = 0.0f.xx;
+    float4 offset = 0.0f.xxxx;
+    if (any(bool2(vUVDistortion.x != (-1.0f).xx.x, vUVDistortion.y != (-1.0f).xx.y)))
+    {
+        offset = texDistortion.Sample(_texDistortion_sampler, vUVDistortion);
+        float localTime = _98_time + (((vTint.x + vTint.y) + vTint.z) * 5.0f);
+        distortion.x = offset.x * sin((offset.y * _98_distort.x) + (localTime * _98_speed.x));
+        distortion.y = offset.x * cos((offset.y * _98_distort.y) + (localTime * _98_speed.y));
+        uint _157_dummy_parameter;
+        float2 localPixelXY = localUV * float2(int2(SPIRV_Cross_textureSize(texYCoCg, uint(0), _157_dummy_parameter)));
+        distortion *= (ddx(localPixelXY.x) * _98_inverseExpectedUVDerivative);
+        float2 copy = localPixelXY;
+        localUV = (floor(localPixelXY) + (distortion * _98_strength)) * _98_invLeafTexSize;
+        uint _186_dummy_parameter;
+        distortion = floor(localUV * float2(int2(SPIRV_Cross_textureSize(texYCoCg, uint(0), _186_dummy_parameter)))) - floor(copy);
+        if (_98_debug != 0u)
+        {
+            fragColor = float4(0.5f + (0.20000000298023223876953125f * distortion.x), 0.5f + (0.20000000298023223876953125f * distortion.y), ddx(localPixelXY.x) * _98_inverseExpectedUVDerivative, 0.0f);
+        }
+    }
+    float alpha = texAlpha.Sample(_texAlpha_sampler, localUV).x;
+    bool _228 = !(_98_debug != 0u);
+    bool _235;
+    if (!_228)
+    {
+        _235 = all(bool2(vUVDistortion.x == (-1.0f).xx.x, vUVDistortion.y == (-1.0f).xx.y));
+    }
+    else
+    {
+        _235 = _228;
+    }
+    if (_235)
+    {
+        float4 yCoCg = texYCoCg.Sample(_texYCoCg_sampler, localUV);
+        float4 param = yCoCg;
+        float param_1 = alpha;
+        fragColor = YCoCgToRGB(param, param_1);
+        float3 grayscale = ((fragColor.xxx + fragColor.yyy) + fragColor.zzz) / 4.0f.xxx;
+        float3 _270 = lerp(grayscale, fragColor.xyz, vTint.w.xxx) * vTint.xyz;
+        fragColor = float4(_270.x, _270.y, _270.z, fragColor.w);
+    }
+    else
+    {
+        float3 _277 = fragColor.xyz * alpha;
+        fragColor = float4(_277.x, _277.y, _277.z, fragColor.w);
+        fragColor.w = alpha;
+    }
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    vUVTexture = stage_input.vUVTexture;
+    vUVDistortion = stage_input.vUVDistortion;
+    vTint = stage_input.vTint;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

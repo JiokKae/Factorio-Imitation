@@ -1,0 +1,56 @@
+Texture2D<float4> mask1Texture : register(t1);
+SamplerState _mask1Texture_sampler : register(s1);
+Texture2D<float4> mask2Texture : register(t2);
+SamplerState _mask2Texture_sampler : register(s2);
+Texture2D<float4> atlasTexture : register(t0);
+SamplerState _atlasTexture_sampler : register(s0);
+
+static float4 maskUVs;
+static float2 vUV;
+static float4 fragColor;
+static float3 vTint;
+static uint vFlags;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+    float4 maskUVs : TEXCOORD1;
+    nointerpolation uint vFlags : TEXCOORD2;
+    float3 vTint : TEXCOORD3;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+void frag_main()
+{
+    float mask = 1.0f;
+    float2 mask1UV = maskUVs.xy;
+    float2 mask2UV = maskUVs.zw;
+    if (mask1UV.x > (-1.0f))
+    {
+        mask = mask1Texture.Sample(_mask1Texture_sampler, mask1UV).x;
+        if (mask2UV.x > (-1.0f))
+        {
+            mask *= mask2Texture.Sample(_mask2Texture_sampler, mask2UV).x;
+        }
+    }
+    float4 texel = atlasTexture.Sample(_atlasTexture_sampler, vUV);
+    fragColor = texel * mask;
+    float3 _69 = fragColor.xyz * vTint;
+    fragColor = float4(_69.x, _69.y, _69.z, fragColor.w);
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    maskUVs = stage_input.maskUVs;
+    vUV = stage_input.vUV;
+    vTint = stage_input.vTint;
+    vFlags = stage_input.vFlags;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

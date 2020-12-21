@@ -1,0 +1,62 @@
+struct TurretRangeData
+{
+    float4 posAndRadius;
+    float4 rangeBoundNormals;
+};
+
+cbuffer _28
+{
+    int _28_dataSize : packoffset(c0);
+    float4 _28_color : packoffset(c1);
+    TurretRangeData _28_data[511] : packoffset(c2);
+};
+Texture2D<float4> pretest : register(t0);
+SamplerState _pretest_sampler : register(s0);
+
+static float4 gl_FragCoord;
+static float4 fragColor;
+static float2 vUV;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+    float4 gl_FragCoord : SV_Position;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+void frag_main()
+{
+    fragColor = 0.0f.xxxx;
+    for (int i = 0; i < _28_dataSize; i++)
+    {
+        float2 pos = _28_data[i].posAndRadius.xy;
+        float2 startVec = _28_data[i].rangeBoundNormals.xy;
+        float2 endVec = _28_data[i].rangeBoundNormals.zw;
+        float2 delta = gl_FragCoord.xy - pos;
+        float2 normal = float2(delta.y, -delta.x);
+        float dist = dot(delta, delta);
+        float crossA = dot(startVec, normal);
+        float crossB = dot(endVec, normal);
+        float maxRadiusSquared = _28_data[i].posAndRadius.z;
+        float minRadiusSquared = _28_data[i].posAndRadius.w;
+        if (all(bool4(crossA >= 0.0f, crossB <= 0.0f, dist < maxRadiusSquared, dist > minRadiusSquared)))
+        {
+            fragColor = _28_color;
+            break;
+        }
+    }
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    gl_FragCoord = stage_input.gl_FragCoord;
+    vUV = stage_input.vUV;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

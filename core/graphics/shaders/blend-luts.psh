@@ -1,0 +1,45 @@
+cbuffer _63
+{
+    float4 _63_tint : packoffset(c0);
+    float _63_lutAlpha : packoffset(c1);
+};
+Texture3D<float4> lut1 : register(t0);
+SamplerState _lut1_sampler : register(s0);
+Texture3D<float4> lut2 : register(t1);
+SamplerState _lut2_sampler : register(s1);
+
+static float4 gl_FragCoord;
+static float4 fragColor;
+static float2 vUV;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+    float4 gl_FragCoord : SV_Position;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+void frag_main()
+{
+    int3 lu = int3(int2(gl_FragCoord.xy), 0);
+    lu.z = lu.x >> 4;
+    lu.x &= 15;
+    lu.y = lu.y;
+    float4 lut1Color = lut1.Load(int4(lu, 0));
+    float4 lut2Color = lut2.Load(int4(lu, 0));
+    fragColor = clamp(lerp(lut1Color, lut2Color, _63_lutAlpha.xxxx) * _63_tint, 0.0f.xxxx, 1.0f.xxxx);
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    gl_FragCoord = stage_input.gl_FragCoord;
+    vUV = stage_input.vUV;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

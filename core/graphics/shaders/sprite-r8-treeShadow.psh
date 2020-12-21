@@ -1,0 +1,91 @@
+cbuffer _112
+{
+    float2 _112_invShadowTexSize : packoffset(c0);
+    float _112_time : packoffset(c0.z);
+    float _112_inverseExpectedUVDerivativeTimesStrength : packoffset(c0.w);
+};
+Texture2D<float4> tex : register(t0);
+SamplerState _tex_sampler : register(s0);
+
+static float4 fragColor;
+static float2 vUV;
+static float4 vTint;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+    float4 vTint : TEXCOORD1;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+uint2 SPIRV_Cross_textureSize(Texture2D<float4> Tex, uint Level, out uint Param)
+{
+    uint2 ret;
+    Tex.GetDimensions(Level, ret.x, ret.y, Param);
+    return ret;
+}
+
+float hmix(float a, float b)
+{
+    return frac(sin((a * 12.98980045318603515625f) + b) * 43758.546875f);
+}
+
+float hash3(float a, float b, float c)
+{
+    float param = a;
+    float param_1 = b;
+    float ab = hmix(param, param_1);
+    float param_2 = a;
+    float param_3 = c;
+    float ac = hmix(param_2, param_3);
+    float param_4 = b;
+    float param_5 = c;
+    float bc = hmix(param_4, param_5);
+    float param_6 = ac;
+    float param_7 = bc;
+    float param_8 = ab;
+    float param_9 = hmix(param_6, param_7);
+    return hmix(param_8, param_9);
+}
+
+float getnoise(float2 p, float time)
+{
+    float param = p.x;
+    float param_1 = p.y;
+    float param_2 = time;
+    return hash3(param, param_1, param_2);
+}
+
+void frag_main()
+{
+    fragColor = vTint * tex.Sample(_tex_sampler, vUV).x;
+    uint _104_dummy_parameter;
+    float2 localUV = vUV * float2(int2(SPIRV_Cross_textureSize(tex, uint(0), _104_dummy_parameter)));
+    float2 param = floor(localUV);
+    float param_1 = floor(_112_time);
+    float2 param_2 = floor(localUV.yx);
+    float param_3 = floor(_112_time);
+    float2 past = float2(getnoise(param, param_1), getnoise(param_2, param_3));
+    float2 param_4 = floor(localUV);
+    float param_5 = ceil(_112_time);
+    float2 param_6 = floor(localUV.yx);
+    float param_7 = ceil(_112_time);
+    float2 next = float2(getnoise(param_4, param_5), getnoise(param_6, param_7));
+    float2 offset = (lerp(past, next, frac(_112_time).xx) * 2.0f) - 1.0f.xx;
+    offset *= (ddx(localUV.x) * _112_inverseExpectedUVDerivativeTimesStrength);
+    fragColor = vTint * tex.Sample(_tex_sampler, (localUV + offset) * _112_invShadowTexSize).x;
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    vUV = stage_input.vUV;
+    vTint = stage_input.vTint;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

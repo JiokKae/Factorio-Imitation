@@ -1,0 +1,80 @@
+cbuffer _31
+{
+    float _31_borderWidthInPixels : packoffset(c0);
+    float _31_onEdgeValue : packoffset(c0.y);
+    float _31_pixelDistScale : packoffset(c0.z);
+};
+Texture2D<float4> atlasTexture : register(t0);
+SamplerState _atlasTexture_sampler : register(s0);
+
+static float4 vColor;
+static float2 vUV;
+static float4 vBorderColor;
+static float4 fragColor;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+    nointerpolation float4 vColor : TEXCOORD1;
+    nointerpolation float4 vBorderColor : TEXCOORD2;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+float getIntensity(float borderWidth, float smoothing, float2 uv)
+{
+    float sdfValue = atlasTexture.Sample(_atlasTexture_sampler, uv).x;
+    float intensity = smoothstep((_31_onEdgeValue - borderWidth) - smoothing, (_31_onEdgeValue - borderWidth) + smoothing, sdfValue);
+    return intensity;
+}
+
+void frag_main()
+{
+    float borderWidth = _31_borderWidthInPixels * _31_pixelDistScale;
+    float smoothing = _31_pixelDistScale * 0.5f;
+    float4 useColor = vColor;
+    float param = borderWidth;
+    float param_1 = smoothing;
+    float2 param_2 = vUV;
+    float intensity = getIntensity(param, param_1, param_2);
+    float dscale = 0.100000001490116119384765625f;
+    float2 duv = (ddx(vUV) + ddy(vUV)) * dscale;
+    float param_3 = borderWidth;
+    float param_4 = smoothing;
+    float2 param_5 = vUV + float2(duv.x, duv.y);
+    float a = getIntensity(param_3, param_4, param_5);
+    float param_6 = borderWidth;
+    float param_7 = smoothing;
+    float2 param_8 = vUV + float2(duv.x, -duv.y);
+    float b = getIntensity(param_6, param_7, param_8);
+    float param_9 = borderWidth;
+    float param_10 = smoothing;
+    float2 param_11 = vUV + float2(-duv.x, duv.y);
+    float c = getIntensity(param_9, param_10, param_11);
+    float param_12 = borderWidth;
+    float param_13 = smoothing;
+    float2 param_14 = vUV + float2(-duv.x, -duv.y);
+    float d = getIntensity(param_12, param_13, param_14);
+    float avg = (((a + b) + c) + d) / 4.0f;
+    intensity = lerp(intensity, avg, 0.5f);
+    bool4 _173 = (borderWidth > 0.0f).xxxx;
+    float4 useBorderColor = float4(_173.x ? vBorderColor.x : useColor.x, _173.y ? vBorderColor.y : useColor.y, _173.z ? vBorderColor.z : useColor.z, _173.w ? vBorderColor.w : useColor.w);
+    float sdfValue = atlasTexture.Sample(_atlasTexture_sampler, vUV).x;
+    float borderIntensity = smoothstep(_31_onEdgeValue - smoothing, _31_onEdgeValue + smoothing, sdfValue);
+    useColor = lerp(useBorderColor, useColor, borderIntensity.xxxx);
+    fragColor = useColor * intensity;
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    vColor = stage_input.vColor;
+    vUV = stage_input.vUV;
+    vBorderColor = stage_input.vBorderColor;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}
