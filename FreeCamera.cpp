@@ -1,6 +1,6 @@
-#include "Camera.h"
+#include "FreeCamera.h"
 
-HRESULT Camera::Init()
+HRESULT FreeCamera::Init()
 {
 	position = glm::vec3(0.0f, 0.0f, 3.0f);
 	front = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -17,11 +17,11 @@ HRESULT Camera::Init()
 	return S_OK;
 }
 
-void Camera::Release()
+void FreeCamera::Release()
 {
 }
 
-void Camera::Update()
+void FreeCamera::Update()
 {
 	// fov
 	float offset = lastMouseZDelta - g_mousezDelta;
@@ -32,10 +32,10 @@ void Camera::Update()
 	float cameraSpeed = movementSpeed * TimerManager::GetSingleton()->GetTimeElapsed(); // adjust accordingly
 
 	if (KeyManager::GetSingleton()->IsStayKeyDown('W'))
-		position += up * cameraSpeed;
+		position += front * cameraSpeed;
 
 	if (KeyManager::GetSingleton()->IsStayKeyDown('S'))
-		position -= up * cameraSpeed;
+		position -= front * cameraSpeed;
 
 	if (KeyManager::GetSingleton()->IsStayKeyDown('A'))
 		position -= glm::normalize(glm::cross(front, up)) * cameraSpeed;
@@ -43,7 +43,16 @@ void Camera::Update()
 	if (KeyManager::GetSingleton()->IsStayKeyDown('D'))
 		position += glm::normalize(glm::cross(front, up)) * cameraSpeed;
 
-	pitch = Clamp(pitch, -89.0f, 89.0f);
+	RECT winRect = GetWindowRect();
+
+	float xoffset = g_ptMouse.x - WINSIZE_X / 2;
+	float yoffset = -g_ptMouse.y + WINSIZE_Y / 2; // y 좌표의 범위는 밑에서부터 위로가기 때문에 반대로 바꿉니다.
+	SetCursorPos(winRect.left+ WINSIZE_X / 2, winRect.top + WINSIZE_Y / 2);
+	xoffset *= mouseSensitivity;
+	yoffset *= mouseSensitivity;
+
+	yaw += xoffset;
+	pitch = Clamp(pitch + yoffset, -89.0f, 89.0f);
 
 	front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
 	front.y = sin(glm::radians(pitch));
@@ -52,7 +61,7 @@ void Camera::Update()
 	glm::lookAt(position, position + front, up);
 }
 
-glm::mat4 Camera::GetViewMatrix()
+glm::mat4 FreeCamera::GetViewMatrix()
 {
 	return glm::lookAt(position, position + front, up);
 }

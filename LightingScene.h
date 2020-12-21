@@ -2,12 +2,12 @@
 #include "Scene.h"
 #include "framework.h"
 
-class Camera;
+class FreeCamera;
 class Shader;
 class Texture;
 class LightingScene : public Scene
 {
-	Camera* camera;
+	FreeCamera* camera;
 	Shader* lightingShader;
 	Shader* lightCubeShader;
 

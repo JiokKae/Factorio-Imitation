@@ -2,7 +2,7 @@
 #include "Scene.h"
 
 class Shader;
-class Camera;
+class FreeCamera;
 class Texture;
 class TenCubeSpaceScene : public Scene
 {
@@ -19,7 +19,7 @@ private:
 	float radio = 0.5;
 
 	Shader* ourShader;
-	Camera* camera;
+	FreeCamera* camera;
 
 public:
 	virtual HRESULT Init();

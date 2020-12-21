@@ -1,6 +1,7 @@
 #include "MainGame.h"
 #include "Image.h"
 #include "TitleScene.h"
+#include "PlayScene.h"
 #include "TileMapToolScene.h"
 #include "TenCubeSpaceScene.h"
 #include "LightingScene.h"
@@ -39,6 +40,7 @@ HRESULT MainGame::Init()
 
 	// Add Scene
 	SceneManager::GetSingleton()->AddScene("TitleScene", new TitleScene(1600, 900));
+	SceneManager::GetSingleton()->AddScene("PlayScene", new PlayScene(1600, 900));
 	SceneManager::GetSingleton()->AddScene("TileMapToolScene", new TileMapToolScene(1600, 900));
 	SceneManager::GetSingleton()->AddScene("TenCubeSpaceScene", new TenCubeSpaceScene(900, 900));
 	SceneManager::GetSingleton()->AddScene("LightingScene", new LightingScene(900, 900));
@@ -83,7 +85,7 @@ void MainGame::Render()
 
 void MainGame::ImageLoad()
 {
-	ImageManager::GetSingleton()->AddImage("TitleSceneImage", "Image/bin.bmp", WINSIZE_TITLE_X, WINSIZE_TITLE_Y);
+	ImageManager::GetSingleton()->AddImage("TitleSceneImage", "core/graphics/background-image.bmp", WINSIZE_TITLE_X, WINSIZE_TITLE_Y);
 	ImageManager::GetSingleton()->AddImage("Button1", "Image/button.bmp", 122, 62, 1, 2, true, RGB(255, 0, 255));
 	ImageManager::GetSingleton()->AddImage("Loading Scene Image", "Image/loading.bmp", WINSIZE_TITLE_X, WINSIZE_TITLE_Y);
 

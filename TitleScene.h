@@ -8,6 +8,7 @@ class TitleScene : public Scene
 private:
 	Image* img;
 	Button* button1;
+	Button* gameStartButton;
 	Button* TenCubeButton;
 	Button* quitButton;
 	Button* lightingButton;

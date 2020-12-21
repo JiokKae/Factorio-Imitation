@@ -1,5 +1,5 @@
 #include "LightingScene.h"
-#include "Camera.h"
+#include "FreeCamera.h"
 #include "Shader.h"
 #include "Texture.h"
 
@@ -8,7 +8,7 @@ HRESULT LightingScene::Init()
     SetWindowSize((1920 - WINSIZE_X) / 2, (1080 - WINSIZE_Y) / 2, WINSIZE_X, WINSIZE_Y);
 
 	// camera
-	camera = new Camera();
+	camera = new FreeCamera();
 	camera->Init();
 
 	// configure global opengl state
@@ -98,9 +98,9 @@ HRESULT LightingScene::Init()
 
     // 텍스처 로드 및 생성
     diffuseMap = new Texture();
-    diffuseMap->Init("graphics/entity/wooden-chest/hr-wooden-chest.png");
+    diffuseMap->Init("base/graphics/entity/wooden-chest/hr-wooden-chest.png");
     specularMap = new Texture();
-    specularMap->Init("graphics/entity/wooden-chest/hr-wooden-chest_specular.png");
+    specularMap->Init("base/graphics/entity/wooden-chest/hr-wooden-chest_specular.png");
     // shader configuration
     // --------------------
     lightingShader->use();

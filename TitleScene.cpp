@@ -12,6 +12,10 @@ HRESULT TitleScene::Init()
 
 	SoundManager::GetSingleton()->Play("DarkWaltz", 0.6f);
 
+	gameStartButton = new Button();
+	gameStartButton->Init("Button1", width / 2, height - 500, { 0, 1 }, { 0, 0 });
+	gameStartButton->SetButtonFunc(ButtonFunction::ChangeScene, Argument_Kind::ChangeSceneArgument, new ChangeSceneArgument("PlayScene", ""));
+
 	button1 = new Button();
 	button1->Init("Button1", width / 2, height - 400, { 0, 1 }, { 0, 0 });
 	button1->SetButtonFunc(ButtonFunction::ChangeScene, Argument_Kind::ChangeSceneArgument, new ChangeSceneArgument("TileMapToolScene", "LoadingScene1"));
@@ -37,6 +41,7 @@ void TitleScene::Release()
 {
 	SoundManager::GetSingleton()->Stop("DarkWaltz");
 
+	SAFE_RELEASE(gameStartButton);
 	SAFE_RELEASE(lightingButton);
 	SAFE_RELEASE(button1);
 	SAFE_RELEASE(TenCubeButton);
@@ -48,6 +53,8 @@ void TitleScene::Update()
 	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_ESCAPE))
 		SendMessage(g_hWnd, WM_DESTROY, 0, 0);
 
+	if (gameStartButton)
+		gameStartButton->Update();
 	if (button1)
 		button1->Update();
 	if (TenCubeButton)
@@ -62,6 +69,8 @@ void TitleScene::Render(HDC hdc)
 {
 	if (img)
 		img->Render(hdc, 0, 0, WINSIZE_TITLE_X, WINSIZE_TITLE_Y);
+	if (gameStartButton)
+		gameStartButton->Render(hdc);
 	if (button1)
 		button1->Render(hdc);
 	if (TenCubeButton)

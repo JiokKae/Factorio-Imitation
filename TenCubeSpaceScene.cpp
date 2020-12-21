@@ -1,6 +1,6 @@
 #include "TenCubeSpaceScene.h"
 #include "Shader.h"
-#include "Camera.h"
+#include "FreeCamera.h"
 #include "Texture.h"
 
 HRESULT TenCubeSpaceScene::Init()
@@ -80,16 +80,16 @@ HRESULT TenCubeSpaceScene::Init()
 
 	// 텍스처 로드 및 생성
 	texture1 = new Texture();
-	texture1->Init("graphics/entity/assembling-machine-1/assembling-machine-1.png");
+	texture1->Init("base/graphics/entity/assembling-machine-1/assembling-machine-1.png");
 	texture2 = new Texture();
-	texture2->Init("graphics/entity/artillery-turret/hr-artillery-turret-base.png");
+	texture2->Init("base/graphics/entity/artillery-turret/hr-artillery-turret-base.png");
 
 	ourShader->use(); // uniform을 설정하기 전에 shader를 활성화해야 한다는 것을 잊지마세요!  
 	ourShader->setInt("texture1", texture1->GetID() - 1);
 	ourShader->setInt("texture2", texture2->GetID() - 1);
 	ourShader->setFloat("radio", radio);
 
-	camera = new Camera();
+	camera = new FreeCamera();
 	camera->Init();
 
 	return S_OK;

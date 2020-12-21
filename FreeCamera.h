@@ -1,7 +1,7 @@
 #pragma once
 #include "framework.h"
 
-class Camera
+class FreeCamera
 {
 private:
     // camera Attributes
@@ -22,9 +22,9 @@ private:
     bool firstMouse = true;
 
 public:
-    HRESULT Init();
-    void Release();
-    void Update();
+	HRESULT Init();
+	void Release();
+	void Update();
 
     float GetFov() { return fov; }
     glm::vec3 GerFront() { return front; }

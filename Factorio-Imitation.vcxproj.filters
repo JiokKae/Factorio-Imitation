@@ -37,17 +37,26 @@
     <Filter Include="2DFrameWork\Button">
       <UniqueIdentifier>{ace42f44-cca2-4ce8-953c-8f1f3050c554}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2DFrameWork\Shader">
-      <UniqueIdentifier>{a7678590-22cc-4b01-88a6-2a932c625ca4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2DFrameWork\Camera">
-      <UniqueIdentifier>{e07ffde3-429b-46d6-9104-c74635b73841}</UniqueIdentifier>
-    </Filter>
     <Filter Include="2DFrameWork\Scene">
       <UniqueIdentifier>{d35c4b11-88bd-4258-86dd-22b1bd68cda4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2DFrameWork\Texture">
+    <Filter Include="2DGLFrameWork">
+      <UniqueIdentifier>{fca1d0f0-872e-4ef7-a2c9-b029ef2ef6bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DGLFrameWork">
+      <UniqueIdentifier>{94e33f7c-4cee-43ef-89e4-952e29080a76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DGLFrameWork\Camera">
+      <UniqueIdentifier>{e07ffde3-429b-46d6-9104-c74635b73841}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DGLFrameWork\Shader">
+      <UniqueIdentifier>{a7678590-22cc-4b01-88a6-2a932c625ca4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DGLFrameWork\Texture">
       <UniqueIdentifier>{ca62b113-7fec-46c3-97aa-85f124a34488}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGLFrameWork\Camera">
+      <UniqueIdentifier>{f62a6598-a5fc-4ac4-be5d-337509381762}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -94,10 +103,7 @@
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
-      <Filter>2DFrameWork\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>2DFrameWork\Camera</Filter>
+      <Filter>3DGLFrameWork\Shader</Filter>
     </ClInclude>
     <ClInclude Include="TenCubeSpaceScene.h">
       <Filter>MainGame\Scene</Filter>
@@ -109,10 +115,10 @@
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>2DFrameWork\Texture</Filter>
+      <Filter>3DGLFrameWork\Texture</Filter>
     </ClInclude>
     <ClInclude Include="TextureManager.h">
-      <Filter>2DFrameWork\Texture</Filter>
+      <Filter>3DGLFrameWork\Texture</Filter>
     </ClInclude>
     <ClInclude Include="ImageManager.h">
       <Filter>2DFrameWork\Image</Filter>
@@ -123,11 +129,17 @@
     <ClInclude Include="TimerManager.h">
       <Filter>2DFrameWork\Timer</Filter>
     </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="FreeCamera.h">
+      <Filter>3DGLFrameWork\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>2DGLFrameWork\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Factorio-Imitation.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="GameNode.cpp">
       <Filter>2DFrameWork</Filter>
     </ClCompile>
@@ -165,10 +177,7 @@
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
-      <Filter>2DFrameWork\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>2DFrameWork\Camera</Filter>
+      <Filter>3DGLFrameWork\Shader</Filter>
     </ClCompile>
     <ClCompile Include="TenCubeSpaceScene.cpp">
       <Filter>MainGame\Scene</Filter>
@@ -180,10 +189,10 @@
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
-      <Filter>2DFrameWork\Texture</Filter>
+      <Filter>3DGLFrameWork\Texture</Filter>
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
-      <Filter>2DFrameWork\Texture</Filter>
+      <Filter>3DGLFrameWork\Texture</Filter>
     </ClCompile>
     <ClCompile Include="ImageManager.cpp">
       <Filter>2DFrameWork\Image</Filter>
@@ -194,25 +203,37 @@
     <ClCompile Include="TimerManager.cpp">
       <Filter>2DFrameWork\Timer</Filter>
     </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Factorio-Imitation.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="FreeCamera.cpp">
+      <Filter>3DGLFrameWork\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>2DGLFrameWork\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="SimpleFragmentShader.glsl">
-      <Filter>2DFrameWork\Shader</Filter>
+      <Filter>3DGLFrameWork\Shader</Filter>
     </None>
     <None Include="SimpleVertexShader.glsl">
-      <Filter>2DFrameWork\Shader</Filter>
+      <Filter>3DGLFrameWork\Shader</Filter>
     </None>
     <None Include="1.colors.vert">
-      <Filter>2DFrameWork\Shader</Filter>
+      <Filter>3DGLFrameWork\Shader</Filter>
     </None>
     <None Include="1.colors.frag">
-      <Filter>2DFrameWork\Shader</Filter>
+      <Filter>3DGLFrameWork\Shader</Filter>
     </None>
     <None Include="1.light_cube.vert">
-      <Filter>2DFrameWork\Shader</Filter>
+      <Filter>3DGLFrameWork\Shader</Filter>
     </None>
     <None Include="1.light_cube.frag">
-      <Filter>2DFrameWork\Shader</Filter>
+      <Filter>3DGLFrameWork\Shader</Filter>
     </None>
   </ItemGroup>
 </Project>
