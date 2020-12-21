@@ -40,23 +40,26 @@
     <Filter Include="2DFrameWork\Scene">
       <UniqueIdentifier>{d35c4b11-88bd-4258-86dd-22b1bd68cda4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2DGLFrameWork">
-      <UniqueIdentifier>{fca1d0f0-872e-4ef7-a2c9-b029ef2ef6bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DGLFrameWork">
+    <Filter Include="GLFrameWork">
       <UniqueIdentifier>{94e33f7c-4cee-43ef-89e4-952e29080a76}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3DGLFrameWork\Camera">
+    <Filter Include="GLFrameWork\Camera3D">
       <UniqueIdentifier>{e07ffde3-429b-46d6-9104-c74635b73841}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3DGLFrameWork\Shader">
+    <Filter Include="GLFrameWork\Shader">
       <UniqueIdentifier>{a7678590-22cc-4b01-88a6-2a932c625ca4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3DGLFrameWork\Texture">
+    <Filter Include="GLFrameWork\Texture">
       <UniqueIdentifier>{ca62b113-7fec-46c3-97aa-85f124a34488}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2DGLFrameWork\Camera">
+    <Filter Include="GLFrameWork\Camera">
       <UniqueIdentifier>{f62a6598-a5fc-4ac4-be5d-337509381762}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Shader">
+      <UniqueIdentifier>{f328a868-77ea-4aa0-97ae-30a1463613d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GLFrameWork\Image">
+      <UniqueIdentifier>{554ab6e3-78db-4b50-92f5-b809b51d07f0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -103,7 +106,7 @@
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
-      <Filter>3DGLFrameWork\Shader</Filter>
+      <Filter>GLFrameWork\Shader</Filter>
     </ClInclude>
     <ClInclude Include="TenCubeSpaceScene.h">
       <Filter>MainGame\Scene</Filter>
@@ -115,10 +118,10 @@
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>3DGLFrameWork\Texture</Filter>
+      <Filter>GLFrameWork\Texture</Filter>
     </ClInclude>
     <ClInclude Include="TextureManager.h">
-      <Filter>3DGLFrameWork\Texture</Filter>
+      <Filter>GLFrameWork\Texture</Filter>
     </ClInclude>
     <ClInclude Include="ImageManager.h">
       <Filter>2DFrameWork\Image</Filter>
@@ -133,10 +136,13 @@
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
     <ClInclude Include="FreeCamera.h">
-      <Filter>3DGLFrameWork\Camera</Filter>
+      <Filter>GLFrameWork\Camera3D</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>2DGLFrameWork\Camera</Filter>
+      <Filter>GLFrameWork\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="GLImage.h">
+      <Filter>GLFrameWork\Image</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -177,7 +183,7 @@
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
-      <Filter>3DGLFrameWork\Shader</Filter>
+      <Filter>GLFrameWork\Shader</Filter>
     </ClCompile>
     <ClCompile Include="TenCubeSpaceScene.cpp">
       <Filter>MainGame\Scene</Filter>
@@ -189,10 +195,10 @@
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
-      <Filter>3DGLFrameWork\Texture</Filter>
+      <Filter>GLFrameWork\Texture</Filter>
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
-      <Filter>3DGLFrameWork\Texture</Filter>
+      <Filter>GLFrameWork\Texture</Filter>
     </ClCompile>
     <ClCompile Include="ImageManager.cpp">
       <Filter>2DFrameWork\Image</Filter>
@@ -210,30 +216,39 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="FreeCamera.cpp">
-      <Filter>3DGLFrameWork\Camera</Filter>
+      <Filter>GLFrameWork\Camera3D</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>2DGLFrameWork\Camera</Filter>
+      <Filter>GLFrameWork\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="GLImage.cpp">
+      <Filter>GLFrameWork\Image</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SimpleFragmentShader.glsl">
-      <Filter>3DGLFrameWork\Shader</Filter>
-    </None>
-    <None Include="SimpleVertexShader.glsl">
-      <Filter>3DGLFrameWork\Shader</Filter>
+    <None Include="1.colors.frag">
+      <Filter>MainGame\Shader</Filter>
     </None>
     <None Include="1.colors.vert">
-      <Filter>3DGLFrameWork\Shader</Filter>
-    </None>
-    <None Include="1.colors.frag">
-      <Filter>3DGLFrameWork\Shader</Filter>
-    </None>
-    <None Include="1.light_cube.vert">
-      <Filter>3DGLFrameWork\Shader</Filter>
+      <Filter>MainGame\Shader</Filter>
     </None>
     <None Include="1.light_cube.frag">
-      <Filter>3DGLFrameWork\Shader</Filter>
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="1.light_cube.vert">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="SimpleFragmentShader.glsl">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="SimpleVertexShader.glsl">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="StandardFragmentShader.glsl">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="StandardVertexShader.glsl">
+      <Filter>MainGame\Shader</Filter>
     </None>
   </ItemGroup>
 </Project>

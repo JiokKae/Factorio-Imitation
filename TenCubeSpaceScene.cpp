@@ -85,8 +85,8 @@ HRESULT TenCubeSpaceScene::Init()
 	texture2->Init("base/graphics/entity/artillery-turret/hr-artillery-turret-base.png");
 
 	ourShader->use(); // uniform을 설정하기 전에 shader를 활성화해야 한다는 것을 잊지마세요!  
-	ourShader->setInt("texture1", texture1->GetID() - 1);
-	ourShader->setInt("texture2", texture2->GetID() - 1);
+	ourShader->setInt("texture1", texture1->GetID());
+	ourShader->setInt("texture2", texture2->GetID());
 	ourShader->setFloat("radio", radio);
 
 	camera = new FreeCamera();
@@ -186,9 +186,9 @@ void TenCubeSpaceScene::Render(HDC hdc)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// bind textures on corresponding texture units
-	glActiveTexture(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0 + texture1->GetID());
 	glBindTexture(GL_TEXTURE_2D, texture1->GetID());
-	glActiveTexture(GL_TEXTURE1);
+	glActiveTexture(GL_TEXTURE0 + texture2->GetID());
 	glBindTexture(GL_TEXTURE_2D, texture2->GetID());
 
 	// shader를 활성화

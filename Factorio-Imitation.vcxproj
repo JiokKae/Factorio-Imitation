@@ -158,6 +158,7 @@
     <ClInclude Include="FreeCamera.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameNode.h" />
+    <ClInclude Include="GLImage.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Image.h" />
@@ -186,6 +187,7 @@
     <ClCompile Include="FreeCamera.cpp" />
     <ClCompile Include="Factorio-Imitation.cpp" />
     <ClCompile Include="GameNode.cpp" />
+    <ClCompile Include="GLImage.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -212,6 +214,8 @@
     <None Include="1.light_cube.vert" />
     <None Include="SimpleFragmentShader.glsl" />
     <None Include="SimpleVertexShader.glsl" />
+    <None Include="StandardFragmentShader.glsl" />
+    <None Include="StandardVertexShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

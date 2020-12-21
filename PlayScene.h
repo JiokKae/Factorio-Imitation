@@ -4,13 +4,13 @@
 class Camera;
 class Shader;
 class Texture;
+class GLImage;
 class PlayScene : public Scene
 {
 	Camera* camera;
 	Shader* lightingShader;
-	unsigned int VBO;
-	unsigned int VAO;
-	Texture* diffuseMap;
+
+	GLImage* dirt_1Image;
 
 public:
 	virtual HRESULT Init();

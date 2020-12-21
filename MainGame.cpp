@@ -34,6 +34,7 @@ HRESULT MainGame::Init()
 	TimerManager::GetSingleton()->Init();
 	SceneManager::GetSingleton()->Init();
 	SoundManager::GetSingleton()->Init();
+	TextureManager::GetSingleton()->Init();
 
 	// Add Sound
 	SoundManager::GetSingleton()->AddSound("DarkWaltz", "Sound/Dark Waltz.mp3", true, false);
@@ -60,6 +61,7 @@ HRESULT MainGame::Init()
 void MainGame::Release()
 {
 	// Singleton Release
+	TextureManager::GetSingleton()->Release();
 	SceneManager::GetSingleton()->Release();
 	TimerManager::GetSingleton()->Release();
 	SoundManager::GetSingleton()->Release();
@@ -92,6 +94,9 @@ void MainGame::ImageLoad()
 	ImageManager::GetSingleton()->AddImage("SelectTileEdge", "Image/selectTileEdge.bmp", 64, 64, 2, 2, true, RGB(255, 0, 255));
 	ImageManager::GetSingleton()->AddImage("SampleTile", "Image/maptiles.bmp", 640, 288, SAMPLE_TILE_X, SAMPLE_TILE_Y);
 	ImageManager::GetSingleton()->AddImage("SaveLoadButton", "Image/button2.bmp", 300, 140, 2, 2);
+
+	TextureManager::GetSingleton()->AddTexture("Dirt_1", "base/graphics/terrain/dirt-1.png");
+	TextureManager::GetSingleton()->AddTexture("White", "core/graphics/white-square.png");
 }
 
 LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)

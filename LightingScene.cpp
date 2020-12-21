@@ -101,11 +101,12 @@ HRESULT LightingScene::Init()
     diffuseMap->Init("base/graphics/entity/wooden-chest/hr-wooden-chest.png");
     specularMap = new Texture();
     specularMap->Init("base/graphics/entity/wooden-chest/hr-wooden-chest_specular.png");
+
     // shader configuration
     // --------------------
     lightingShader->use();
-    lightingShader->setInt("material.diffuse", diffuseMap->GetID() - 1);
-    lightingShader->setInt("material.specular", specularMap->GetID() - 1);
+    lightingShader->setInt("material.diffuse", diffuseMap->GetID());
+    lightingShader->setInt("material.specular", specularMap->GetID());
 
 	return S_OK;
 }
@@ -233,10 +234,10 @@ void LightingScene::Render(HDC hdc)
     lightingShader->setMat4("model", model);
 
     // bind diffuse map
-    glActiveTexture(GL_TEXTURE0);
+    glActiveTexture(GL_TEXTURE0 + diffuseMap->GetID());
     glBindTexture(GL_TEXTURE_2D, diffuseMap->GetID());
     // bind specular map
-    glActiveTexture(GL_TEXTURE1);
+    glActiveTexture(GL_TEXTURE0 + specularMap->GetID());
     glBindTexture(GL_TEXTURE_2D, specularMap->GetID());
 
     // render the cube

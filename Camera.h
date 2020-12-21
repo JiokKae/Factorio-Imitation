@@ -10,12 +10,9 @@ private:
     glm::vec3 up;
     glm::vec3 right;
     glm::vec3 worldUp;
-    // euler Angles
-    float yaw;
-    float pitch;
+
     // camera options
     float movementSpeed;
-    float mouseSensitivity;
     float fov;
     float zoomSpeed;
     float lastMouseZDelta;
@@ -30,4 +27,6 @@ public:
     glm::vec3 GerFront() { return front; }
     glm::vec3 GetPosition() { return position; }
     glm::mat4 GetViewMatrix();
+
+    void SetPosition(glm::vec3 position) { this->position = position; }
 };

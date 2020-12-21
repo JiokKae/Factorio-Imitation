@@ -32,6 +32,7 @@ using namespace std;
 #include "ImageManager.h"
 #include "SceneManager.h"
 #include "SoundManager.h"
+#include "TextureManager.h"
 
 #define WINSIZE_X	900
 #define WINSIZE_Y	900
