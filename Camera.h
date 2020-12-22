@@ -18,6 +18,9 @@ private:
     float lastMouseZDelta;
     bool firstMouse = true;
 
+    // target
+    glm::vec2* target;
+
 public:
     HRESULT Init();
     void Release();
@@ -28,5 +31,9 @@ public:
     glm::vec3 GetPosition() { return position; }
     glm::mat4 GetViewMatrix();
 
+    void SetTarget(glm::vec2* targetPos) { this->target = targetPos; }
     void SetPosition(glm::vec3 position) { this->position = position; }
+    Camera()
+        : target(nullptr)
+    {};
 };

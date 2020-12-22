@@ -51,7 +51,7 @@ HRESULT MainGame::Init()
 	ImageLoad();
 
 	// Change StartScene
-	SceneManager::GetSingleton()->ChangeScene("LightingScene");
+	SceneManager::GetSingleton()->ChangeScene("PlayScene");
 
 	TimerManager::GetSingleton()->SetTargetFPS(120);
 
@@ -95,8 +95,13 @@ void MainGame::ImageLoad()
 	ImageManager::GetSingleton()->AddImage("SampleTile", "Image/maptiles.bmp", 640, 288, SAMPLE_TILE_X, SAMPLE_TILE_Y);
 	ImageManager::GetSingleton()->AddImage("SaveLoadButton", "Image/button2.bmp", 300, 140, 2, 2);
 
-	TextureManager::GetSingleton()->AddTexture("Dirt_1", "base/graphics/terrain/dirt-1.png");
-	TextureManager::GetSingleton()->AddTexture("White", "core/graphics/white-square.png");
+	TextureManager::GetSingleton()->AddTexture("Character/hr-level1_idle",				"base/graphics/entity/character/hr-level1_idle.png");
+	TextureManager::GetSingleton()->AddTexture("Character/hr-level1_idle_shadow",		"base/graphics/entity/character/hr-level1_idle_shadow.png");
+	TextureManager::GetSingleton()->AddTexture("Character/hr-level1_running",			"base/graphics/entity/character/hr-level1_running.png");
+	TextureManager::GetSingleton()->AddTexture("Character/hr-level1_running_shadow",	"base/graphics/entity/character/hr-level1_running_shadow.png");
+
+	TextureManager::GetSingleton()->AddTexture("Terrain/Dirt_1",					"base/graphics/terrain/dirt-1.png");
+	TextureManager::GetSingleton()->AddTexture("White",								"core/graphics/white-square.png");
 }
 
 LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)

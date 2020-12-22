@@ -76,7 +76,8 @@ void main()
     // phase 3: spot light
     result += CalcSpotLight(spotLight, norm, IN.FragPos, viewDir);    
     
-    FragColor = vec4(result, 1.0);
+    float alpha = texture(material.diffuse, IN.TexCoords).a;
+    FragColor = vec4(result, alpha);
 }  
 
 // calculates the color when using a directional light.

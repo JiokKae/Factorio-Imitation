@@ -1,22 +1,28 @@
 #include "PlayScene.h"
+#include "Character.h"
 #include "Texture.h"
 #include "GLImage.h"
 #include "Shader.h"
 #include "Camera.h"
-
 HRESULT PlayScene::Init()
 {
     SetWindowSize((1920 - width) / 2, (1080 - height) / 2, width, height);
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_ALWAYS);
     glEnable(GL_BLEND);
     glBlendEquation(GL_FUNC_ADD); // this is default
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    // player
+    player = new Character();
+    player->Init();
+
     // camera
     camera = new Camera();
     camera->Init();
-    camera->SetPosition({ 0.0f, 0.0f, 5.0f });
+    camera->SetPosition({ 0.0f, 0.0f, 25.0f });
+    camera->SetTarget(player->GetLpPosition());
 
 	// build and compile our shader zprogram
 	// ------------------------------------
@@ -25,7 +31,7 @@ HRESULT PlayScene::Init()
 
 	// 텍스처 로드 및 이미지 생성
     dirt_1Image = new GLImage();
-    dirt_1Image->Init(TextureManager::GetSingleton()->FindTexture("Dirt_1"), 2048, 288, 64, 9);
+    dirt_1Image->Init(TextureManager::GetSingleton()->FindTexture("Terrain/Dirt_1"), 2048, 288, 64, 9);
     
 	// shader configuration
 	// --------------------
@@ -40,15 +46,10 @@ HRESULT PlayScene::Init()
     // change the light's position values over time (can be done anywhere in the render loop actually, but try to do it at least before using the light source positions)
     lightingShader->setFloat("material.shininess", 64.0f);
     Texture* white = TextureManager::GetSingleton()->FindTexture("White");
-    lightingShader->setInt("material.specular", white->GetID());
-    glActiveTexture(GL_TEXTURE0 + white->GetID());
+    lightingShader->setInt("material.specular", 16);
+    glActiveTexture(GL_TEXTURE0 + 16);
     glBindTexture(GL_TEXTURE_2D, white->GetID());
 
-    // directional light
-    lightingShader->setVec3("dirLight.direction", { 0.5f, 0.5f, -0.3f });
-    lightingShader->setVec3("dirLight.ambient", { 0.2f, 0.2f, 0.2f });
-    lightingShader->setVec3("dirLight.diffuse", { 0.5f, 0.5f, 0.5f });
-    lightingShader->setVec3("dirLight.specular", { 0.5f, 0.5f, 0.5f });
     // point light 1
     lightingShader->setVec3("pointLights[0].position", pointLightPositions[0]);
     lightingShader->setVec3("pointLights[0].ambient", { 0.05f, 0.05f, 0.05f });
@@ -84,19 +85,21 @@ HRESULT PlayScene::Init()
 
     // spotLight
     lightingShader->setVec3("spotLight.ambient", { 0.0f, 0.0f, 0.0f });
-    lightingShader->setVec3("spotLight.diffuse", { 1.0f, 1.0f, 1.0f });
-    lightingShader->setVec3("spotLight.specular", { 1.0f, 1.0f, 1.0f });
-    lightingShader->setFloat("spotLight.constant", 1.0f);
-    lightingShader->setFloat("spotLight.linear", 0.09);
-    lightingShader->setFloat("spotLight.quadratic", 0.032);
-    lightingShader->setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5)));
-    lightingShader->setFloat("spotLight.outerCutOff", glm::cos(glm::radians(30.0f)));
+    lightingShader->setVec3("spotLight.diffuse", { 0.0f, 0.0f, 0.0f });
+    lightingShader->setVec3("spotLight.specular", { 1.0f, 0.8f, 0.8f });
+    lightingShader->setFloat("spotLight.constant", 1.0f * 0.1);
+    lightingShader->setFloat("spotLight.linear", 0.09 * .1);
+    lightingShader->setFloat("spotLight.quadratic", 0.032 * .1);
+    lightingShader->setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+    lightingShader->setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+
 
 	return S_OK;
 }
 
 void PlayScene::Release()
 {
+    SAFE_RELEASE(player);
     SAFE_RELEASE(dirt_1Image);
 	SAFE_DELETE(lightingShader);
 	SAFE_RELEASE(camera);
@@ -109,7 +112,7 @@ void PlayScene::Update()
 		SceneManager::GetSingleton()->ChangeScene("TitleScene");
 		return;
 	}
-
+    player->Update();
 	camera->Update();
 }
 
@@ -124,19 +127,29 @@ void PlayScene::Render(HDC hdc)
     lightingShader->setVec3("spotLight.direction", camera->GerFront());
     lightingShader->setVec3("viewPos", camera->GetPosition());
 
+    // directional light
+    lightingShader->setVec3("dirLight.direction", { 0.5f, 0.5f, 0.3f });
+    lightingShader->setVec3("dirLight.ambient", { 0.2f, 0.2f, 0.2f });
+    lightingShader->setVec3("dirLight.diffuse", {0,0,0});// glm::vec3((sin(timeGetTime() / 3000.0f) + 1) / 2));
+    lightingShader->setVec3("dirLight.specular", { 0.0f, 0.0f, 0.0f });
+
     // view/projection transformations
     glm::mat4 projection = glm::perspective(glm::radians(camera->GetFov()), (float)width / (float)height, 0.1f, 100.0f);
     glm::mat4 view = camera->GetViewMatrix();
     lightingShader->setMat4("projection", projection);
     lightingShader->setMat4("view", view);
 
-    for (int y = 0; y < 10; y++)
+   
+
+    for (int y = 0; y < 30; y++)
     {
-        for (int x = 0; x < 10; x++)
+        for (int x = 0; x < 30; x++)
         {
             dirt_1Image->FrameRender(lightingShader, 32 * x, 32 * y, 0, 0);
         }
     }
+
+    player->Render(lightingShader);
 
 	glFlush();
 }

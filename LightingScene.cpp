@@ -6,6 +6,7 @@
 HRESULT LightingScene::Init()
 {
     SetWindowSize((1920 - WINSIZE_X) / 2, (1080 - WINSIZE_Y) / 2, WINSIZE_X, WINSIZE_Y);
+    glDepthFunc(GL_LESS);
 
 	// camera
 	camera = new FreeCamera();
@@ -155,10 +156,10 @@ void LightingScene::Render(HDC hdc)
         glm::vec3(-1.3f,  1.0f, -1.5f)
     };
     glm::vec3 pointLightPositions[] = {
-        glm::vec3(0.7f,  0.2f,  2.0f),
+        glm::vec3(1.7f,  1.2f,  2.0f),
         glm::vec3(2.3f, -3.3f, -4.0f),
         glm::vec3(-4.0f,  2.0f, -12.0f),
-        glm::vec3(0.0f,  0.0f, -3.0f)
+        glm::vec3(1.0f,  2.0f, -3.0f)
     };
 
     // be sure to activate shader when setting uniforms/drawing objects
@@ -178,12 +179,12 @@ void LightingScene::Render(HDC hdc)
     lightingShader->setVec3("dirLight.direction", { -0.2f, -1.0f, -0.3f });
     lightingShader->setVec3("dirLight.ambient", { 0.05f, 0.05f, 0.05f });
     lightingShader->setVec3("dirLight.diffuse", { 0.01f, 0.01f, 0.01f });
-    lightingShader->setVec3("dirLight.specular", { 0.5f, 0.5f, 0.5f });
+    lightingShader->setVec3("dirLight.specular", { 0.0f, 0.0f, 0.0f });
     // point light 1
     lightingShader->setVec3("pointLights[0].position", pointLightPositions[0]);
     lightingShader->setVec3("pointLights[0].ambient", { 0.05f, 0.05f, 0.05f });
     lightingShader->setVec3("pointLights[0].diffuse", { 0.8f, 0.8f, 0.8f });
-    lightingShader->setVec3("pointLights[0].specular", { 1.0f, 1.0f, 1.0f });
+    lightingShader->setVec3("pointLights[0].specular", { 0, 0, 0 });
     lightingShader->setFloat("pointLights[0].constant", 1.0f);
     lightingShader->setFloat("pointLights[0].linear", 0.09);
     lightingShader->setFloat("pointLights[0].quadratic", 0.032);
@@ -222,6 +223,10 @@ void LightingScene::Render(HDC hdc)
     lightingShader->setFloat("spotLight.quadratic", 0.032);
     lightingShader->setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
     lightingShader->setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+    /*
+    lightingShader->setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+    lightingShader->setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+    */
 
     // view/projection transformations
     glm::mat4 projection = glm::perspective(glm::radians(camera->GetFov()), (float)width / (float)height, 0.1f, 100.0f);

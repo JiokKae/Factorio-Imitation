@@ -61,6 +61,27 @@
     <Filter Include="GLFrameWork\Image">
       <UniqueIdentifier>{554ab6e3-78db-4b50-92f5-b809b51d07f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Character">
+      <UniqueIdentifier>{65ea402a-7da0-47ca-9f02-cc6c540403f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene\LightingScene">
+      <UniqueIdentifier>{3588c314-9f5e-47c2-a652-50e5161a12bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene\TitleScene">
+      <UniqueIdentifier>{b8d7c194-5a70-496d-a3b2-f40803de2c84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene\TenCubeSpaceScene">
+      <UniqueIdentifier>{b1ec984b-f8c3-4f95-89bf-afde80f704c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene\LoadingScene1">
+      <UniqueIdentifier>{e97c33fa-b240-4787-a74b-1ea93b1eb440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene\TileMapToolScene">
+      <UniqueIdentifier>{a3f88dd2-0ea1-4233-aa3f-3e223fb21030}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene\PlayScene">
+      <UniqueIdentifier>{533fe382-1ad8-4ff8-b730-28348027c827}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -84,9 +105,6 @@
     <ClInclude Include="Animation.h">
       <Filter>2DFrameWork\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="TitleScene.h">
-      <Filter>MainGame\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>2DFrameWork\Button</Filter>
     </ClInclude>
@@ -96,26 +114,14 @@
     <ClInclude Include="KeyManager.h">
       <Filter>2DFrameWork\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="TileMapToolScene.h">
-      <Filter>MainGame\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>2DFrameWork\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadingScene1.h">
-      <Filter>MainGame\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>GLFrameWork\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="TenCubeSpaceScene.h">
-      <Filter>MainGame\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>2DFrameWork\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="LightingScene.h">
-      <Filter>MainGame\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>GLFrameWork\Texture</Filter>
@@ -132,9 +138,6 @@
     <ClInclude Include="TimerManager.h">
       <Filter>2DFrameWork\Timer</Filter>
     </ClInclude>
-    <ClInclude Include="PlayScene.h">
-      <Filter>MainGame\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="FreeCamera.h">
       <Filter>GLFrameWork\Camera3D</Filter>
     </ClInclude>
@@ -143,6 +146,27 @@
     </ClInclude>
     <ClInclude Include="GLImage.h">
       <Filter>GLFrameWork\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>MainGame\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="LightingScene.h">
+      <Filter>MainGame\Scene\LightingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>MainGame\Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="TenCubeSpaceScene.h">
+      <Filter>MainGame\Scene\TenCubeSpaceScene</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingScene1.h">
+      <Filter>MainGame\Scene\LoadingScene1</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>MainGame\Scene\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMapToolScene.h">
+      <Filter>MainGame\Scene\TileMapToolScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -161,9 +185,6 @@
     <ClCompile Include="Animation.cpp">
       <Filter>2DFrameWork\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
-      <Filter>MainGame\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>2DFrameWork\Button</Filter>
     </ClCompile>
@@ -173,26 +194,14 @@
     <ClCompile Include="KeyManager.cpp">
       <Filter>2DFrameWork\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="TileMapToolScene.cpp">
-      <Filter>MainGame\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>2DFrameWork\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadingScene1.cpp">
-      <Filter>MainGame\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>GLFrameWork\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="TenCubeSpaceScene.cpp">
-      <Filter>MainGame\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>2DFrameWork\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="LightingScene.cpp">
-      <Filter>MainGame\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>GLFrameWork\Texture</Filter>
@@ -209,9 +218,6 @@
     <ClCompile Include="TimerManager.cpp">
       <Filter>2DFrameWork\Timer</Filter>
     </ClCompile>
-    <ClCompile Include="PlayScene.cpp">
-      <Filter>MainGame\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Factorio-Imitation.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -223,6 +229,27 @@
     </ClCompile>
     <ClCompile Include="GLImage.cpp">
       <Filter>GLFrameWork\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>MainGame\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="LightingScene.cpp">
+      <Filter>MainGame\Scene\LightingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>MainGame\Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="TenCubeSpaceScene.cpp">
+      <Filter>MainGame\Scene\TenCubeSpaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingScene1.cpp">
+      <Filter>MainGame\Scene\LoadingScene1</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>MainGame\Scene\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMapToolScene.cpp">
+      <Filter>MainGame\Scene\TileMapToolScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

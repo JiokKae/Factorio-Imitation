@@ -26,19 +26,13 @@ void Camera::Update()
 	fov += offset / 120.0f * zoomSpeed;
 	fov = Clamp(fov, 5.0f, 89.0f);
 
+	if (target)
+	{
+		position.x = (*target).x / 100.0f;
+		position.y = (*target).y / 100.0f;
+	}
+	
 	float cameraSpeed = movementSpeed * TimerManager::GetSingleton()->GetTimeElapsed(); // adjust accordingly
-
-	if (KeyManager::GetSingleton()->IsStayKeyDown('W'))
-		position += up * cameraSpeed;
-
-	if (KeyManager::GetSingleton()->IsStayKeyDown('S'))
-		position -= up * cameraSpeed;
-
-	if (KeyManager::GetSingleton()->IsStayKeyDown('A'))
-		position -= glm::normalize(glm::cross(front, up)) * cameraSpeed;
-
-	if (KeyManager::GetSingleton()->IsStayKeyDown('D'))
-		position += glm::normalize(glm::cross(front, up)) * cameraSpeed;
 
 	glm::lookAt(position, position + front, up);
 }

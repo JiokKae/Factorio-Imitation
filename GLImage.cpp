@@ -39,34 +39,37 @@ HRESULT GLImage::Init(Texture* sourceTexture, int width, int height, int maxFram
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(2);
 
+    isInit = true;
 	return S_OK;
 }
 
 void GLImage::Release()
 {
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
+    if (isInit)
+    {
+        glDeleteVertexArrays(1, &VAO);
+        glDeleteBuffers(1, &VBO);
+    }
 }
 
-void GLImage::Render(Shader* shader, int destX, int destY, int sizeX, int sizeY)
+void GLImage::Render(Shader* shader, float destX, float destY, int sizeX, int sizeY)
 {
 }
 
-void GLImage::FrameRender(Shader* shader, int destX, int destY, int currFrameX, int currFrameY)
+void GLImage::FrameRender(Shader* shader, float destX, float destY, int currFrameX, int currFrameY)
 {
     shader->use();
     shader->setVec2("currFrame", { currFrameX, currFrameY });
     shader->setVec2("maxFrame", maxFrame);
-    glm::vec3 position = glm::vec3(destX / 100.0f, destY / 100.0f, 0.0f);
+    glm::vec3 position = glm::vec3(destX / 100, destY / 100, 0.0f);
     // world transformation
     glm::mat4 model = glm::mat4(1.0f);
     shader->setMat4("model", model);
 
     // bind diffuse map
-    shader->setInt("material.diffuse", sourceTexture->GetID());
-    glActiveTexture(GL_TEXTURE0 + sourceTexture->GetID());
+    shader->setInt("material.diffuse", 0);
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, sourceTexture->GetID());
-
 
     // render the cube
     glBindVertexArray(VAO);
@@ -75,11 +78,17 @@ void GLImage::FrameRender(Shader* shader, int destX, int destY, int currFrameX, 
     planeModel = glm::translate(planeModel, position);
     shader->setMat4("model", planeModel);
 
+    if (isSpecular != true)
+        shader->setInt("material.specular", 15);
+
     glDrawArrays(GL_TRIANGLES, 0, 36);
     
+    if (isSpecular != true)
+        shader->setInt("material.specular", 16);
+
     glBindVertexArray(0);
 }
 
-void GLImage::AnimationRender(Shader* shader, int destX, int destY, Animation* ani)
+void GLImage::AnimationRender(Shader* shader, float destX, float destY, Animation* ani)
 {
 }
