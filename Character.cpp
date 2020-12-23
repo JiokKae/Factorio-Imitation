@@ -5,20 +5,21 @@ HRESULT Character::Init()
 {
 	position = { 0.0f, 0.0f };
 	image = new GLImage[State::END];
-	image[IDLE].Init(TextureManager::GetSingleton()->FindTexture("Character/hr-level1_idle"), 2024, 928, 22, 8);
-	image[RUNNING].Init(TextureManager::GetSingleton()->FindTexture("Character/hr-level1_running"), 1936, 1056, 22, 8);
+	image[IDLE].Init("Character/hr-level1_idle", 2024, 928, 22, 8);
+	image[RUNNING].Init("Character/hr-level1_running", 1936, 1056, 22, 8);
 	//image[IDLE].SetSpecular(false);
 	//image[RUNNING].SetSpecular(false);
 
 	shadow = new GLImage[State::END];
-	shadow[IDLE].Init(TextureManager::GetSingleton()->FindTexture("Character/hr-level1_idle_shadow"), 3608, 624, 22, 8);
-	shadow[RUNNING].Init(TextureManager::GetSingleton()->FindTexture("Character/hr-level1_running_shadow"), 4180, 544, 22, 8);
-
+	shadow[IDLE].Init("Character/hr-level1_idle_shadow", 3608, 624, 22, 8);
+	shadow[RUNNING].Init("Character/hr-level1_running_shadow", 4180, 544, 22, 8);
+	shadow[IDLE].SetAlpha(0.6f);
+	shadow[RUNNING].SetAlpha(0.6f);
 
 	animationSpeed[IDLE] = 0.01f;
-	animationSpeed[RUNNING] = 0.03f;
+	animationSpeed[RUNNING] = 0.04f;
 	
-	speed = 150.0f;
+	speed = 250.0f;
 	return S_OK;
 }
 
@@ -153,4 +154,34 @@ void Character::Running()
 			state = State::IDLE;
 	}
 	direction = newDirection;
+}
+
+glm::vec3 Character::GetVec3Direction()
+{
+	switch (direction)
+	{
+	case Character::leftup:
+		break;
+	case Character::left:
+		return glm::vec3(-1.0f, 0.0f, 0.0f);
+		break;
+	case Character::leftdown:
+		break;
+	case Character::down:
+		return glm::vec3(0.0f, -1.0f, 0.0f);
+		break;
+	case Character::rightdown:
+		break;
+	case Character::right:
+		return glm::vec3(+1.0f, 0.0f, 0.0f);
+		break;
+	case Character::rightup:
+		break;
+	case Character::up:
+		return glm::vec3(0.0f, +1.0f, 0.0f);
+		break;
+	default:
+		break;
+	}
+	return glm::vec3(0.0f, +1.0f, 0.0f);
 }

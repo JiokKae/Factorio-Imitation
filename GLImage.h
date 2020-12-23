@@ -14,23 +14,30 @@ class GLImage
 	unsigned int VAO;
 	unsigned int VBO;
 	
-	bool isSpecular = true;
+	bool isSpecular;
+	float alpha;
+	float zoom;
 	bool isInit;
 
 public:
 	//빈 비트맵 이미지를 만든다.
-	HRESULT Init(Texture* sourceTexture, int width, int height, int maxFrameX = 1, int maxFrameY = 1);
+	HRESULT Init(char const* sourceTexture, int width, int height, int maxFrameX = 1, int maxFrameY = 1);
 	// 메모리 해제
 	void Release();
 
-	void Render(Shader* shader, float destX, float destY, int sizeX, int sizeY);
+	void Render(Shader* shader, float destX, float destY);
 	void FrameRender(Shader* shader, float destX, float destY, int currFrameX, int currFrameY);
 	void AnimationRender(Shader* shader, float destX, float destY, Animation* ani);
 
-	void SetSpecular(bool isSpecular) { this->isSpecular = isSpecular; }
+	void SetZoom(float zoom)			{ this->zoom = zoom; }
+	void SetAlpha(float alpha)			{ this->alpha = alpha; }
+	void SetSpecular(bool isSpecular)	{ this->isSpecular = isSpecular; }
 
 	GLImage()
 		: sourceTexture(nullptr)
+		, isSpecular(true)
+		, alpha(1.0f)
+		, isInit(false)
 	{};
 };
 

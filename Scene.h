@@ -8,7 +8,12 @@ protected:
 
 public:
 	bool IsUseBackBuffer() { return useBackBuffer; }
-	void SetUseBackBuffer(bool b) { this->useBackBuffer = b; }
+
+	void SetUseBackBuffer(bool b)				{ this->useBackBuffer = b; }
+	void SetWidthHeight(int width, int height)	{ this->width = width, this->height = height; }
+	
+	int GetWidth()	{ return width; }
+	int GetHeight() { return height; }
 
 	Scene(int width, int height)
 		: width(width)

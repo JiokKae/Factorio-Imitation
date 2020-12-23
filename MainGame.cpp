@@ -53,7 +53,7 @@ HRESULT MainGame::Init()
 	// Change StartScene
 	SceneManager::GetSingleton()->ChangeScene("PlayScene");
 
-	TimerManager::GetSingleton()->SetTargetFPS(120);
+	TimerManager::GetSingleton()->SetTargetFPS(0);
 
 	return S_OK;
 }
@@ -99,6 +99,8 @@ void MainGame::ImageLoad()
 	TextureManager::GetSingleton()->AddTexture("Character/hr-level1_idle_shadow",		"base/graphics/entity/character/hr-level1_idle_shadow.png");
 	TextureManager::GetSingleton()->AddTexture("Character/hr-level1_running",			"base/graphics/entity/character/hr-level1_running.png");
 	TextureManager::GetSingleton()->AddTexture("Character/hr-level1_running_shadow",	"base/graphics/entity/character/hr-level1_running_shadow.png");
+	
+	TextureManager::GetSingleton()->AddTexture("UI/CharacterUI",						"Image/UI/CharacterUI.png");
 
 	TextureManager::GetSingleton()->AddTexture("Terrain/Dirt_1",					"base/graphics/terrain/dirt-1.png");
 	TextureManager::GetSingleton()->AddTexture("White",								"core/graphics/white-square.png");
@@ -118,11 +120,15 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
-		glOrtho(-2, 2, -1, 1, 1, -1);
+		glOrtho(-1, 1, -1, 1, 1, -1);
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-
+		{
+			Scene* scene = (Scene*)SceneManager::GetSingleton()->currScene;
+			if(scene)
+				scene->SetWidthHeight(LOWORD(lParam), HIWORD(lParam));
+		}
 		break;
 
 	case WM_MOUSEWHEEL:

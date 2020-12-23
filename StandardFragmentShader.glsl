@@ -43,6 +43,7 @@ struct SpotLight {
 };
 
 #define NR_POINT_LIGHTS 4 
+#define NR_SPOT_LIGHTS 2
 
 in StandardVertexShaderOut
 {
@@ -54,8 +55,9 @@ in StandardVertexShaderOut
 uniform vec3 viewPos;
 uniform DirLight dirLight;
 uniform PointLight pointLights[NR_POINT_LIGHTS];
-uniform SpotLight spotLight;
+uniform SpotLight spotLights[NR_SPOT_LIGHTS];
 uniform Material material;
+uniform float alpha;
 
 // function prototypes
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);  
@@ -74,10 +76,10 @@ void main()
     for(int i = 0; i < NR_POINT_LIGHTS; i++)
         result += CalcPointLight(pointLights[i], norm, IN.FragPos, viewDir);    
     // phase 3: spot light
-    result += CalcSpotLight(spotLight, norm, IN.FragPos, viewDir);    
-    
-    float alpha = texture(material.diffuse, IN.TexCoords).a;
-    FragColor = vec4(result, alpha);
+//    for(int i = 0; i < NR_SPOT_LIGHTS; i++)
+//       result += CalcSpotLight(spotLights[i], norm, IN.FragPos, viewDir);    
+    float imageAlpha = texture(material.diffuse, IN.TexCoords).a;
+    FragColor = vec4(result, imageAlpha * alpha);
 }  
 
 // calculates the color when using a directional light.

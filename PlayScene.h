@@ -5,12 +5,18 @@ class Camera;
 class Shader;
 class GLImage;
 class Character;
+class CharacterUI;
+class Tile;
 class PlayScene : public Scene
 {
 	Camera* camera;
 	Shader* lightingShader;
+	Shader* UIShader;
+	Tile* tiles;
 	Character* player;
 	GLImage* dirt_1Image;
+
+	CharacterUI* characterUI;
 
 public:
 	virtual HRESULT Init();

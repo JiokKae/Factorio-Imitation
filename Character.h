@@ -41,7 +41,7 @@ public:
 	void Running();
 
 	glm::vec2* GetLpPosition() { return &position; }
-
+	glm::vec3 GetVec3Direction();
 	
 
 	Character() {};

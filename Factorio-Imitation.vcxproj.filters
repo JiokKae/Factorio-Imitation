@@ -82,6 +82,15 @@
     <Filter Include="MainGame\Scene\PlayScene">
       <UniqueIdentifier>{533fe382-1ad8-4ff8-b730-28348027c827}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GLFrameWork\UI">
+      <UniqueIdentifier>{9d2c7c8f-18c1-473e-ae8f-502674d68784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI">
+      <UniqueIdentifier>{c53c5724-0256-4215-b8e8-c4b64e6514c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Tile">
+      <UniqueIdentifier>{59f27837-67e1-44a7-b47a-035f26772753}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -168,6 +177,15 @@
     <ClInclude Include="TileMapToolScene.h">
       <Filter>MainGame\Scene\TileMapToolScene</Filter>
     </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>GLFrameWork\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterUI.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>MainGame\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -251,6 +269,15 @@
     <ClCompile Include="TileMapToolScene.cpp">
       <Filter>MainGame\Scene\TileMapToolScene</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>GLFrameWork\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterUI.cpp">
+      <Filter>MainGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>MainGame\Tile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="1.colors.frag">
@@ -275,6 +302,12 @@
       <Filter>MainGame\Shader</Filter>
     </None>
     <None Include="StandardVertexShader.glsl">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="UIVertexShader.glsl">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="UIFragmentShader.glsl">
       <Filter>MainGame\Shader</Filter>
     </None>
   </ItemGroup>

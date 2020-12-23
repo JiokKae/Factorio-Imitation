@@ -156,6 +156,7 @@
     <ClInclude Include="ButtonFunction.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="CharacterUI.h" />
     <ClInclude Include="FreeCamera.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameNode.h" />
@@ -175,10 +176,12 @@
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="TenCubeSpaceScene.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMapToolScene.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimerManager.h" />
     <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
@@ -186,6 +189,7 @@
     <ClCompile Include="ButtonFunction.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="CharacterUI.cpp" />
     <ClCompile Include="FreeCamera.cpp" />
     <ClCompile Include="Factorio-Imitation.cpp" />
     <ClCompile Include="GameNode.cpp" />
@@ -204,10 +208,12 @@
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="TenCubeSpaceScene.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileMapToolScene.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerManager.cpp" />
     <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="1.colors.frag" />
@@ -218,6 +224,8 @@
     <None Include="SimpleVertexShader.glsl" />
     <None Include="StandardFragmentShader.glsl" />
     <None Include="StandardVertexShader.glsl" />
+    <None Include="UIFragmentShader.glsl" />
+    <None Include="UIVertexShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

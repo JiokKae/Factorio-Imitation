@@ -21,6 +21,9 @@ HRESULT Texture::Init(char const* path, bool flip)
 		else if (nrComponents == 4)
 			format = GL_RGBA;
 
+		if(nrComponents != 2)
+			data = stbi_load(path, &width, &height, &nrComponents, nrComponents);
+
 		glBindTexture(GL_TEXTURE_2D, ID);
 		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
