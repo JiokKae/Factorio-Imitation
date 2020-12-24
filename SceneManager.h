@@ -3,20 +3,20 @@
 #include "Singleton.h"
 
 class Image;
-class GameNode;
+class Scene;
 class SceneManager : public Singleton<SceneManager>
 {
 private:
-	map<string, GameNode*> mapSceneData;
-	map<string, GameNode*> mapLoadingSceneData;
+	map<string, Scene*> mapSceneData;
+	map<string, Scene*> mapLoadingSceneData;
 
 	HDC backDC;
 	Image* backBuffer;
 	
 public:
-	static GameNode* currScene;		// 현재 출력 중인 씬
-	static GameNode* loadingScene;	// 다음 씬 준비 중에 출력될 씬
-	static GameNode* readyScene;	// 준비 중인 씬
+	static Scene* currScene;	// 현재 출력 중인 씬
+	static Scene* loadingScene;	// 다음 씬 준비 중에 출력될 씬
+	static Scene* readyScene;	// 준비 중인 씬
 
 public:
 	HRESULT Init();
@@ -25,8 +25,8 @@ public:
 	void Render(HDC hdc);
 
 	// 씬 추가
-	GameNode* AddScene(string key, GameNode* scene);
-	GameNode* AddLoadingScene(string key, GameNode* scene);
+	Scene* AddScene(string key, Scene* scene);
+	Scene* AddLoadingScene(string key, Scene* scene);
 
 	// 씬 변경
 	HRESULT ChangeScene(string sceneName);

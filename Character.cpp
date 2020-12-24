@@ -50,8 +50,8 @@ void Character::Update()
 
 void Character::Render(Shader* lpShader)
 {
-	shadow[state].FrameRender(lpShader, position.x+60, position.y-42, int(timeGetTime() * animationSpeed[state]) % 22, direction);
-	image[state].FrameRender(lpShader, position.x, position.y, int(timeGetTime() * animationSpeed[state]) % 22, direction);
+	shadow[state].Render(lpShader, position.x+60, position.y-42, int(timeGetTime() * animationSpeed[state]) % 22, direction);
+	image[state].Render(lpShader, position.x, position.y, int(timeGetTime() * animationSpeed[state]) % 22, direction);
 }
 
 void Character::Idle()

@@ -6,8 +6,6 @@ HRESULT Camera::Init()
 	front = glm::vec3(0.0f, 0.0f, -1.0f);
 	up = glm::vec3(0.0f, 1.0f, 0.0f);
 
-	
-
 	movementSpeed = 15.0f;
 	zoom = 1.0f;
 	zoomSpeed = 0.1f;
@@ -21,7 +19,7 @@ void Camera::Release()
 
 void Camera::Update()
 {
-	// fov
+	// zoom
 	float offset = lastMouseZDelta - g_mousezDelta;
 	lastMouseZDelta = g_mousezDelta;
 	zoom -= offset / 120.0f * zoomSpeed;
@@ -34,8 +32,6 @@ void Camera::Update()
 	}
 	
 	float cameraSpeed = movementSpeed * TimerManager::GetSingleton()->GetTimeElapsed(); // adjust accordingly
-
-	glm::lookAt(position, position + front, up);
 }
 
 glm::mat4 Camera::GetViewMatrix()

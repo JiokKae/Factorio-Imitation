@@ -186,6 +186,9 @@
     <ClInclude Include="Tile.h">
       <Filter>MainGame\Tile</Filter>
     </ClInclude>
+    <ClInclude Include="InventorySlotUI.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -277,6 +280,9 @@
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>MainGame\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="InventorySlotUI.cpp">
+      <Filter>MainGame\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

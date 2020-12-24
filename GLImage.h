@@ -25,13 +25,15 @@ public:
 	// 메모리 해제
 	void Release();
 
-	void Render(Shader* shader, float destX, float destY);
-	void FrameRender(Shader* shader, float destX, float destY, int currFrameX, int currFrameY);
+	void Render(Shader* shader, float destX, float destY, int currFrameX = 0, int currFrameY = 0);
 	void AnimationRender(Shader* shader, float destX, float destY, Animation* ani);
 
 	void SetZoom(float zoom)			{ this->zoom = zoom; }
 	void SetAlpha(float alpha)			{ this->alpha = alpha; }
 	void SetSpecular(bool isSpecular)	{ this->isSpecular = isSpecular; }
+
+	float GetFrameWidth()				{ return this->frameWidth; }
+	float GetFrameHeight()				{ return this->frameHeight; }
 
 	GLImage()
 		: sourceTexture(nullptr)

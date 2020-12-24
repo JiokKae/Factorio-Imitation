@@ -161,6 +161,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="GLImage.h" />
+    <ClInclude Include="InventorySlotUI.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Image.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="Factorio-Imitation.cpp" />
     <ClCompile Include="GameNode.cpp" />
     <ClCompile Include="GLImage.cpp" />
+    <ClCompile Include="InventorySlotUI.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Image.cpp" />

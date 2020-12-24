@@ -101,9 +101,12 @@ void MainGame::ImageLoad()
 	TextureManager::GetSingleton()->AddTexture("Character/hr-level1_running_shadow",	"base/graphics/entity/character/hr-level1_running_shadow.png");
 	
 	TextureManager::GetSingleton()->AddTexture("UI/CharacterUI",						"Image/UI/CharacterUI.png");
+	TextureManager::GetSingleton()->AddTexture("UI/InventorySlotUI",					"Image/UI/InventorySlotUI.png");
 
 	TextureManager::GetSingleton()->AddTexture("Terrain/Dirt_1",						"base/graphics/terrain/dirt-1.png");
 	TextureManager::GetSingleton()->AddTexture("White",									"core/graphics/white-square.png");
+
+	TextureManager::GetSingleton()->AddTexture("Checker",								"Image/Checker.png");
 }
 
 LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
@@ -111,10 +114,15 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 	switch (iMessage)
 	{
 	case WM_MOUSEMOVE:
-		g_ptMouse.x = LOWORD(lParam);
-		g_ptMouse.y = HIWORD(lParam);
+	{
+		Scene* scene = (Scene*)SceneManager::GetSingleton()->currScene;
+		if (scene)
+		{		
+			g_ptMouse.x = LOWORD(lParam);
+			g_ptMouse.y = scene->GetHeight() - HIWORD(lParam);
+		}
 		break;
-
+	}
 	case WM_SIZE:
 		glViewport(0, 0, LOWORD(lParam), HIWORD(lParam));
 		glMatrixMode(GL_PROJECTION);

@@ -1,13 +1,12 @@
 #include "SceneManager.h"
-#include "GameNode.h"
 #include "Scene.h"
 #include "Image.h"
 
 DWORD CALLBACK LoadingThread(LPVOID pvParam);
 
-GameNode* SceneManager::currScene = nullptr;
-GameNode* SceneManager::loadingScene = nullptr;
-GameNode* SceneManager::readyScene = nullptr;
+Scene* SceneManager::currScene = nullptr;
+Scene* SceneManager::loadingScene = nullptr;
+Scene* SceneManager::readyScene = nullptr;
 
 HRESULT SceneManager::Init()
 {
@@ -20,7 +19,7 @@ HRESULT SceneManager::Init()
 
 void SceneManager::Release()
 {
-	map<string, GameNode*>::iterator it;
+	map<string, Scene*>::iterator it;
 	for (it = mapSceneData.begin(); it != mapSceneData.end(); )
 	{
 		if (it->second)
@@ -82,29 +81,29 @@ void SceneManager::Render(HDC hdc)
 		
 }
 
-GameNode * SceneManager::AddScene(string key, GameNode * scene)
+Scene* SceneManager::AddScene(string key, Scene* scene)
 {
 	if (scene == nullptr)
 		return nullptr;
 
-	mapSceneData.insert(pair<string, GameNode*>(key, scene));
+	mapSceneData.insert(pair<string, Scene*>(key, scene));
 
 	return scene;
 }
 
-GameNode * SceneManager::AddLoadingScene(string key, GameNode * scene)
+Scene* SceneManager::AddLoadingScene(string key, Scene* scene)
 {
 	if (scene == nullptr)
 		return nullptr;
 
-	mapLoadingSceneData.insert(pair<string, GameNode*>(key, scene));
+	mapLoadingSceneData.insert(pair<string, Scene*>(key, scene));
 
 	return scene;
 }
 
 HRESULT SceneManager::ChangeScene(string sceneName)
 {
-	map<string, GameNode*>::iterator it = mapSceneData.find(sceneName);
+	map<string, Scene*>::iterator it = mapSceneData.find(sceneName);
 	if (it == mapSceneData.end())
 	{
 		return E_FAIL;
@@ -125,11 +124,11 @@ HRESULT SceneManager::ChangeScene(string sceneName)
 
 HRESULT SceneManager::ChangeScene(string sceneName, string loadingSceneName)
 {
-	map<string, GameNode*>::iterator it = mapSceneData.find(sceneName);
+	map<string, Scene*>::iterator it = mapSceneData.find(sceneName);
 	if (it == mapSceneData.end())
 		return E_FAIL;
 
-	map<string, GameNode*>::iterator itLoading = mapLoadingSceneData.find(loadingSceneName);
+	map<string, Scene*>::iterator itLoading = mapLoadingSceneData.find(loadingSceneName);
 	if (itLoading == mapLoadingSceneData.end())
 		return ChangeScene(sceneName);
 
