@@ -17,7 +17,7 @@ HRESULT Character::Init()
 	shadow[RUNNING].SetAlpha(0.6f);
 
 	animationSpeed[IDLE] = 0.01f;
-	animationSpeed[RUNNING] = 0.04f;
+	animationSpeed[RUNNING] = 0.038f;
 	
 	speed = 250.0f;
 	return S_OK;

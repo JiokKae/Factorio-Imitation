@@ -13,7 +13,7 @@ private:
 
     // camera options
     float movementSpeed;
-    float fov;
+    float zoom;
     float zoomSpeed;
     float lastMouseZDelta;
     bool firstMouse = true;
@@ -26,7 +26,7 @@ public:
     void Release();
     void Update();
 
-    float GetFov() { return fov; }
+    float GetZoom() { return pow(2, zoom); }
     glm::vec3 GerFront() { return front; }
     glm::vec3 GetPosition() { return position; }
     glm::mat4 GetViewMatrix();

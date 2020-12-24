@@ -11,8 +11,8 @@ HRESULT GLImage::Init(char const* sourceTexture, int width, int height, int maxF
 
 	maxFrame.x = maxFrameX;
 	maxFrame.y = maxFrameY;
-    frameWidth = (float)width / maxFrame.x/ 100.0f;
-    frameHeight = (float)height / maxFrame.y / 100.0f;
+    frameWidth = (float)width / maxFrame.x;
+    frameHeight = (float)height / maxFrame.y;
     
     zoom = 1.0f;
     
@@ -60,15 +60,17 @@ void GLImage::Release()
 void GLImage::Render(Shader* shader, float destX, float destY)
 {
     shader->use();
+
+    shader->setVec2("currFrame", { 0, 0 });
+    shader->setVec2("maxFrame", maxFrame);
     shader->setFloat("alpha", alpha);
 
-    glm::vec3 position = glm::vec3(destX / 100, destY / 100, 0.0f);
+    glm::vec3 position = glm::vec3(destX, destY, 0.0f);
     // world transformation
     glm::mat4 planeModel;
     planeModel = glm::translate(planeModel, position);
     Scene* scene = (Scene*)SceneManager::currScene;
-    
-    planeModel = glm::scale(planeModel, glm::vec3(200.0f / scene->GetWidth(), 200.0f / scene->GetHeight(), 0));
+    planeModel = glm::scale(planeModel, glm::vec3(2.0f / scene->GetWidth(), 2.0f / scene->GetHeight(), 0));
     shader->setMat4("model", planeModel);
 
     // bind diffuse map
@@ -86,11 +88,13 @@ void GLImage::Render(Shader* shader, float destX, float destY)
 
 void GLImage::FrameRender(Shader* shader, float destX, float destY, int currFrameX, int currFrameY)
 {
+    shader->use();
+
     shader->setVec2("currFrame", { currFrameX, currFrameY });
     shader->setVec2("maxFrame", maxFrame);
     shader->setFloat("alpha", alpha);
 
-    glm::vec3 position = glm::vec3(destX / 100, destY / 100, 0.0f);
+    glm::vec3 position = glm::vec3(destX, destY, 0.0f);
     // world transformation
     glm::mat4 planeModel;
     planeModel = glm::translate(planeModel, position);

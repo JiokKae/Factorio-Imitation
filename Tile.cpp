@@ -25,8 +25,5 @@ void Tile::Update()
 
 void Tile::Render(Shader* lpShader)
 {
-	lpShader->use();
-
 	image->FrameRender(lpShader, 64 * x, 64 * y, 0, 0);
-
 }

@@ -102,8 +102,8 @@ void MainGame::ImageLoad()
 	
 	TextureManager::GetSingleton()->AddTexture("UI/CharacterUI",						"Image/UI/CharacterUI.png");
 
-	TextureManager::GetSingleton()->AddTexture("Terrain/Dirt_1",					"base/graphics/terrain/dirt-1.png");
-	TextureManager::GetSingleton()->AddTexture("White",								"core/graphics/white-square.png");
+	TextureManager::GetSingleton()->AddTexture("Terrain/Dirt_1",						"base/graphics/terrain/dirt-1.png");
+	TextureManager::GetSingleton()->AddTexture("White",									"core/graphics/white-square.png");
 }
 
 LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)

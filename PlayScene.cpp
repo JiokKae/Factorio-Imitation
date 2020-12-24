@@ -33,7 +33,7 @@ HRESULT PlayScene::Init()
     // camera
     camera = new Camera();
     camera->Init();
-    camera->SetPosition({ 0.0f, 0.0f, 25.0f });
+    camera->SetPosition({ 0.0f, 0.0f, 1.0f });
     camera->SetTarget(player->GetLpPosition());
 
 	// build and compile our shader zprogram
@@ -110,10 +110,12 @@ HRESULT PlayScene::Init()
 
 void PlayScene::Release()
 {
-    
-    for (int i = 0; i < 30 * 30; i++)
+    if (tiles)
     {
-        tiles[i].Release();
+        for (int i = 0; i < 30 * 30; i++)
+        {
+            tiles[i].Release();
+        }
     }
     SAFE_ARR_DELETE(tiles);
 
@@ -163,31 +165,28 @@ void PlayScene::Render(HDC hdc)
     lightingShader->setVec3("spotLights[1].direction", camera->GerFront());// player->GetVec3Direction());
     lightingShader->setVec3("viewPos", camera->GetPosition());
 
-
-
     // point light 1
-    lightingShader->setVec3("pointLights[0].position", glm::vec3(player->GetLpPosition()->x/100.0f, player->GetLpPosition()->y / 100.0f, 0.1f));
+    lightingShader->setVec3("pointLights[0].position", glm::vec3(player->GetLpPosition()->x, player->GetLpPosition()->y, 0.01f));
     lightingShader->setVec3("pointLights[0].ambient", { 0.05f, 0.05f, 0.05f });
-    lightingShader->setVec3("pointLights[0].diffuse", { 0.8f, 0.8f, 0.8f });
+    lightingShader->setVec3("pointLights[0].diffuse", { 0.6f, 0.6f, 0.6f });
     lightingShader->setVec3("pointLights[0].specular", { 1.0f, 1.0f, 1.0f });
-    lightingShader->setFloat("pointLights[0].constant", 1.0f * 0.1);
-    lightingShader->setFloat("pointLights[0].linear", 0.09 * 0.1);
-    lightingShader->setFloat("pointLights[0].quadratic", 0.032);
+    lightingShader->setFloat("pointLights[0].constant", 0.08f);
+    lightingShader->setFloat("pointLights[0].linear", 0.001f);
+    lightingShader->setFloat("pointLights[0].quadratic", 0.0164f);
 
     // directional light
     lightingShader->setVec3("dirLight.direction", { 0.5f, 0.5f, 0.3f });
-    lightingShader->setVec3("dirLight.ambient", { 0.2f, 0.2f, 0.2f });
+    lightingShader->setVec3("dirLight.ambient", { 0.1f, 0.1f, 0.1f });
     lightingShader->setVec3("dirLight.diffuse", { 0,0,0 });
     //lightingShader->setVec3("dirLight.diffuse", glm::vec3((sin(timeGetTime() / 3000.0f) + 1) / 2));
     lightingShader->setVec3("dirLight.specular", { 0.0f, 0.0f, 0.0f });
 
     // view/projection transformations
-    glm::mat4 projection = glm::perspective(glm::radians(camera->GetFov()), (float)width / (float)height, 0.1f, 100.0f);
+    glm::mat4 projection = glm::ortho(float(-width) / 2, float(width) / 2, float(-height) / 2.0f, float(height) / 2, -1.0f, 1.0f);//
+    projection = glm::scale(projection, glm::vec3(camera->GetZoom(), camera->GetZoom(), 1.0f));
     glm::mat4 view = camera->GetViewMatrix();
     lightingShader->setMat4("projection", projection);
     lightingShader->setMat4("view", view);
-
-
 
     for (int i = 0; i < 30 * 30; i++)
     {

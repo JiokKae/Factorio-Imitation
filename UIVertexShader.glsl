@@ -17,6 +17,5 @@ out UIVertexShaderOut
 void main()
 {
 	o.TexCoords = (aTexCoords + currFrame) / maxFrame;
-
 	gl_Position = model * vec4(aPos, 1.0); // projection * view * model * vec4(aPos, 1.0);
 }

@@ -1,6 +1,6 @@
 #include "CharacterUI.h"
 #include "GLImage.h"
-
+#include "Shader.h"
 HRESULT CharacterUI::Init()
 {
 	image = new GLImage();
