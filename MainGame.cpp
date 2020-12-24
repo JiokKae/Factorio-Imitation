@@ -55,6 +55,7 @@ HRESULT MainGame::Init()
 
 	TimerManager::GetSingleton()->SetTargetFPS(0);
 
+	isInit = true;
 	return S_OK;
 }
 
@@ -113,6 +114,18 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 {
 	switch (iMessage)
 	{
+	case WM_WINDOWPOSCHANGED:
+		if (isInit)
+			Render();
+		break;
+	case WM_SYSCOMMAND:
+		switch (wParam & 0xfff0) {
+		case SC_MOVE:
+		case SC_SIZE:
+			TimerManager::GetSingleton()->SetIsSC_MOVE(true);
+			break;
+		}
+		break;
 	case WM_MOUSEMOVE:
 	{
 		Scene* scene = (Scene*)SceneManager::GetSingleton()->currScene;

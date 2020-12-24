@@ -7,7 +7,7 @@ class MainGame : public GameNode
 private:
 	HDC hdc;
 	HGLRC hrc;
-
+	bool isInit;
 public:
 	HRESULT Init();				// 멤버 변수 초기화, 메모리 할당
 	void Release();				// 메모리 해제

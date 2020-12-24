@@ -3,6 +3,7 @@
 class Timer
 {
 private:
+	bool isSC_MOVE;
 	bool isHardware;	// 고성능 타이머를 쓸 수 있는지 여부
 	float timeScale;	// 경과 진동수를 초당 진동수로 나눠서 진동수를 시간단위로 변환
 	float timeElapsed;	// 마지막 시간과 현재 시간의 경과량
@@ -21,6 +22,7 @@ public:
 	ULONG GetFPS()			{ return fps; }
 	float GetTimeElapsed()	{ return timeElapsed; }
 
-	void SetTargetFPS(ULONG targetFps) { this->targetFps = targetFps; }
+	void SetTargetFPS(ULONG targetFps)	{ this->targetFps = targetFps; }
+	void SetIsSC_MOVE(bool isSC_MOVE)	{ this->isSC_MOVE = isSC_MOVE; }
 };
 

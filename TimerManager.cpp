@@ -31,6 +31,11 @@ float TimerManager::GetTimeElapsed()
 	return timer->GetTimeElapsed();
 }
 
+void TimerManager::SetIsSC_MOVE(bool isSC_MOVE)
+{
+	timer->SetIsSC_MOVE(isSC_MOVE);
+}
+
 void TimerManager::SetTargetFPS(ULONG targetFPS)
 {
 	timer->SetTargetFPS(targetFPS);

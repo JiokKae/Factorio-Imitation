@@ -38,6 +38,11 @@ bool Timer::Tick()
 	timeElapsed = (currTime - lastTime) * timeScale;
 	if (targetFps == 0 || timeElapsed > 1.0f / targetFps)
 	{
+		if (isSC_MOVE) {
+			isSC_MOVE = false;
+			timeElapsed = 0.0f;
+		}
+
 		fpsFrameCount++;
 		fpsTimeElapsed += timeElapsed;
 		if (fpsTimeElapsed >= 1.0f)
