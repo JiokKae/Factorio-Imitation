@@ -6,6 +6,7 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Tile.h"
+#include "TileRenderer.h"
 
 HRESULT PlayScene::Init()
 {
@@ -21,14 +22,8 @@ HRESULT PlayScene::Init()
     player = new Character();
     player->Init();
 
-    tiles = new Tile[30 * 30]();
-    for (int y = 0; y < 30; y++)
-    {
-        for (int x = 0; x < 30; x++)
-        {
-            tiles[y * 30 + x].Init(x, y);
-        }
-    }
+    tileRenderer = new TileRenderer();
+    tileRenderer->Init();
 
     // camera
     camera = new Camera();
@@ -115,18 +110,9 @@ HRESULT PlayScene::Init()
 
 void PlayScene::Release()
 {
-    if (tiles)
-    {
-        for (int i = 0; i < 30 * 30; i++)
-        {
-            tiles[i].Release();
-        }
-    }
-    SAFE_ARR_DELETE(tiles);
-
+    SAFE_RELEASE(tileRenderer);
     SAFE_RELEASE(characterUI);
     SAFE_RELEASE(player);
-    SAFE_RELEASE(dirt_1Image);
     SAFE_DELETE(UIShader);
 	SAFE_DELETE(lightingShader);
 	SAFE_RELEASE(camera);
@@ -144,10 +130,7 @@ void PlayScene::Update()
         characterUI->SetActive(!characterUI->IsActive());
     }
 
-    for (int i = 0; i < 30*30; i++)
-    {
-        tiles[i].Update();
-    }
+    tileRenderer->Update();
 
     player->Update();
     
@@ -179,10 +162,7 @@ void PlayScene::Render(HDC hdc)
     glm::mat4 UIprojection = glm::ortho(0.0f, float(width), 0.0f, float(height), -1.0f, 1.0f);
     UIShader->setMat4("projection", UIprojection);
 
-    for (int i = 0; i < 30 * 30; i++)
-    {
-        tiles[i].Render(lightingShader);
-    }
+    tileRenderer->Render(lightingShader);
 
     player->Render(lightingShader);
     characterUI->Render(UIShader);

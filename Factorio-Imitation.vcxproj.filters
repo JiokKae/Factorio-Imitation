@@ -91,6 +91,12 @@
     <Filter Include="MainGame\Tile">
       <UniqueIdentifier>{59f27837-67e1-44a7-b47a-035f26772753}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Entity">
+      <UniqueIdentifier>{99aaed30-0b8c-4d00-9f1d-4b95d3a8ff82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Entity\Ore">
+      <UniqueIdentifier>{146395d1-b902-4ffc-9653-8bf2f9318799}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -189,6 +195,12 @@
     <ClInclude Include="InventorySlotUI.h">
       <Filter>MainGame\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Ore.h">
+      <Filter>MainGame\Entity\Ore</Filter>
+    </ClInclude>
+    <ClInclude Include="TileRenderer.h">
+      <Filter>MainGame\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -283,6 +295,12 @@
     </ClCompile>
     <ClCompile Include="InventorySlotUI.cpp">
       <Filter>MainGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Ore.cpp">
+      <Filter>MainGame\Entity\Ore</Filter>
+    </ClCompile>
+    <ClCompile Include="TileRenderer.cpp">
+      <Filter>MainGame\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

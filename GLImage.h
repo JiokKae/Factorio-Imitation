@@ -26,14 +26,23 @@ public:
 	void Release();
 
 	void Render(Shader* shader, float destX, float destY, int currFrameX = 0, int currFrameY = 0);
+	void MassiveRenderInit(Shader* lpShader);
+	void MassiveRender(Shader* lpShader, int x, int y, int currFrameX, int currFrameY);
+	void MassiveRenderRelease();
 	void AnimationRender(Shader* shader, float destX, float destY, Animation* ani);
 
 	void SetZoom(float zoom)			{ this->zoom = zoom; }
 	void SetAlpha(float alpha)			{ this->alpha = alpha; }
 	void SetSpecular(bool isSpecular)	{ this->isSpecular = isSpecular; }
 
-	float GetFrameWidth()				{ return this->frameWidth; }
-	float GetFrameHeight()				{ return this->frameHeight; }
+	float GetZoom()						{ return zoom; }
+	unsigned int GetVAO()				{ return VAO; }
+	float GetFrameWidth()				{ return frameWidth; }
+	float GetFrameHeight()				{ return frameHeight; }
+	glm::vec2 GetMaxFrame()				{ return maxFrame; }
+	float GetZoomedFrameWidth()			{ return frameWidth * zoom; }
+	float GetZoomedFrameHeight()		{ return frameHeight * zoom; }
+	Texture* GetLpSourceTexture()		{ return sourceTexture; }
 
 	GLImage()
 		: sourceTexture(nullptr)

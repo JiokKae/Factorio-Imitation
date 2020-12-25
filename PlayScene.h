@@ -3,19 +3,16 @@
 
 class Camera;
 class Shader;
-class GLImage;
 class Character;
 class CharacterUI;
-class Tile;
+class TileRenderer;
 class PlayScene : public Scene
 {
 	Camera* camera;
 	Shader* lightingShader;
 	Shader* UIShader;
-	Tile* tiles;
+	TileRenderer* tileRenderer;
 	Character* player;
-	GLImage* dirt_1Image;
-
 	CharacterUI* characterUI;
 
 public:
@@ -26,10 +23,10 @@ public:
 
 	PlayScene(int width, int height)
 		: Scene(width, height)
-		, camera(nullptr)
 		, lightingShader(nullptr)
+		, tileRenderer(nullptr)
 		, player(nullptr)
-		, dirt_1Image(nullptr)
+		, camera(nullptr)
 	{};
 	virtual ~PlayScene();
 };

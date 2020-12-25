@@ -2,17 +2,31 @@
 #include "GameNode.h"
 
 class Shader;
-class GLImage;
+class Ore;
 class Tile : public GameNode
 {
+public:
+	enum class KIND {
+		DIRT_1,
+		END
+	};
+
+private:
 	int x;
 	int y;
-	GLImage* image;
+	KIND kind;
+	Ore* ore;
 
 public:
 	virtual HRESULT Init(int x, int y);
 	virtual void Release();
 	virtual void Update();
-	virtual void Render(Shader* lpShader);
+
+	KIND GetKind()	{ return kind; }
+	Ore* GetLpOre() { return ore; }
+	Tile()
+		: ore(nullptr)
+
+	{};
 };
 

@@ -107,6 +107,8 @@ void MainGame::ImageLoad()
 	TextureManager::GetSingleton()->AddTexture("Terrain/Dirt_1",						"base/graphics/terrain/dirt-1.png");
 	TextureManager::GetSingleton()->AddTexture("White",									"core/graphics/white-square.png");
 
+	TextureManager::GetSingleton()->AddTexture("IronOre", "base/graphics/entity/iron-ore/hr-iron-ore.png");
+
 	TextureManager::GetSingleton()->AddTexture("Checker",								"Image/Checker.png");
 }
 

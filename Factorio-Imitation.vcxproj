@@ -162,6 +162,7 @@
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="GLImage.h" />
     <ClInclude Include="InventorySlotUI.h" />
+    <ClInclude Include="Ore.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Image.h" />
@@ -179,6 +180,7 @@
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMapToolScene.h" />
+    <ClInclude Include="TileRenderer.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimerManager.h" />
     <ClInclude Include="TitleScene.h" />
@@ -196,6 +198,7 @@
     <ClCompile Include="GameNode.cpp" />
     <ClCompile Include="GLImage.cpp" />
     <ClCompile Include="InventorySlotUI.cpp" />
+    <ClCompile Include="Ore.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -212,6 +215,7 @@
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileMapToolScene.cpp" />
+    <ClCompile Include="TileRenderer.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerManager.cpp" />
     <ClCompile Include="TitleScene.cpp" />
