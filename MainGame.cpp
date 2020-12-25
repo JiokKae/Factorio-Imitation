@@ -6,6 +6,7 @@
 #include "TenCubeSpaceScene.h"
 #include "LightingScene.h"
 #include "LoadingScene1.h"
+#include "TextRenderer.h"
 
 HRESULT MainGame::Init()
 {

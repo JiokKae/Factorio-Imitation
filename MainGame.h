@@ -7,6 +7,7 @@ class MainGame : public GameNode
 private:
 	HDC hdc;
 	HGLRC hrc;
+
 	bool isInit;
 public:
 	HRESULT Init();				// 멤버 변수 초기화, 메모리 할당
@@ -15,6 +16,9 @@ public:
 	void Render();				// 프레임 단위 출력 (이미지, 텍스트 등)
 
 	void ImageLoad();
+
+
+	MainGame() {};
 
 	LRESULT MainProc(HWND hWnd, UINT iMessage,
 		WPARAM wParam, LPARAM lParam);

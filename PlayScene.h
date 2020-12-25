@@ -6,6 +6,7 @@ class Shader;
 class Character;
 class CharacterUI;
 class TileRenderer;
+class TextRenderer;
 class PlayScene : public Scene
 {
 	Camera* camera;
@@ -14,6 +15,7 @@ class PlayScene : public Scene
 	TileRenderer* tileRenderer;
 	Character* player;
 	CharacterUI* characterUI;
+	TextRenderer* textRenderer;
 
 public:
 	virtual HRESULT Init();
@@ -27,6 +29,7 @@ public:
 		, tileRenderer(nullptr)
 		, player(nullptr)
 		, camera(nullptr)
+		, textRenderer(nullptr)
 	{};
 	virtual ~PlayScene();
 };

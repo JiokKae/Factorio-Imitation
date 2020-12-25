@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "Tile.h"
 #include "TileRenderer.h"
+#include "TextRenderer.h"
 
 HRESULT PlayScene::Init()
 {
@@ -105,11 +106,17 @@ HRESULT PlayScene::Init()
     lightingShader->setFloat("pointLights[3].linear", 0.09);
     lightingShader->setFloat("pointLights[3].quadratic", 0.032);
 
+    // TextRenderer Init
+    textRenderer = new TextRenderer();
+    textRenderer->Init(1600, 900);
+    textRenderer->Load("Fonts/NotoSans-Regular.ttf", 24);
+
 	return S_OK;
 }
 
 void PlayScene::Release()
 {
+    SAFE_RELEASE(textRenderer);
     SAFE_RELEASE(tileRenderer);
     SAFE_RELEASE(characterUI);
     SAFE_RELEASE(player);
@@ -166,6 +173,10 @@ void PlayScene::Render(HDC hdc)
 
     player->Render(lightingShader);
     characterUI->Render(UIShader);
+
+    textRenderer->RenderText("Text render kk", sin(g_time), 0.0f, 0.0f);
+    textRenderer->RenderText("Press ENTER to start", 250.0f, 900 / 2.0f, 1.0f);
+
 	glFlush();
 }
 

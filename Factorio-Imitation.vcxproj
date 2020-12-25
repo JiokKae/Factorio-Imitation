@@ -127,7 +127,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>winmm.lib;msimg32.lib;glew32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;msimg32.lib;glew32.lib;opengl32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -164,6 +164,7 @@
     <ClInclude Include="InventorySlotUI.h" />
     <ClInclude Include="Ore.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="TextRenderer.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
@@ -200,6 +201,7 @@
     <ClCompile Include="InventorySlotUI.cpp" />
     <ClCompile Include="Ore.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
@@ -230,6 +232,8 @@
     <None Include="SimpleVertexShader.glsl" />
     <None Include="StandardFragmentShader.glsl" />
     <None Include="StandardVertexShader.glsl" />
+    <None Include="Text2DFragmentShader.glsl" />
+    <None Include="Text2DVertexShader.glsl" />
     <None Include="UIFragmentShader.glsl" />
     <None Include="UIVertexShader.glsl" />
   </ItemGroup>

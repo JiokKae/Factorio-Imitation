@@ -97,6 +97,9 @@
     <Filter Include="MainGame\Entity\Ore">
       <UniqueIdentifier>{146395d1-b902-4ffc-9653-8bf2f9318799}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GLFrameWork\TextRenderer">
+      <UniqueIdentifier>{3cf64f20-07ad-40a1-9540-fa1707684808}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -201,6 +204,9 @@
     <ClInclude Include="TileRenderer.h">
       <Filter>MainGame\Tile</Filter>
     </ClInclude>
+    <ClInclude Include="TextRenderer.h">
+      <Filter>GLFrameWork\TextRenderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -302,6 +308,9 @@
     <ClCompile Include="TileRenderer.cpp">
       <Filter>MainGame\Tile</Filter>
     </ClCompile>
+    <ClCompile Include="TextRenderer.cpp">
+      <Filter>GLFrameWork\TextRenderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="1.colors.frag">
@@ -332,6 +341,12 @@
       <Filter>MainGame\Shader</Filter>
     </None>
     <None Include="UIFragmentShader.glsl">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="Text2DVertexShader.glsl">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="Text2DFragmentShader.glsl">
       <Filter>MainGame\Shader</Filter>
     </None>
   </ItemGroup>
