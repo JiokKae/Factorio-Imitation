@@ -7,7 +7,8 @@ HRESULT TextRenderer::Init(unsigned int width, unsigned int height)
 {
     // load and configure shader
     this->TextShader = new Shader("Text2DVertexShader.glsl", "Text2DFragmentShader.glsl");
-    this->TextShader->setMat4("projection", glm::ortho(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f), true);
+    this->TextShader->use();
+    this->TextShader->setMat4("projection", glm::ortho(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f), false);
     this->TextShader->setInt("text", 0);
 
     // configure VAO/VBO for texture quads

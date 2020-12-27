@@ -174,8 +174,8 @@ void PlayScene::Render(HDC hdc)
     player->Render(lightingShader);
     characterUI->Render(UIShader);
 
-    textRenderer->RenderText("Text render kk", sin(g_time), 0.0f, 0.0f);
-    textRenderer->RenderText("Press ENTER to start", 250.0f, 900 / 2.0f, 1.0f);
+    textRenderer->RenderText("g_ptMouse : " + to_string(g_ptMouse.x) + ", " + to_string(g_ptMouse.y), 0, 0, 1.0f);
+    textRenderer->RenderText("g_ptMouse + cameraPos : " + to_string(g_ptMouse.x + camera->GetPosition().x) + ", " + to_string(g_ptMouse.y + camera->GetPosition().y), 0, 24, 1.0f);
 
 	glFlush();
 }
