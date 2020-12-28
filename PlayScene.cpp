@@ -8,6 +8,7 @@
 #include "Tile.h"
 #include "TileRenderer.h"
 #include "TextRenderer.h"
+#include "PointLight.h"
 
 HRESULT PlayScene::Init()
 {
@@ -51,10 +52,10 @@ HRESULT PlayScene::Init()
     UIShader->setMat4("projection", projection);
 
     glm::vec3 pointLightPositions[] = {
-    glm::vec3(   0.0f,     0.0f, 0.1f),
-    glm::vec3(1000.0f,     0.0f, 0.1f),
-    glm::vec3(   0.0f,  1000.0f, 0.1f),
-    glm::vec3(1000.0f,  1000.0f, 0.1f),
+    glm::vec3(   0.0f,     0.0f, 10.0f),
+    glm::vec3(1000.0f,     0.0f, 10.0f),
+    glm::vec3(   0.0f,  1000.0f, -10.0f),
+    glm::vec3(1000.0f,  1000.0f, -10.0f),
     };
 
 	lightingShader->use();
@@ -65,46 +66,45 @@ HRESULT PlayScene::Init()
     glActiveTexture(GL_TEXTURE0 + 16);
     glBindTexture(GL_TEXTURE_2D, white->GetID());
 
+    pointLights = new PointLight[4]();
+
     // directional light(static)
     lightingShader->setVec3("dirLight.direction", { 0.5f, 0.5f, 0.3f });
-    lightingShader->setVec3("dirLight.ambient", { 0.1f, 0.1f, 0.1f });
+    lightingShader->setVec3("dirLight.ambient", { 0.01f, 0.01f, 0.01f });
     lightingShader->setVec3("dirLight.diffuse", { 0,0,0 });
     lightingShader->setVec3("dirLight.specular", { 0.0f, 0.0f, 0.0f });
 
     // player point light(static)
-    lightingShader->setVec3("pointLights[0].ambient", { 0.05f, 0.05f, 0.05f });
+    lightingShader->setVec3("pointLights[0].ambient", { 0.01f, 0.01f, 0.01f });
     lightingShader->setVec3("pointLights[0].diffuse", { 0.6f, 0.6f, 0.6f });
-    lightingShader->setVec3("pointLights[0].specular", { 1.0f, 1.0f, 1.0f });
-    lightingShader->setFloat("pointLights[0].constant", 0.08f);
-    lightingShader->setFloat("pointLights[0].linear", 0.001f);
-    lightingShader->setFloat("pointLights[0].quadratic", 0.0164f);
+    lightingShader->setFloat("pointLights[0].constant", 0.5f);
+    lightingShader->setFloat("pointLights[0].linear", 0.06f);
+    lightingShader->setFloat("pointLights[0].quadratic", 0.082f);
 
     // point light 2
+    pointLights[1].position = glm::vec3(1000.0f, 0.0f, 0.1f);
     lightingShader->setVec3("pointLights[1].position", pointLightPositions[1]);
-    lightingShader->setVec3("pointLights[1].ambient", { 0.05f, 0.05f, 0.05f });
+    lightingShader->setVec3("pointLights[1].ambient", { 0.01f, 0.01f, 0.01f });
     lightingShader->setVec3("pointLights[1].diffuse", { 0.8f, 0.8f, 0.8f });
-    lightingShader->setVec3("pointLights[1].specular", { 1.0f, 1.0f, 1.0f });
-    lightingShader->setFloat("pointLights[1].constant", 1.0f * 0.1);
-    lightingShader->setFloat("pointLights[1].linear", 0.09);
-    lightingShader->setFloat("pointLights[1].quadratic", 0.032);
+    lightingShader->setFloat("pointLights[1].constant", 1.0f);
+    lightingShader->setFloat("pointLights[1].linear", 0.09f);
+    lightingShader->setFloat("pointLights[1].quadratic", 0.062f);
 
     // point light 3
     lightingShader->setVec3("pointLights[2].position", pointLightPositions[2]);
-    lightingShader->setVec3("pointLights[2].ambient", { 0.05f, 0.05f, 0.05f });
+    lightingShader->setVec3("pointLights[2].ambient", { 0.01f, 0.01f, 0.01f });
     lightingShader->setVec3("pointLights[2].diffuse", { 0.8f, 0.8f, 0.8f });
-    lightingShader->setVec3("pointLights[2].specular", { 1.0f, 1.0f, 1.0f });
-    lightingShader->setFloat("pointLights[2].constant", 1.0f * 0.1);
-    lightingShader->setFloat("pointLights[2].linear", 0.09);
-    lightingShader->setFloat("pointLights[2].quadratic", 0.032);
+    lightingShader->setFloat("pointLights[2].constant", 1.0f);
+    lightingShader->setFloat("pointLights[2].linear", 0.09f);
+    lightingShader->setFloat("pointLights[2].quadratic", 0.062f);
 
     // point light 4
     lightingShader->setVec3("pointLights[3].position", pointLightPositions[3]);
-    lightingShader->setVec3("pointLights[3].ambient", { 0.05f, 0.05f, 0.05f });
+    lightingShader->setVec3("pointLights[3].ambient", { 0.01f, 0.01f, 0.01f });
     lightingShader->setVec3("pointLights[3].diffuse", { 0.8f, 0.8f, 0.8f });
-    lightingShader->setVec3("pointLights[3].specular", { 1.0f, 1.0f, 1.0f });
-    lightingShader->setFloat("pointLights[3].constant", 1.0f * 0.1);
-    lightingShader->setFloat("pointLights[3].linear", 0.09);
-    lightingShader->setFloat("pointLights[3].quadratic", 0.032);
+    lightingShader->setFloat("pointLights[3].constant", 1.0f);
+    lightingShader->setFloat("pointLights[3].linear", 0.09f);
+    lightingShader->setFloat("pointLights[3].quadratic", 0.062f);
 
     // TextRenderer Init
     textRenderer = new TextRenderer();
@@ -162,7 +162,7 @@ void PlayScene::Render(HDC hdc)
     // player point light(dynamic)
     lightingShader->setVec3("pointLights[0].position", glm::vec3(player->GetLpPosition()->x, player->GetLpPosition()->y, 0.01f));
     // directional light(dynamic)
-    lightingShader->setVec3("dirLight.diffuse", glm::vec3((sin(timeGetTime() / 3000.0f) + 1) / 2));
+    lightingShader->setVec3("dirLight.diffuse", glm::vec3((sin(timeGetTime() / 3000.0f) + 1) / 2) * 0.0f);
 
     // 뷰/프로젝션 매트릭스 연산
     glm::mat4 projection = glm::ortho(0.0f, float(width) / camera->GetZoom(), 0.0f, float(height) / camera->GetZoom());

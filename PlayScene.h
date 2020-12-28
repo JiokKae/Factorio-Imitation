@@ -4,6 +4,7 @@
 class Camera;
 class Shader;
 class Character;
+class PointLight;
 class CharacterUI;
 class TileRenderer;
 class TextRenderer;
@@ -19,6 +20,7 @@ class PlayScene : public Scene
 	CharacterUI* characterUI;
 	TextRenderer* textRenderer;
 
+	PointLight* pointLights;
 public:
 	virtual HRESULT Init();
 	virtual void Release();
