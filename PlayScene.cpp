@@ -111,6 +111,13 @@ HRESULT PlayScene::Init()
     textRenderer->Init(1600, 900);
     textRenderer->Load("Fonts/NotoSans-Regular.ttf", 24);
 
+    glGenBuffers(1, &uboMatrices);
+    glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
+    glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), NULL, GL_STATIC_DRAW);
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+    glBindBufferRange(GL_UNIFORM_BUFFER, 0, uboMatrices, 0, 2 * sizeof(glm::mat4));
+
 	return S_OK;
 }
 
@@ -157,13 +164,16 @@ void PlayScene::Render(HDC hdc)
     // directional light(dynamic)
     lightingShader->setVec3("dirLight.diffuse", glm::vec3((sin(timeGetTime() / 3000.0f) + 1) / 2));
 
-    // view/projection transformations
-    //glm::mat4 projection = glm::ortho(float(-width) / 2, float(width) / 2, float(-height) / 2.0f, float(height) / 2, -1.0f, 1.0f);
+    // 뷰/프로젝션 매트릭스 연산
     glm::mat4 projection = glm::ortho(0.0f, float(width) / camera->GetZoom(), 0.0f, float(height) / camera->GetZoom());
     glm::mat4 view = camera->GetViewMatrix();
     view = glm::translate(view, glm::vec3(float(width) / camera->GetZoom() / 2, float(height) / camera->GetZoom() / 2, 0.0f));
-    lightingShader->setMat4("projection", projection);
-    lightingShader->setMat4("view", view);
+
+    // uniform buffer object 0번 바인딩 인덱스에 프로젝션과 뷰 매트릭스 설정
+    glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
+    glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(projection));
+    glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
     UIShader->use();
     glm::mat4 UIprojection = glm::ortho(0.0f, float(width), 0.0f, float(height));

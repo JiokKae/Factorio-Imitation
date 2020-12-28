@@ -11,6 +11,8 @@ class PlayScene : public Scene
 {
 	Camera* camera;
 	Shader* lightingShader;
+	unsigned int uboMatrices;
+
 	Shader* UIShader;
 	TileRenderer* tileRenderer;
 	Character* player;
