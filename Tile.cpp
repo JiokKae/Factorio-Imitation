@@ -5,8 +5,8 @@
 
 HRESULT Tile::Init(int x, int y)
 {
-	this->x = x;
-	this->y = y;
+	index.x = x;
+	index.y = y;
 
 	kind = KIND::DIRT_1;
 

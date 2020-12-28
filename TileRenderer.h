@@ -2,12 +2,13 @@
 #include "GameNode.h"
 
 class Tile;
+class Chunk;
 class Shader;
 class GLImage;
 class TileRenderer : public GameNode
 {
 private:
-	Tile* tiles;
+	map<int, map<int, Chunk*>> mapChunks;
 	GLImage* tileImages;
 	GLImage* oreImages;
 
@@ -18,8 +19,7 @@ public:
 	virtual void Render(Shader* lpShader);
 
 	TileRenderer() 
-		: tiles(nullptr)
-		, tileImages(nullptr)
+		: tileImages(nullptr)
 		, oreImages(nullptr)
 	{};
 };

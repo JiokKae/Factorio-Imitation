@@ -16,6 +16,7 @@ public:
 	bool Update();
 	void Render(HDC hdc);
 	float GetTimeElapsed();
+	ULONG GetFPS();
 
 	void SetIsSC_MOVE(bool isSC_MOVE);
 	void SetTargetFPS(ULONG targetFPS);

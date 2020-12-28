@@ -159,14 +159,14 @@ void PlayScene::Render(HDC hdc)
 
     // view/projection transformations
     //glm::mat4 projection = glm::ortho(float(-width) / 2, float(width) / 2, float(-height) / 2.0f, float(height) / 2, -1.0f, 1.0f);
-    glm::mat4 projection = glm::ortho(0.0f, float(width) / camera->GetZoom(), 0.0f, float(height) / camera->GetZoom(), -1.0f, 1.0f);
+    glm::mat4 projection = glm::ortho(0.0f, float(width) / camera->GetZoom(), 0.0f, float(height) / camera->GetZoom());
     glm::mat4 view = camera->GetViewMatrix();
     view = glm::translate(view, glm::vec3(float(width) / camera->GetZoom() / 2, float(height) / camera->GetZoom() / 2, 0.0f));
     lightingShader->setMat4("projection", projection);
     lightingShader->setMat4("view", view);
 
     UIShader->use();
-    glm::mat4 UIprojection = glm::ortho(0.0f, float(width), 0.0f, float(height), -1.0f, 1.0f);
+    glm::mat4 UIprojection = glm::ortho(0.0f, float(width), 0.0f, float(height));
     UIShader->setMat4("projection", UIprojection);
 
     tileRenderer->Render(lightingShader);
@@ -174,9 +174,21 @@ void PlayScene::Render(HDC hdc)
     player->Render(lightingShader);
     characterUI->Render(UIShader);
 
-    textRenderer->RenderText("g_ptMouse : " + to_string(g_ptMouse.x) + ", " + to_string(g_ptMouse.y), 0, 0, 1.0f);
-    textRenderer->RenderText("g_ptMouse + cameraPos : " + to_string(g_ptMouse.x + camera->GetPosition().x) + ", " + to_string(g_ptMouse.y + camera->GetPosition().y), 0, 24, 1.0f);
+    textRenderer->RenderText("FPS: " + to_string(TimerManager::GetSingleton()->GetFPS()),
+        0, 10);
+    textRenderer->RenderText("g_ptMouse : " + to_string(g_ptMouse.x) + ", " + to_string(g_ptMouse.y), 
+        0, 40);
+    textRenderer->RenderText("cameraPos : " + to_string(camera->GetPosition().x) + ", " + to_string(camera->GetPosition().y),
+        0, 70);
 
+    char str[128];
+    sprintf_s(str, "Cursor: (%.1f, %.1f)", 
+        (g_ptMouse.x - width / 2) / (64 * camera->GetZoom()) + (camera->GetPosition().x / 64), 
+        (g_ptMouse.y - height / 2) / (64 * camera->GetZoom()) + (camera->GetPosition().y / 64));
+    textRenderer->RenderText(string(str), 0, 100);
+
+    textRenderer->RenderText("Zoom: " + to_string(camera->GetZoom()),
+        0, 130);
 	glFlush();
 }
 

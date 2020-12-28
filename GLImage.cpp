@@ -17,13 +17,13 @@ HRESULT GLImage::Init(char const* sourceTexture, int width, int height, int maxF
     zoom = 1.0f;
     
     float vertices[] = {
-        // positions                               // texture coords
-        -frameWidth / 2, -frameHeight / 2,  0.0f,  0.0f, 0.0f,
-         frameWidth / 2, -frameHeight / 2,  0.0f,  1.0f, 0.0f,
-         frameWidth / 2,  frameHeight / 2,  0.0f,  1.0f, 1.0f,
-         frameWidth / 2,  frameHeight / 2,  0.0f,  1.0f, 1.0f,
-        -frameWidth / 2,  frameHeight / 2,  0.0f,  0.0f, 1.0f,
-        -frameWidth / 2, -frameHeight / 2,  0.0f,  0.0f, 0.0f,
+        // positions                        // texture coords
+        -frameWidth / 2, -frameHeight / 2,  0.0f, 0.0f,
+         frameWidth / 2, -frameHeight / 2,  1.0f, 0.0f,
+         frameWidth / 2,  frameHeight / 2,  1.0f, 1.0f,
+         frameWidth / 2,  frameHeight / 2,  1.0f, 1.0f,
+        -frameWidth / 2,  frameHeight / 2,  0.0f, 1.0f,
+        -frameWidth / 2, -frameHeight / 2,  0.0f, 0.0f,
     };
 
     glGenVertexArrays(1, &VAO);
@@ -34,13 +34,10 @@ HRESULT GLImage::Init(char const* sourceTexture, int width, int height, int maxF
 
     glBindVertexArray(VAO);
 
-    // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    // position attribute + texcoord attribute (vec4)
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    // texcoord attribute
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
+    
     isInit = true;
 	return S_OK;
 }

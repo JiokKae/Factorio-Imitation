@@ -8,7 +8,7 @@ class GLImage
 {
 	Texture* sourceTexture;
 
-	glm::vec2 maxFrame;
+	glm::ivec2 maxFrame;
 	float frameWidth;
 	float frameHeight;
 	unsigned int VAO;
@@ -39,7 +39,7 @@ public:
 	unsigned int GetVAO()				{ return VAO; }
 	float GetFrameWidth()				{ return frameWidth; }
 	float GetFrameHeight()				{ return frameHeight; }
-	glm::vec2 GetMaxFrame()				{ return maxFrame; }
+	glm::ivec2 GetMaxFrame()			{ return maxFrame; }
 	float GetZoomedFrameWidth()			{ return frameWidth * zoom; }
 	float GetZoomedFrameHeight()		{ return frameHeight * zoom; }
 	Texture* GetLpSourceTexture()		{ return sourceTexture; }

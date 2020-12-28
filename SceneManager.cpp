@@ -75,7 +75,6 @@ void SceneManager::Render(HDC hdc)
 		else
 		{
 			currScene->Render(hdc);
-			TimerManager::GetSingleton()->Render(hdc);
 		}
 	}
 		

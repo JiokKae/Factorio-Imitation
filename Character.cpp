@@ -1,23 +1,36 @@
 #include "Character.h"
+#include "Animation.h"
 #include "GLImage.h"
 
 HRESULT Character::Init()
 {
 	position = { 0.0f, 0.0f };
-	image = new GLImage[State::END];
+	direction = Direction::up;
+	image = new GLImage[State::END]();
 	image[IDLE].Init("Character/hr-level1_idle", 2024, 928, 22, 8);
+	imageAniOffset[IDLE] = { 0.0f, 43.0f };
 	image[RUNNING].Init("Character/hr-level1_running", 1936, 1056, 22, 8);
+	imageAniOffset[RUNNING] = { 0.0f, 43.0f };
+	image[MINING].Init("Character/hr-level1_mining_tool", 5096, 1552, 26, 8);
+	imageAniOffset[MINING] = { 0.0f, 33.0f };
 	//image[IDLE].SetSpecular(false);
 	//image[RUNNING].SetSpecular(false);
 
-	shadow = new GLImage[State::END];
+	shadow = new GLImage[(int)State::END];
 	shadow[IDLE].Init("Character/hr-level1_idle_shadow", 3608, 624, 22, 8);
-	shadow[RUNNING].Init("Character/hr-level1_running_shadow", 4180, 544, 22, 8);
 	shadow[IDLE].SetAlpha(0.6f);
+	shadowAniOffset[IDLE] = {60.0f, 1.0f};
+	shadow[RUNNING].Init("Character/hr-level1_running_shadow", 4180, 544, 22, 8);
 	shadow[RUNNING].SetAlpha(0.6f);
+	shadowAniOffset[RUNNING] = { 60.0f, 1.0f };
+	shadow[MINING].Init("Character/hr-level1_mining_tool_shadow", 7592, 1136, 26, 8);
+	shadow[MINING].SetAlpha(0.6f);
+	shadowAniOffset[MINING] = { 50.0f, 5.0f };
 
-	animationSpeed[IDLE] = 0.01f;
-	animationSpeed[RUNNING] = 0.038f;
+
+	animationSpeed[IDLE] = 0.1f;
+	animationSpeed[RUNNING] = 0.030f;
+	animationSpeed[MINING] = 0.023f;
 	
 	speed = 250.0f;
 	return S_OK;
@@ -25,8 +38,9 @@ HRESULT Character::Init()
 
 void Character::Release()
 {
+
 	SAFE_ARR_DELETE(image);
-	SAFE_RELEASE(shadow);
+	SAFE_ARR_DELETE(shadow);
 }
 
 void Character::Update()
@@ -35,23 +49,40 @@ void Character::Update()
 	{
 	case State::IDLE:
 		Idle();
-
 		break;
+
 	case State::RUNNING:
 		Running();
-
 		break;
+
+	case State::MINING:
+		Mining();
+		break;
+
 	default:
 		break;
 	}
 
-	
+
+	if (accumulateTime > animationSpeed[state])
+	{
+		animationCurrFrame[state]++;
+		accumulateTime-= animationSpeed[state];
+	}
+	accumulateTime += TimerManager::GetSingleton()->GetTimeElapsed();
 }
 
 void Character::Render(Shader* lpShader)
 {
-	shadow[state].Render(lpShader, position.x+60, position.y-42, int(timeGetTime() * animationSpeed[state]) % 22, direction);
-	image[state].Render(lpShader, position.x, position.y, int(timeGetTime() * animationSpeed[state]) % 22, direction);
+	shadow[state].Render(lpShader, position.x + shadowAniOffset[state].x, position.y + shadowAniOffset[state].y, animationCurrFrame[state] % image->GetMaxFrame().x, direction);
+	image[state].Render(lpShader, position.x + imageAniOffset[state].x, position.y + imageAniOffset[state].y, animationCurrFrame[state] % image->GetMaxFrame().x, direction);
+}
+
+void Character::ChangeState(State state)
+{
+	this->state = state;
+	animationCurrFrame[state] = 0;
+	accumulateTime = 0;
 }
 
 void Character::Idle()
@@ -101,10 +132,13 @@ void Character::Idle()
 				newDirection = Direction::down;
 		}
 		direction = newDirection;
-		state = State::RUNNING;
+		ChangeState(State::RUNNING);
 	}
 
-	
+	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RBUTTON))
+	{
+		ChangeState(State::MINING);
+	}
 }
 
 void Character::Running()
@@ -151,9 +185,22 @@ void Character::Running()
 		else if (deltaPos.y < 0)
 			newDirection = Direction::down;
 		else
-			state = State::IDLE;
+			ChangeState(State::IDLE);
 	}
 	direction = newDirection;
+
+	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RBUTTON))
+	{
+		ChangeState(State::MINING);
+	}
+}
+
+void Character::Mining()
+{
+	if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_RBUTTON))
+	{
+		ChangeState(State::IDLE);
+	}
 }
 
 glm::vec3 Character::GetVec3Direction()

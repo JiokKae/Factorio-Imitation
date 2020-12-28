@@ -101,11 +101,13 @@ void MainGame::ImageLoad()
 	TextureManager::GetSingleton()->AddTexture("Character/hr-level1_idle_shadow",		"base/graphics/entity/character/hr-level1_idle_shadow.png");
 	TextureManager::GetSingleton()->AddTexture("Character/hr-level1_running",			"base/graphics/entity/character/hr-level1_running.png");
 	TextureManager::GetSingleton()->AddTexture("Character/hr-level1_running_shadow",	"base/graphics/entity/character/hr-level1_running_shadow.png");
+	TextureManager::GetSingleton()->AddTexture("Character/hr-level1_mining_tool",		"base/graphics/entity/character/hr-level1_mining_tool.png");
+	TextureManager::GetSingleton()->AddTexture("Character/hr-level1_mining_tool_shadow", "base/graphics/entity/character/hr-level1_mining_tool_shadow.png");
 	
 	TextureManager::GetSingleton()->AddTexture("UI/CharacterUI",						"Image/UI/CharacterUI.png");
 	TextureManager::GetSingleton()->AddTexture("UI/InventorySlotUI",					"Image/UI/InventorySlotUI.png");
 
-	TextureManager::GetSingleton()->AddTexture("Terrain/Dirt_1",						"base/graphics/terrain/dirt-1.png");
+	TextureManager::GetSingleton()->AddTexture("Terrain/Dirt_1",						"base/graphics/terrain/hr-dirt-1.png");
 	TextureManager::GetSingleton()->AddTexture("White",									"core/graphics/white-square.png");
 
 	TextureManager::GetSingleton()->AddTexture("IronOre", "base/graphics/entity/iron-ore/hr-iron-ore.png");

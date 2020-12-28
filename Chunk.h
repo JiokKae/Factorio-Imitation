@@ -1,32 +1,26 @@
 #pragma once
 #include "GameNode.h"
 
-class Shader;
-class Ore;
-class Tile : public GameNode
-{
-public:
-	enum class KIND {
-		DIRT_1,
-		END
-	};
+#define CHUNK_IN_TILE	32
 
-private:
+class Tile;
+class Shader;
+class Chunk : public GameNode
+{
 	glm::ivec2 index;
-	KIND kind;
-	Ore* ore;
+	Tile* tiles;
 
 public:
 	virtual HRESULT Init(int x, int y);
 	virtual void Release();
 	virtual void Update();
+	virtual void Render(Shader* lpShader);
 
 	glm::ivec2 GetIndex() { return index; }
-	KIND GetKind()	{ return kind; }
-	Ore* GetLpOre() { return ore; }
-	Tile()
-		: ore(nullptr)
+	Tile* GetLpTile(int x, int y);
 
+	Chunk() 
+		: tiles(nullptr)
 	{};
 };
 

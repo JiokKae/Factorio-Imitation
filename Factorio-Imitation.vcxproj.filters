@@ -207,6 +207,9 @@
     <ClInclude Include="TextRenderer.h">
       <Filter>GLFrameWork\TextRenderer</Filter>
     </ClInclude>
+    <ClInclude Include="Chunk.h">
+      <Filter>MainGame\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -310,6 +313,9 @@
     </ClCompile>
     <ClCompile Include="TextRenderer.cpp">
       <Filter>GLFrameWork\TextRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Chunk.cpp">
+      <Filter>MainGame\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
