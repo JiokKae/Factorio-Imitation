@@ -8,11 +8,13 @@ class PointLight;
 class CharacterUI;
 class TileRenderer;
 class TextRenderer;
+class DirectionalLight;
 class PlayScene : public Scene
 {
 	Camera* camera;
 	Shader* lightingShader;
 	unsigned int uboMatrices;
+	unsigned int uboLights;
 
 	Shader* UIShader;
 	TileRenderer* tileRenderer;
@@ -20,7 +22,10 @@ class PlayScene : public Scene
 	CharacterUI* characterUI;
 	TextRenderer* textRenderer;
 
+	DirectionalLight* dirLight;
 	PointLight* pointLights;
+	int numOfPointLight;
+
 public:
 	virtual HRESULT Init();
 	virtual void Release();
