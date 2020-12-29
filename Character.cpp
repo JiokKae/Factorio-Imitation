@@ -28,11 +28,11 @@ HRESULT Character::Init()
 	shadowAniOffset[MINING] = { 50.0f, 5.0f };
 
 
-	animationSpeed[IDLE] = 0.1f;
-	animationSpeed[RUNNING] = 0.030f;
-	animationSpeed[MINING] = 0.023f;
+	animationSpeed[IDLE] = 0.105f;
+	animationSpeed[RUNNING] = 0.025f;
+	animationSpeed[MINING] = 0.022f;
 	
-	speed = 250.0f;
+	speed = 566.0f;
 	return S_OK;
 }
 
@@ -101,7 +101,10 @@ void Character::Idle()
 	if (KeyManager::GetSingleton()->IsStayKeyDown('D'))
 		deltaPos.x += scaledspeed;
 
-	position += deltaPos;
+	if (deltaPos.x != 0 && deltaPos.y != 0)
+		position += deltaPos / 1.4142135623f;
+	else
+		position += deltaPos;
 
 	if (deltaPos.x != 0 || deltaPos.y != 0)
 	{
@@ -157,7 +160,10 @@ void Character::Running()
 	if (KeyManager::GetSingleton()->IsStayKeyDown('D'))
 		deltaPos.x += scaledspeed;
 
-	position += deltaPos;
+	if (deltaPos.x != 0 && deltaPos.y != 0)
+		position += deltaPos / 1.4142135623f;
+	else
+		position += deltaPos;
 
 	Direction newDirection = direction;
 	if (deltaPos.x > 0)

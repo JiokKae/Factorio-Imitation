@@ -23,7 +23,7 @@ void Camera::Update()
 	float offset = lastMouseZDelta - g_mousezDelta;
 	lastMouseZDelta = g_mousezDelta;
 	zoom -= offset / 120.0f * zoomSpeed;
-	zoom = Clamp(zoom, -3.0f, 3.0f);
+	zoom = Clamp(zoom, -2.9f, 0.7f);
 
 	if (target)
 	{
