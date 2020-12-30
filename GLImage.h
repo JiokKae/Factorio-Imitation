@@ -26,9 +26,6 @@ public:
 	void Release();
 
 	void Render(Shader* shader, float destX, float destY, int currFrameX = 0, int currFrameY = 0);
-	void MassiveRenderInit(Shader* lpShader);
-	void MassiveRender(Shader* lpShader, int x, int y, int currFrameX, int currFrameY);
-	void MassiveRenderRelease();
 	void AnimationRender(Shader* shader, float destX, float destY, Animation* ani);
 
 	void SetZoom(float zoom)			{ this->zoom = zoom; }

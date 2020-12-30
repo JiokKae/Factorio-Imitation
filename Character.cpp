@@ -64,7 +64,7 @@ void Character::Update()
 	}
 
 
-	if (accumulateTime > animationSpeed[state])
+	while (accumulateTime > animationSpeed[state])
 	{
 		animationCurrFrame[state]++;
 		accumulateTime-= animationSpeed[state];

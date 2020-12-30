@@ -370,5 +370,8 @@
     <None Include="Text2DFragmentShader.glsl">
       <Filter>MainGame\Shader</Filter>
     </None>
+    <None Include="InstancingVertexShader.glsl">
+      <Filter>MainGame\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

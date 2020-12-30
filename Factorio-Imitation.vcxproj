@@ -234,6 +234,7 @@
     <None Include="1.colors.vert" />
     <None Include="1.light_cube.frag" />
     <None Include="1.light_cube.vert" />
+    <None Include="InstancingVertexShader.glsl" />
     <None Include="SimpleFragmentShader.glsl" />
     <None Include="SimpleVertexShader.glsl" />
     <None Include="StandardFragmentShader.glsl" />

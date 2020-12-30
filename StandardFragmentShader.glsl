@@ -53,7 +53,7 @@ void main()
 
     float imageAlpha = texture(material.diffuse, IN.TexCoords).a;
     FragColor = vec4(result, imageAlpha * alpha);
-
+   // FragColor = vec4(vec3(1.0f), imageAlpha * alpha);
 }  
 
 // calculates the color when using a directional light.

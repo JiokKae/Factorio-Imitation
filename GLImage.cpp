@@ -77,37 +77,6 @@ void GLImage::Render(Shader* shader, float destX, float destY, int currFrameX, i
     
     glBindVertexArray(0);
 }
-void GLImage::MassiveRenderInit(Shader* lpShader)
-{
-    lpShader->use();
-    lpShader->setVec2("maxFrame", maxFrame);
-
-    // bind diffuse map
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, sourceTexture->GetID());
-
-    glBindVertexArray(VAO);
-}
-
-void GLImage::MassiveRender(Shader* lpShader, int destX, int destY, int currFrameX, int currFrameY)
-{
-    lpShader->setVec2("currFrame", { currFrameX , currFrameY });
-    glm::vec3 position = glm::vec3(destX, destY, 0.0f);
-    // world transformation
-    glm::mat4 planeModel;
-    planeModel = glm::translate(planeModel, position);
-    planeModel = glm::scale(planeModel, glm::vec3(zoom));
-    lpShader->setMat4("model", planeModel);
-
-    // render the cube
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-}
-
-void GLImage::MassiveRenderRelease()
-{
-    glBindVertexArray(0);
-}
-
 
 void GLImage::AnimationRender(Shader* shader, float destX, float destY, Animation* ani)
 {
