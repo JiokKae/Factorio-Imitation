@@ -7,7 +7,7 @@ class Tile;
 class Shader;
 class Chunk : public GameNode
 {
-	glm::ivec2 index;
+	glm::ivec2 coord;
 	Tile* tiles;
 
 public:
@@ -16,8 +16,9 @@ public:
 	virtual void Update();
 	virtual void Render(Shader* lpShader);
 
-	glm::ivec2 GetIndex() { return index; }
+	RECT GetRect();
 	Tile* GetLpTile(int x, int y);
+	glm::ivec2 GetCoord() { return coord; }
 
 	Chunk() 
 		: tiles(nullptr)

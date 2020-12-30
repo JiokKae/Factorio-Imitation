@@ -35,29 +35,26 @@ HRESULT PlayScene::Init()
 
     numOfPointLight = 4;
 
+    // 
     glGenBuffers(1, &uboMatrices);
     glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
     glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), NULL, GL_DYNAMIC_DRAW);
+    glBindBufferRange(GL_UNIFORM_BUFFER, 0, uboMatrices, 0, 2 * sizeof(glm::mat4));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-    glBindBufferRange(GL_UNIFORM_BUFFER, 0, uboMatrices, 0, 2 * sizeof(glm::mat4));
  
-    int a = sizeof(glm::vec4) * 2 + sizeof(glm::vec4) * 4 * numOfPointLight;
-
     glGenBuffers(1, &uboLights);
     glBindBuffer(GL_UNIFORM_BUFFER, uboLights);
-    glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::vec4) * 2 + sizeof(glm::vec4) * 4 * numOfPointLight, NULL, GL_DYNAMIC_DRAW);
+    glBufferData(GL_UNIFORM_BUFFER, DirectionalLight::std140Size() + PointLight::std140Size() * numOfPointLight, NULL, GL_DYNAMIC_DRAW);
+    glBindBufferRange(GL_UNIFORM_BUFFER, 1, uboLights, 0, DirectionalLight::std140Size() + PointLight::std140Size() * numOfPointLight * numOfPointLight);
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-    glBindBufferRange(GL_UNIFORM_BUFFER, 1, uboLights, 0, sizeof(glm::vec4) * 2 + sizeof(glm::vec4) * 4 * numOfPointLight);
 
 	// build and compile our shader zprogram
 	// ------------------------------------
 	lightingShader = new Shader("StandardVertexShader.glsl", "StandardFragmentShader.glsl");
-    lightingShader->setInt("material.diffuse", 0);
     UIShader = new Shader("UIVertexShader.glsl", "UIFragmentShader.glsl");
-    UIShader->setInt("material.diffuse", 0);
-
+    
     characterUI = new CharacterUI();
     characterUI->Init();
     characterUI->SetLocalPosition(glm::vec2(width / 2, height / 2));
@@ -65,36 +62,28 @@ HRESULT PlayScene::Init()
 	// shader configuration
 	// --------------------
     UIShader->use();
-
+    UIShader->setInt("material.diffuse", 0);
     glm::mat4 projection = glm::ortho(0.0f, 1600.0f, 0.0f, 900.0f);
     UIShader->setMat4("projection", projection);
 
 	lightingShader->use();
-    // change the light's position values over time (can be done anywhere in the render loop actually, but try to do it at least before using the light source positions)
-    lightingShader->setFloat("material.shininess", 64.0f);
-    Texture* white = TextureManager::GetSingleton()->FindTexture("White");
-    lightingShader->setInt("material.specular", 128);
-    glActiveTexture(GL_TEXTURE0 + 16);
-    glBindTexture(GL_TEXTURE_2D, white->GetID());
-
-    pointLights = new PointLight[numOfPointLight]();
-    
-    // directional light(static)
-    dirLight = new DirectionalLight();
-    
+    lightingShader->setInt("material.diffuse", 0);
     glBindBuffer(GL_UNIFORM_BUFFER, uboLights);
 
+    // directional light(static)
+    dirLight = new DirectionalLight();
     dirLight->ambient = { 0.01f, 0.01f, 0.01f };
     dirLight->diffuse = { 0.3f, 0.3f, 0.3f };
     glBufferSubData(GL_UNIFORM_BUFFER,                  0, sizeof(glm::vec3), glm::value_ptr(dirLight->ambient));
     glBufferSubData(GL_UNIFORM_BUFFER,  sizeof(glm::vec4), sizeof(glm::vec3), glm::value_ptr(dirLight->diffuse));
 
+    pointLights = new PointLight[numOfPointLight]();
     pointLights[0].position =   { 0.0f,   0.0f,  0.0f };
     pointLights[0].ambient =    { 0.01f, 0.01f, 0.01f };
     pointLights[0].diffuse =    { 0.6f,   0.6f,  0.6f };
     pointLights[0].constant =   0.09f;
     pointLights[0].linear =     0.0008f;
-    pointLights[0].quadratic =  0.000252f;
+    pointLights[0].quadratic =  0.000352f;
     
     pointLights[1].position = { 1000.0f, 0.0f, 0.0f };
     pointLights[1].ambient = { 0.01f, 0.01f, 0.01f };
@@ -203,7 +192,7 @@ void PlayScene::Render(HDC hdc)
     glm::mat4 UIprojection = glm::ortho(0.0f, float(width), 0.0f, float(height));
     UIShader->setMat4("projection", UIprojection);
 
-    tileRenderer->Render(lightingShader);
+    tileRenderer->Render();
 
     player->Render(lightingShader);
     characterUI->Render(UIShader);

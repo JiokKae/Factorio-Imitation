@@ -191,6 +191,7 @@
     <ClInclude Include="TimerManager.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="VertexArrayObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
@@ -232,6 +233,7 @@
     <ClCompile Include="TimerManager.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="VertexArrayObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="1.colors.frag" />

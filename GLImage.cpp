@@ -2,6 +2,7 @@
 #include "Texture.h"
 #include "Shader.h"
 #include "Scene.h"
+#include "VertexArrayObject.h"
 
 HRESULT GLImage::Init(char const* sourceTexture, int maxFrameX, int maxFrameY, int width, int height)
 {
@@ -32,6 +33,7 @@ HRESULT GLImage::Init(char const* sourceTexture, int maxFrameX, int maxFrameY, i
         -frameWidth / 2, -frameHeight / 2,  0.0f, 0.0f,
     };
 
+    vao = new VertexArrayObject();
     // Generate VAO, VBO
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -58,6 +60,7 @@ void GLImage::Release()
 {
     if (isInit)
     {
+        SAFE_DELETE(vao);
         glDeleteVertexArrays(1, &VAO);
         glDeleteBuffers(1, &VBO);
     }

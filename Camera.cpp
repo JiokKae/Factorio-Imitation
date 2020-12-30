@@ -7,7 +7,7 @@ HRESULT Camera::Init()
 	up = glm::vec3(0.0f, 1.0f, 0.0f);
 
 	movementSpeed = 15.0f;
-	zoom = 1.0f;
+	zoom = 0.0f;
 	zoomSpeed = 0.1f;
 
 	return S_OK;
@@ -23,7 +23,7 @@ void Camera::Update()
 	float offset = lastMouseZDelta - g_mousezDelta;
 	lastMouseZDelta = g_mousezDelta;
 	zoom -= offset / 120.0f * zoomSpeed;
-	zoom = Clamp(zoom, -2.9f, 0.7f);
+	zoom = Clamp(zoom, -2.3f, 0.7f);
 
 	if (target)
 	{

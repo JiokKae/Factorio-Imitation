@@ -3,13 +3,13 @@
 #include "Ore.h"
 HRESULT Chunk::Init(int x, int y)
 {
-    index = { x, y };
+    coord = { x, y };
     tiles = new Tile[CHUNK_IN_TILE * CHUNK_IN_TILE]();
     for (int y = 0; y < CHUNK_IN_TILE; y++)
     {
         for (int x = 0; x < CHUNK_IN_TILE; x++)
         {
-            tiles[y * CHUNK_IN_TILE + x].Init(x + index.x * CHUNK_IN_TILE, y + index.y * CHUNK_IN_TILE);
+            tiles[y * CHUNK_IN_TILE + x].Init(x + coord.x * CHUNK_IN_TILE, y + coord.y * CHUNK_IN_TILE);
         }
     }
 
@@ -39,6 +39,18 @@ void Chunk::Update()
 void Chunk::Render(Shader* lpShader)
 {
 
+}
+
+RECT Chunk::GetRect()
+{
+    RECT rect;
+
+    rect.left = coord.x * 2048;
+    rect.right = (coord.x + 1) * 2048;
+    rect.top = (coord.y + 1) * 2048;
+    rect.bottom = coord.y * 2048;
+
+    return rect;
 }
 
 Tile* Chunk::GetLpTile(int x, int y)

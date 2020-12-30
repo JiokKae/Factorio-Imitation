@@ -22,9 +22,9 @@ HRESULT TileRenderer::Init()
             mapChunks[y][x]->Init(x, y);
         }
     }
+    glm::vec2* tileCurrFrame = new glm::vec2[1024];
+    glm::vec2* tileOffset = new glm::vec2[1024];
 
-    glm::vec2 tileOffset[1024];
-    glm::vec2 tileCurrFrame[1024];
     int index = 0;
     for (int y = 0; y < 32; y++)
     {
@@ -37,16 +37,11 @@ HRESULT TileRenderer::Init()
 
     instancingShader = new Shader("InstancingVertexShader.glsl", "StandardFragmentShader.glsl");
     instancingShader->use();
-    instancingShader->setVec2("currFrame", { 0 , 0 });
     instancingShader->setInt("material.diffuse", 0);
     instancingShader->setFloat("alpha", 1.0f);
-    
-    glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
     // world transformation
-    glm::mat4 planeModel;
-    planeModel = glm::translate(planeModel, position);
-    planeModel = glm::scale(planeModel, glm::vec3(1.0f));
-    instancingShader->setMat4("model", planeModel);
+    glm::mat4 model;
+    instancingShader->setMat4("model", model);
     
     glGenBuffers(1, &offsetVBO);
     glBindBuffer(GL_ARRAY_BUFFER, offsetVBO);
@@ -57,22 +52,14 @@ HRESULT TileRenderer::Init()
     glBindBuffer(GL_ARRAY_BUFFER, currFrameVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    float vertices[] = {
-        // positions       // texture coords
-        -64 / 2, -64 / 2,  0.0f, 0.0f,
-         64 / 2, -64 / 2,  1.0f, 0.0f,
-         64 / 2,  64 / 2,  1.0f, 1.0f,
-         64 / 2,  64 / 2,  1.0f, 1.0f,
-        -64 / 2,  64 / 2,  0.0f, 1.0f,
-        -64 / 2, -64 / 2,  0.0f, 0.0f,
-    };
-    
+
     glGenVertexArrays(1, &tilesVAO);
     glGenBuffers(1, &tileQuadVBO);
+
     glBindVertexArray(tilesVAO);
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, tileQuadVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 4 * 6, NULL, GL_STATIC_DRAW); // vec4(vec2 pos, vec2 texCoord) * 6
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
     // also set instance data
     glEnableVertexAttribArray(1);
@@ -84,6 +71,9 @@ HRESULT TileRenderer::Init()
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glVertexAttribDivisor(2, 1); // tell OpenGL this is an instanced vertex attribute.
+
+    delete[] tileCurrFrame;
+    delete[] tileOffset;
 
 	return S_OK;
 }
@@ -100,8 +90,11 @@ void TileRenderer::Update()
 
 }
 
-void TileRenderer::Render(Shader* lpShader)
+void TileRenderer::Render()
 {
+    int index;
+    glm::vec2 tileCurrFrame[1024];
+
     instancingShader->use();
     glBindVertexArray(tilesVAO);
     float vertices[] = {
@@ -122,10 +115,9 @@ void TileRenderer::Render(Shader* lpShader)
         for (smallIt = bigIt->second.begin(); smallIt != bigIt->second.end(); smallIt++)
         {
             Chunk* currChunk = smallIt->second;
-            instancingShader->setVec2("chunkCoord", currChunk->GetIndex());
+            instancingShader->setVec2("chunkCoord", currChunk->GetCoord());
 
-            glm::vec2 tileCurrFrame[1024];
-            int index = 0;
+            index = 0;
             for (int y = 0; y < 32; y++)
             {
                 for (int x = 0; x < 32; x++)
@@ -136,13 +128,11 @@ void TileRenderer::Render(Shader* lpShader)
             glBindBuffer(GL_ARRAY_BUFFER, currFrameVBO);
             glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
 
-
             for (int kind = 0; kind < int(Tile::KIND::END); kind++)
             {
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, tileImages[kind].GetLpSourceTexture()->GetID());
-                glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 1024);
-                
+                glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 1024);    
             }
         }
     }
@@ -165,10 +155,9 @@ void TileRenderer::Render(Shader* lpShader)
         for (smallIt = bigIt->second.begin(); smallIt != bigIt->second.end(); smallIt++)
         {
             Chunk* currChunk = smallIt->second;
-            instancingShader->setVec2("chunkCoord", currChunk->GetIndex());
+            instancingShader->setVec2("chunkCoord", currChunk->GetCoord());
             
-            glm::vec2 tileCurrFrame[1024];
-            int index = 0;
+            index = 0;
             for (int y = 0; y < 32; y++)
             {
                 for (int x = 0; x < 32; x++)

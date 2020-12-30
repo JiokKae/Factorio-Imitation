@@ -14,6 +14,6 @@ public:
 	float_t quadratic;
 
 public:
-	static int std140Size() { return sizeof(vec4) * 4; }
+	static ULONG64 std140Size() { return sizeof(vec4) * 4; }
 };
 

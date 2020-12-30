@@ -4,6 +4,7 @@
 class Shader;
 class Texture;
 class Animation;
+class VertexArrayObject;
 class GLImage
 {
 	Texture* sourceTexture;
@@ -13,7 +14,8 @@ class GLImage
 	float frameHeight;
 	unsigned int VAO;
 	unsigned int VBO;
-	
+	VertexArrayObject* vao;
+
 	bool isSpecular;
 	float alpha;
 	float zoom;

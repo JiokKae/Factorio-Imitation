@@ -103,6 +103,9 @@
     <Filter Include="GLFrameWork\Light">
       <UniqueIdentifier>{320186c3-c873-43f3-80cd-1c43613725b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GLFrameWork\VertexArrayObject">
+      <UniqueIdentifier>{8f0485d7-9cf0-48ee-9cfd-dabd95d5563a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -225,6 +228,9 @@
     <ClInclude Include="BurnerMiningDrill.h">
       <Filter>MainGame\Entity</Filter>
     </ClInclude>
+    <ClInclude Include="VertexArrayObject.h">
+      <Filter>GLFrameWork\VertexArrayObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -343,6 +349,9 @@
     </ClCompile>
     <ClCompile Include="BurnerMiningDrill.cpp">
       <Filter>MainGame\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexArrayObject.cpp">
+      <Filter>GLFrameWork\VertexArrayObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

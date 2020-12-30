@@ -9,6 +9,6 @@ public:
 	vec3 diffuse;
 
 public:
-	static int std140Size() { return sizeof(vec4) * 2; }
+	static ULONGLONG std140Size() { return sizeof(vec4) * 2; }
 };
 
