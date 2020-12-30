@@ -1,5 +1,6 @@
 #pragma once
 #include "framework.h"
+// CC
 
 class Texture
 {
@@ -13,7 +14,9 @@ public:
 	HRESULT Init(char const* path, bool flip = true);
 	void Release();
 
-	unsigned int GetID() { return ID; }
+	unsigned int GetID()	{ return ID; }
+	int GetWidth()			{ return width; }
+	int GetHeight()			{ return height; }
 
 	Texture() {};
 	~Texture() {};

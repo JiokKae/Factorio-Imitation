@@ -21,7 +21,8 @@ class GLImage
 
 public:
 	//빈 비트맵 이미지를 만든다.
-	HRESULT Init(char const* sourceTexture, int width, int height, int maxFrameX = 1, int maxFrameY = 1);
+	HRESULT Init(char const* sourceTexture, int maxFrameX = 1, int maxFrameY = 1, int width = -1, int height = -1);
+
 	// 메모리 해제
 	void Release();
 

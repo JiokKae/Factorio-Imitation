@@ -14,9 +14,9 @@ HRESULT TileRenderer::Init()
     oreImages = new GLImage[int(Ore::KIND::END)]();
     oreImages[int(Ore::KIND::IRON_ORE)].Init("IronOre", 1024, 1024, 8, 8);
         
-    for (int y = -3; y < 3; y++)
+    for (int y = -7; y < 7; y++)
     {
-        for (int x = -3; x < 3; x++)
+        for (int x = -7; x < 7; x++)
         {
             mapChunks[y][x] = new Chunk();
             mapChunks[y][x]->Init(x, y);

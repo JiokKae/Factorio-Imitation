@@ -219,6 +219,12 @@
     <ClInclude Include="DirectionalLight.h">
       <Filter>GLFrameWork\Light</Filter>
     </ClInclude>
+    <ClInclude Include="Structure.h">
+      <Filter>MainGame\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="BurnerMiningDrill.h">
+      <Filter>MainGame\Entity</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -331,6 +337,12 @@
     </ClCompile>
     <ClCompile Include="DirectionalLight.cpp">
       <Filter>GLFrameWork\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Structure.cpp">
+      <Filter>MainGame\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="BurnerMiningDrill.cpp">
+      <Filter>MainGame\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

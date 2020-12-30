@@ -6,7 +6,7 @@
 HRESULT CharacterUI::Init()
 {
 	image = new GLImage();
-	image->Init("UI/CharacterUI", 884, 500);
+	image->Init("UI/CharacterUI");
 
 	slotUI = new InventorySlotUI[SLOT_SIZE]();
 	for (int y = 0; y < SLOT_Y; y++)

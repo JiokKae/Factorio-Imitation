@@ -52,6 +52,7 @@ void main()
         result += CalcPointLight(pointLights[i], IN.FragPos);    
 
     float imageAlpha = texture(material.diffuse, IN.TexCoords).a;
+    result = clamp(result, vec3(0.0f), texture(material.diffuse, IN.TexCoords).rgb);
     FragColor = vec4(result, imageAlpha * alpha);
    // FragColor = vec4(vec3(1.0f), imageAlpha * alpha);
 }  

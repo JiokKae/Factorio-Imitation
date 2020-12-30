@@ -92,30 +92,30 @@ HRESULT PlayScene::Init()
     pointLights[0].position =   { 0.0f,   0.0f,  0.0f };
     pointLights[0].ambient =    { 0.01f, 0.01f, 0.01f };
     pointLights[0].diffuse =    { 0.6f,   0.6f,  0.6f };
-    pointLights[0].constant =   0.5f;
-    pointLights[0].linear =     0.06f;
-    pointLights[0].quadratic =  0.082f;
+    pointLights[0].constant =   0.09f;
+    pointLights[0].linear =     0.0008f;
+    pointLights[0].quadratic =  0.000252f;
     
     pointLights[1].position = { 1000.0f, 0.0f, 0.0f };
     pointLights[1].ambient = { 0.01f, 0.01f, 0.01f };
     pointLights[1].diffuse = { 0.8f, 0.8f, 0.8f };
-    pointLights[1].constant = 1.0f;
-    pointLights[1].linear = 0.09f;
-    pointLights[1].quadratic = 0.062f;
+    pointLights[1].constant = 2.0f;
+    pointLights[1].linear = 0.003f;
+    pointLights[1].quadratic = 0.022f;
 
     pointLights[2].position = { 0.0f,  1000.0f, 0.0f };
     pointLights[2].ambient = { 0.01f, 0.01f, 0.01f };
     pointLights[2].diffuse = { 0.8f, 0.8f, 0.8f };
-    pointLights[2].constant = 1.0f;
-    pointLights[2].linear = 0.09f;
-    pointLights[2].quadratic = 0.062f;
+    pointLights[2].constant = 3.0f;
+    pointLights[2].linear = 0.002f;
+    pointLights[2].quadratic = 0.012f;
 
     pointLights[3].position = { 1000.0f,  1000.0f, 0.0f };
     pointLights[3].ambient = { 0.01f, 0.01f, 0.01f };
     pointLights[3].diffuse = { 0.8f, 0.8f, 0.8f };
-    pointLights[3].constant = 1.0f;
-    pointLights[3].linear = 0.09f;
-    pointLights[3].quadratic = 0.062f;
+    pointLights[3].constant = 2.0f;
+    pointLights[3].linear = 0.0001f;
+    pointLights[3].quadratic = 0.002f;
 
     for (int i = 0; i < numOfPointLight; i++)
     {
@@ -181,7 +181,8 @@ void PlayScene::Render(HDC hdc)
     pointLights[0].position = glm::vec3(player->GetLpPosition()->x, player->GetLpPosition()->y, 0.01f);
     glBufferSubData(GL_UNIFORM_BUFFER, DirectionalLight::std140Size(), sizeof(glm::vec3), glm::value_ptr(pointLights[0].position));
     // directional light(dynamic)
-    dirLight->diffuse = glm::vec3((sin(timeGetTime() / 3000.0f) + 1) / 2);
+    //dirLight->diffuse = glm::vec3((sin(timeGetTime() / 3000.0f) + 1) / 2);
+    dirLight->diffuse = glm::vec3(0.0f);
     glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::vec4), sizeof(glm::vec3), glm::value_ptr(dirLight->diffuse));
 
     glBindBuffer(GL_UNIFORM_BUFFER, 0);

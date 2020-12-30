@@ -4,7 +4,7 @@
 HRESULT InventorySlotUI::Init(int x, int y)
 {
 	image = new GLImage();
-	image->Init("UI/InventorySlotUI", 76, 38, 2, 1);
+	image->Init("UI/InventorySlotUI", 2, 1);
 	width = image->GetFrameWidth();
 	height = image->GetFrameHeight();
 	localPosition.x = x * (width + 2) -397;
