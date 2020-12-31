@@ -1,19 +1,22 @@
-#include "TileRenderer.h"
+#include "TileManager.h"
 #include "Tile.h"
 #include "GLImage.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "Ore.h"
 #include "Chunk.h"
+#include "VertexBufferObject.h"
+#include "VertexArrayObject.h"
 
-HRESULT TileRenderer::Init()
+HRESULT TileManager::Init()
 {
     tileImages = new GLImage[int(Tile::KIND::END)]();
     tileImages[int(Tile::KIND::DIRT_1)].Init("Terrain/Dirt_1", 4096, 576, 64, 9);
     
     oreImages = new GLImage[int(Ore::KIND::END)]();
     oreImages[int(Ore::KIND::IRON_ORE)].Init("IronOre", 1024, 1024, 8, 8);
-        
+    
+    // 14 * 14 청크 생성
     for (int y = -7; y < 7; y++)
     {
         for (int x = -7; x < 7; x++)
@@ -22,81 +25,66 @@ HRESULT TileRenderer::Init()
             mapChunks[y][x]->Init(x, y);
         }
     }
-    glm::vec2* tileCurrFrame = new glm::vec2[1024];
-    glm::vec2* tileOffset = new glm::vec2[1024];
 
-    int index = 0;
-    for (int y = 0; y < 32; y++)
-    {
-        for (int x = 0; x < 32; x++)
-        {
-            tileCurrFrame[index] = {x % 64, y % 4};
-            tileOffset[index++] = { x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2 };
-        }
-    }
-
+    // 인스턴싱 쉐이더 생성 및 초기화
     instancingShader = new Shader("InstancingVertexShader.glsl", "StandardFragmentShader.glsl");
     instancingShader->use();
     instancingShader->setInt("material.diffuse", 0);
     instancingShader->setFloat("alpha", 1.0f);
-    // world transformation
-    glm::mat4 model;
-    instancingShader->setMat4("model", model);
+    instancingShader->setMat4("model", glm::mat4());
     
-    glGenBuffers(1, &offsetVBO);
-    glBindBuffer(GL_ARRAY_BUFFER, offsetVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec2) * 1024, &tileOffset[0], GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    // 아래의 VBO들을 담는 Vertex Array Object를 생성한다.
+    tilesVAO = new VAO();
 
-    glGenBuffers(1, &currFrameVBO);
-    glBindBuffer(GL_ARRAY_BUFFER, currFrameVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    // tileQuadVBO Init (사각형 버텍스들을 저장하는 VBO)
+    VBO* tileQuadVBO = new VBO();   // 사각형 버텍스들을 저장하는 VBO
+    tileQuadVBO->SetData(sizeof(float) * 4 * 6, NULL, GL_DYNAMIC_DRAW); // vec4(vec2 pos, vec2 texCoord) * 6
+    tilesVAO->AddVBO(0, tileQuadVBO, 4);
 
-    glGenVertexArrays(1, &tilesVAO);
-    glGenBuffers(1, &tileQuadVBO);
+    // currFrameVBO Init (각 인스턴스의 현재 프레임을 저장하는 VBO)
+    VBO* currFrameVBO = new VBO();
+    currFrameVBO->SetData(sizeof(glm::vec2) * 1024, NULL, GL_DYNAMIC_DRAW); // vec2(currFrame.x, currFrame.y) * 1024
+    tilesVAO->AddVBO(1, currFrameVBO, 2);
+    tilesVAO->SetDivisor(1, 1);
+    
+    // offsetVBO Init (각 인스턴스의 위치 오프셋을 저장하는 VBO)
 
-    glBindVertexArray(tilesVAO);
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, tileQuadVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 4 * 6, NULL, GL_STATIC_DRAW); // vec4(vec2 pos, vec2 texCoord) * 6
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-    // also set instance data
-    glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, currFrameVBO); // this attribute comes from a different vertex buffer
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-    glVertexAttribDivisor(1, 1); // tell OpenGL this is an instanced vertex attribute.
-    glEnableVertexAttribArray(2);
-    glBindBuffer(GL_ARRAY_BUFFER, offsetVBO); // this attribute comes from a different vertex buffer
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glVertexAttribDivisor(2, 1); // tell OpenGL this is an instanced vertex attribute.
+    //set Data
+    glm::vec2* tileOffset = new glm::vec2[CHUNK_IN_TILE * CHUNK_IN_TILE];
+    for (int y = 0; y < CHUNK_IN_TILE; y++)
+        for (int x = 0; x < CHUNK_IN_TILE; x++)
+            tileOffset[y * CHUNK_IN_TILE + x] = { x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2 }; 
+    
+    VBO* offsetVBO = new VBO();
+    offsetVBO->SetData(sizeof(glm::vec2) * 1024, &tileOffset[0], GL_STATIC_DRAW); // vec2(currFrame.x, currFrame.y) * 1024
+    tilesVAO->AddVBO(2, offsetVBO, 2);
+    tilesVAO->SetDivisor(2, 1);
 
-    delete[] tileCurrFrame;
     delete[] tileOffset;
 
 	return S_OK;
 }
 
-void TileRenderer::Release()
+void TileManager::Release()
 {
+    SAFE_DELETE(tilesVAO);
     SAFE_DELETE(instancingShader);
     SAFE_RELEASE(tileImages);
     SAFE_RELEASE(oreImages);
 }
 
-void TileRenderer::Update()
+void TileManager::Update()
 {
 
 }
 
-void TileRenderer::Render()
+void TileManager::Render(RECT cameraRect)
 {
-    int index;
     glm::vec2 tileCurrFrame[1024];
 
     instancingShader->use();
-    glBindVertexArray(tilesVAO);
+    glBindVertexArray(tilesVAO->GetID());
+
     float vertices[] = {
         // positions       // texture coords
         -64 / 2, -64 / 2,  0.0f, 0.0f,
@@ -106,8 +94,7 @@ void TileRenderer::Render()
         -64 / 2,  64 / 2,  0.0f, 1.0f,
         -64 / 2, -64 / 2,  0.0f, 0.0f,
     };
-    glBindBuffer(GL_ARRAY_BUFFER, tileQuadVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    tilesVAO->SetVBOData(0, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
 
     instancingShader->setVec2("maxFrame", glm::vec2(64, 9));
     for (bigIt = mapChunks.begin(); bigIt != mapChunks.end(); bigIt++)
@@ -115,18 +102,19 @@ void TileRenderer::Render()
         for (smallIt = bigIt->second.begin(); smallIt != bigIt->second.end(); smallIt++)
         {
             Chunk* currChunk = smallIt->second;
+            if (!CheckRectCollision(currChunk->GetRect(), cameraRect))
+                continue;
+
             instancingShader->setVec2("chunkCoord", currChunk->GetCoord());
 
-            index = 0;
             for (int y = 0; y < 32; y++)
             {
                 for (int x = 0; x < 32; x++)
                 {
-                    tileCurrFrame[index++] = { x % 64, y % 4 };
+                    tileCurrFrame[y * CHUNK_IN_TILE + x] = { x % 64, y % 4 };
                 }
             }
-            glBindBuffer(GL_ARRAY_BUFFER, currFrameVBO);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
+            tilesVAO->SetVBOData(1, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
 
             for (int kind = 0; kind < int(Tile::KIND::END); kind++)
             {
@@ -146,8 +134,7 @@ void TileRenderer::Render()
         -128 / 2,  128 / 2,  0.0f, 1.0f,
         -128 / 2, -128 / 2,  0.0f, 0.0f,
     };
-    glBindBuffer(GL_ARRAY_BUFFER, tileQuadVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(OreVertices), OreVertices, GL_STATIC_DRAW);
+    tilesVAO->SetVBOData(0, sizeof(OreVertices), OreVertices, GL_DYNAMIC_DRAW);
 
     instancingShader->setVec2("maxFrame", glm::vec2(8, 8));
     for (bigIt = mapChunks.begin(); bigIt != mapChunks.end(); bigIt++)
@@ -155,19 +142,20 @@ void TileRenderer::Render()
         for (smallIt = bigIt->second.begin(); smallIt != bigIt->second.end(); smallIt++)
         {
             Chunk* currChunk = smallIt->second;
+            if (!CheckRectCollision(currChunk->GetRect(), cameraRect))
+                continue;
+
             instancingShader->setVec2("chunkCoord", currChunk->GetCoord());
-            
-            index = 0;
+
             for (int y = 0; y < 32; y++)
             {
                 for (int x = 0; x < 32; x++)
                 {
                     Ore* ore = currChunk->GetLpTile(x, y)->GetLpOre();
-                    tileCurrFrame[index++] = { ore->GetRandFrameX(), ore->AmountToImageFrameY() };
+                    tileCurrFrame[y * CHUNK_IN_TILE + x] = { ore->GetRandFrameX(), ore->AmountToImageFrameY() };
                 }
             }
-            glBindBuffer(GL_ARRAY_BUFFER, currFrameVBO);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
+            tilesVAO->SetVBOData(1, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
 
             for (int kind = 0; kind < int(Ore::KIND::END); kind++)
             {

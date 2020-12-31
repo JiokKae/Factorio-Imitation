@@ -54,7 +54,7 @@ HRESULT MainGame::Init()
 	// Change StartScene
 	SceneManager::GetSingleton()->ChangeScene("PlayScene");
 
-	TimerManager::GetSingleton()->SetTargetFPS(0);
+	TimerManager::GetSingleton()->SetTargetFPS(120);
 
 	isInit = true;
 	return S_OK;

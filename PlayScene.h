@@ -6,9 +6,10 @@ class Shader;
 class Character;
 class PointLight;
 class CharacterUI;
-class TileRenderer;
+class TileManager;
 class TextRenderer;
 class DirectionalLight;
+class BurnerMiningDrill;
 class PlayScene : public Scene
 {
 	Camera* camera;
@@ -17,7 +18,7 @@ class PlayScene : public Scene
 	unsigned int uboLights;
 
 	Shader* UIShader;
-	TileRenderer* tileRenderer;
+	TileManager* tileRenderer;
 	Character* player;
 	CharacterUI* characterUI;
 	TextRenderer* textRenderer;
@@ -26,6 +27,7 @@ class PlayScene : public Scene
 	PointLight* pointLights;
 	int numOfPointLight;
 
+	BurnerMiningDrill* drill;
 public:
 	virtual HRESULT Init();
 	virtual void Release();

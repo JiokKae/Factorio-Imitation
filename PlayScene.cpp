@@ -6,10 +6,12 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Tile.h"
-#include "TileRenderer.h"
+#include "TileManager.h"
 #include "TextRenderer.h"
 #include "PointLight.h"
 #include "DirectionalLight.h"
+#include "BurnerMiningDrill.h"
+
 HRESULT PlayScene::Init()
 {
     SetWindowSize((1920 - width) / 2, (1080 - height) / 2, width, height);
@@ -24,7 +26,7 @@ HRESULT PlayScene::Init()
     player = new Character();
     player->Init();
 
-    tileRenderer = new TileRenderer();
+    tileRenderer = new TileManager();
     tileRenderer->Init();
 
     // camera
@@ -123,11 +125,15 @@ HRESULT PlayScene::Init()
     textRenderer->Init(1600, 900);
     textRenderer->Load("Fonts/NotoSans-Regular.ttf", 24);
 
+    drill = new BurnerMiningDrill();
+    drill->Init(0, 0);
+
 	return S_OK;
 }
 
 void PlayScene::Release()
 {
+    SAFE_RELEASE(drill);
     SAFE_RELEASE(textRenderer);
     SAFE_RELEASE(tileRenderer);
     SAFE_RELEASE(characterUI);
@@ -148,6 +154,8 @@ void PlayScene::Update()
     {
         characterUI->SetActive(!characterUI->IsActive());
     }
+
+    drill->Update();
 
     tileRenderer->Update();
 
@@ -192,7 +200,9 @@ void PlayScene::Render(HDC hdc)
     glm::mat4 UIprojection = glm::ortho(0.0f, float(width), 0.0f, float(height));
     UIShader->setMat4("projection", UIprojection);
 
-    tileRenderer->Render();
+    tileRenderer->Render(camera->GetRect(width, height));
+
+    drill->Render(lightingShader);
 
     player->Render(lightingShader);
     characterUI->Render(UIShader);

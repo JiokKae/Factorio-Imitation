@@ -7,7 +7,8 @@ class Tile;
 class Chunk;
 class Shader;
 class GLImage;
-class TileRenderer : public GameNode
+class VertexArrayObject;
+class TileManager : public GameNode
 {
 private:
 	map<int, map<int, Chunk*>> mapChunks;
@@ -17,19 +18,14 @@ private:
 	GLImage* oreImages;
 
 	Shader* instancingShader;
-	UINT offsetVBO;
-	UINT currFrameVBO;
-	UINT tileQuadVBO;
-	UINT tilesVAO;
-
-	UINT oreVAO;
+	VertexArrayObject* tilesVAO;
 public:
 	virtual HRESULT Init();
 	virtual void Release();
 	virtual void Update();
-	virtual void Render();
+	virtual void Render(RECT cameraRect);
 
-	TileRenderer() 
+	TileManager() 
 		: tileImages(nullptr)
 		, oreImages(nullptr)
 	{};

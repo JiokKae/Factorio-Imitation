@@ -130,3 +130,16 @@ inline T Lerp(T a, T b, float v)
 {
 	return a + (b - a) * v;
 }
+
+inline bool CheckRectCollision(RECT rc1, RECT rc2)
+{
+	if (rc1.right < rc2.left ||
+		rc1.left > rc2.right ||
+		rc1.top < rc2.bottom ||
+		rc1.bottom > rc2.top)
+	{
+		return false;
+	}
+
+	return true;
+}
