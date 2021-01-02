@@ -17,7 +17,6 @@ public:
 
 	void ImageLoad();
 
-
 	MainGame() {};
 
 	LRESULT MainProc(HWND hWnd, UINT iMessage,
