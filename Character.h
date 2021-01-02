@@ -1,9 +1,10 @@
 #pragma once
-#include "GameNode.h"
+#include "Entity.h"
+
 class Shader;
 class GLImage;
 class Animation;
-class Character : public GameNode
+class Character : public Entity
 {
 public:
 	enum Direction {
@@ -34,7 +35,7 @@ private:
 	glm::vec2 imageAniOffset[State::END];
 	glm::vec2 shadowAniOffset[State::END];
 	float accumulateTime;
-
+	
 	glm::vec2 position;
 	Direction direction;
 	State state;
@@ -54,7 +55,7 @@ public:
 
 	glm::vec2* GetLpPosition() { return &position; }
 	glm::vec3 GetVec3Direction();
-	
+	virtual FRECT GetCollisionFRect() override;
 
 	Character() {};
 	virtual ~Character() {};

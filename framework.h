@@ -33,6 +33,7 @@ using namespace std;
 #include "SceneManager.h"
 #include "SoundManager.h"
 #include "TextureManager.h"
+#include "Camera.h"
 
 #define WINSIZE_X	900
 #define WINSIZE_Y	900
@@ -44,11 +45,15 @@ using namespace std;
 #define SAFE_ARR_DELETE(p) 	{if (p) delete[] p, p = nullptr; }
 #define SAFE_RELEASE(p) 	{if (p) p->Release(), delete p, p = nullptr; }
 
+#define TILE_SIZE	64
+
 extern HWND			g_hWnd;
 extern HINSTANCE	g_hInstance;
 extern POINT		g_ptMouse;
 extern float		g_time;
 extern float		g_mousezDelta;
+extern glm::vec2	g_cursorCoord;
+extern glm::vec2	g_cursorPosition;
 
 enum class Argument_Kind {
 	None,
@@ -78,6 +83,14 @@ struct TileInfoArgument
 		this->tileInfo = lpTileInfo;
 	}
 };
+
+typedef struct tagFRECT 
+{
+	float left;
+	float top;
+	float right;
+	float bottom;
+} FRECT, *LPFRECT;
 
 inline void SetWindowSize(int startX, int startY, int sizeX, int sizeY)
 {
@@ -131,12 +144,67 @@ inline T Lerp(T a, T b, float v)
 	return a + (b - a) * v;
 }
 
+inline bool IntersectFRect(LPFRECT lpfrcDst, const FRECT* lpfrcSrc1, const FRECT* lpfrcSrc2)
+{
+	if (lpfrcSrc1->right	< lpfrcSrc2->left ||
+		lpfrcSrc1->left		> lpfrcSrc2->right ||
+		lpfrcSrc1->top		< lpfrcSrc2->bottom ||
+		lpfrcSrc1->bottom	> lpfrcSrc2->top)
+	{
+		return false;
+	}
+	else
+	{
+		*lpfrcDst = *lpfrcSrc1;
+		if (lpfrcSrc2->left > lpfrcSrc1->left && lpfrcSrc2->left <= lpfrcSrc1->right)
+			lpfrcDst->left = lpfrcSrc2->left;
+
+		if (lpfrcSrc2->right >= lpfrcSrc1->left && lpfrcSrc2->right < lpfrcSrc1->right)
+			lpfrcDst->right = lpfrcSrc2->right;
+
+		if (lpfrcSrc2->top >= lpfrcSrc1->bottom && lpfrcSrc2->top < lpfrcSrc1->top)
+			lpfrcDst->top = lpfrcSrc2->top;
+
+		if (lpfrcSrc2->bottom > lpfrcSrc1->bottom && lpfrcSrc2->bottom <= lpfrcSrc1->top)
+			lpfrcDst->bottom = lpfrcSrc2->bottom;
+	}
+	
+
+	return true;
+}
+
 inline bool CheckRectCollision(RECT rc1, RECT rc2)
 {
 	if (rc1.right < rc2.left ||
 		rc1.left > rc2.right ||
 		rc1.top < rc2.bottom ||
 		rc1.bottom > rc2.top)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+inline bool PtInRect(RECT rc, glm::vec2 pt)
+{
+	if (rc.right < pt.x ||
+		rc.left > pt.x ||
+		rc.top < pt.y ||
+		rc.bottom > pt.y)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+inline bool PtInFRect(FRECT rc, glm::vec2 pt)
+{
+	if (rc.right < pt.x ||
+		rc.left > pt.x ||
+		rc.top < pt.y ||
+		rc.bottom > pt.y)
 	{
 		return false;
 	}

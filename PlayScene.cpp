@@ -11,7 +11,7 @@
 #include "PointLight.h"
 #include "DirectionalLight.h"
 #include "BurnerMiningDrill.h"
-
+#include "BurnerMiningDrillUI.h"
 HRESULT PlayScene::Init()
 {
     SetWindowSize((1920 - width) / 2, (1080 - height) / 2, width, height);
@@ -60,7 +60,7 @@ HRESULT PlayScene::Init()
     characterUI = new CharacterUI();
     characterUI->Init();
     characterUI->SetLocalPosition(glm::vec2(width / 2, height / 2));
-
+    burnerMiningDrillUI = (UI*)new BurnerMiningDrill();
 	// shader configuration
 	// --------------------
     UIShader->use();
@@ -125,7 +125,14 @@ HRESULT PlayScene::Init()
     textRenderer->Init(1600, 900);
     textRenderer->Load("Fonts/NotoSans-Regular.ttf", 24);
 
-    drill = new BurnerMiningDrill();
+    drill = new BurnerMiningDrill[10*10]();
+    for (int i = 0; i < 10; i++)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            drill[i * 10 + j].Init(j * 128, i * 128);
+        }
+    }
     drill->Init(0, 0);
 
 	return S_OK;
@@ -133,7 +140,7 @@ HRESULT PlayScene::Init()
 
 void PlayScene::Release()
 {
-    SAFE_RELEASE(drill);
+    SAFE_ARR_DELETE(drill);
     SAFE_RELEASE(textRenderer);
     SAFE_RELEASE(tileRenderer);
     SAFE_RELEASE(characterUI);
@@ -155,12 +162,43 @@ void PlayScene::Update()
         characterUI->SetActive(!characterUI->IsActive());
     }
 
-    drill->Update();
+    for (int i = 0; i < 100; i++)
+    {
+        drill[i].Update();
+    }
+    
 
     tileRenderer->Update();
 
     player->Update();
     
+    for (int i = 0; i < 100; i++)
+    {
+        FRECT colRect;
+        FRECT playerRect = player->GetCollisionFRect();
+        FRECT drillRect = drill[i].GetCollisionFRect();
+        if (IntersectFRect(&colRect, &playerRect, &drillRect))
+        {
+            if (abs(colRect.right - colRect.left) < abs(colRect.top - colRect.bottom))
+            {
+                // 우측 충돌일때
+                if (colRect.right == drillRect.right)
+                    player->GetLpPosition()->x += abs(colRect.right - colRect.left);
+                else
+                    player->GetLpPosition()->x -= abs(colRect.right - colRect.left);
+            }
+            else
+            {
+                // 아래측 충돌일 때
+                if (colRect.bottom == drillRect.bottom)
+                    player->GetLpPosition()->y -= abs(colRect.top - colRect.bottom);
+                else
+                    player->GetLpPosition()->y += abs(colRect.top - colRect.bottom);
+            }
+        }
+    }
+    
+
 	camera->Update();
     characterUI->Update();
 }
@@ -202,26 +240,40 @@ void PlayScene::Render(HDC hdc)
 
     tileRenderer->Render(camera->GetRect(width, height));
 
-    drill->Render(lightingShader);
+    for (int i = 0; i < 100; i++)
+    {
+        drill[i].Render(lightingShader);
+    }
+    
 
     player->Render(lightingShader);
+
     characterUI->Render(UIShader);
+    g_cursorPosition = { (g_ptMouse.x - width / 2) / camera->GetZoom() + camera->GetPosition().x,
+                        (g_ptMouse.y - height / 2) / camera->GetZoom() + camera->GetPosition().y };
+    g_cursorCoord = { g_cursorPosition.x / TILE_SIZE, g_cursorPosition.y / TILE_SIZE };
+
+    char str[128];
 
     textRenderer->RenderText("FPS: " + to_string(TimerManager::GetSingleton()->GetFPS()),
         0, 10);
     textRenderer->RenderText("g_ptMouse : " + to_string(g_ptMouse.x) + ", " + to_string(g_ptMouse.y), 
         0, 40);
-    textRenderer->RenderText("cameraPos : " + to_string(camera->GetPosition().x) + ", " + to_string(camera->GetPosition().y),
+
+    sprintf_s(str, "cameraPos: (%.1f, %.1f)", camera->GetPosition().x, camera->GetPosition().y);
+    textRenderer->RenderText(string(str),
         0, 70);
 
-    char str[128];
-    sprintf_s(str, "Cursor: (%.1f, %.1f)", 
-        (g_ptMouse.x - width / 2) / (64 * camera->GetZoom()) + (camera->GetPosition().x / 64), 
-        (g_ptMouse.y - height / 2) / (64 * camera->GetZoom()) + (camera->GetPosition().y / 64));
-    textRenderer->RenderText(string(str), 0, 100);
+    sprintf_s(str, "g_cursorPosition: (%.1f, %.1f)", g_cursorPosition.x, g_cursorPosition.y );
+    textRenderer->RenderText(string(str),
+        0, 100);
+
+    sprintf_s(str, "Cursor: (%.1f, %.1f)", g_cursorCoord.x, g_cursorCoord.y);
+    textRenderer->RenderText(string(str),
+        0, 130);
 
     textRenderer->RenderText("Zoom: " + to_string(camera->GetZoom()),
-        0, 130);
+        0, 160);
 	glFlush();
 }
 

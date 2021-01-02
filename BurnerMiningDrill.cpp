@@ -3,13 +3,25 @@
 
 HRESULT BurnerMiningDrill::Init(int x, int y)
 {
-	leftTopcoord = { x, y };
+	position = { x, y };
+	size = { 2, 2 };
 	image = new GLImage[int(DIRECTION::END)]();
-	image[int(DIRECTION::NORTH)].Init("Burner-mining-drill/hr-burner-mining-drill-N", 4, 8);
+	image[DIRECTION::NORTH].Init("Burner-mining-drill/hr-burner-mining-drill-N", 4, 8);
+	image[DIRECTION::EAST].Init("Burner-mining-drill/hr-burner-mining-drill-E", 4, 8);
+	image[DIRECTION::SOUTH].Init("Burner-mining-drill/hr-burner-mining-drill-S", 4, 8);
+	image[DIRECTION::WEST].Init("Burner-mining-drill/hr-burner-mining-drill-W", 4, 8);
+
 	shadow = new GLImage[int(DIRECTION::END)]();
-	shadow[int(DIRECTION::NORTH)].Init("Burner-mining-drill/hr-burner-mining-drill-N-shadow", 4, 8);
-	shadow->SetAlpha(0.6f);
-	
+	shadow[DIRECTION::NORTH].Init("Burner-mining-drill/hr-burner-mining-drill-N-shadow", 4, 8);
+	shadow[DIRECTION::NORTH].SetAlpha(0.6f);
+	shadowAniOffset[DIRECTION::NORTH] = {50, 0};
+	shadow[DIRECTION::EAST].Init("Burner-mining-drill/hr-burner-mining-drill-E-shadow", 4, 8);
+	shadow[DIRECTION::EAST].SetAlpha(0.6f);
+	shadow[DIRECTION::SOUTH].Init("Burner-mining-drill/hr-burner-mining-drill-S-shadow", 4, 8);
+	shadow[DIRECTION::SOUTH].SetAlpha(0.6f);
+	shadow[DIRECTION::WEST].Init("Burner-mining-drill/hr-burner-mining-drill-W-shadow", 4, 8);
+	shadow[DIRECTION::WEST].SetAlpha(0.6f);
+
 	return S_OK;
 }
 
@@ -26,10 +38,40 @@ void BurnerMiningDrill::Release()
 
 void BurnerMiningDrill::Update()
 {
+	if (PtInFRect(GetFRect(), g_cursorPosition))
+	{
+		if (KeyManager::GetSingleton()->IsOnceKeyDown('R'))
+		{
+			SoundManager::GetSingleton()->Play("RotateMedium", 0.6f);
+			direction = DIRECTION(direction + 1);
+			if (direction == DIRECTION::END)
+				direction = DIRECTION::NORTH;
+		}
+	}
 }
 
 void BurnerMiningDrill::Render(Shader* lpShader)
 {
-	shadow[int(DIRECTION::NORTH)].Render(lpShader, leftTopcoord.x, leftTopcoord.y, 0, 0);
-	image[int(DIRECTION::NORTH)].Render(lpShader, leftTopcoord.x, leftTopcoord.y, 0, 0);
+	shadow[direction].Render(lpShader, position.x + shadowAniOffset[direction].x, position.y + shadowAniOffset[direction].y, 0, 0);
+	image[direction].Render(lpShader, position.x, position.y, 0, 0);
+}
+
+FRECT BurnerMiningDrill::GetFRect()
+{
+	FRECT rect;
+	rect.left =		position.x - (size.x * TILE_SIZE / 2.0f) * Camera::GetSingleton()->GetZoom();
+	rect.right =	position.x + (size.x * TILE_SIZE / 2.0f) * Camera::GetSingleton()->GetZoom();
+	rect.top =		position.y + (size.y * TILE_SIZE / 2.0f) * Camera::GetSingleton()->GetZoom();
+	rect.bottom =	position.y - (size.y * TILE_SIZE / 2.0f) * Camera::GetSingleton()->GetZoom();
+	return rect;
+}
+
+FRECT BurnerMiningDrill::GetCollisionFRect()
+{
+	FRECT rect;
+	rect.left =		position.x - (size.x * TILE_SIZE / 2.0f * (2.0f / 3.0f)) * Camera::GetSingleton()->GetZoom();
+	rect.right =	position.x + (size.x * TILE_SIZE / 2.0f * (2.0f / 3.0f)) * Camera::GetSingleton()->GetZoom();
+	rect.top =		position.y + (size.y * TILE_SIZE / 2.0f * (2.0f / 3.0f)) * Camera::GetSingleton()->GetZoom();
+	rect.bottom =	position.y - (size.y * TILE_SIZE / 2.0f * (2.0f / 3.0f)) * Camera::GetSingleton()->GetZoom();
+	return rect;
 }

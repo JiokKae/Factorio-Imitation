@@ -5,8 +5,8 @@
 #include "Texture.h"
 #include "Ore.h"
 #include "Chunk.h"
-#include "VertexBufferObject.h"
 #include "VertexArrayObject.h"
+#include "VertexBufferObject.h"
 
 HRESULT TileManager::Init()
 {

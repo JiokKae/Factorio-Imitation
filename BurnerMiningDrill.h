@@ -5,14 +5,34 @@ class Shader;
 class GLImage;
 class BurnerMiningDrill : public Structure
 {
-	glm::ivec2 leftTopcoord;
+public:
+	enum STATUS {
+		NOPOWER,
+		WAITING_SPACE,
+		DESTORY,
+		END
+	};
+
+private:
+	glm::ivec2 position;
+	glm::ivec2 size;
 	GLImage* image;
 	GLImage* shadow;
+	glm::vec2 imageAniOffset[DIRECTION::END];
+	glm::vec2 shadowAniOffset[DIRECTION::END];
 	DIRECTION direction;
+
+	STATUS status;
+	float miningSpeed;
+	glm::ivec2 miningArea;
+
 public:
 	virtual HRESULT Init(int x, int y);
 	virtual void Release();
 	virtual void Update();
 	virtual void Render(Shader* lpShader);
+
+	FRECT GetFRect();
+	virtual FRECT GetCollisionFRect() override;
 };
 

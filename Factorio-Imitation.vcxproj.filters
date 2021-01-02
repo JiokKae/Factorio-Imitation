@@ -234,6 +234,12 @@
     <ClInclude Include="VertexBufferObject.h">
       <Filter>GLFrameWork\VertexDataObject</Filter>
     </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>MainGame\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="BurnerMiningDrillUI.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -358,6 +364,12 @@
     </ClCompile>
     <ClCompile Include="VertexBufferObject.cpp">
       <Filter>GLFrameWork\VertexDataObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>MainGame\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="BurnerMiningDrillUI.cpp">
+      <Filter>MainGame\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

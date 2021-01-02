@@ -3,6 +3,7 @@
 #include "Shader.h"
 #include "Scene.h"
 #include "VertexArrayObject.h"
+#include "VertexBufferObject.h"
 
 HRESULT GLImage::Init(char const* sourceTexture, int maxFrameX, int maxFrameY, int width, int height)
 {
@@ -33,25 +34,11 @@ HRESULT GLImage::Init(char const* sourceTexture, int maxFrameX, int maxFrameY, i
         -frameWidth / 2, -frameHeight / 2,  0.0f, 0.0f,
     };
 
-    vao = new VertexArrayObject();
-    // Generate VAO, VBO
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
+    imageVAO = new VAO();
+    VBO* posTexcoordVBO = new VBO();
+    posTexcoordVBO->SetData(sizeof(vertices), vertices, GL_STATIC_DRAW);
+    imageVAO->AddVBO(0, posTexcoordVBO, 4);
 
-    // Bind VAO
-    glBindVertexArray(VAO);
-
-    // Bind VBO
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-    // Set data in Binded VBO
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    // VAO->loacation(0) (vec4) position attribute + texcoord attribute
-    glEnableVertexAttribArray(0);    
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-
-    glBindVertexArray(0);
     isInit = true;
 	return S_OK;
 }
@@ -60,9 +47,7 @@ void GLImage::Release()
 {
     if (isInit)
     {
-        SAFE_DELETE(vao);
-        glDeleteVertexArrays(1, &VAO);
-        glDeleteBuffers(1, &VBO);
+        SAFE_DELETE(imageVAO);
     }
 }
 
@@ -86,7 +71,7 @@ void GLImage::Render(Shader* shader, float destX, float destY, int currFrameX, i
     glBindTexture(GL_TEXTURE_2D, sourceTexture->GetID());
 
     // render the cube
-    glBindVertexArray(VAO);
+    glBindVertexArray(imageVAO->GetID());
     
     glDrawArrays(GL_TRIANGLES, 0, 6);
     

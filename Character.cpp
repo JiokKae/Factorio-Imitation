@@ -238,3 +238,13 @@ glm::vec3 Character::GetVec3Direction()
 	}
 	return glm::vec3(0.0f, +1.0f, 0.0f);
 }
+
+FRECT Character::GetCollisionFRect()
+{
+	FRECT rect;
+	rect.left =		position.x - (TILE_SIZE / 4 * (4.0f / 5.0f)) * Camera::GetSingleton()->GetZoom();
+	rect.right =	position.x + (TILE_SIZE / 4 * (4.0f / 5.0f)) * Camera::GetSingleton()->GetZoom();
+	rect.top =		position.y + (TILE_SIZE / 4 * (4.0f / 5.0f)) * Camera::GetSingleton()->GetZoom();
+	rect.bottom =	position.y - (TILE_SIZE / 4 * (4.0f / 5.0f)) * Camera::GetSingleton()->GetZoom();
+	return rect;
+}

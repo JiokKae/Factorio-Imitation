@@ -1,8 +1,6 @@
 #pragma once
 #include "GameNode.h"
 
-#define TILE_SIZE	64
-
 class Tile;
 class Chunk;
 class Shader;

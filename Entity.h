@@ -1,22 +1,16 @@
 #pragma once
-#include "Entity.h"
+#include "GameNode.h"
 
 class Shader;
-class Structure : public Entity
+class Entity : public GameNode
 {
-public:
-	enum DIRECTION{
-		NORTH,
-		EAST,
-		SOUTH,
-		WEST,
-		END
-	};
 
 public:
 	virtual HRESULT Init();
 	virtual void Release();
 	virtual void Update();
 	virtual void Render(Shader* lpShader);
+
+	virtual FRECT GetCollisionFRect() { return FRECT(); };
 };
 

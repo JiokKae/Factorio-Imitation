@@ -12,11 +12,8 @@ class GLImage
 	glm::ivec2 maxFrame;
 	float frameWidth;
 	float frameHeight;
-	unsigned int VAO;
-	unsigned int VBO;
-	VertexArrayObject* vao;
+	VertexArrayObject* imageVAO;
 
-	bool isSpecular;
 	float alpha;
 	float zoom;
 	bool isInit;
@@ -33,10 +30,8 @@ public:
 
 	void SetZoom(float zoom)			{ this->zoom = zoom; }
 	void SetAlpha(float alpha)			{ this->alpha = alpha; }
-	void SetSpecular(bool isSpecular)	{ this->isSpecular = isSpecular; }
 
 	float GetZoom()						{ return zoom; }
-	unsigned int GetVAO()				{ return VAO; }
 	float GetFrameWidth()				{ return frameWidth; }
 	float GetFrameHeight()				{ return frameHeight; }
 	glm::ivec2 GetMaxFrame()			{ return maxFrame; }
@@ -46,7 +41,6 @@ public:
 
 	GLImage()
 		: sourceTexture(nullptr)
-		, isSpecular(true)
 		, alpha(1.0f)
 		, isInit(false)
 	{};

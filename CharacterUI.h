@@ -11,8 +11,8 @@ class CharacterUI : public UI
 	InventorySlotUI* slotUI;
 
 public:
-	virtual HRESULT Init();
-	virtual void Release();
-	virtual void Update();
-	virtual void Render(Shader* lpShader);
+	virtual HRESULT Init() override;
+	virtual void Release() override;
+	virtual void Update() override;
+	virtual void Render(Shader* lpShader) override;
 };
