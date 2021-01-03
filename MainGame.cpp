@@ -121,6 +121,7 @@ void MainGame::ImageLoad()
 	textureManager->AddTexture("UI/CharacterUI",			"graphics/ui/CharacterUI.png");
 	textureManager->AddTexture("UI/InventorySlotUI",		"graphics/ui/InventorySlotUI.png");
 	textureManager->AddTexture("UI/BunerMiningDrillUI",		"graphics/ui/BunerMiningDrillUI.png");
+	textureManager->AddTexture("UI/DeactiveButtonUI",		"graphics/ui/DeactiveButtonUI.png");
 
 	textureManager->AddTexture("Terrain/Dirt_1",			"graphics/terrain/hr-dirt-1.png");
 

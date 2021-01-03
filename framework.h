@@ -33,6 +33,8 @@ using namespace std;
 #include "SceneManager.h"
 #include "SoundManager.h"
 #include "TextureManager.h"
+#include "UIManager.h"
+#include "TileManager.h"
 #include "Camera.h"
 
 #define WINSIZE_X	900
@@ -48,9 +50,9 @@ using namespace std;
 #define TILE_SIZE	64
 
 extern HWND			g_hWnd;
+extern float		g_time;
 extern HINSTANCE	g_hInstance;
 extern POINT		g_ptMouse;
-extern float		g_time;
 extern float		g_mousezDelta;
 extern glm::vec2	g_cursorCoord;
 extern glm::vec2	g_cursorPosition;

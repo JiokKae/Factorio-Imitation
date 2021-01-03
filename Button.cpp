@@ -42,7 +42,7 @@ void Button::Release()
 
 void Button::Update()
 {
-	if (PtInRect(&rc, g_ptMouse))
+	if (PtInRect(&rc, { (int)g_ptMouse.x, (int)g_ptMouse.y}))
 	{
 		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
 		{

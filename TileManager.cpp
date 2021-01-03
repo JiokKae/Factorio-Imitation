@@ -71,6 +71,7 @@ void TileManager::Release()
     SAFE_DELETE(instancingShader);
     SAFE_RELEASE(tileImages);
     SAFE_RELEASE(oreImages);
+    ReleaseSingleton();
 }
 
 void TileManager::Update()
@@ -102,6 +103,8 @@ void TileManager::Render(RECT cameraRect)
         for (smallIt = bigIt->second.begin(); smallIt != bigIt->second.end(); smallIt++)
         {
             Chunk* currChunk = smallIt->second;
+            if (currChunk == nullptr)
+                continue;
             if (!CheckRectCollision(currChunk->GetRect(), cameraRect))
                 continue;
 
@@ -142,6 +145,8 @@ void TileManager::Render(RECT cameraRect)
         for (smallIt = bigIt->second.begin(); smallIt != bigIt->second.end(); smallIt++)
         {
             Chunk* currChunk = smallIt->second;
+            if (currChunk == nullptr)
+                continue;
             if (!CheckRectCollision(currChunk->GetRect(), cameraRect))
                 continue;
 
@@ -166,4 +171,29 @@ void TileManager::Render(RECT cameraRect)
         }
     }
     glBindVertexArray(0);
+}
+
+Tile* TileManager::GetLpTile(int x, int y)
+{
+    Chunk* chunk = GetLpChunk(x / CHUNK_IN_TILE, y / CHUNK_IN_TILE);
+    if (chunk != nullptr)
+    {
+        glm::ivec2 indexInChunk;
+        indexInChunk.x = x % CHUNK_IN_TILE;
+        indexInChunk.y = y % CHUNK_IN_TILE;
+
+        if (indexInChunk.x < 0)
+            indexInChunk.x += CHUNK_IN_TILE;
+        if (indexInChunk.y < 0)
+            indexInChunk.y += CHUNK_IN_TILE;
+
+        return chunk->GetLpTile(indexInChunk.x, indexInChunk.y);
+    }
+    else
+        return nullptr;
+}
+
+Chunk* TileManager::GetLpChunk(int x, int y)
+{
+    return mapChunks[y][x];
 }

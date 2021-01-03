@@ -5,6 +5,8 @@
 HRESULT Ore::Init()
 {
 	amount = rand() % 12000;
+	if (amount > 8000)
+		amount = 0;
 	randFrameX = rand() % 8;
 	return S_OK;
 }

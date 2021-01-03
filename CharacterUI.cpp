@@ -1,5 +1,6 @@
 #include "CharacterUI.h"
 #include "InventorySlotUI.h"
+#include "DeactiveButtonUI.h"
 #include "GLImage.h"
 #include "Shader.h"
 
@@ -7,7 +8,7 @@ HRESULT CharacterUI::Init()
 {
 	image = new GLImage();
 	image->Init("UI/CharacterUI");
-
+	
 	slotUI = new InventorySlotUI[SLOT_SIZE]();
 	for (int y = 0; y < SLOT_Y; y++)
 	{
@@ -17,6 +18,11 @@ HRESULT CharacterUI::Init()
 			slotUI[y * SLOT_X + x].SetParent(this);
 		}
 	}
+
+	deactiveButtonUI = new DeactiveButtonUI();
+	deactiveButtonUI->Init();
+	deactiveButtonUI->SetParent(this);
+	deactiveButtonUI->SetLocalPosition({ 419, 231 });
 
 	return S_OK;
 }
@@ -38,6 +44,11 @@ void CharacterUI::Update()
 		{
 			slotUI[i].Update();
 		}
+		deactiveButtonUI->Update();
+		if (PtInFRect(GetFrect(), { g_ptMouse.x, g_ptMouse.y }))
+		{
+			KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON);
+		}
 	}
 }
 
@@ -51,5 +62,6 @@ void CharacterUI::Render(Shader* lpShader)
 		{
 			slotUI[i].Render(lpShader);
 		}
+		deactiveButtonUI->Render(lpShader);
 	}
 }

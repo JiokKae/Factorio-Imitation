@@ -1,12 +1,10 @@
 #pragma once
 #include "Scene.h"
 
-class UI;
 class Camera;
 class Shader;
 class Character;
 class PointLight;
-class CharacterUI;
 class TileManager;
 class TextRenderer;
 class DirectionalLight;
@@ -21,8 +19,7 @@ class PlayScene : public Scene
 	Shader* UIShader;
 	TileManager* tileRenderer;
 	Character* player;
-	CharacterUI* characterUI;
-	UI* burnerMiningDrillUI;
+
 	TextRenderer* textRenderer;
 
 	DirectionalLight* dirLight;

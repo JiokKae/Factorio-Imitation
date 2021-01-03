@@ -1,6 +1,7 @@
 #pragma once
 #include "Structure.h"
 
+class UI;
 class Shader;
 class GLImage;
 class BurnerMiningDrill : public Structure

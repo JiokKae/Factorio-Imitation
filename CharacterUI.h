@@ -6,10 +6,11 @@
 #define SLOT_Y	9
 #define SLOT_SIZE	(SLOT_X * SLOT_Y)
 class InventorySlotUI;
+class DeactiveButtonUI;
 class CharacterUI : public UI
 {
 	InventorySlotUI* slotUI;
-
+	DeactiveButtonUI* deactiveButtonUI;
 public:
 	virtual HRESULT Init() override;
 	virtual void Release() override;

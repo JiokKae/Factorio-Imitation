@@ -40,6 +40,11 @@ void BurnerMiningDrill::Update()
 {
 	if (PtInFRect(GetFRect(), g_cursorPosition))
 	{
+		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
+		{
+			UIManager::GetSingleton()->ActiveUI("BurnerMiningDrillUI");
+		}
+
 		if (KeyManager::GetSingleton()->IsOnceKeyDown('R'))
 		{
 			SoundManager::GetSingleton()->Play("RotateMedium", 0.6f);
@@ -69,9 +74,9 @@ FRECT BurnerMiningDrill::GetFRect()
 FRECT BurnerMiningDrill::GetCollisionFRect()
 {
 	FRECT rect;
-	rect.left =		position.x - (size.x * TILE_SIZE / 2.0f * (2.0f / 3.0f)) * Camera::GetSingleton()->GetZoom();
-	rect.right =	position.x + (size.x * TILE_SIZE / 2.0f * (2.0f / 3.0f)) * Camera::GetSingleton()->GetZoom();
-	rect.top =		position.y + (size.y * TILE_SIZE / 2.0f * (2.0f / 3.0f)) * Camera::GetSingleton()->GetZoom();
-	rect.bottom =	position.y - (size.y * TILE_SIZE / 2.0f * (2.0f / 3.0f)) * Camera::GetSingleton()->GetZoom();
+	rect.left =		position.x - (size.x * TILE_SIZE / 2.0f * (2.0f / 3.0f));// * Camera::GetSingleton()->GetZoom();
+	rect.right =	position.x + (size.x * TILE_SIZE / 2.0f * (2.0f / 3.0f));// * Camera::GetSingleton()->GetZoom();
+	rect.top =		position.y + (size.y * TILE_SIZE / 2.0f * (2.0f / 3.0f));// * Camera::GetSingleton()->GetZoom();
+	rect.bottom =	position.y - (size.y * TILE_SIZE / 2.0f * (2.0f / 3.0f));// * Camera::GetSingleton()->GetZoom();
 	return rect;
 }

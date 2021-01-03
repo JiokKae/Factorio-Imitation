@@ -12,6 +12,8 @@
 #include "DirectionalLight.h"
 #include "BurnerMiningDrill.h"
 #include "BurnerMiningDrillUI.h"
+#include "Ore.h"
+
 HRESULT PlayScene::Init()
 {
     SetWindowSize((1920 - width) / 2, (1080 - height) / 2, width, height);
@@ -22,29 +24,30 @@ HRESULT PlayScene::Init()
     glBlendEquation(GL_FUNC_ADD); // this is default
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    UIManager::GetSingleton()->Init();
+
     // player
     player = new Character();
     player->Init();
 
-    tileRenderer = new TileManager();
+    tileRenderer = TileManager::GetSingleton();
     tileRenderer->Init();
 
     // camera
-    camera = new Camera();
+    camera = Camera::GetSingleton();
     camera->Init();
     camera->SetPosition({ 0.0f, 0.0f, 1.0f });
     camera->SetTarget(player->GetLpPosition());
 
     numOfPointLight = 4;
 
-    // 
+    //  Uniform Buffer Object ÃÊ±âÈ­
     glGenBuffers(1, &uboMatrices);
     glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
     glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), NULL, GL_DYNAMIC_DRAW);
     glBindBufferRange(GL_UNIFORM_BUFFER, 0, uboMatrices, 0, 2 * sizeof(glm::mat4));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
- 
     glGenBuffers(1, &uboLights);
     glBindBuffer(GL_UNIFORM_BUFFER, uboLights);
     glBufferData(GL_UNIFORM_BUFFER, DirectionalLight::std140Size() + PointLight::std140Size() * numOfPointLight, NULL, GL_DYNAMIC_DRAW);
@@ -57,10 +60,17 @@ HRESULT PlayScene::Init()
 	lightingShader = new Shader("StandardVertexShader.glsl", "StandardFragmentShader.glsl");
     UIShader = new Shader("UIVertexShader.glsl", "UIFragmentShader.glsl");
     
-    characterUI = new CharacterUI();
+    // UI Init
+    UI* characterUI = new CharacterUI();
     characterUI->Init();
     characterUI->SetLocalPosition(glm::vec2(width / 2, height / 2));
-    burnerMiningDrillUI = (UI*)new BurnerMiningDrill();
+    UIManager::GetSingleton()->AddUI("CharacterUI", characterUI);
+
+    UI* burnerMiningDrillUI = new BurnerMiningDrillUI();
+    burnerMiningDrillUI->Init();
+    burnerMiningDrillUI->SetLocalPosition(glm::vec2(width / 2, height / 2));
+    UIManager::GetSingleton()->AddUI("BurnerMiningDrillUI", burnerMiningDrillUI);
+
 	// shader configuration
 	// --------------------
     UIShader->use();
@@ -142,12 +152,13 @@ void PlayScene::Release()
 {
     SAFE_ARR_DELETE(drill);
     SAFE_RELEASE(textRenderer);
-    SAFE_RELEASE(tileRenderer);
-    SAFE_RELEASE(characterUI);
+    tileRenderer->Release();
+    tileRenderer = nullptr;
     SAFE_RELEASE(player);
     SAFE_DELETE(UIShader);
 	SAFE_DELETE(lightingShader);
-	SAFE_RELEASE(camera);
+    camera->Release();
+    camera = nullptr;
 }
 
 void PlayScene::Update()
@@ -159,14 +170,18 @@ void PlayScene::Update()
 	}
     if (KeyManager::GetSingleton()->IsOnceKeyDown('E'))
     {
-        characterUI->SetActive(!characterUI->IsActive());
+        if (UIManager::GetSingleton()->IsCurrUINull())
+            UIManager::GetSingleton()->ActiveUI("CharacterUI");
+        else
+            UIManager::GetSingleton()->DeactiveUI();
     }
+
+    UIManager::GetSingleton()->Update();
 
     for (int i = 0; i < 100; i++)
     {
         drill[i].Update();
     }
-    
 
     tileRenderer->Update();
 
@@ -198,9 +213,8 @@ void PlayScene::Update()
         }
     }
     
-
 	camera->Update();
-    characterUI->Update();
+    
 }
 
 void PlayScene::Render(HDC hdc)
@@ -244,11 +258,11 @@ void PlayScene::Render(HDC hdc)
     {
         drill[i].Render(lightingShader);
     }
-    
 
     player->Render(lightingShader);
 
-    characterUI->Render(UIShader);
+    UIManager::GetSingleton()->Render(UIShader);
+
     g_cursorPosition = { (g_ptMouse.x - width / 2) / camera->GetZoom() + camera->GetPosition().x,
                         (g_ptMouse.y - height / 2) / camera->GetZoom() + camera->GetPosition().y };
     g_cursorCoord = { g_cursorPosition.x / TILE_SIZE, g_cursorPosition.y / TILE_SIZE };
@@ -272,8 +286,12 @@ void PlayScene::Render(HDC hdc)
     textRenderer->RenderText(string(str),
         0, 130);
 
-    textRenderer->RenderText("Zoom: " + to_string(camera->GetZoom()),
+    sprintf_s(str, "Ore Amount: (%d)", TileManager::GetSingleton()->GetLpTile(g_cursorCoord.x, g_cursorCoord.y)->GetLpOre()->GetAmount() );
+    textRenderer->RenderText(string(str),
         0, 160);
+
+    textRenderer->RenderText("Zoom: " + to_string(camera->GetZoom()),
+        0, 190);
 	glFlush();
 }
 

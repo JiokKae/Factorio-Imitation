@@ -19,4 +19,8 @@ void BurnerMiningDrillUI::Update()
 
 void BurnerMiningDrillUI::Render(Shader* lpShader)
 {
+	if (active)
+	{
+		image->Render(lpShader, GetPosition().x, GetPosition().y);
+	}
 }

@@ -240,6 +240,12 @@
     <ClInclude Include="BurnerMiningDrillUI.h">
       <Filter>MainGame\UI</Filter>
     </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>GLFrameWork\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="DeactiveButtonUI.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -369,6 +375,12 @@
       <Filter>MainGame\Entity</Filter>
     </ClCompile>
     <ClCompile Include="BurnerMiningDrillUI.cpp">
+      <Filter>MainGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>GLFrameWork\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="DeactiveButtonUI.cpp">
       <Filter>MainGame\UI</Filter>
     </ClCompile>
   </ItemGroup>

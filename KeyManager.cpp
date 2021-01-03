@@ -49,7 +49,6 @@ bool KeyManager::IsOnceKeyDown(int key)
 
 bool KeyManager::IsOnceKeyUp(int key)
 {
-	// 실습1. 위의 코드를 분석해서 완성해보자.
 	if (GetAsyncKeyState(key) & 0x8000)	// return false인 경우
 	{
 		SetKeyUp(key, false);
@@ -68,7 +67,6 @@ bool KeyManager::IsOnceKeyUp(int key)
 
 bool KeyManager::IsStayKeyDown(int key)
 {
-	// 실습2. 위의 코드를 분석해서 완성해보자.
 	if (GetAsyncKeyState(key) & 0x8000)
 		return true;
 

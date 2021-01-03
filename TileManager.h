@@ -6,7 +6,7 @@ class Chunk;
 class Shader;
 class GLImage;
 class VertexArrayObject;
-class TileManager : public GameNode
+class TileManager : public Singleton<TileManager>
 {
 private:
 	map<int, map<int, Chunk*>> mapChunks;
@@ -22,6 +22,9 @@ public:
 	virtual void Release();
 	virtual void Update();
 	virtual void Render(RECT cameraRect);
+
+	Tile* GetLpTile(int x, int y);
+	Chunk* GetLpChunk(int x, int y);
 
 	TileManager() 
 		: tileImages(nullptr)

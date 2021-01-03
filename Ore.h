@@ -21,6 +21,7 @@ public:
 	virtual void Render(Shader* lpShader, float destX, float destY);
 
 	KIND GetKind()		{ return kind; }
+	int GetAmount()		{ return amount; }
 	int GetRandFrameX() { return randFrameX; }
 	int AmountToImageFrameY();
 
