@@ -1,13 +1,10 @@
 #include "PlayScene.h"
 #include "CharacterUI.h"
 #include "Character.h"
-#include "Texture.h"
-#include "GLImage.h"
 #include "Shader.h"
 #include "Camera.h"
 #include "Tile.h"
 #include "TileManager.h"
-#include "TextRenderer.h"
 #include "PointLight.h"
 #include "DirectionalLight.h"
 #include "BurnerMiningDrill.h"
@@ -34,7 +31,7 @@ HRESULT PlayScene::Init()
     tileRenderer->Init();
 
     // camera
-    camera = Camera::GetSingleton();
+    camera = new Camera();
     camera->Init();
     camera->SetPosition({ 0.0f, 0.0f, 1.0f });
     camera->SetTarget(player->GetLpPosition());
@@ -54,6 +51,11 @@ HRESULT PlayScene::Init()
     glBindBufferRange(GL_UNIFORM_BUFFER, 1, uboLights, 0, DirectionalLight::std140Size() + PointLight::std140Size() * numOfPointLight * numOfPointLight);
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
+    glGenBuffers(1, &uboUIMatrices);
+    glBindBuffer(GL_UNIFORM_BUFFER, uboUIMatrices);
+    glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), NULL, GL_DYNAMIC_DRAW);
+    glBindBufferRange(GL_UNIFORM_BUFFER, 2, uboUIMatrices, 0, 2 * sizeof(glm::mat4));
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
 	// build and compile our shader zprogram
 	// ------------------------------------
@@ -61,8 +63,8 @@ HRESULT PlayScene::Init()
     UIShader = new Shader("UIVertexShader.glsl", "UIFragmentShader.glsl");
     
     // UI Init
-    UI* characterUI = new CharacterUI();
-    characterUI->Init();
+    CharacterUI* characterUI = new CharacterUI();
+    characterUI->Init(player->GetLpInventory());
     characterUI->SetLocalPosition(glm::vec2(width / 2, height / 2));
     UIManager::GetSingleton()->AddUI("CharacterUI", characterUI);
 
@@ -75,8 +77,6 @@ HRESULT PlayScene::Init()
 	// --------------------
     UIShader->use();
     UIShader->setInt("material.diffuse", 0);
-    glm::mat4 projection = glm::ortho(0.0f, 1600.0f, 0.0f, 900.0f);
-    UIShader->setMat4("projection", projection);
 
 	lightingShader->use();
     lightingShader->setInt("material.diffuse", 0);
@@ -131,9 +131,9 @@ HRESULT PlayScene::Init()
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
   
     // TextRenderer Init
-    textRenderer = new TextRenderer();
-    textRenderer->Init(1600, 900);
-    textRenderer->Load("Fonts/NotoSans-Regular.ttf", 24);
+    textRenderer = TextRenderer::GetSingleton();
+    textRenderer->Init();
+    textRenderer->Load("Fonts/NotoSans-Bold.ttf", 24);
 
     drill = new BurnerMiningDrill[10*10]();
     for (int i = 0; i < 10; i++)
@@ -152,13 +152,11 @@ void PlayScene::Release()
 {
     SAFE_ARR_DELETE(drill);
     SAFE_RELEASE(textRenderer);
-    tileRenderer->Release();
-    tileRenderer = nullptr;
+    SAFE_RELEASE(tileRenderer);
     SAFE_RELEASE(player);
     SAFE_DELETE(UIShader);
 	SAFE_DELETE(lightingShader);
-    camera->Release();
-    camera = nullptr;
+    SAFE_RELEASE(camera);
 }
 
 void PlayScene::Update()
@@ -236,7 +234,6 @@ void PlayScene::Render(HDC hdc)
 
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
     
-
     // 뷰/프로젝션 매트릭스 연산
     glm::mat4 projection = glm::ortho(0.0f, float(width) / camera->GetZoom(), 0.0f, float(height) / camera->GetZoom());
     glm::mat4 view = camera->GetViewMatrix();
@@ -248,9 +245,15 @@ void PlayScene::Render(HDC hdc)
     glBufferSubData(GL_UNIFORM_BUFFER,  sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-    UIShader->use();
+    // UI프로젝션 매트릭스 연산
     glm::mat4 UIprojection = glm::ortho(0.0f, float(width), 0.0f, float(height));
-    UIShader->setMat4("projection", UIprojection);
+    glm::mat4 reverseVerticalUIProjection = glm::ortho(0.0f, float(width), float(height), 0.0f);
+
+    // uniform buffer object 2번 바인딩 인덱스에 UI프로젝션 설정
+    glBindBuffer(GL_UNIFORM_BUFFER, uboUIMatrices);
+    glBufferSubData(GL_UNIFORM_BUFFER,                  0, sizeof(glm::mat4), glm::value_ptr(UIprojection));
+    glBufferSubData(GL_UNIFORM_BUFFER,  sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(reverseVerticalUIProjection));
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
     tileRenderer->Render(camera->GetRect(width, height));
 
@@ -270,28 +273,29 @@ void PlayScene::Render(HDC hdc)
     char str[128];
 
     textRenderer->RenderText("FPS: " + to_string(TimerManager::GetSingleton()->GetFPS()),
-        0, 10);
+        10, height - 10);
     textRenderer->RenderText("g_ptMouse : " + to_string(g_ptMouse.x) + ", " + to_string(g_ptMouse.y), 
-        0, 40);
+        10, height - 40);
 
     sprintf_s(str, "cameraPos: (%.1f, %.1f)", camera->GetPosition().x, camera->GetPosition().y);
     textRenderer->RenderText(string(str),
-        0, 70);
+        10, height - 70);
 
     sprintf_s(str, "g_cursorPosition: (%.1f, %.1f)", g_cursorPosition.x, g_cursorPosition.y );
     textRenderer->RenderText(string(str),
-        0, 100);
+        10, height - 100);
 
     sprintf_s(str, "Cursor: (%.1f, %.1f)", g_cursorCoord.x, g_cursorCoord.y);
     textRenderer->RenderText(string(str),
-        0, 130);
+        10, height - 130);
 
     sprintf_s(str, "Ore Amount: (%d)", TileManager::GetSingleton()->GetLpTile(g_cursorCoord.x, g_cursorCoord.y)->GetLpOre()->GetAmount() );
     textRenderer->RenderText(string(str),
-        0, 160);
+        10, height - 160);
 
     textRenderer->RenderText("Zoom: " + to_string(camera->GetZoom()),
-        0, 190);
+        10, height - 190);
+
 	glFlush();
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "framework.h"
 
-class Camera : public Singleton<Camera>
+class Camera
 {
 private:
     // camera Attributes

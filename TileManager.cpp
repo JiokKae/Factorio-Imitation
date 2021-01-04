@@ -166,7 +166,7 @@ void TileManager::Render(RECT cameraRect)
             {
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, oreImages[kind].GetLpSourceTexture()->GetID());
-                glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 1024);
+                //glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 1024);
             }
         }
     }

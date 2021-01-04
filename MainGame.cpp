@@ -123,6 +123,9 @@ void MainGame::ImageLoad()
 	textureManager->AddTexture("UI/BunerMiningDrillUI",		"graphics/ui/BunerMiningDrillUI.png");
 	textureManager->AddTexture("UI/DeactiveButtonUI",		"graphics/ui/DeactiveButtonUI.png");
 
+	textureManager->AddTexture("Icons/Hand",	"graphics/icons/hand.png");
+	textureManager->AddTexture("Icons/Coal",	"graphics/icons/coal.png");
+
 	textureManager->AddTexture("Terrain/Dirt_1",			"graphics/terrain/hr-dirt-1.png");
 
 	textureManager->AddTexture("IronOre",					"graphics/entity/iron_ore/hr-iron-ore.png");

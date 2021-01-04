@@ -64,19 +64,19 @@ void BurnerMiningDrill::Render(Shader* lpShader)
 FRECT BurnerMiningDrill::GetFRect()
 {
 	FRECT rect;
-	rect.left =		position.x - (size.x * TILE_SIZE / 2.0f) * Camera::GetSingleton()->GetZoom();
-	rect.right =	position.x + (size.x * TILE_SIZE / 2.0f) * Camera::GetSingleton()->GetZoom();
-	rect.top =		position.y + (size.y * TILE_SIZE / 2.0f) * Camera::GetSingleton()->GetZoom();
-	rect.bottom =	position.y - (size.y * TILE_SIZE / 2.0f) * Camera::GetSingleton()->GetZoom();
+	rect.left =		position.x - (size.x * TILE_SIZE / 2.0f);
+	rect.right =	position.x + (size.x * TILE_SIZE / 2.0f);
+	rect.top =		position.y + (size.y * TILE_SIZE / 2.0f);
+	rect.bottom =	position.y - (size.y * TILE_SIZE / 2.0f);
 	return rect;
 }
 
 FRECT BurnerMiningDrill::GetCollisionFRect()
 {
 	FRECT rect;
-	rect.left =		position.x - (size.x * TILE_SIZE / 2.0f * (2.0f / 3.0f));// * Camera::GetSingleton()->GetZoom();
-	rect.right =	position.x + (size.x * TILE_SIZE / 2.0f * (2.0f / 3.0f));// * Camera::GetSingleton()->GetZoom();
-	rect.top =		position.y + (size.y * TILE_SIZE / 2.0f * (2.0f / 3.0f));// * Camera::GetSingleton()->GetZoom();
-	rect.bottom =	position.y - (size.y * TILE_SIZE / 2.0f * (2.0f / 3.0f));// * Camera::GetSingleton()->GetZoom();
+	rect.left =		position.x - (size.x * TILE_SIZE / 2.0f * (2.0f / 3.0f));
+	rect.right =	position.x + (size.x * TILE_SIZE / 2.0f * (2.0f / 3.0f));
+	rect.top =		position.y + (size.y * TILE_SIZE / 2.0f * (2.0f / 3.0f));
+	rect.bottom =	position.y - (size.y * TILE_SIZE / 2.0f * (2.0f / 3.0f));
 	return rect;
 }

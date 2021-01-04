@@ -33,6 +33,7 @@ using namespace std;
 #include "SceneManager.h"
 #include "SoundManager.h"
 #include "TextureManager.h"
+#include "TextRenderer.h"
 #include "UIManager.h"
 #include "TileManager.h"
 #include "Camera.h"

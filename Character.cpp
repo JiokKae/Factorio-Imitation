@@ -1,6 +1,7 @@
 #include "Character.h"
 #include "Animation.h"
 #include "GLImage.h"
+#include "Inventory.h"
 
 HRESULT Character::Init()
 {
@@ -13,8 +14,6 @@ HRESULT Character::Init()
 	imageAniOffset[RUNNING] = { 0.0f, 43.0f };
 	image[MINING].Init("Character/hr-level1_mining_tool", 26, 8);
 	imageAniOffset[MINING] = { 0.0f, 33.0f };
-	//image[IDLE].SetSpecular(false);
-	//image[RUNNING].SetSpecular(false);
 
 	shadow = new GLImage[(int)State::END];
 	shadow[IDLE].Init("Character/hr-level1_idle_shadow", 22, 8);
@@ -32,13 +31,17 @@ HRESULT Character::Init()
 	animationSpeed[RUNNING] = 0.025f;
 	animationSpeed[MINING] = 0.022f;
 	
+	inventory = new Inventory();
+	inventory->AddItem("Coal", 500);
+	inventory->AddItem("Coal", 40);
+	inventory->AddItem("Coal", 3);
 	speed = 566.0f;
 	return S_OK;
 }
 
 void Character::Release()
 {
-
+	SAFE_RELEASE(inventory);
 	SAFE_ARR_DELETE(image);
 	SAFE_ARR_DELETE(shadow);
 }
@@ -242,9 +245,14 @@ glm::vec3 Character::GetVec3Direction()
 FRECT Character::GetCollisionFRect()
 {
 	FRECT rect;
-	rect.left =		position.x - (TILE_SIZE / 4 * (4.0f / 5.0f)) * Camera::GetSingleton()->GetZoom();
-	rect.right =	position.x + (TILE_SIZE / 4 * (4.0f / 5.0f)) * Camera::GetSingleton()->GetZoom();
-	rect.top =		position.y + (TILE_SIZE / 4 * (4.0f / 5.0f)) * Camera::GetSingleton()->GetZoom();
-	rect.bottom =	position.y - (TILE_SIZE / 4 * (4.0f / 5.0f)) * Camera::GetSingleton()->GetZoom();
+	rect.left =		position.x - (TILE_SIZE / 4 * (4.0f / 5.0f));
+	rect.right =	position.x + (TILE_SIZE / 4 * (4.0f / 5.0f));
+	rect.top =		position.y + (TILE_SIZE / 4 * (4.0f / 5.0f));
+	rect.bottom =	position.y - (TILE_SIZE / 4 * (4.0f / 5.0f));
 	return rect;
+}
+
+Inventory* Character::GetLpInventory()
+{
+	return inventory;
 }

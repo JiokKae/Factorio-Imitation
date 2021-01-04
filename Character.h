@@ -4,6 +4,7 @@
 class Shader;
 class GLImage;
 class Animation;
+class Inventory;
 class Character : public Entity
 {
 public:
@@ -40,6 +41,7 @@ private:
 	Direction direction;
 	State state;
 	float speed;
+	Inventory* inventory;
 
 public:
 	virtual HRESULT Init();
@@ -56,6 +58,7 @@ public:
 	glm::vec2* GetLpPosition() { return &position; }
 	glm::vec3 GetVec3Direction();
 	virtual FRECT GetCollisionFRect() override;
+	Inventory* GetLpInventory();
 
 	Character() {};
 	virtual ~Character() {};

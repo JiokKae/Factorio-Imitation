@@ -1,10 +1,11 @@
 #include "CharacterUI.h"
 #include "InventorySlotUI.h"
+#include "Inventory.h"
 #include "DeactiveButtonUI.h"
 #include "GLImage.h"
 #include "Shader.h"
 
-HRESULT CharacterUI::Init()
+HRESULT CharacterUI::Init(Inventory* inventory)
 {
 	image = new GLImage();
 	image->Init("UI/CharacterUI");
@@ -18,6 +19,8 @@ HRESULT CharacterUI::Init()
 			slotUI[y * SLOT_X + x].SetParent(this);
 		}
 	}
+
+	this->inventory = inventory;
 
 	deactiveButtonUI = new DeactiveButtonUI();
 	deactiveButtonUI->Init();
@@ -40,7 +43,12 @@ void CharacterUI::Update()
 {
 	if (active)
 	{
-		for (int i = 0; i < SLOT_SIZE; i++)
+		vector<ItemInfo> arr = inventory->GetItemInfoArray();
+		for (int i = 0; i < arr.size(); i++)
+		{
+			slotUI[i].Update(arr[i].name, arr[i].amount);
+		}
+		for (int i = arr.size(); i < SLOT_SIZE; i++)
 		{
 			slotUI[i].Update();
 		}
@@ -62,6 +70,11 @@ void CharacterUI::Render(Shader* lpShader)
 		{
 			slotUI[i].Render(lpShader);
 		}
+		for (int i = 0; i < SLOT_SIZE; i++)
+		{
+			
+		}
+		
 		deactiveButtonUI->Render(lpShader);
 	}
 }

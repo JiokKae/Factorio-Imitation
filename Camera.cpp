@@ -15,7 +15,6 @@ HRESULT Camera::Init()
 
 void Camera::Release()
 {
-	ReleaseSingleton();
 }
 
 void Camera::Update()

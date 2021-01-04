@@ -15,6 +15,7 @@ class PlayScene : public Scene
 	Shader* lightingShader;
 	unsigned int uboMatrices;
 	unsigned int uboLights;
+	GLuint uboUIMatrices;
 
 	Shader* UIShader;
 	TileManager* tileRenderer;

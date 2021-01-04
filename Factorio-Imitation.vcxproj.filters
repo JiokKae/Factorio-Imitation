@@ -246,6 +246,9 @@
     <ClInclude Include="DeactiveButtonUI.h">
       <Filter>MainGame\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>MainGame\Character</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -382,6 +385,9 @@
     </ClCompile>
     <ClCompile Include="DeactiveButtonUI.cpp">
       <Filter>MainGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>MainGame\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
