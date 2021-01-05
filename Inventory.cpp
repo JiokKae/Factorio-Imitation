@@ -1,25 +1,26 @@
 #include "Inventory.h"
 
-void Inventory::AddItem(string strkey, int amount)
+void Inventory::AddItem(ItemInfo* itemInfo)
 {
-	map<string, int>::iterator it = mapInventory.find(strkey);
+	map<ItemEnum, ItemInfo*>::iterator it = mapInventory.find((ItemEnum)itemInfo->id);
 	if (it != mapInventory.end())
 	{
-		it->second += amount;
+		it->second->amount += itemInfo->amount;
 	}
 	else
 	{
-		mapInventory.insert(make_pair(strkey, amount));
+		mapInventory.insert(make_pair((ItemEnum)itemInfo->id, itemInfo));
 	}
 }
 
-vector<ItemInfo> Inventory::GetItemInfoArray()
+vector<ItemInfo*> Inventory::GetItemInfoArray()
 {
-	map<string, int>::iterator it;
-	vector<ItemInfo> vecItemInfo;
+	map<ItemEnum, ItemInfo*>::iterator it;
+	vector<ItemInfo*> vecItemInfo;
 	for (it = mapInventory.begin(); it != mapInventory.end(); it++)
 	{
-		vecItemInfo.push_back({ it->first, it->second });
+		if(it->second->amount != 0)
+			vecItemInfo.push_back(it->second);
 	}
 	return vecItemInfo;
 }

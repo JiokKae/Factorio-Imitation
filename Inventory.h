@@ -1,17 +1,13 @@
 #pragma once
 #include "GameNode.h"
-
-struct ItemInfo {
-	string name;
-	int amount;
-};
+#include "ItemEnum.h"
 
 class Inventory : public GameNode
 {
-	map<string, int> mapInventory;
+	map<ItemEnum, ItemInfo*> mapInventory;
 
 public:
-	void AddItem(string strkey, int amount);
-	vector<ItemInfo> GetItemInfoArray();
+	void AddItem(ItemInfo* itemInfo);
+	vector<ItemInfo*> GetItemInfoArray();
 };
 

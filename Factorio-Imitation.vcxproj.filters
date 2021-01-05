@@ -240,14 +240,20 @@
     <ClInclude Include="BurnerMiningDrillUI.h">
       <Filter>MainGame\UI</Filter>
     </ClInclude>
-    <ClInclude Include="UIManager.h">
-      <Filter>GLFrameWork\UI</Filter>
-    </ClInclude>
     <ClInclude Include="DeactiveButtonUI.h">
       <Filter>MainGame\UI</Filter>
     </ClInclude>
     <ClInclude Include="Inventory.h">
       <Filter>MainGame\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="HandUI.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemEnum.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -380,14 +386,17 @@
     <ClCompile Include="BurnerMiningDrillUI.cpp">
       <Filter>MainGame\UI</Filter>
     </ClCompile>
-    <ClCompile Include="UIManager.cpp">
-      <Filter>GLFrameWork\UI</Filter>
-    </ClCompile>
     <ClCompile Include="DeactiveButtonUI.cpp">
       <Filter>MainGame\UI</Filter>
     </ClCompile>
     <ClCompile Include="Inventory.cpp">
       <Filter>MainGame\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>MainGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="HandUI.cpp">
+      <Filter>MainGame\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

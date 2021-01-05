@@ -14,6 +14,14 @@ float		g_mousezDelta;
 glm::vec2	g_cursorCoord;
 glm::vec2	g_cursorPosition;
 float		g_time;
+ItemSpec	g_itemSpecs[] = {
+	{ "AssemblingMachine1",	true },
+	{ "BurnerMiningDrill",	true },
+	{ "IronPlate",			false },
+	{ "Coal" ,				false },
+};
+
+enum ItemEnum;	// 정의 피킹용
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);

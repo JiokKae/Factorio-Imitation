@@ -15,8 +15,8 @@ HRESULT PlayScene::Init()
 {
     SetWindowSize((1920 - width) / 2, (1080 - height) / 2, width, height);
     glEnable(GL_TEXTURE_2D);
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_ALWAYS);
+    //glEnable(GL_DEPTH_TEST);
+    //glDepthFunc(GL_ALWAYS);
     glEnable(GL_BLEND);
     glBlendEquation(GL_FUNC_ADD); // this is default
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -152,11 +152,22 @@ void PlayScene::Release()
 {
     SAFE_ARR_DELETE(drill);
     SAFE_RELEASE(textRenderer);
+
+    if (tileRenderer) 
+    {
+        tileRenderer->Release();
+        tileRenderer = nullptr;
+    }
+
     SAFE_RELEASE(tileRenderer);
     SAFE_RELEASE(player);
     SAFE_DELETE(UIShader);
 	SAFE_DELETE(lightingShader);
     SAFE_RELEASE(camera);
+
+    glDisable(GL_TEXTURE_2D);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_BLEND);
 }
 
 void PlayScene::Update()

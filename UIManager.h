@@ -4,11 +4,14 @@
 
 class UI;
 class Shader;
+class HandUI;
 class UIManager : public Singleton<UIManager>
 {
 private:
 	map<string, UI*> mapUIs;
 	UI* currUI;
+
+	HandUI* handUI;
 	
 public:
 	HRESULT Init();
@@ -23,6 +26,7 @@ public:
 	bool IsCurrUINull() { return currUI == nullptr; }
 	void ActiveUI(string strKey);
 	void DeactiveUI();
+	HandUI* GetLpHandUI() { return handUI; }
 
 	UIManager()
 		: currUI(nullptr) 

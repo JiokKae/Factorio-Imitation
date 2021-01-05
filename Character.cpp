@@ -32,9 +32,12 @@ HRESULT Character::Init()
 	animationSpeed[MINING] = 0.022f;
 	
 	inventory = new Inventory();
-	inventory->AddItem("Coal", 500);
-	inventory->AddItem("Coal", 40);
-	inventory->AddItem("Coal", 3);
+	inventory->AddItem(new ItemInfo(COAL, 500));
+	inventory->AddItem(new ItemInfo(BURNER_MINING_DRILL, 40));
+	inventory->AddItem(new ItemInfo(IRON_PLATE, 3));
+	inventory->AddItem(new ItemInfo(IRON_PLATE, 3));
+	inventory->AddItem(new ItemInfo(ASSEMBLING_MACHINE_1, 3));
+
 	speed = 566.0f;
 	return S_OK;
 }

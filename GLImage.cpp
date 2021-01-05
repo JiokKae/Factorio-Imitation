@@ -53,6 +53,9 @@ void GLImage::Release()
 
 void GLImage::Render(Shader* shader, float destX, float destY, int currFrameX, int currFrameY)
 {
+    if (sourceTexture == nullptr)
+        return;
+
     shader->use();
 
     shader->setVec2("currFrame", { currFrameX, currFrameY });

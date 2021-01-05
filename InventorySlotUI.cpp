@@ -1,13 +1,15 @@
 #include "InventorySlotUI.h"
 #include "GLImage.h"
 #include "TextRenderer.h"
+#include "HandUI.h"
+
 HRESULT InventorySlotUI::Init(int x, int y)
 {
 	image = new GLImage();
 	image->Init("UI/InventorySlotUI", 2, 1);
 	
-	image2 = new GLImage();
-	image2->Init("Icons/Coal", 1, 1, 32, 32);
+	itemImage = new GLImage();
+	itemImage->Init("Icons/Coal", 1, 1, 32, 32);
 
 	hand = new GLImage();
 	hand->Init("Icons/Hand", 1, 1, 32, 32);
@@ -23,12 +25,14 @@ void InventorySlotUI::Release()
 {
 }
 
-void InventorySlotUI::Update(string itemName, int itemAmount)
+void InventorySlotUI::Update(ItemInfo* itemInfo)
 {
 	if (active)
 	{
-		this->itemName = itemName;
-		this->itemAmount = itemAmount;
+		this->itemInfo = itemInfo;
+
+		if (itemInfo)
+			itemImage->SetSourceTexture(TextureManager::GetSingleton()->FindTexture("Icons/" + g_itemSpecs[itemInfo->id].name ));
 
 		if (PtInFRect(GetFrect(), { g_ptMouse.x, g_ptMouse.y }))
 		{
@@ -36,9 +40,7 @@ void InventorySlotUI::Update(string itemName, int itemAmount)
 			if (isMouseDown)
 			{
 				if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LBUTTON))
-				{
-					isSelected = true;
-				}
+					OnClick();
 			}
 
 			if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
@@ -57,16 +59,10 @@ void InventorySlotUI::Update(string itemName, int itemAmount)
 
 void InventorySlotUI::Render(Shader* lpShader)
 {
-	if (isSelected)
-	{
-		image2->Render(lpShader, g_ptMouse.x + 16, g_ptMouse.y - 16);
-		TextRenderer::GetSingleton()->RenderText("100", g_ptMouse.x + 16, g_ptMouse.y - 16 - 7.0f, 0.46f);
-	}
-
 	if (active)
 	{
 		image->Render(lpShader, GetPosition().x, GetPosition().y, onMouse, 0);
-		if (itemAmount != 0)
+		if (itemInfo && itemInfo->amount != 0)
 		{
 			if (isSelected)
 			{
@@ -74,11 +70,37 @@ void InventorySlotUI::Render(Shader* lpShader)
 			}
 			else
 			{
-				image2->Render(lpShader, GetPosition().x, GetPosition().y);
-				TextRenderer::GetSingleton()->RenderText(to_string(itemAmount), GetPosition().x, GetPosition().y - 7.0f, 0.46f);
+				itemImage->Render(lpShader, GetPosition().x, GetPosition().y);
+				TextRenderer::GetSingleton()->RenderText(to_string(itemInfo->amount), GetPosition().x - to_string(itemInfo->amount).length() * 6 + 17, GetPosition().y - 7.0f, 0.46f);
 			}
 		}
 		
+	}
+}
+void InventorySlotUI::HandRender(Shader* lpShader)
+{
+	if (isSelected)
+	{
+		if (itemInfo)
+		{
+			itemImage->Render(lpShader, g_ptMouse.x + 16, g_ptMouse.y - 16);
+			TextRenderer::GetSingleton()->RenderText(to_string(itemInfo->amount), g_ptMouse.x + 16 - to_string(itemInfo->amount).length() * 6 + 17, g_ptMouse.y - 16 - 7.0f, 0.46f);
+		}
+	}
+}
+
+void InventorySlotUI::OnClick()
+{
+	// 선택하기 처리
+	if (!isSelected)
+	{
+		isSelected = true;
+		UIManager::GetSingleton()->GetLpHandUI()->SetCurrentSlotUI(this);
+	}
+	// 선택되어있다면 선택 해제
+	else
+	{
+		UIManager::GetSingleton()->GetLpHandUI()->SetCurrentSlotUI(nullptr);
 	}
 }
 // 이 주석을 지워주세요

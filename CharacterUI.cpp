@@ -43,14 +43,14 @@ void CharacterUI::Update()
 {
 	if (active)
 	{
-		vector<ItemInfo> arr = inventory->GetItemInfoArray();
+		vector<ItemInfo*> arr = inventory->GetItemInfoArray();
 		for (int i = 0; i < arr.size(); i++)
 		{
-			slotUI[i].Update(arr[i].name, arr[i].amount);
+			slotUI[i].Update(arr[i]);
 		}
 		for (int i = arr.size(); i < SLOT_SIZE; i++)
 		{
-			slotUI[i].Update();
+			slotUI[i].Update(nullptr);
 		}
 		deactiveButtonUI->Update();
 		if (PtInFRect(GetFrect(), { g_ptMouse.x, g_ptMouse.y }))

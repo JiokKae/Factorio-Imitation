@@ -1,0 +1,10 @@
+#pragma once
+
+enum ItemEnum {
+	ASSEMBLING_MACHINE_1,
+	BURNER_MINING_DRILL,
+	IRON_PLATE,
+	COAL,
+	END
+};
+

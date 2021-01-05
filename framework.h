@@ -50,6 +50,29 @@ using namespace std;
 
 #define TILE_SIZE	64
 
+struct ItemSpec {
+	string name;
+	bool placeable;
+};
+
+struct ItemInfo {
+	int id;
+	int amount;
+
+	ItemInfo(int id, int amount)
+	{
+		this->id = id;
+		this->amount = amount;
+	}
+
+	void AddAmount(int amount)
+	{
+		this->amount += amount;
+		if (this->amount < 0)
+			this->amount = 0;
+	}
+};
+
 extern HWND			g_hWnd;
 extern float		g_time;
 extern HINSTANCE	g_hInstance;
@@ -57,6 +80,7 @@ extern POINT		g_ptMouse;
 extern float		g_mousezDelta;
 extern glm::vec2	g_cursorCoord;
 extern glm::vec2	g_cursorPosition;
+extern ItemSpec		g_itemSpecs[];
 
 enum class Argument_Kind {
 	None,

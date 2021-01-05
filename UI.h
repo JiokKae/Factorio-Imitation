@@ -30,6 +30,11 @@ public:
 	glm::vec2 GetLocalPosition()	{ return localPosition; }
 	FRECT GetFrect();
 
+	virtual void OnMouse() {};
+
+	// 클릭 이벤트
+	virtual void OnClick() {};
+
 	UI()
 		: image(nullptr)
 		, parent(nullptr)

@@ -28,8 +28,9 @@ public:
 	void Render(Shader* shader, float destX, float destY, int currFrameX = 0, int currFrameY = 0);
 	void AnimationRender(Shader* shader, float destX, float destY, Animation* ani);
 
-	void SetZoom(float zoom)			{ this->zoom = zoom; }
-	void SetAlpha(float alpha)			{ this->alpha = alpha; }
+	void SetZoom(float zoom)				{ this->zoom = zoom; }
+	void SetAlpha(float alpha)				{ this->alpha = alpha; }
+	void SetSourceTexture(Texture* texture) { this->sourceTexture = texture; }
 
 	float GetZoom()						{ return zoom; }
 	float GetFrameWidth()				{ return frameWidth; }

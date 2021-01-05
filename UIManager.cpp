@@ -1,12 +1,17 @@
 #include "UIManager.h"
 #include "UI.h"
+#include "HandUI.h"
 HRESULT UIManager::Init()
 {
+	handUI = new HandUI();
+
 	return S_OK;
 }
 
 void UIManager::Release()
 {
+	SAFE_RELEASE(handUI);
+
 	map<string, UI*>::iterator it;
 	for (it = mapUIs.begin(); it != mapUIs.end(); )
 	{
@@ -30,12 +35,16 @@ void UIManager::Update()
 {
 	if (currUI)
 		currUI->Update();
+
+	handUI->Update();
 }
 
 void UIManager::Render(Shader* lpShader)
 {
 	if(currUI)
 		currUI->Render(lpShader);
+
+	handUI->Render(lpShader);
 }
 
 UI* UIManager::AddUI(string strKey, UI* lpUi)
