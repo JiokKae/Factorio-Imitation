@@ -163,6 +163,7 @@
     <ClInclude Include="DeactiveButtonUI.h" />
     <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityManager.h" />
     <ClInclude Include="FreeCamera.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameNode.h" />
@@ -214,6 +215,7 @@
     <ClCompile Include="DeactiveButtonUI.cpp" />
     <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="FreeCamera.cpp" />
     <ClCompile Include="Factorio-Imitation.cpp" />
     <ClCompile Include="GameNode.cpp" />

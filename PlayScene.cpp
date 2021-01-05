@@ -9,7 +9,9 @@
 #include "DirectionalLight.h"
 #include "BurnerMiningDrill.h"
 #include "BurnerMiningDrillUI.h"
+#include "EntityManager.h"
 #include "Ore.h"
+#include "GLImage.h"
 
 HRESULT PlayScene::Init()
 {
@@ -53,8 +55,8 @@ HRESULT PlayScene::Init()
 
     glGenBuffers(1, &uboUIMatrices);
     glBindBuffer(GL_UNIFORM_BUFFER, uboUIMatrices);
-    glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), NULL, GL_DYNAMIC_DRAW);
-    glBindBufferRange(GL_UNIFORM_BUFFER, 2, uboUIMatrices, 0, 2 * sizeof(glm::mat4));
+    glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), NULL, GL_DYNAMIC_DRAW);
+    glBindBufferRange(GL_UNIFORM_BUFFER, 2, uboUIMatrices, 0, sizeof(glm::mat4));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
 	// build and compile our shader zprogram
@@ -80,6 +82,7 @@ HRESULT PlayScene::Init()
 
 	lightingShader->use();
     lightingShader->setInt("material.diffuse", 0);
+    lightingShader->setVec3("material.diffuseColor", vec3(1.0f, 1.0f, 1.0f));
     glBindBuffer(GL_UNIFORM_BUFFER, uboLights);
 
     // directional light(static)
@@ -129,28 +132,35 @@ HRESULT PlayScene::Init()
     }
 
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
-  
+
+    itemPlaceImage = new GLImage();
+    itemPlaceImage->Init("Entity/BurnerMiningDrill-W", 4, 8);
+
     // TextRenderer Init
     textRenderer = TextRenderer::GetSingleton();
     textRenderer->Init();
     textRenderer->Load("Fonts/NotoSans-Bold.ttf", 24);
 
-    drill = new BurnerMiningDrill[10*10]();
+    entityManager = new EntityManager();
+    entityManager->Init();
+    
+    BurnerMiningDrill* drill;
     for (int i = 0; i < 10; i++)
     {
         for (int j = 0; j < 10; j++)
-        {
-            drill[i * 10 + j].Init(j * 128, i * 128);
+        {   
+            drill = new BurnerMiningDrill();
+            drill->Init(j * 128, i * 128);
+            entityManager->AddEntity(drill);
         }
     }
-    drill->Init(0, 0);
 
 	return S_OK;
 }
 
 void PlayScene::Release()
 {
-    SAFE_ARR_DELETE(drill);
+    SAFE_RELEASE(entityManager);
     SAFE_RELEASE(textRenderer);
 
     if (tileRenderer) 
@@ -187,26 +197,23 @@ void PlayScene::Update()
 
     UIManager::GetSingleton()->Update();
 
-    for (int i = 0; i < 100; i++)
-    {
-        drill[i].Update();
-    }
+    entityManager->Update();
 
     tileRenderer->Update();
 
     player->Update();
     
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < entityManager->GetSize(); i++)
     {
         FRECT colRect;
         FRECT playerRect = player->GetCollisionFRect();
-        FRECT drillRect = drill[i].GetCollisionFRect();
-        if (IntersectFRect(&colRect, &playerRect, &drillRect))
+        FRECT entityRect = entityManager->GetEntity(i)->GetCollisionFRect();
+        if (IntersectFRect(&colRect, &playerRect, &entityRect))
         {
             if (abs(colRect.right - colRect.left) < abs(colRect.top - colRect.bottom))
             {
                 // 우측 충돌일때
-                if (colRect.right == drillRect.right)
+                if (colRect.right == entityRect.right)
                     player->GetLpPosition()->x += abs(colRect.right - colRect.left);
                 else
                     player->GetLpPosition()->x -= abs(colRect.right - colRect.left);
@@ -214,7 +221,7 @@ void PlayScene::Update()
             else
             {
                 // 아래측 충돌일 때
-                if (colRect.bottom == drillRect.bottom)
+                if (colRect.bottom == entityRect.bottom)
                     player->GetLpPosition()->y -= abs(colRect.top - colRect.bottom);
                 else
                     player->GetLpPosition()->y += abs(colRect.top - colRect.bottom);
@@ -258,22 +265,42 @@ void PlayScene::Render(HDC hdc)
 
     // UI프로젝션 매트릭스 연산
     glm::mat4 UIprojection = glm::ortho(0.0f, float(width), 0.0f, float(height));
-    glm::mat4 reverseVerticalUIProjection = glm::ortho(0.0f, float(width), float(height), 0.0f);
 
     // uniform buffer object 2번 바인딩 인덱스에 UI프로젝션 설정
     glBindBuffer(GL_UNIFORM_BUFFER, uboUIMatrices);
     glBufferSubData(GL_UNIFORM_BUFFER,                  0, sizeof(glm::mat4), glm::value_ptr(UIprojection));
-    glBufferSubData(GL_UNIFORM_BUFFER,  sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(reverseVerticalUIProjection));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
     tileRenderer->Render(camera->GetRect(width, height));
 
-    for (int i = 0; i < 100; i++)
-    {
-        drill[i].Render(lightingShader);
-    }
+    entityManager->Render(lightingShader);
 
     player->Render(lightingShader);
+
+    ivec2 placeCoord;
+    if (g_cursorPosition.x < 0)
+        placeCoord.x = int(g_cursorPosition.x - TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
+    else
+        placeCoord.x = int(g_cursorPosition.x + TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
+
+    if (g_cursorPosition.y < 0)
+        placeCoord.y = int(g_cursorPosition.y - TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
+    else
+        placeCoord.y = int(g_cursorPosition.y + TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
+
+    if (distance((vec2)placeCoord, *player->GetLpPosition()) > 800)
+        lightingShader->setVec3("material.diffuseColor", vec3(1.0f, 0.0f, 0.0f));
+    else
+        lightingShader->setVec3("material.diffuseColor", vec3(0.0f, 1.0f, 0.0f));
+
+    itemPlaceImage->Render(lightingShader, placeCoord.x , placeCoord.y);
+    lightingShader->setVec3("material.diffuseColor", vec3(1.0f, 1.0f, 1.0f));
+    if (KeyManager::GetSingleton()->IsOnceKeyDown('B'))
+    {
+        BurnerMiningDrill* drill = new BurnerMiningDrill();
+        drill->Init(placeCoord.x, placeCoord.y);
+        entityManager->AddEntity(drill);
+    }
 
     UIManager::GetSingleton()->Render(UIShader);
 

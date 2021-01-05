@@ -9,6 +9,7 @@ class InventorySlotUI : public UI
 	bool isMouseDown;
 	bool isSelected;
 	GLImage* itemImage;
+
 	GLImage* hand;
 public:
 	virtual HRESULT Init(int x, int y);

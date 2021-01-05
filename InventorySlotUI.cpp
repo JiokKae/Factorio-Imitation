@@ -83,8 +83,15 @@ void InventorySlotUI::HandRender(Shader* lpShader)
 	{
 		if (itemInfo)
 		{
-			itemImage->Render(lpShader, g_ptMouse.x + 16, g_ptMouse.y - 16);
-			TextRenderer::GetSingleton()->RenderText(to_string(itemInfo->amount), g_ptMouse.x + 16 - to_string(itemInfo->amount).length() * 6 + 17, g_ptMouse.y - 16 - 7.0f, 0.46f);
+			if (g_itemSpecs[itemInfo->id].placeable && !UIManager::GetSingleton()->IsMouseOnUI())
+			{
+				
+			}
+			else
+			{
+				itemImage->Render(lpShader, g_ptMouse.x + 16, g_ptMouse.y - 16);
+				TextRenderer::GetSingleton()->RenderText(to_string(itemInfo->amount), g_ptMouse.x + 16 - to_string(itemInfo->amount).length() * 6 + 17, g_ptMouse.y - 16 - 7.0f, 0.46f);
+			}
 		}
 	}
 }

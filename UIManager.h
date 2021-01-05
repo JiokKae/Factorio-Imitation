@@ -24,6 +24,7 @@ public:
 	UI* FindUI(string strKey);
 	
 	bool IsCurrUINull() { return currUI == nullptr; }
+	bool IsMouseOnUI();
 	void ActiveUI(string strKey);
 	void DeactiveUI();
 	HandUI* GetLpHandUI() { return handUI; }

@@ -8,21 +8,21 @@ HRESULT Character::Init()
 	position = { 0.0f, 0.0f };
 	direction = Direction::up;
 	image = new GLImage[State::END]();
-	image[IDLE].Init("Character/hr-level1_idle", 22, 8);
+	image[IDLE].Init("Entity/Character-level1_idle", 22, 8);
 	imageAniOffset[IDLE] = { 0.0f, 43.0f };
-	image[RUNNING].Init("Character/hr-level1_running", 22, 8);
+	image[RUNNING].Init("Entity/Character-level1_running", 22, 8);
 	imageAniOffset[RUNNING] = { 0.0f, 43.0f };
-	image[MINING].Init("Character/hr-level1_mining_tool", 26, 8);
+	image[MINING].Init("Entity/Character-level1_mining_tool", 26, 8);
 	imageAniOffset[MINING] = { 0.0f, 33.0f };
 
 	shadow = new GLImage[(int)State::END];
-	shadow[IDLE].Init("Character/hr-level1_idle_shadow", 22, 8);
+	shadow[IDLE].Init("Entity/Character-level1_idle_shadow", 22, 8);
 	shadow[IDLE].SetAlpha(0.6f);
 	shadowAniOffset[IDLE] = {60.0f, 1.0f};
-	shadow[RUNNING].Init("Character/hr-level1_running_shadow", 22, 8);
+	shadow[RUNNING].Init("Entity/Character-level1_running_shadow", 22, 8);
 	shadow[RUNNING].SetAlpha(0.6f);
 	shadowAniOffset[RUNNING] = { 60.0f, 1.0f };
-	shadow[MINING].Init("Character/hr-level1_mining_tool_shadow", 26, 8);
+	shadow[MINING].Init("Entity/Character-level1_mining_tool_shadow", 26, 8);
 	shadow[MINING].SetAlpha(0.6f);
 	shadowAniOffset[MINING] = { 50.0f, 5.0f };
 

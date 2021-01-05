@@ -6,20 +6,20 @@ HRESULT BurnerMiningDrill::Init(int x, int y)
 	position = { x, y };
 	size = { 2, 2 };
 	image = new GLImage[int(DIRECTION::END)]();
-	image[DIRECTION::NORTH].Init("Burner-mining-drill/hr-burner-mining-drill-N", 4, 8);
-	image[DIRECTION::EAST].Init("Burner-mining-drill/hr-burner-mining-drill-E", 4, 8);
-	image[DIRECTION::SOUTH].Init("Burner-mining-drill/hr-burner-mining-drill-S", 4, 8);
-	image[DIRECTION::WEST].Init("Burner-mining-drill/hr-burner-mining-drill-W", 4, 8);
+	image[DIRECTION::NORTH].Init(	"Entity/BurnerMiningDrill-N", 4, 8);
+	image[DIRECTION::EAST].Init(	"Entity/BurnerMiningDrill-E", 4, 8);
+	image[DIRECTION::SOUTH].Init(	"Entity/BurnerMiningDrill-S", 4, 8);
+	image[DIRECTION::WEST].Init(	"Entity/BurnerMiningDrill-W", 4, 8);
 
 	shadow = new GLImage[int(DIRECTION::END)]();
-	shadow[DIRECTION::NORTH].Init("Burner-mining-drill/hr-burner-mining-drill-N-shadow", 4, 8);
+	shadow[DIRECTION::NORTH].Init("Entity/BurnerMiningDrill-N-shadow", 4, 8);
 	shadow[DIRECTION::NORTH].SetAlpha(0.6f);
 	shadowAniOffset[DIRECTION::NORTH] = {50, 0};
-	shadow[DIRECTION::EAST].Init("Burner-mining-drill/hr-burner-mining-drill-E-shadow", 4, 8);
+	shadow[DIRECTION::EAST].Init("Entity/BurnerMiningDrill-E-shadow", 4, 8);
 	shadow[DIRECTION::EAST].SetAlpha(0.6f);
-	shadow[DIRECTION::SOUTH].Init("Burner-mining-drill/hr-burner-mining-drill-S-shadow", 4, 8);
+	shadow[DIRECTION::SOUTH].Init("Entity/BurnerMiningDrill-S-shadow", 4, 8);
 	shadow[DIRECTION::SOUTH].SetAlpha(0.6f);
-	shadow[DIRECTION::WEST].Init("Burner-mining-drill/hr-burner-mining-drill-W-shadow", 4, 8);
+	shadow[DIRECTION::WEST].Init("Entity/BurnerMiningDrill-W-shadow", 4, 8);
 	shadow[DIRECTION::WEST].SetAlpha(0.6f);
 
 	return S_OK;

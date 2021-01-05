@@ -84,6 +84,18 @@ UI* UIManager::FindUI(string strKey)
 	return nullptr;
 }
 
+bool UIManager::IsMouseOnUI()
+{
+	if (currUI)
+	{
+		if (PtInFRect(currUI->GetFrect(), { g_ptMouse.x, g_ptMouse.y }))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 void UIManager::ActiveUI(string strKey)
 {
 	if(currUI)

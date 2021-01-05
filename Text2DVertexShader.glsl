@@ -5,7 +5,6 @@ out vec2 TexCoords;
 layout (std140, binding = 2) uniform UIMatrices
 {
 	mat4 projection;
-    mat4 reverseVerticalProjection;
 };
 
 void main()

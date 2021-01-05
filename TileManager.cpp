@@ -30,6 +30,7 @@ HRESULT TileManager::Init()
     instancingShader = new Shader("InstancingVertexShader.glsl", "StandardFragmentShader.glsl");
     instancingShader->use();
     instancingShader->setInt("material.diffuse", 0);
+    instancingShader->setVec3("material.diffuseColor", glm::vec3(1.0f, 1.0f, 1.0f));
     instancingShader->setFloat("alpha", 1.0f);
     instancingShader->setMat4("model", glm::mat4());
     

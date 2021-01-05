@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 
+class GLImage;
 class Camera;
 class Shader;
 class Character;
@@ -9,12 +10,13 @@ class TileManager;
 class TextRenderer;
 class DirectionalLight;
 class BurnerMiningDrill;
+class EntityManager;
 class PlayScene : public Scene
 {
 	Camera* camera;
 	Shader* lightingShader;
-	unsigned int uboMatrices;
-	unsigned int uboLights;
+	GLuint uboMatrices;
+	GLuint uboLights;
 	GLuint uboUIMatrices;
 
 	Shader* UIShader;
@@ -27,7 +29,11 @@ class PlayScene : public Scene
 	PointLight* pointLights;
 	int numOfPointLight;
 
-	BurnerMiningDrill* drill;
+	EntityManager* entityManager;
+
+	GLImage* itemPlaceImage;
+
+	
 public:
 	virtual HRESULT Init();
 	virtual void Release();
@@ -41,6 +47,7 @@ public:
 		, player(nullptr)
 		, camera(nullptr)
 		, textRenderer(nullptr)
+		, entityManager(nullptr)
 	{};
 	virtual ~PlayScene();
 };

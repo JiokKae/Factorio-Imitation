@@ -102,21 +102,21 @@ void MainGame::ImageLoad()
 
 	TextureManager* textureManager = TextureManager::GetSingleton();
 
-	textureManager->AddTexture("Character/hr-level1_idle",					"graphics/entity/character/hr-level1_idle.png");
-	textureManager->AddTexture("Character/hr-level1_idle_shadow",			"graphics/entity/character/hr-level1_idle_shadow.png");
-	textureManager->AddTexture("Character/hr-level1_running",				"graphics/entity/character/hr-level1_running.png");
-	textureManager->AddTexture("Character/hr-level1_running_shadow",		"graphics/entity/character/hr-level1_running_shadow.png");
-	textureManager->AddTexture("Character/hr-level1_mining_tool",			"graphics/entity/character/hr-level1_mining_tool.png");
-	textureManager->AddTexture("Character/hr-level1_mining_tool_shadow",	"graphics/entity/character/hr-level1_mining_tool_shadow.png");
+	textureManager->AddTexture("Entity/Character-level1_idle",					"graphics/entity/character/hr-level1_idle.png");
+	textureManager->AddTexture("Entity/Character-level1_idle_shadow",			"graphics/entity/character/hr-level1_idle_shadow.png");
+	textureManager->AddTexture("Entity/Character-level1_running",				"graphics/entity/character/hr-level1_running.png");
+	textureManager->AddTexture("Entity/Character-level1_running_shadow",		"graphics/entity/character/hr-level1_running_shadow.png");
+	textureManager->AddTexture("Entity/Character-level1_mining_tool",			"graphics/entity/character/hr-level1_mining_tool.png");
+	textureManager->AddTexture("Entity/Character-level1_mining_tool_shadow",	"graphics/entity/character/hr-level1_mining_tool_shadow.png");
 
-	textureManager->AddTexture("Burner-mining-drill/hr-burner-mining-drill-N",			"graphics/entity/burner_mining_drill/hr-burner-mining-drill-N.png");
-	textureManager->AddTexture("Burner-mining-drill/hr-burner-mining-drill-E",			"graphics/entity/burner_mining_drill/hr-burner-mining-drill-E.png");
-	textureManager->AddTexture("Burner-mining-drill/hr-burner-mining-drill-S",			"graphics/entity/burner_mining_drill/hr-burner-mining-drill-S.png");
-	textureManager->AddTexture("Burner-mining-drill/hr-burner-mining-drill-W",			"graphics/entity/burner_mining_drill/hr-burner-mining-drill-W.png");
-	textureManager->AddTexture("Burner-mining-drill/hr-burner-mining-drill-N-shadow",	"graphics/entity/burner_mining_drill/hr-burner-mining-drill-N-shadow.png");
-	textureManager->AddTexture("Burner-mining-drill/hr-burner-mining-drill-E-shadow",	"graphics/entity/burner_mining_drill/hr-burner-mining-drill-E-shadow.png");
-	textureManager->AddTexture("Burner-mining-drill/hr-burner-mining-drill-S-shadow",	"graphics/entity/burner_mining_drill/hr-burner-mining-drill-S-shadow.png");
-	textureManager->AddTexture("Burner-mining-drill/hr-burner-mining-drill-W-shadow",	"graphics/entity/burner_mining_drill/hr-burner-mining-drill-W-shadow.png");
+	textureManager->AddTexture("Entity/BurnerMiningDrill-N",		"graphics/entity/burner_mining_drill/hr-burner-mining-drill-N.png");
+	textureManager->AddTexture("Entity/BurnerMiningDrill-E",		"graphics/entity/burner_mining_drill/hr-burner-mining-drill-E.png");
+	textureManager->AddTexture("Entity/BurnerMiningDrill-S",		"graphics/entity/burner_mining_drill/hr-burner-mining-drill-S.png");
+	textureManager->AddTexture("Entity/BurnerMiningDrill-W",		"graphics/entity/burner_mining_drill/hr-burner-mining-drill-W.png");
+	textureManager->AddTexture("Entity/BurnerMiningDrill-N-shadow",	"graphics/entity/burner_mining_drill/hr-burner-mining-drill-N-shadow.png");
+	textureManager->AddTexture("Entity/BurnerMiningDrill-E-shadow",	"graphics/entity/burner_mining_drill/hr-burner-mining-drill-E-shadow.png");
+	textureManager->AddTexture("Entity/BurnerMiningDrill-S-shadow",	"graphics/entity/burner_mining_drill/hr-burner-mining-drill-S-shadow.png");
+	textureManager->AddTexture("Entity/BurnerMiningDrill-W-shadow",	"graphics/entity/burner_mining_drill/hr-burner-mining-drill-W-shadow.png");
 
 	textureManager->AddTexture("UI/CharacterUI",			"graphics/ui/CharacterUI.png");
 	textureManager->AddTexture("UI/InventorySlotUI",		"graphics/ui/InventorySlotUI.png");

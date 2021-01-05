@@ -9,6 +9,7 @@ in StandardVertexShaderOut
 
 struct Material {
     sampler2D diffuse;
+    vec3 diffuseColor;
 };
 
 struct DirLight {
@@ -58,9 +59,10 @@ void main()
 // calculates the color when using a directional light.
 vec3 CalcDirLight(DirLight light)
 {
+    vec3 matDiffuse = vec3(texture(material.diffuse, IN.TexCoords)) * material.diffuseColor;
     // 결과들을 결합
-    vec3 ambient  = light.ambient  * vec3(texture(material.diffuse, IN.TexCoords));
-    vec3 diffuse  = light.diffuse  * vec3(texture(material.diffuse, IN.TexCoords));
+    vec3 ambient  = light.ambient * matDiffuse;
+    vec3 diffuse  = light.diffuse * matDiffuse;
     return (ambient + diffuse);
 } 
 
@@ -72,9 +74,11 @@ vec3 CalcPointLight(PointLight light, vec3 fragPos)
     float attenuation = 1.0 / (light.constant + light.linear * distance + 
   			     light.quadratic * (distance * distance));    
 
+    vec3 matDiffuse = vec3(texture(material.diffuse, IN.TexCoords)) * material.diffuseColor;
+
     // 결과들을 결합
-    vec3 ambient  = light.ambient  * vec3(texture(material.diffuse, IN.TexCoords));
-    vec3 diffuse  = light.diffuse  * vec3(texture(material.diffuse, IN.TexCoords));
+    vec3 ambient  = light.ambient * matDiffuse;
+    vec3 diffuse  = light.diffuse * matDiffuse;
 
     ambient  *= attenuation;
     diffuse  *= attenuation;
