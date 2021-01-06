@@ -15,10 +15,10 @@ glm::vec2	g_cursorCoord;
 glm::vec2	g_cursorPosition;
 float		g_time;
 ItemSpec	g_itemSpecs[] = {
-	{ "AssemblingMachine1",	true },
-	{ "BurnerMiningDrill",	true },
-	{ "IronPlate",			false },
-	{ "Coal" ,				false },
+	{ "AssemblingMachine1",	true,	{ 3, 3 }, },
+	{ "BurnerMiningDrill",	true,	{ 2, 2 }, },
+	{ "IronPlate",			false,	{ 0, 0 }, } ,
+	{ "Coal" ,				false,	{ 0, 0 }, },
 };
 
 enum ItemEnum;	// 정의 피킹용

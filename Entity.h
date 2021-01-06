@@ -4,6 +4,8 @@
 class Shader;
 class Entity : public GameNode
 {
+protected:
+	glm::ivec2 position;
 
 public:
 	virtual HRESULT Init();
@@ -13,4 +15,3 @@ public:
 
 	virtual FRECT GetCollisionFRect() { return FRECT(); };
 };
-

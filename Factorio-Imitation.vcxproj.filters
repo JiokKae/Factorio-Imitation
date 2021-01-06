@@ -256,6 +256,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="EntityManager.h">
+      <Filter>MainGame\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="VirtualStructureBuilder.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -402,6 +405,9 @@
       <Filter>MainGame\UI</Filter>
     </ClCompile>
     <ClCompile Include="EntityManager.cpp">
+      <Filter>MainGame\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="VirtualStructureBuilder.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

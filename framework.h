@@ -49,11 +49,17 @@ using namespace std;
 #define SAFE_ARR_DELETE(p) 	{if (p) delete[] p, p = nullptr; }
 #define SAFE_RELEASE(p) 	{if (p) p->Release(), delete p, p = nullptr; }
 
-#define TILE_SIZE	64
+#define TILE_SIZE		64
+#define CHUNK_IN_TILE	32
 
+#define POSX_TO_COORDX(x)				( (x < 0)? int(x) / TILE_SIZE - 1 : int(x) / TILE_SIZE )
+#define POS_TO_COORD(pos)				{ POSX_TO_COORDX(pos.x), POSX_TO_COORDX(pos.y) }
+#define TILECOORDX_TO_CHUNKCOORDX(x)	( (x < 0)? int(x) / CHUNK_IN_TILE - 1 : int(x) / CHUNK_IN_TILE )
+#define TILECOORD_TO_CHUNKCOORD(coord)	{ TILECOORDX_TO_CHUNKCOORDX(coord.x), TILECOORDX_TO_CHUNKCOORDX(coord.y) }
 struct ItemSpec {
 	string name;
 	bool placeable;
+	glm::ivec2 coordSize;
 };
 
 struct ItemInfo {

@@ -15,13 +15,10 @@ public:
 	};
 
 private:
-	glm::ivec2 position;
-	glm::ivec2 size;
 	GLImage* image;
 	GLImage* shadow;
 	glm::vec2 imageAniOffset[DIRECTION::END];
 	glm::vec2 shadowAniOffset[DIRECTION::END];
-	DIRECTION direction;
 
 	STATUS status;
 	float miningSpeed;

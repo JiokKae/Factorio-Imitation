@@ -1,8 +1,6 @@
 #pragma once
 #include "GameNode.h"
 
-#define CHUNK_IN_TILE	32
-
 class Tile;
 class Shader;
 class Chunk : public GameNode

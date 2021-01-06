@@ -201,6 +201,7 @@
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="VertexArrayObject.h" />
     <ClInclude Include="VertexBufferObject.h" />
+    <ClInclude Include="VirtualStructureBuilder.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
@@ -251,6 +252,7 @@
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="VertexArrayObject.cpp" />
     <ClCompile Include="VertexBufferObject.cpp" />
+    <ClCompile Include="VirtualStructureBuilder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="1.colors.frag" />

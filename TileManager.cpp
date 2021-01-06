@@ -10,6 +10,7 @@
 
 HRESULT TileManager::Init()
 {
+    
     tileImages = new GLImage[int(Tile::KIND::END)]();
     tileImages[int(Tile::KIND::DIRT_1)].Init("Terrain/Dirt_1", 4096, 576, 64, 9);
     
@@ -32,6 +33,7 @@ HRESULT TileManager::Init()
     instancingShader->setInt("material.diffuse", 0);
     instancingShader->setVec3("material.diffuseColor", glm::vec3(1.0f, 1.0f, 1.0f));
     instancingShader->setFloat("alpha", 1.0f);
+    instancingShader->setFloat("vertexScale", 1.0f);
     instancingShader->setMat4("model", glm::mat4());
     
     // 아래의 VBO들을 담는 Vertex Array Object를 생성한다.
@@ -39,7 +41,16 @@ HRESULT TileManager::Init()
 
     // tileQuadVBO Init (사각형 버텍스들을 저장하는 VBO)
     VBO* tileQuadVBO = new VBO();   // 사각형 버텍스들을 저장하는 VBO
-    tileQuadVBO->SetData(sizeof(float) * 4 * 6, NULL, GL_DYNAMIC_DRAW); // vec4(vec2 pos, vec2 texCoord) * 6
+    float vertices[] = {
+        // positions       // texture coords
+        -64 / 2, -64 / 2,  0.0f, 0.0f,
+         64 / 2, -64 / 2,  1.0f, 0.0f,
+         64 / 2,  64 / 2,  1.0f, 1.0f,
+         64 / 2,  64 / 2,  1.0f, 1.0f,
+        -64 / 2,  64 / 2,  0.0f, 1.0f,
+        -64 / 2, -64 / 2,  0.0f, 0.0f,
+    };
+    tileQuadVBO->SetData(sizeof(float) * 4 * 6, vertices, GL_STATIC_DRAW); // vec4(vec2 pos, vec2 texCoord) * 6
     tilesVAO->AddVBO(0, tileQuadVBO, 4);
 
     // currFrameVBO Init (각 인스턴스의 현재 프레임을 저장하는 VBO)
@@ -86,18 +97,7 @@ void TileManager::Render(RECT cameraRect)
 
     instancingShader->use();
     glBindVertexArray(tilesVAO->GetID());
-
-    float vertices[] = {
-        // positions       // texture coords
-        -64 / 2, -64 / 2,  0.0f, 0.0f,
-         64 / 2, -64 / 2,  1.0f, 0.0f,
-         64 / 2,  64 / 2,  1.0f, 1.0f,
-         64 / 2,  64 / 2,  1.0f, 1.0f,
-        -64 / 2,  64 / 2,  0.0f, 1.0f,
-        -64 / 2, -64 / 2,  0.0f, 0.0f,
-    };
-    tilesVAO->SetVBOData(0, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
-
+    instancingShader->setFloat("vertexScale", 1.0f);
     instancingShader->setVec2("maxFrame", glm::vec2(64, 9));
     for (bigIt = mapChunks.begin(); bigIt != mapChunks.end(); bigIt++)
     {
@@ -116,6 +116,13 @@ void TileManager::Render(RECT cameraRect)
                 for (int x = 0; x < 32; x++)
                 {
                     tileCurrFrame[y * CHUNK_IN_TILE + x] = { x % 64, y % 4 };
+                    /*
+                    Tile* tile = currChunk->GetLpTile(x, y);
+                    if(tile->GetLpSturcture() != nullptr)
+                        tileCurrFrame[y * CHUNK_IN_TILE + x] = { x % 64, y % 4 };
+                    else
+                        tileCurrFrame[y * CHUNK_IN_TILE + x] = { 100, 100 };
+                    */
                 }
             }
             tilesVAO->SetVBOData(1, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
@@ -128,18 +135,7 @@ void TileManager::Render(RECT cameraRect)
             }
         }
     }
-   
-    float OreVertices[] = {
-        // positions         // texture coords
-        -128 / 2, -128 / 2,  0.0f, 0.0f,
-         128 / 2, -128 / 2,  1.0f, 0.0f,
-         128 / 2,  128 / 2,  1.0f, 1.0f,
-         128 / 2,  128 / 2,  1.0f, 1.0f,
-        -128 / 2,  128 / 2,  0.0f, 1.0f,
-        -128 / 2, -128 / 2,  0.0f, 0.0f,
-    };
-    tilesVAO->SetVBOData(0, sizeof(OreVertices), OreVertices, GL_DYNAMIC_DRAW);
-
+    instancingShader->setFloat("vertexScale", 2.0f);
     instancingShader->setVec2("maxFrame", glm::vec2(8, 8));
     for (bigIt = mapChunks.begin(); bigIt != mapChunks.end(); bigIt++)
     {
@@ -167,21 +163,26 @@ void TileManager::Render(RECT cameraRect)
             {
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, oreImages[kind].GetLpSourceTexture()->GetID());
-                //glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 1024);
+                glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 1024);
             }
         }
     }
     glBindVertexArray(0);
 }
 
-Tile* TileManager::GetLpTile(int x, int y)
+Tile* TileManager::GetLpTile(int coordX, int coordY)
 {
-    Chunk* chunk = GetLpChunk(x / CHUNK_IN_TILE, y / CHUNK_IN_TILE);
+    glm::ivec2 chunkCoord;
+
+    chunkCoord.x = TILECOORDX_TO_CHUNKCOORDX(coordX + ((coordX < -1) ? 1 : 0));
+    chunkCoord.y = TILECOORDX_TO_CHUNKCOORDX(coordY + ((coordY < -1) ? 1 : 0));
+
+    Chunk* chunk = GetLpChunk(chunkCoord.x, chunkCoord.y);
     if (chunk != nullptr)
     {
         glm::ivec2 indexInChunk;
-        indexInChunk.x = x % CHUNK_IN_TILE;
-        indexInChunk.y = y % CHUNK_IN_TILE;
+        indexInChunk.x = coordX % CHUNK_IN_TILE;
+        indexInChunk.y = coordY % CHUNK_IN_TILE;
 
         if (indexInChunk.x < 0)
             indexInChunk.x += CHUNK_IN_TILE;

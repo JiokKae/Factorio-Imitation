@@ -233,6 +233,21 @@ void PlayScene::Update()
     
 }
 
+bool CheckCanPlace(glm::ivec2 coord, glm::ivec2 coordSize) 
+{
+    for (int y = 0; y < coordSize.y; y++)
+    {
+        for (int x = 0; x < coordSize.x; x++)
+        {
+            Tile* tile = TileManager::GetSingleton()->GetLpTile(coord.x - coordSize.x / 2 * ((coord.x < 0) ? 0 : 1) + x, coord.y - coordSize.y / 2 * ((coord.y < 0) ? 0 : 1) + y);
+
+            if (!tile || tile->GetLpSturcture() != nullptr)
+                return false; 
+        }
+    }
+    return true;
+}
+
 void PlayScene::Render(HDC hdc)
 {
 	glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
@@ -246,8 +261,8 @@ void PlayScene::Render(HDC hdc)
     pointLights[0].position = glm::vec3(player->GetLpPosition()->x, player->GetLpPosition()->y, 0.01f);
     glBufferSubData(GL_UNIFORM_BUFFER, DirectionalLight::std140Size(), sizeof(glm::vec3), glm::value_ptr(pointLights[0].position));
     // directional light(dynamic)
-    //dirLight->diffuse = glm::vec3((sin(timeGetTime() / 3000.0f) + 1) / 2);
-    dirLight->diffuse = glm::vec3(0.0f);
+    dirLight->diffuse = glm::vec3((sin(timeGetTime() / 3000.0f) + 1));
+    //dirLight->diffuse = glm::vec3(0.0f);
     glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::vec4), sizeof(glm::vec3), glm::value_ptr(dirLight->diffuse));
 
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
@@ -277,36 +292,43 @@ void PlayScene::Render(HDC hdc)
 
     player->Render(lightingShader);
 
-    ivec2 placeCoord;
+    ivec2 placePos;
     if (g_cursorPosition.x < 0)
-        placeCoord.x = int(g_cursorPosition.x - TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
+        placePos.x = int(g_cursorPosition.x - TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
     else
-        placeCoord.x = int(g_cursorPosition.x + TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
+        placePos.x = int(g_cursorPosition.x + TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
 
     if (g_cursorPosition.y < 0)
-        placeCoord.y = int(g_cursorPosition.y - TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
+        placePos.y = int(g_cursorPosition.y - TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
     else
-        placeCoord.y = int(g_cursorPosition.y + TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
+        placePos.y = int(g_cursorPosition.y + TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
 
-    if (distance((vec2)placeCoord, *player->GetLpPosition()) > 800)
-        lightingShader->setVec3("material.diffuseColor", vec3(1.0f, 0.0f, 0.0f));
-    else
-        lightingShader->setVec3("material.diffuseColor", vec3(0.0f, 1.0f, 0.0f));
-
-    itemPlaceImage->Render(lightingShader, placeCoord.x , placeCoord.y);
-    lightingShader->setVec3("material.diffuseColor", vec3(1.0f, 1.0f, 1.0f));
-    if (KeyManager::GetSingleton()->IsOnceKeyDown('B'))
+    ivec2 placeCoord = POS_TO_COORD(placePos);
+    if (distance((vec2)placePos, *player->GetLpPosition()) < 800 && CheckCanPlace(placeCoord, g_itemSpecs[ItemEnum::BURNER_MINING_DRILL].coordSize))
     {
-        BurnerMiningDrill* drill = new BurnerMiningDrill();
-        drill->Init(placeCoord.x, placeCoord.y);
-        entityManager->AddEntity(drill);
+        lightingShader->setVec3("material.diffuseColor", vec3(0.0f, 1.0f, 0.0f));
+        if (KeyManager::GetSingleton()->IsStayKeyDown('B'))
+        {
+            BurnerMiningDrill* drill = new BurnerMiningDrill();
+            drill->Init(placePos.x, placePos.y);
+            entityManager->AddEntity(drill);
+        }
     }
+    else
+    {
+        lightingShader->setVec3("material.diffuseColor", vec3(1.0f, 0.0f, 0.0f));
+    }
+
+    itemPlaceImage->Render(lightingShader, placePos.x , placePos.y);
+
+    lightingShader->setVec3("material.diffuseColor", vec3(1.0f, 1.0f, 1.0f));
+
 
     UIManager::GetSingleton()->Render(UIShader);
 
     g_cursorPosition = { (g_ptMouse.x - width / 2) / camera->GetZoom() + camera->GetPosition().x,
                         (g_ptMouse.y - height / 2) / camera->GetZoom() + camera->GetPosition().y };
-    g_cursorCoord = { g_cursorPosition.x / TILE_SIZE, g_cursorPosition.y / TILE_SIZE };
+    g_cursorCoord = POS_TO_COORD(g_cursorPosition);// { g_cursorPosition.x / TILE_SIZE, g_cursorPosition.y / TILE_SIZE };
 
     char str[128];
 
@@ -323,16 +345,23 @@ void PlayScene::Render(HDC hdc)
     textRenderer->RenderText(string(str),
         10, height - 100);
 
-    sprintf_s(str, "Cursor: (%.1f, %.1f)", g_cursorCoord.x, g_cursorCoord.y);
+    sprintf_s(str, "Cursor: (%d, %d)", (int)g_cursorCoord.x, (int)g_cursorCoord.y);
     textRenderer->RenderText(string(str),
         10, height - 130);
 
-    sprintf_s(str, "Ore Amount: (%d)", TileManager::GetSingleton()->GetLpTile(g_cursorCoord.x, g_cursorCoord.y)->GetLpOre()->GetAmount() );
+    Tile* tile = TileManager::GetSingleton()->GetLpTile((int)g_cursorCoord.x, (int)g_cursorCoord.y);
+    if (tile)
+    {
+    sprintf_s(str, "Ore Amount: (%d)", tile->GetLpOre()->GetAmount() );
     textRenderer->RenderText(string(str),
         10, height - 160);
+    sprintf_s(str, "StructureAddress: (%p)", tile->GetLpSturcture());
+    textRenderer->RenderText(string(str),
+        10, height - 190);
+    }
 
     textRenderer->RenderText("Zoom: " + to_string(camera->GetZoom()),
-        10, height - 190);
+        10, height - 220);
 
 	glFlush();
 }

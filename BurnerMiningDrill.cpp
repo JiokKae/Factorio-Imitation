@@ -3,8 +3,8 @@
 
 HRESULT BurnerMiningDrill::Init(int x, int y)
 {
-	position = { x, y };
-	size = { 2, 2 };
+	Structure::Init(ItemEnum::BURNER_MINING_DRILL, x, y);
+
 	image = new GLImage[int(DIRECTION::END)]();
 	image[DIRECTION::NORTH].Init(	"Entity/BurnerMiningDrill-N", 4, 8);
 	image[DIRECTION::EAST].Init(	"Entity/BurnerMiningDrill-E", 4, 8);
@@ -57,26 +57,29 @@ void BurnerMiningDrill::Update()
 
 void BurnerMiningDrill::Render(Shader* lpShader)
 {
-	shadow[direction].Render(lpShader, position.x + shadowAniOffset[direction].x, position.y + shadowAniOffset[direction].y, 0, 0);
-	image[direction].Render(lpShader, position.x, position.y, 0, 0);
+	static int oframe;
+	int frame = oframe/600;
+	shadow[direction].Render(lpShader, position.x + shadowAniOffset[direction].x, position.y + shadowAniOffset[direction].y, frame/8%4, frame%8);
+	image[direction].Render(lpShader, position.x, position.y, frame / 8 % 4, frame % 8);
+	oframe++;
 }
 
 FRECT BurnerMiningDrill::GetFRect()
 {
 	FRECT rect;
-	rect.left =		position.x - (size.x * TILE_SIZE / 2.0f);
-	rect.right =	position.x + (size.x * TILE_SIZE / 2.0f);
-	rect.top =		position.y + (size.y * TILE_SIZE / 2.0f);
-	rect.bottom =	position.y - (size.y * TILE_SIZE / 2.0f);
+	rect.left =		position.x - (coordSize.x * TILE_SIZE / 2.0f);
+	rect.right =	position.x + (coordSize.x * TILE_SIZE / 2.0f);
+	rect.top =		position.y + (coordSize.y * TILE_SIZE / 2.0f);
+	rect.bottom =	position.y - (coordSize.y * TILE_SIZE / 2.0f);
 	return rect;
 }
 
 FRECT BurnerMiningDrill::GetCollisionFRect()
 {
 	FRECT rect;
-	rect.left =		position.x - (size.x * TILE_SIZE / 2.0f * (2.0f / 3.0f));
-	rect.right =	position.x + (size.x * TILE_SIZE / 2.0f * (2.0f / 3.0f));
-	rect.top =		position.y + (size.y * TILE_SIZE / 2.0f * (2.0f / 3.0f));
-	rect.bottom =	position.y - (size.y * TILE_SIZE / 2.0f * (2.0f / 3.0f));
+	rect.left =		position.x - (coordSize.x * TILE_SIZE / 2.0f * (2.0f / 3.0f));
+	rect.right =	position.x + (coordSize.x * TILE_SIZE / 2.0f * (2.0f / 3.0f));
+	rect.top =		position.y + (coordSize.y * TILE_SIZE / 2.0f * (2.0f / 3.0f));
+	rect.bottom =	position.y - (coordSize.y * TILE_SIZE / 2.0f * (2.0f / 3.0f));
 	return rect;
 }
