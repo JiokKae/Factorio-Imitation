@@ -195,6 +195,11 @@ Tile* TileManager::GetLpTile(int coordX, int coordY)
         return nullptr;
 }
 
+Tile* TileManager::GetLPTileUnderMouse()
+{
+    return GetLpTile(g_cursorCoord.x, g_cursorCoord.y);
+}
+
 Chunk* TileManager::GetLpChunk(int x, int y)
 {
     return mapChunks[y][x];

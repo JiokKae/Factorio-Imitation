@@ -1,7 +1,6 @@
 #pragma once
 #include "Scene.h"
 
-class GLImage;
 class Camera;
 class Shader;
 class Character;
@@ -9,8 +8,8 @@ class PointLight;
 class TileManager;
 class TextRenderer;
 class DirectionalLight;
-class BurnerMiningDrill;
 class EntityManager;
+class StructureBuilder;
 class PlayScene : public Scene
 {
 	Camera* camera;
@@ -31,9 +30,7 @@ class PlayScene : public Scene
 
 	EntityManager* entityManager;
 
-	GLImage* itemPlaceImage;
-
-	
+	StructureBuilder* structureBuilder;
 public:
 	virtual HRESULT Init();
 	virtual void Release();

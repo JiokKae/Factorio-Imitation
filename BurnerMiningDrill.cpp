@@ -5,13 +5,13 @@ HRESULT BurnerMiningDrill::Init(int x, int y)
 {
 	Structure::Init(ItemEnum::BURNER_MINING_DRILL, x, y);
 
-	image = new GLImage[int(DIRECTION::END)]();
+	image = new GLImage[DIRECTION_END]();
 	image[DIRECTION::NORTH].Init(	"Entity/BurnerMiningDrill-N", 4, 8);
 	image[DIRECTION::EAST].Init(	"Entity/BurnerMiningDrill-E", 4, 8);
 	image[DIRECTION::SOUTH].Init(	"Entity/BurnerMiningDrill-S", 4, 8);
 	image[DIRECTION::WEST].Init(	"Entity/BurnerMiningDrill-W", 4, 8);
 
-	shadow = new GLImage[int(DIRECTION::END)]();
+	shadow = new GLImage[DIRECTION_END]();
 	shadow[DIRECTION::NORTH].Init("Entity/BurnerMiningDrill-N-shadow", 4, 8);
 	shadow[DIRECTION::NORTH].SetAlpha(0.6f);
 	shadowAniOffset[DIRECTION::NORTH] = {50, 0};
@@ -47,9 +47,9 @@ void BurnerMiningDrill::Update()
 
 		if (KeyManager::GetSingleton()->IsOnceKeyDown('R'))
 		{
-			SoundManager::GetSingleton()->Play("RotateMedium", 0.6f);
+			SoundManager::GetSingleton()->Play("Rotate-medium", 0.6f);
 			direction = DIRECTION(direction + 1);
-			if (direction == DIRECTION::END)
+			if (direction == DIRECTION_END)
 				direction = DIRECTION::NORTH;
 		}
 	}

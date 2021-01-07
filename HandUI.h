@@ -1,14 +1,17 @@
 #pragma once
 #include "UI.h"
 class InventorySlotUI;
+class ItemInfo;
 class HandUI : public UI
 {
-	InventorySlotUI* currSlotUI;
+	InventorySlotUI* selectedSlotUI;
 
 public:
 	void Update() override;
 	void Render(Shader* shader) override;
 
-	void SetCurrentSlotUI(InventorySlotUI* slotUI);
+	void SelectSlotUI(InventorySlotUI* slotUI);
+
+	ItemInfo* GetLpSelectedSlot();
 };
 

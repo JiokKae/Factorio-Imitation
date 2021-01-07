@@ -12,6 +12,8 @@
 #include "EntityManager.h"
 #include "Ore.h"
 #include "GLImage.h"
+#include "StructureBuilder.h"
+#include "HandUI.h"
 
 HRESULT PlayScene::Init()
 {
@@ -130,11 +132,7 @@ HRESULT PlayScene::Init()
         glBufferSubData(GL_UNIFORM_BUFFER,  1 * sizeof(float_t) + 3 * sizeof(glm::vec4) + PointLight::std140Size() * i + DirectionalLight::std140Size(), sizeof(glm::float_t), &pointLights[i].linear);
         glBufferSubData(GL_UNIFORM_BUFFER,  2 * sizeof(float_t) + 3 * sizeof(glm::vec4) + PointLight::std140Size() * i + DirectionalLight::std140Size(), sizeof(glm::float_t), &pointLights[i].quadratic);
     }
-
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
-
-    itemPlaceImage = new GLImage();
-    itemPlaceImage->Init("Entity/BurnerMiningDrill-W", 4, 8);
 
     // TextRenderer Init
     textRenderer = TextRenderer::GetSingleton();
@@ -155,21 +153,22 @@ HRESULT PlayScene::Init()
         }
     }
 
+    structureBuilder = new StructureBuilder();
+    structureBuilder->Init(entityManager);
 	return S_OK;
 }
 
 void PlayScene::Release()
 {
+    SAFE_RELEASE(structureBuilder);
     SAFE_RELEASE(entityManager);
     SAFE_RELEASE(textRenderer);
-
     if (tileRenderer) 
     {
         tileRenderer->Release();
         tileRenderer = nullptr;
     }
 
-    SAFE_RELEASE(tileRenderer);
     SAFE_RELEASE(player);
     SAFE_DELETE(UIShader);
 	SAFE_DELETE(lightingShader);
@@ -228,24 +227,26 @@ void PlayScene::Update()
             }
         }
     }
+
+    g_cursorPosition = { (g_ptMouse.x - width / 2) / camera->GetZoom() + camera->GetPosition().x,
+                    (g_ptMouse.y - height / 2) / camera->GetZoom() + camera->GetPosition().y };
+    g_cursorCoord = POS_TO_COORD(g_cursorPosition);
+
+    if (!UIManager::GetSingleton()->IsMouseOnUI())
+    {
+        ItemInfo* info = UIManager::GetSingleton()->GetLpHandUI()->GetLpSelectedSlot();
+        if (info && g_itemSpecs[info->id].buildable)
+            structureBuilder->Active();
+        else
+            structureBuilder->Deactive();
+    }
+    else
+        structureBuilder->Deactive();
+
     
+    structureBuilder->Update(player->GetLpPosition());
 	camera->Update();
     
-}
-
-bool CheckCanPlace(glm::ivec2 coord, glm::ivec2 coordSize) 
-{
-    for (int y = 0; y < coordSize.y; y++)
-    {
-        for (int x = 0; x < coordSize.x; x++)
-        {
-            Tile* tile = TileManager::GetSingleton()->GetLpTile(coord.x - coordSize.x / 2 * ((coord.x < 0) ? 0 : 1) + x, coord.y - coordSize.y / 2 * ((coord.y < 0) ? 0 : 1) + y);
-
-            if (!tile || tile->GetLpSturcture() != nullptr)
-                return false; 
-        }
-    }
-    return true;
 }
 
 void PlayScene::Render(HDC hdc)
@@ -286,54 +287,28 @@ void PlayScene::Render(HDC hdc)
     glBufferSubData(GL_UNIFORM_BUFFER,                  0, sizeof(glm::mat4), glm::value_ptr(UIprojection));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
+
     tileRenderer->Render(camera->GetRect(width, height));
+    float tileRenderer_time = TimerManager::GetSingleton()->CheckTime();
 
     entityManager->Render(lightingShader);
+    float entityManager_time = TimerManager::GetSingleton()->CheckTime();
 
     player->Render(lightingShader);
+    float player_time = TimerManager::GetSingleton()->CheckTime();
 
-    ivec2 placePos;
-    if (g_cursorPosition.x < 0)
-        placePos.x = int(g_cursorPosition.x - TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
-    else
-        placePos.x = int(g_cursorPosition.x + TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
-
-    if (g_cursorPosition.y < 0)
-        placePos.y = int(g_cursorPosition.y - TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
-    else
-        placePos.y = int(g_cursorPosition.y + TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
-
-    ivec2 placeCoord = POS_TO_COORD(placePos);
-    if (distance((vec2)placePos, *player->GetLpPosition()) < 800 && CheckCanPlace(placeCoord, g_itemSpecs[ItemEnum::BURNER_MINING_DRILL].coordSize))
-    {
-        lightingShader->setVec3("material.diffuseColor", vec3(0.0f, 1.0f, 0.0f));
-        if (KeyManager::GetSingleton()->IsStayKeyDown('B'))
-        {
-            BurnerMiningDrill* drill = new BurnerMiningDrill();
-            drill->Init(placePos.x, placePos.y);
-            entityManager->AddEntity(drill);
-        }
-    }
-    else
-    {
-        lightingShader->setVec3("material.diffuseColor", vec3(1.0f, 0.0f, 0.0f));
-    }
-
-    itemPlaceImage->Render(lightingShader, placePos.x , placePos.y);
-
-    lightingShader->setVec3("material.diffuseColor", vec3(1.0f, 1.0f, 1.0f));
-
+    structureBuilder->Render(lightingShader);
+    float structureBuilder_time = TimerManager::GetSingleton()->CheckTime();
 
     UIManager::GetSingleton()->Render(UIShader);
+    float UIManager_time = TimerManager::GetSingleton()->CheckTime();
 
-    g_cursorPosition = { (g_ptMouse.x - width / 2) / camera->GetZoom() + camera->GetPosition().x,
-                        (g_ptMouse.y - height / 2) / camera->GetZoom() + camera->GetPosition().y };
-    g_cursorCoord = POS_TO_COORD(g_cursorPosition);// { g_cursorPosition.x / TILE_SIZE, g_cursorPosition.y / TILE_SIZE };
-
+   
     char str[128];
 
     textRenderer->RenderText("FPS: " + to_string(TimerManager::GetSingleton()->GetFPS()),
         10, height - 10);
+
     textRenderer->RenderText("g_ptMouse : " + to_string(g_ptMouse.x) + ", " + to_string(g_ptMouse.y), 
         10, height - 40);
 
@@ -349,19 +324,37 @@ void PlayScene::Render(HDC hdc)
     textRenderer->RenderText(string(str),
         10, height - 130);
 
-    Tile* tile = TileManager::GetSingleton()->GetLpTile((int)g_cursorCoord.x, (int)g_cursorCoord.y);
+    Tile* tile = TileManager::GetSingleton()->GetLPTileUnderMouse();
     if (tile)
     {
-    sprintf_s(str, "Ore Amount: (%d)", tile->GetLpOre()->GetAmount() );
-    textRenderer->RenderText(string(str),
-        10, height - 160);
-    sprintf_s(str, "StructureAddress: (%p)", tile->GetLpSturcture());
-    textRenderer->RenderText(string(str),
-        10, height - 190);
+        sprintf_s(str, "Ore Amount: (%d)", tile->GetLpOre()->GetAmount() );
+        textRenderer->RenderText(string(str),
+            10, height - 160);
+        sprintf_s(str, "StructureAddress: (%p)", tile->GetLpSturcture());
+        textRenderer->RenderText(string(str),
+            10, height - 190);
     }
 
     textRenderer->RenderText("Zoom: " + to_string(camera->GetZoom()),
         10, height - 220);
+
+    textRenderer->RenderText("UpdateTime: " + to_string(TimerManager::GetSingleton()->updateTime),
+        10, height - 250);
+
+    textRenderer->RenderText("tileRenderer_time:         " + to_string(tileRenderer_time),
+        10, height - 280);                           
+    textRenderer->RenderText("entityManager_time:      " + to_string(entityManager_time),
+        10, height - 310);                           
+    textRenderer->RenderText("player_time:           " + to_string(player_time),
+        10, height - 340);
+    textRenderer->RenderText("structureBuilder_time: " + to_string(structureBuilder_time),
+        10, height - 370);
+    textRenderer->RenderText("UIManager_time:          " + to_string(UIManager_time),
+        10, height - 400);
+    textRenderer->RenderText("TextRender_time:         " + to_string(TimerManager::GetSingleton()->CheckTime()),
+        10, height - 430);
+    textRenderer->RenderText("RenderTime:              " + to_string(TimerManager::GetSingleton()->renderTime),
+        10, height - 460);
 
 	glFlush();
 }

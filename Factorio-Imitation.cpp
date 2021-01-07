@@ -11,14 +11,20 @@ MainGame	g_mainGame;
 LPSTR		g_lpszClass = (LPSTR)TEXT("Factorio-Imitation");
 POINT		g_ptMouse;
 float		g_mousezDelta;
-glm::vec2	g_cursorCoord;
-glm::vec2	g_cursorPosition;
+glm::vec2	g_cursorPosition;	// 마우스 커서의 포지션
+glm::vec2	g_cursorCoord;		// 마우스 커서의 좌표
 float		g_time;
 ItemSpec	g_itemSpecs[] = {
 	{ "AssemblingMachine1",	true,	{ 3, 3 }, },
 	{ "BurnerMiningDrill",	true,	{ 2, 2 }, },
 	{ "IronPlate",			false,	{ 0, 0 }, } ,
 	{ "Coal" ,				false,	{ 0, 0 }, },
+};
+const char* g_directionToLpChar[] = {
+	"-N",
+	"-E",
+	"-S",
+	"-W",
 };
 
 enum ItemEnum;	// 정의 피킹용
@@ -66,7 +72,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			if (TimerManager::GetSingleton()->Update())
 			{
 				g_mainGame.Update();
+				TimerManager::GetSingleton()->CheckUpdateTime();
 				g_mainGame.Render();
+				TimerManager::GetSingleton()->CheckRenderTime();
 			}
 
 			g_time += TimerManager::GetSingleton()->GetTimeElapsed();

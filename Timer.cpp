@@ -57,3 +57,10 @@ bool Timer::Tick()
 	}
 	return false;
 }
+
+float Timer::CheckTime()
+{
+	LONGLONG currTime;
+	QueryPerformanceCounter((LARGE_INTEGER*)&currTime);
+	return (currTime - lastTime) * timeScale;
+}

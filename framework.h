@@ -58,7 +58,7 @@ using namespace std;
 #define TILECOORD_TO_CHUNKCOORD(coord)	{ TILECOORDX_TO_CHUNKCOORDX(coord.x), TILECOORDX_TO_CHUNKCOORDX(coord.y) }
 struct ItemSpec {
 	string name;
-	bool placeable;
+	bool buildable;
 	glm::ivec2 coordSize;
 };
 
@@ -80,14 +80,23 @@ struct ItemInfo {
 	}
 };
 
+enum DIRECTION {
+	NORTH,
+	EAST,
+	SOUTH,
+	WEST,
+	DIRECTION_END
+};
+
 extern HWND			g_hWnd;
 extern float		g_time;
 extern HINSTANCE	g_hInstance;
 extern POINT		g_ptMouse;
 extern float		g_mousezDelta;
-extern glm::vec2	g_cursorCoord;
-extern glm::vec2	g_cursorPosition;
+extern glm::vec2	g_cursorPosition;	// 마우스 커서의 포지션
+extern glm::vec2	g_cursorCoord;		// 마우스 커서의 좌표
 extern ItemSpec		g_itemSpecs[];
+extern const char*	g_directionToLpChar[];
 
 enum class Argument_Kind {
 	None,

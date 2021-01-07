@@ -36,6 +36,21 @@ ULONG TimerManager::GetFPS()
 	return timer->GetFPS();
 }
 
+float TimerManager::CheckTime()
+{
+	return timer->CheckTime();
+}
+
+void TimerManager::CheckRenderTime()
+{
+	renderTime = timer->CheckTime();
+}
+
+void TimerManager::CheckUpdateTime()
+{
+	updateTime = timer->CheckTime();
+}
+
 void TimerManager::SetIsSC_MOVE(bool isSC_MOVE)
 {
 	timer->SetIsSC_MOVE(isSC_MOVE);

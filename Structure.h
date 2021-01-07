@@ -5,15 +5,6 @@
 class Shader;
 class Structure : public Entity
 {
-public:
-	enum DIRECTION{
-		NORTH,
-		EAST,
-		SOUTH,
-		WEST,
-		END
-	};
-
 protected:
 	glm::ivec2 coordSize;
 	DIRECTION direction;

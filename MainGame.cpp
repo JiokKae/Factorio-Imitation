@@ -38,8 +38,8 @@ HRESULT MainGame::Init()
 	TextureManager::GetSingleton()->Init();
 
 	// Add Sound
-	SoundManager::GetSingleton()->AddSound("DarkWaltz", "Sound/Dark Waltz.mp3", true, false);
-	SoundManager::GetSingleton()->AddSound("RotateMedium", "core/sound/rotate-medium.ogg", false, false);
+	SoundManager::GetSingleton()->AddSound("Rotate-medium", "sound/rotate-medium.ogg", false, false);
+	SoundManager::GetSingleton()->AddSound("Build-medium", "sound/build-medium.ogg", false, false);
 
 	// Add Scene
 	SceneManager::GetSingleton()->AddScene("TitleScene", new TitleScene(1600, 900));

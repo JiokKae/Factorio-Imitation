@@ -258,8 +258,8 @@
     <ClInclude Include="EntityManager.h">
       <Filter>MainGame\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="VirtualStructureBuilder.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="StructureBuilder.h">
+      <Filter>MainGame</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -407,8 +407,8 @@
     <ClCompile Include="EntityManager.cpp">
       <Filter>MainGame\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="VirtualStructureBuilder.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="StructureBuilder.cpp">
+      <Filter>MainGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

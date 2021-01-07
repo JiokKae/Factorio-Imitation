@@ -17,8 +17,8 @@ public:
 private:
 	GLImage* image;
 	GLImage* shadow;
-	glm::vec2 imageAniOffset[DIRECTION::END];
-	glm::vec2 shadowAniOffset[DIRECTION::END];
+	glm::vec2 imageAniOffset[DIRECTION_END];
+	glm::vec2 shadowAniOffset[DIRECTION_END];
 
 	STATUS status;
 	float miningSpeed;

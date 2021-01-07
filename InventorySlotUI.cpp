@@ -83,9 +83,9 @@ void InventorySlotUI::HandRender(Shader* lpShader)
 	{
 		if (itemInfo)
 		{
-			if (g_itemSpecs[itemInfo->id].placeable && !UIManager::GetSingleton()->IsMouseOnUI())
+			if (g_itemSpecs[itemInfo->id].buildable && !UIManager::GetSingleton()->IsMouseOnUI())
 			{
-				
+				TextRenderer::GetSingleton()->RenderText(to_string(itemInfo->amount), g_ptMouse.x + 16 - to_string(itemInfo->amount).length() * 6 + 17, g_ptMouse.y - 16 - 7.0f, 0.46f);
 			}
 			else
 			{
@@ -98,16 +98,6 @@ void InventorySlotUI::HandRender(Shader* lpShader)
 
 void InventorySlotUI::OnClick()
 {
-	// 선택하기 처리
-	if (!isSelected)
-	{
-		isSelected = true;
-		UIManager::GetSingleton()->GetLpHandUI()->SetCurrentSlotUI(this);
-	}
-	// 선택되어있다면 선택 해제
-	else
-	{
-		UIManager::GetSingleton()->GetLpHandUI()->SetCurrentSlotUI(nullptr);
-	}
+	UIManager::GetSingleton()->GetLpHandUI()->SelectSlotUI(this);
 }
 // 이 주석을 지워주세요

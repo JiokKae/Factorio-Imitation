@@ -24,6 +24,7 @@ public:
 	virtual void Render(RECT cameraRect);
 
 	Tile* GetLpTile(int x, int y);
+	Tile* GetLPTileUnderMouse();
 	Chunk* GetLpChunk(int x, int y);
 
 	TileManager() 
