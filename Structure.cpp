@@ -7,9 +7,8 @@
 HRESULT Structure::Init(int x, int y)
 {
 	position = { x, y };
+	coord = POS_TO_COORD(position);
 	coordSize = g_itemSpecs[itemId].coordSize;
-
-	glm::ivec2 coord = POS_TO_COORD(position);
 
 	for (int y = 0; y < coordSize.y; y++)
 	{
@@ -28,6 +27,20 @@ HRESULT Structure::Init(int x, int y)
 
 void Structure::Release()
 {
+	glm::ivec2 coord = POS_TO_COORD(position);
+
+	for (int y = 0; y < coordSize.y; y++)
+	{
+		for (int x = 0; x < coordSize.x; x++)
+		{
+			Tile* tile = TileManager::GetSingleton()->GetLpTile(
+				coord.x - coordSize.x / 2 + x,
+				coord.y - coordSize.y / 2 + y
+			);
+			tile->LinkStructure(this);
+		}
+	}
+
 	TileManager::GetSingleton()->GetLpTile((int)position.x / 64, (int)position.y / 64)->UnlinkStructure();
 }
 

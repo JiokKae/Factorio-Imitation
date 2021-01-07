@@ -24,7 +24,7 @@ void EntityManager::Render(Shader* shader, GLfloat playerPosY)
 {
 	for (it = mapEntitys.begin(); it != mapEntitys.end(); it++)
 	{
-		if (it->second->GetPosition().y > playerPosY)
+		if (it->second->GetPosition().y > playerPosY || it->second->IsPassable())
 			it->second->Render(shader);
 	}
 }
@@ -33,7 +33,7 @@ void EntityManager::LateRender(Shader* shader, GLfloat playerPosY)
 {
 	for (it = mapEntitys.begin(); it != mapEntitys.end(); it++)
 	{
-		if (it->second->GetPosition().y <= playerPosY)
+		if (it->second->GetPosition().y <= playerPosY && !it->second->IsPassable())
 			it->second->Render(shader);
 	}
 }

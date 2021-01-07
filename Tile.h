@@ -13,7 +13,7 @@ public:
 	};
 
 private:
-	glm::ivec2 index;
+	glm::ivec2 coord;
 	KIND kind;
 	Ore* ore;
 	Structure* structure;
@@ -22,12 +22,13 @@ public:
 	virtual void Release();
 	virtual void Update();
 
-	glm::ivec2 GetIndex() { return index; }
+	glm::ivec2 GetCoord() { return coord; }
 	KIND GetKind()	{ return kind; }
 	Ore* GetLpOre() { return ore; }
 	Structure* GetLpSturcture() { return structure; }
 	void LinkStructure(Structure* structure) { this->structure = structure; }
 	void UnlinkStructure() { this->structure = nullptr; }
+	Tile* GetAroundTile(DIRECTION direction);
 
 	Tile()
 		: ore(nullptr)
