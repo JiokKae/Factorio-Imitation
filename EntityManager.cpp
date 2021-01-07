@@ -1,5 +1,6 @@
 #include "EntityManager.h"
 #include "Entity.h"
+#include "Character.h"
 
 HRESULT EntityManager::Init()
 {
@@ -8,32 +9,77 @@ HRESULT EntityManager::Init()
 
 void EntityManager::Release()
 {
-    vecEntitys.clear();
+    mapEntitys.clear();
 }
 
 void EntityManager::Update()
 {
-	for (int i = 0; i < vecEntitys.size(); i++)
+	for (it = mapEntitys.begin(); it != mapEntitys.end(); it++)
 	{
-		vecEntitys[i]->Update();
+		it->second->Update();
 	}
 }
 
-void EntityManager::Render(Shader* shader)
+void EntityManager::Render(Shader* shader, GLfloat playerPosY)
 {
-	for (int i = 0; i < vecEntitys.size(); i++)
+	for (it = mapEntitys.begin(); it != mapEntitys.end(); it++)
 	{
-		vecEntitys[i]->Render(shader);
+		if (it->second->GetPosition().y > playerPosY)
+			it->second->Render(shader);
 	}
+}
+
+void EntityManager::LateRender(Shader* shader, GLfloat playerPosY)
+{
+	for (it = mapEntitys.begin(); it != mapEntitys.end(); it++)
+	{
+		if (it->second->GetPosition().y <= playerPosY)
+			it->second->Render(shader);
+	}
+}
+
+void EntityManager::Collision(Character* player)
+{
+    FRECT colRect;
+    FRECT entityRect;
+    FRECT playerRect = player->GetCollisionFRect();
+
+    for (it = mapEntitys.begin(); it != mapEntitys.end(); it++)
+    {
+        Entity* entity = it->second;
+        if (entity->IsPassable())
+            continue;
+
+        entityRect = entity->GetCollisionFRect();
+        if (IntersectFRect(&colRect, &playerRect, &entityRect))
+        {
+            if (abs(colRect.right - colRect.left) < abs(colRect.top - colRect.bottom))
+            {
+                // 우측 충돌일때
+                if (colRect.right == entityRect.right)
+                    player->GetLpPosition()->x += abs(colRect.right - colRect.left);
+                else
+                    player->GetLpPosition()->x -= abs(colRect.right - colRect.left);
+            }
+            else
+            {
+                // 아래측 충돌일 때
+                if (colRect.bottom == entityRect.bottom)
+                    player->GetLpPosition()->y -= abs(colRect.top - colRect.bottom);
+                else
+                    player->GetLpPosition()->y += abs(colRect.top - colRect.bottom);
+            }
+        }
+    }
 }
 
 void EntityManager::AddEntity(Entity* entity)
 {
-    vecEntitys.push_back(entity);
+    mapEntitys.insert(make_pair(entity->GetPosition().y, entity));
 }
 
 void EntityManager::DeleteEntity(Entity* entity)
 {
-	vecEntitys.erase(std::remove(vecEntitys.begin(), vecEntitys.end(), entity), vecEntitys.end());
+	//vecEntitys.erase(std::remove(vecEntitys.begin(), vecEntitys.end(), entity), vecEntitys.end());
 
 }

@@ -118,6 +118,11 @@ void MainGame::ImageLoad()
 	textureManager->AddTexture("Entity/BurnerMiningDrill-S-shadow",	"graphics/entity/burner_mining_drill/hr-burner-mining-drill-S-shadow.png");
 	textureManager->AddTexture("Entity/BurnerMiningDrill-W-shadow",	"graphics/entity/burner_mining_drill/hr-burner-mining-drill-W-shadow.png");
 
+	textureManager->AddTexture("Entity/AssemblingMachine1",			"graphics/entity/assembling_machine_1/hr-assembling-machine-1.png");
+	textureManager->AddTexture("Entity/AssemblingMachine1-shadow",	"graphics/entity/assembling_machine_1/hr-assembling-machine-1-shadow.png");
+
+	textureManager->AddTexture("Entity/TransportBelt",				"graphics/entity/transport_belt/hr-transport-belt.png");
+
 	textureManager->AddTexture("UI/CharacterUI",			"graphics/ui/CharacterUI.png");
 	textureManager->AddTexture("UI/InventorySlotUI",		"graphics/ui/InventorySlotUI.png");
 	textureManager->AddTexture("UI/BunerMiningDrillUI",		"graphics/ui/BunerMiningDrillUI.png");

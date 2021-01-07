@@ -34,6 +34,10 @@ HRESULT GLImage::Init(char const* sourceTexture, int maxFrameX, int maxFrameY, i
         -frameWidth / 2, -frameHeight / 2,  0.0f, 0.0f,
     };
 
+    if (isInit)
+    {
+        SAFE_DELETE(imageVAO);
+    }
     imageVAO = new VAO();
     VBO* posTexcoordVBO = new VBO();
     posTexcoordVBO->SetData(sizeof(vertices), vertices, GL_STATIC_DRAW);

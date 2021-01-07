@@ -2,18 +2,17 @@
 #include "Shader.h"
 #include "ItemEnum.h"
 #include "GLImage.h"
-#include "BurnerMiningDrill.h"
 #include "EntityManager.h"
 #include "Tile.h"
-
+#include "HandUI.h"
+#include "Texture.h"
+#include "Structure.h"
 HRESULT StructureBuilder::Init(EntityManager* entityManager)
 {
     this->entityManager = entityManager;
     itemBuildImage = new GLImage();
-    entityName = "BurnerMiningDrill";
     entityDirection = DIRECTION::NORTH;
-    itemBuildImage->Init(string("Entity/" + entityName + g_directionToLpChar[entityDirection]).c_str(), 4, 8);
-    canBuildDistance = 800.0f;
+    canBuildDistance = 700.0f;
     return S_OK;
 }
 
@@ -27,26 +26,51 @@ void StructureBuilder::Update(vec2* playerPos)
     if (!active)
         return;
 
-    if (g_cursorPosition.x < 0)
-        buildPos.x = int(g_cursorPosition.x - TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
+    ItemSpec spec = g_itemSpecs[itemId];
+    // °¡·Î°¡ È¦¼ö Ä­ÀÌ¸é
+    if (spec.coordSize.x & 1)
+    {
+        if (g_cursorPosition.x < 0)
+            buildPos.x = int(g_cursorPosition.x) / TILE_SIZE * TILE_SIZE - TILE_SIZE / 2 + 1;
+        else
+            buildPos.x = int(g_cursorPosition.x) / TILE_SIZE * TILE_SIZE + TILE_SIZE / 2;
+    }
+    // Â¦¼ö Ä­ÀÌ¸é
     else
-        buildPos.x = int(g_cursorPosition.x + TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
+    {
+        if (g_cursorPosition.x < 0)
+            buildPos.x = int(g_cursorPosition.x - TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE + 1;
+        else
+            buildPos.x = int(g_cursorPosition.x + TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
+    }
 
-    if (g_cursorPosition.y < 0)
-        buildPos.y = int(g_cursorPosition.y - TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
+    // ¼¼·Î°¡ È¦¼ö Ä­ÀÌ¸é
+    if (spec.coordSize.y & 1)
+    {
+        if (g_cursorPosition.y < 0)
+            buildPos.y = int(g_cursorPosition.y) / TILE_SIZE * TILE_SIZE - TILE_SIZE / 2 + 1;
+        else
+            buildPos.y = int(g_cursorPosition.y) / TILE_SIZE * TILE_SIZE + TILE_SIZE / 2;
+    }
+    // Â¦¼ö Ä­ÀÌ¸é
     else
-        buildPos.y = int(g_cursorPosition.y + TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
+    {
+        if (g_cursorPosition.y < 0)
+            buildPos.y = int(g_cursorPosition.y - TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE + 1;
+        else
+            buildPos.y = int(g_cursorPosition.y + TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
+    }
 
     ivec2 buildCoord = POS_TO_COORD(buildPos);
-    if (distance((vec2)buildPos, *playerPos) < canBuildDistance && CheckCanBuild(buildCoord, g_itemSpecs[ItemEnum::BURNER_MINING_DRILL].coordSize))
+    if (distance((vec2)buildPos, *playerPos) < canBuildDistance && CheckCanBuild(buildCoord, spec.coordSize))
     {
         buildable = true;
         if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
         {
             SoundManager::GetSingleton()->Play("Build-medium", 0.6f);
-            BurnerMiningDrill* drill = new BurnerMiningDrill();
-            drill->Init(buildPos.x, buildPos.y);
-            entityManager->AddEntity(drill);
+            Structure* structure = Structure::CreateStructure((ItemEnum)itemId);
+            structure->Init(buildPos.x, buildPos.y);
+            entityManager->AddEntity(structure);
         }
     }
     else
@@ -70,9 +94,17 @@ void StructureBuilder::Render(Shader* shader)
     shader->setVec3("material.diffuseColor", vec3(1.0f, 1.0f, 1.0f));
 }
 
-void StructureBuilder::Active()
+void StructureBuilder::Active(int itemId)
 {
     active = true;
+    this->itemId = itemId;
+    ItemSpec spec = g_itemSpecs[itemId];
+
+    entityDirection = DIRECTION::NORTH;
+    if(spec.directionCount > 1)
+        itemBuildImage->Init(string("Entity/" + spec.name + g_directionToLpChar[entityDirection]).c_str(), spec.maxFrame.x, spec.maxFrame.y);
+    else
+        itemBuildImage->Init(string("Entity/" + spec.name).c_str(), spec.maxFrame.x, spec.maxFrame.y);
 }
 
 void StructureBuilder::Deactive()
@@ -86,8 +118,10 @@ bool StructureBuilder::CheckCanBuild(ivec2 coord, ivec2 coordSize)
     {
         for (int x = 0; x < coordSize.x; x++)
         {
-            Tile* tile = TileManager::GetSingleton()->GetLpTile(coord.x - coordSize.x / 2 * ((coord.x < 0) ? 0 : 1) + x, coord.y - coordSize.y / 2 * ((coord.y < 0) ? 0 : 1) + y);
-
+            Tile* tile = TileManager::GetSingleton()->GetLpTile(
+                coord.x - coordSize.x / 2 + x,
+                coord.y - coordSize.y / 2 + y
+            );
             if (!tile || tile->GetLpSturcture() != nullptr)
                 return false;
         }

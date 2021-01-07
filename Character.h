@@ -36,8 +36,7 @@ private:
 	glm::vec2 imageAniOffset[State::END];
 	glm::vec2 shadowAniOffset[State::END];
 	float accumulateTime;
-	
-	glm::vec2 position;
+
 	Direction direction;
 	State state;
 	float speed;

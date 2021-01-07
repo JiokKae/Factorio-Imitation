@@ -7,13 +7,13 @@
 #include "TileManager.h"
 #include "PointLight.h"
 #include "DirectionalLight.h"
-#include "BurnerMiningDrill.h"
 #include "BurnerMiningDrillUI.h"
 #include "EntityManager.h"
 #include "Ore.h"
 #include "GLImage.h"
 #include "StructureBuilder.h"
 #include "HandUI.h"
+#include "Structure.h"
 
 HRESULT PlayScene::Init()
 {
@@ -142,14 +142,14 @@ HRESULT PlayScene::Init()
     entityManager = new EntityManager();
     entityManager->Init();
     
-    BurnerMiningDrill* drill;
+    Structure* structure;
     for (int i = 0; i < 10; i++)
     {
         for (int j = 0; j < 10; j++)
         {   
-            drill = new BurnerMiningDrill();
-            drill->Init(j * 128, i * 128);
-            entityManager->AddEntity(drill);
+            structure = Structure::CreateStructure(ItemEnum::BURNER_MINING_DRILL);
+            structure->Init(j * 128, i * 128);
+            entityManager->AddEntity(structure);
         }
     }
 
@@ -202,31 +202,7 @@ void PlayScene::Update()
 
     player->Update();
     
-    for (int i = 0; i < entityManager->GetSize(); i++)
-    {
-        FRECT colRect;
-        FRECT playerRect = player->GetCollisionFRect();
-        FRECT entityRect = entityManager->GetEntity(i)->GetCollisionFRect();
-        if (IntersectFRect(&colRect, &playerRect, &entityRect))
-        {
-            if (abs(colRect.right - colRect.left) < abs(colRect.top - colRect.bottom))
-            {
-                // 우측 충돌일때
-                if (colRect.right == entityRect.right)
-                    player->GetLpPosition()->x += abs(colRect.right - colRect.left);
-                else
-                    player->GetLpPosition()->x -= abs(colRect.right - colRect.left);
-            }
-            else
-            {
-                // 아래측 충돌일 때
-                if (colRect.bottom == entityRect.bottom)
-                    player->GetLpPosition()->y -= abs(colRect.top - colRect.bottom);
-                else
-                    player->GetLpPosition()->y += abs(colRect.top - colRect.bottom);
-            }
-        }
-    }
+    entityManager->Collision(player);
 
     g_cursorPosition = { (g_ptMouse.x - width / 2) / camera->GetZoom() + camera->GetPosition().x,
                     (g_ptMouse.y - height / 2) / camera->GetZoom() + camera->GetPosition().y };
@@ -236,7 +212,7 @@ void PlayScene::Update()
     {
         ItemInfo* info = UIManager::GetSingleton()->GetLpHandUI()->GetLpSelectedSlot();
         if (info && g_itemSpecs[info->id].buildable)
-            structureBuilder->Active();
+            structureBuilder->Active(info->id);
         else
             structureBuilder->Deactive();
     }
@@ -291,70 +267,46 @@ void PlayScene::Render(HDC hdc)
     tileRenderer->Render(camera->GetRect(width, height));
     float tileRenderer_time = TimerManager::GetSingleton()->CheckTime();
 
-    entityManager->Render(lightingShader);
+    entityManager->Render(lightingShader, player->GetPosition().y);
     float entityManager_time = TimerManager::GetSingleton()->CheckTime();
 
     player->Render(lightingShader);
     float player_time = TimerManager::GetSingleton()->CheckTime();
+
+    entityManager->LateRender(lightingShader, player->GetPosition().y);
 
     structureBuilder->Render(lightingShader);
     float structureBuilder_time = TimerManager::GetSingleton()->CheckTime();
 
     UIManager::GetSingleton()->Render(UIShader);
     float UIManager_time = TimerManager::GetSingleton()->CheckTime();
-
    
     char str[128];
-
-    textRenderer->RenderText("FPS: " + to_string(TimerManager::GetSingleton()->GetFPS()),
-        10, height - 10);
-
-    textRenderer->RenderText("g_ptMouse : " + to_string(g_ptMouse.x) + ", " + to_string(g_ptMouse.y), 
-        10, height - 40);
-
+    textRenderer->RenderText("FPS: " + to_string(TimerManager::GetSingleton()->GetFPS()),                           10, height - 10);
+    textRenderer->RenderText("g_ptMouse : " + to_string(g_ptMouse.x) + ", " + to_string(g_ptMouse.y),               10, height - 40);
     sprintf_s(str, "cameraPos: (%.1f, %.1f)", camera->GetPosition().x, camera->GetPosition().y);
-    textRenderer->RenderText(string(str),
-        10, height - 70);
-
+    textRenderer->RenderText(string(str),                                                                           10, height - 70);
     sprintf_s(str, "g_cursorPosition: (%.1f, %.1f)", g_cursorPosition.x, g_cursorPosition.y );
-    textRenderer->RenderText(string(str),
-        10, height - 100);
-
+    textRenderer->RenderText(string(str),                                                                           10, height - 100);
     sprintf_s(str, "Cursor: (%d, %d)", (int)g_cursorCoord.x, (int)g_cursorCoord.y);
-    textRenderer->RenderText(string(str),
-        10, height - 130);
-
+    textRenderer->RenderText(string(str),                                                                           10, height - 130);
     Tile* tile = TileManager::GetSingleton()->GetLPTileUnderMouse();
     if (tile)
     {
         sprintf_s(str, "Ore Amount: (%d)", tile->GetLpOre()->GetAmount() );
-        textRenderer->RenderText(string(str),
-            10, height - 160);
+        textRenderer->RenderText(string(str),                                                                       10, height - 160);
         sprintf_s(str, "StructureAddress: (%p)", tile->GetLpSturcture());
-        textRenderer->RenderText(string(str),
-            10, height - 190);
+        textRenderer->RenderText(string(str),                                                                       10, height - 190);
     }
-
-    textRenderer->RenderText("Zoom: " + to_string(camera->GetZoom()),
-        10, height - 220);
-
-    textRenderer->RenderText("UpdateTime: " + to_string(TimerManager::GetSingleton()->updateTime),
-        10, height - 250);
-
-    textRenderer->RenderText("tileRenderer_time:         " + to_string(tileRenderer_time),
-        10, height - 280);                           
-    textRenderer->RenderText("entityManager_time:      " + to_string(entityManager_time),
-        10, height - 310);                           
-    textRenderer->RenderText("player_time:           " + to_string(player_time),
-        10, height - 340);
-    textRenderer->RenderText("structureBuilder_time: " + to_string(structureBuilder_time),
-        10, height - 370);
-    textRenderer->RenderText("UIManager_time:          " + to_string(UIManager_time),
-        10, height - 400);
-    textRenderer->RenderText("TextRender_time:         " + to_string(TimerManager::GetSingleton()->CheckTime()),
-        10, height - 430);
-    textRenderer->RenderText("RenderTime:              " + to_string(TimerManager::GetSingleton()->renderTime),
-        10, height - 460);
+    textRenderer->RenderText("Zoom: " + to_string(camera->GetZoom()),                                               10, height - 220);
+    textRenderer->RenderText("UpdateTime: " + to_string(TimerManager::GetSingleton()->updateTime),                  10, height - 250);
+    textRenderer->RenderText("tileRenderer_time:         " + to_string(tileRenderer_time),                          10, height - 280);                           
+    textRenderer->RenderText("entityManager_time:      " + to_string(entityManager_time),                           10, height - 310);                           
+    textRenderer->RenderText("player_time:           " + to_string(player_time),                                    10, height - 340);
+    textRenderer->RenderText("structureBuilder_time: " + to_string(structureBuilder_time),                          10, height - 370);
+    textRenderer->RenderText("UIManager_time:          " + to_string(UIManager_time),                               10, height - 400);
+    textRenderer->RenderText("TextRender_time:         " + to_string(TimerManager::GetSingleton()->CheckTime()),    10, height - 430);
+    textRenderer->RenderText("RenderTime:              " + to_string(TimerManager::GetSingleton()->renderTime),     10, height - 460);
 
 	glFlush();
 }

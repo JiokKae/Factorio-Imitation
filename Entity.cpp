@@ -16,3 +16,4 @@ void Entity::Update()
 void Entity::Render(Shader* lpShader)
 {
 }
+

@@ -38,6 +38,7 @@ using namespace std;
 #include "UIManager.h"
 #include "TileManager.h"
 #include "Camera.h"
+#include "GLImage.h"
 
 #define WINSIZE_X	900
 #define WINSIZE_Y	900
@@ -56,10 +57,13 @@ using namespace std;
 #define POS_TO_COORD(pos)				{ POSX_TO_COORDX(pos.x), POSX_TO_COORDX(pos.y) }
 #define TILECOORDX_TO_CHUNKCOORDX(x)	( (x < 0)? int(x) / CHUNK_IN_TILE - 1 : int(x) / CHUNK_IN_TILE )
 #define TILECOORD_TO_CHUNKCOORD(coord)	{ TILECOORDX_TO_CHUNKCOORDX(coord.x), TILECOORDX_TO_CHUNKCOORDX(coord.y) }
+
 struct ItemSpec {
 	string name;
 	bool buildable;
 	glm::ivec2 coordSize;
+	int directionCount;
+	glm::ivec2 maxFrame;
 };
 
 struct ItemInfo {

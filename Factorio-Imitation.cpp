@@ -15,10 +15,13 @@ glm::vec2	g_cursorPosition;	// 마우스 커서의 포지션
 glm::vec2	g_cursorCoord;		// 마우스 커서의 좌표
 float		g_time;
 ItemSpec	g_itemSpecs[] = {
-	{ "AssemblingMachine1",	true,	{ 3, 3 }, },
-	{ "BurnerMiningDrill",	true,	{ 2, 2 }, },
-	{ "IronPlate",			false,	{ 0, 0 }, } ,
-	{ "Coal" ,				false,	{ 0, 0 }, },
+//		name					buildable	coordSize	direction	maxFrame
+//														Count
+	{	"AssemblingMachine1",	true,		{ 3, 3 },	1,			{ 8, 4 },		},
+	{	"BurnerMiningDrill",	true,		{ 2, 2 },	4,			{ 4, 8 },		},
+	{	"IronPlate",			false,		{ 0, 0 },	0,			{ 1, 1 },		},
+	{	"Coal" ,				false,		{ 0, 0 },	0,			{ 1, 1 },		},
+	{	"TransportBelt",		true,		{ 1, 1 },	1,			{ 16, 20 },		},
 };
 const char* g_directionToLpChar[] = {
 	"-N",

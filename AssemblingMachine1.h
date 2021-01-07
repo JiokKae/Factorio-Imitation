@@ -4,7 +4,7 @@
 class UI;
 class Shader;
 class GLImage;
-class BurnerMiningDrill : public Structure
+class AssemblingMachine1 : public Structure
 {
 public:
 	enum STATUS {
@@ -29,6 +29,5 @@ public:
 	virtual void Release();
 	virtual void Update();
 	virtual void Render(Shader* lpShader);
-
 };
 

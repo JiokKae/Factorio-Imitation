@@ -14,8 +14,9 @@ class StructureBuilder : public GameNode
 	float canBuildDistance;		// 구조물의 건설 거리 제한
 	ivec2 buildPos;				// 건설할 포지션
 	bool active;				// VSB의 활성화 여부
-	string entityName;			// 구조물의 이름
 	DIRECTION entityDirection;	// 구조물의 방향
+	int itemId;
+
 	// 참조용
 	EntityManager* entityManager;
 public:
@@ -24,7 +25,7 @@ public:
 	virtual void Update(vec2* playerPos);
 	virtual void Render(Shader* shader);
 
-	void Active();
+	void Active(int itemId);
 	void Deactive();
 	bool CheckCanBuild(ivec2 coord, ivec2 coordSize);
 

@@ -36,7 +36,8 @@ HRESULT Character::Init()
 	inventory->AddItem(new ItemInfo(BURNER_MINING_DRILL, 40));
 	inventory->AddItem(new ItemInfo(IRON_PLATE, 3));
 	inventory->AddItem(new ItemInfo(IRON_PLATE, 3));
-	inventory->AddItem(new ItemInfo(ASSEMBLING_MACHINE_1, 3));
+	inventory->AddItem(new ItemInfo(ASSEMBLING_MACHINE_1, 30));
+	inventory->AddItem(new ItemInfo(TRANSPORT_BELT, 200));
 
 	speed = 566.0f;
 	return S_OK;

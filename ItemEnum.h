@@ -5,6 +5,7 @@ enum ItemEnum {
 	BURNER_MINING_DRILL,
 	IRON_PLATE,
 	COAL,
+	TRANSPORT_BELT,
 	END
 };
 

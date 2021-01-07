@@ -3,7 +3,8 @@
 
 HRESULT BurnerMiningDrill::Init(int x, int y)
 {
-	Structure::Init(ItemEnum::BURNER_MINING_DRILL, x, y);
+	itemId = ItemEnum::BURNER_MINING_DRILL;
+	Structure::Init(x, y);
 
 	image = new GLImage[DIRECTION_END]();
 	image[DIRECTION::NORTH].Init(	"Entity/BurnerMiningDrill-N", 4, 8);
@@ -59,27 +60,10 @@ void BurnerMiningDrill::Render(Shader* lpShader)
 {
 	static int oframe;
 	int frame = oframe/600;
-	shadow[direction].Render(lpShader, position.x + shadowAniOffset[direction].x, position.y + shadowAniOffset[direction].y, frame/8%4, frame%8);
-	image[direction].Render(lpShader, position.x, position.y, frame / 8 % 4, frame % 8);
+	glm::ivec2 maxFrame = image->GetMaxFrame();
+	shadow[direction].Render(lpShader, position.x + shadowAniOffset[direction].x, position.y + shadowAniOffset[direction].y,
+		maxFrame.x - 1 - frame % maxFrame.x, frame / maxFrame.x % maxFrame.y);
+	image[direction].Render(lpShader, position.x, position.y,
+		maxFrame.x - 1 - frame % maxFrame.x, frame / maxFrame.x % maxFrame.y);
 	oframe++;
-}
-
-FRECT BurnerMiningDrill::GetFRect()
-{
-	FRECT rect;
-	rect.left =		position.x - (coordSize.x * TILE_SIZE / 2.0f);
-	rect.right =	position.x + (coordSize.x * TILE_SIZE / 2.0f);
-	rect.top =		position.y + (coordSize.y * TILE_SIZE / 2.0f);
-	rect.bottom =	position.y - (coordSize.y * TILE_SIZE / 2.0f);
-	return rect;
-}
-
-FRECT BurnerMiningDrill::GetCollisionFRect()
-{
-	FRECT rect;
-	rect.left =		position.x - (coordSize.x * TILE_SIZE / 2.0f * (2.0f / 3.0f));
-	rect.right =	position.x + (coordSize.x * TILE_SIZE / 2.0f * (2.0f / 3.0f));
-	rect.top =		position.y + (coordSize.y * TILE_SIZE / 2.0f * (2.0f / 3.0f));
-	rect.bottom =	position.y - (coordSize.y * TILE_SIZE / 2.0f * (2.0f / 3.0f));
-	return rect;
 }

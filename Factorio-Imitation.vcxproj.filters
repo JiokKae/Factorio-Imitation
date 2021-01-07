@@ -106,6 +106,9 @@
     <Filter Include="GLFrameWork\VertexDataObject">
       <UniqueIdentifier>{8f0485d7-9cf0-48ee-9cfd-dabd95d5563a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Entity\Structure">
+      <UniqueIdentifier>{13f602e5-3d97-432f-9fb6-c2a9a4025319}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -219,12 +222,6 @@
     <ClInclude Include="DirectionalLight.h">
       <Filter>GLFrameWork\Light</Filter>
     </ClInclude>
-    <ClInclude Include="Structure.h">
-      <Filter>MainGame\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="BurnerMiningDrill.h">
-      <Filter>MainGame\Entity</Filter>
-    </ClInclude>
     <ClInclude Include="VertexArrayObject.h">
       <Filter>GLFrameWork\VertexDataObject</Filter>
     </ClInclude>
@@ -260,6 +257,18 @@
     </ClInclude>
     <ClInclude Include="StructureBuilder.h">
       <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Structure.h">
+      <Filter>MainGame\Entity\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="BurnerMiningDrill.h">
+      <Filter>MainGame\Entity\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="AssemblingMachine1.h">
+      <Filter>MainGame\Entity\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="TransportBelt.h">
+      <Filter>MainGame\Entity\Structure</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -371,12 +380,6 @@
     <ClCompile Include="DirectionalLight.cpp">
       <Filter>GLFrameWork\Light</Filter>
     </ClCompile>
-    <ClCompile Include="Structure.cpp">
-      <Filter>MainGame\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="BurnerMiningDrill.cpp">
-      <Filter>MainGame\Entity</Filter>
-    </ClCompile>
     <ClCompile Include="VertexArrayObject.cpp">
       <Filter>GLFrameWork\VertexDataObject</Filter>
     </ClCompile>
@@ -409,6 +412,18 @@
     </ClCompile>
     <ClCompile Include="StructureBuilder.cpp">
       <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Structure.cpp">
+      <Filter>MainGame\Entity\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="BurnerMiningDrill.cpp">
+      <Filter>MainGame\Entity\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="AssemblingMachine1.cpp">
+      <Filter>MainGame\Entity\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="TransportBelt.cpp">
+      <Filter>MainGame\Entity\Structure</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,21 +1,23 @@
 #pragma once
 #include "GameNode.h"
 #include "framework.h"
-
+#include <functional>
 class Shader;
 class Entity;
+class Character;
 class EntityManager : public GameNode
 {
-	vector<Entity*> vecEntitys;
-	vector<Entity*>::iterator it;
+	multimap<GLfloat, Entity*, greater<GLfloat>> mapEntitys;
+	multimap<GLfloat, Entity*>::iterator it;
 public:
 	virtual HRESULT Init();
 	virtual void Release();
 	virtual void Update();
-	virtual void Render(Shader* shader);
+	virtual void Render(Shader* shader, GLfloat playerPosY);
+	void LateRender(Shader* shader, GLfloat playerPosY);
 
-	int GetSize()					{ return vecEntitys.size(); }
-	Entity* GetEntity(int index)	{ return vecEntitys[index]; }
+	void Collision(Character* player);
+
 	void AddEntity(Entity* entity);
 	void DeleteEntity(Entity* entity);
 

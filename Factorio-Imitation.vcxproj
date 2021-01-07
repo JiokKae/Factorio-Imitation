@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="AssemblingMachine1.h" />
     <ClInclude Include="BurnerMiningDrill.h" />
     <ClInclude Include="BurnerMiningDrillUI.h" />
     <ClInclude Include="Button.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimerManager.h" />
     <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="TransportBelt.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="VertexArrayObject.h" />
@@ -205,6 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AssemblingMachine1.cpp" />
     <ClCompile Include="BurnerMiningDrill.cpp" />
     <ClCompile Include="BurnerMiningDrillUI.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -248,6 +251,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerManager.cpp" />
     <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="TransportBelt.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="VertexArrayObject.cpp" />

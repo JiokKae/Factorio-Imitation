@@ -1,7 +1,7 @@
 #pragma once
 #include "UI.h"
 class InventorySlotUI;
-class ItemInfo;
+struct ItemInfo;
 class HandUI : public UI
 {
 	InventorySlotUI* selectedSlotUI;

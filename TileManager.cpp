@@ -115,14 +115,14 @@ void TileManager::Render(RECT cameraRect)
             {
                 for (int x = 0; x < 32; x++)
                 {
-                    tileCurrFrame[y * CHUNK_IN_TILE + x] = { x % 64, y % 4 };
                     /*
+                    tileCurrFrame[y * CHUNK_IN_TILE + x] = { x % 64, y % 4 };
+                    */
                     Tile* tile = currChunk->GetLpTile(x, y);
                     if(tile->GetLpSturcture() != nullptr)
                         tileCurrFrame[y * CHUNK_IN_TILE + x] = { x % 64, y % 4 };
                     else
                         tileCurrFrame[y * CHUNK_IN_TILE + x] = { 100, 100 };
-                    */
                 }
             }
             tilesVAO->SetVBOData(1, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
