@@ -90,6 +90,7 @@ void StructureBuilder::Render(Shader* shader)
     else
         shader->setVec3("material.diffuseColor", vec3(1.0f, 0.0f, 0.0f));
 
+    tempStructure->FirstRender(shader);
     tempStructure->Render(shader);
     tempStructure->LateRender(shader);
 
@@ -108,13 +109,13 @@ void StructureBuilder::Active(int itemId)
         {
             SAFE_RELEASE(tempStructure);
             tempStructure = Structure::CreateStructure((ItemEnum)itemId);
-            tempStructure->TempInit(0, 0, NORTH);
+            tempStructure->Init(0, 0, NORTH, true);
         }
     }
     else
     {
         tempStructure = Structure::CreateStructure((ItemEnum)itemId);
-        tempStructure->TempInit(0, 0, NORTH);
+        tempStructure->Init(0, 0, NORTH, true);
     }
 }
 

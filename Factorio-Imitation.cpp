@@ -22,6 +22,7 @@ ItemSpec	g_itemSpecs[] = {
 	{	"IronPlate",			false,		{ 0, 0 },	0,			{ 1, 1 },		},
 	{	"Coal" ,				false,		{ 0, 0 },	0,			{ 1, 1 },		},
 	{	"TransportBelt",		true,		{ 1, 1 },	1,			{ 16, 20 },		},
+	{	"BurnerInserter",		true,		{ 1, 1 },	4,			{ 4, 1 },		},
 };
 const char* g_directionToLpChar[] = {
 	"-N",

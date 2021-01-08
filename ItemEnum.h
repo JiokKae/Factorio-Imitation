@@ -6,6 +6,7 @@ enum ItemEnum {
 	IRON_PLATE,
 	COAL,
 	TRANSPORT_BELT,
+	BURNER_INSERTER,
 	END
 };
 

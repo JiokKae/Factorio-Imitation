@@ -17,17 +17,17 @@ public:
 private:
 	GLImage* image;
 	GLImage* shadow;
-	glm::vec2 imageAniOffset[DIRECTION_END];
-	glm::vec2 shadowAniOffset[DIRECTION_END];
+	glm::vec2 imageAniOffset;
+	glm::vec2 shadowAniOffset;
 
 	STATUS status;
 	float miningSpeed;
 	glm::ivec2 miningArea;
 
 public:
-	virtual HRESULT Init(int x, int y, DIRECTION direction) override;
+	virtual HRESULT Init(int x, int y, DIRECTION direction, bool temp = false) override;
 	virtual void Release();
 	virtual void Update();
-	virtual void Render(Shader* lpShader);
+	virtual void Render(Shader* lpShader) override;
 };
 

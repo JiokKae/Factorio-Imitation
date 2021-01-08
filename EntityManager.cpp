@@ -22,9 +22,19 @@ void EntityManager::Update()
 
 void EntityManager::Render(Shader* shader, GLfloat playerPosY)
 {
+    for (it = mapEntitys.begin(); it != mapEntitys.end(); it++)
+    {
+        //±×¸²ÀÚ ·»´õ
+        it->second->FirstRender(shader);
+    }
+    for (it = mapEntitys.begin(); it != mapEntitys.end(); it++)
+    {
+        if (it->second->IsPassable())
+            it->second->Render(shader);
+    }
 	for (it = mapEntitys.begin(); it != mapEntitys.end(); it++)
 	{
-		if (it->second->GetPosition().y > playerPosY || it->second->IsPassable())
+		if (it->second->GetPosition().y > playerPosY && !it->second->IsPassable())
 			it->second->Render(shader);
 	}
 }
@@ -33,9 +43,9 @@ void EntityManager::LateRender(Shader* shader, GLfloat playerPosY)
 {
 	for (it = mapEntitys.begin(); it != mapEntitys.end(); it++)
 	{
+        it->second->LateRender(shader);
 		if (it->second->GetPosition().y <= playerPosY && !it->second->IsPassable())
 			it->second->Render(shader);
-        it->second->LateRender(shader);
 	}
 }
 

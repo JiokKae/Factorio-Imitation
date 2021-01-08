@@ -109,6 +109,18 @@
     <Filter Include="MainGame\Entity\Structure">
       <UniqueIdentifier>{13f602e5-3d97-432f-9fb6-c2a9a4025319}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Entity\Structure\AssemblingMachine1">
+      <UniqueIdentifier>{7087a311-16c2-4d99-beb6-7489b166f34f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Entity\Structure\BurnerMiningDrill">
+      <UniqueIdentifier>{69cb2ab0-d338-4ae2-9bcc-21c822688eef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Entity\Structure\TransportBelt">
+      <UniqueIdentifier>{2f46f621-7b61-4063-ab59-0678a187081d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Entity\Structure\BurnerInserter">
+      <UniqueIdentifier>{a6ae06b0-37cf-4f38-95e8-a34d480bc12d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -255,19 +267,22 @@
     <ClInclude Include="EntityManager.h">
       <Filter>MainGame\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="StructureBuilder.h">
-      <Filter>MainGame</Filter>
-    </ClInclude>
     <ClInclude Include="Structure.h">
       <Filter>MainGame\Entity\Structure</Filter>
     </ClInclude>
-    <ClInclude Include="BurnerMiningDrill.h">
-      <Filter>MainGame\Entity\Structure</Filter>
-    </ClInclude>
     <ClInclude Include="AssemblingMachine1.h">
-      <Filter>MainGame\Entity\Structure</Filter>
+      <Filter>MainGame\Entity\Structure\AssemblingMachine1</Filter>
+    </ClInclude>
+    <ClInclude Include="BurnerMiningDrill.h">
+      <Filter>MainGame\Entity\Structure\BurnerMiningDrill</Filter>
     </ClInclude>
     <ClInclude Include="TransportBelt.h">
+      <Filter>MainGame\Entity\Structure\TransportBelt</Filter>
+    </ClInclude>
+    <ClInclude Include="BurnerInserter.h">
+      <Filter>MainGame\Entity\Structure\BurnerInserter</Filter>
+    </ClInclude>
+    <ClInclude Include="StructureBuilder.h">
       <Filter>MainGame\Entity\Structure</Filter>
     </ClInclude>
   </ItemGroup>
@@ -410,23 +425,26 @@
     <ClCompile Include="EntityManager.cpp">
       <Filter>MainGame\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="StructureBuilder.cpp">
-      <Filter>MainGame</Filter>
-    </ClCompile>
     <ClCompile Include="Structure.cpp">
-      <Filter>MainGame\Entity\Structure</Filter>
-    </ClCompile>
-    <ClCompile Include="BurnerMiningDrill.cpp">
-      <Filter>MainGame\Entity\Structure</Filter>
-    </ClCompile>
-    <ClCompile Include="AssemblingMachine1.cpp">
-      <Filter>MainGame\Entity\Structure</Filter>
-    </ClCompile>
-    <ClCompile Include="TransportBelt.cpp">
       <Filter>MainGame\Entity\Structure</Filter>
     </ClCompile>
     <ClCompile Include="framework.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="AssemblingMachine1.cpp">
+      <Filter>MainGame\Entity\Structure\AssemblingMachine1</Filter>
+    </ClCompile>
+    <ClCompile Include="BurnerMiningDrill.cpp">
+      <Filter>MainGame\Entity\Structure\BurnerMiningDrill</Filter>
+    </ClCompile>
+    <ClCompile Include="TransportBelt.cpp">
+      <Filter>MainGame\Entity\Structure\TransportBelt</Filter>
+    </ClCompile>
+    <ClCompile Include="BurnerInserter.cpp">
+      <Filter>MainGame\Entity\Structure\BurnerInserter</Filter>
+    </ClCompile>
+    <ClCompile Include="StructureBuilder.cpp">
+      <Filter>MainGame\Entity\Structure</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

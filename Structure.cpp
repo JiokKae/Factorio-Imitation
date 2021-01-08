@@ -2,15 +2,19 @@
 #include "AssemblingMachine1.h"
 #include "BurnerMiningDrill.h"
 #include "TransportBelt.h"
+#include "BurnerInserter.h"
 #include "Tile.h"
 
-HRESULT Structure::Init(int x, int y, DIRECTION direction)
+HRESULT Structure::Init(int x, int y, DIRECTION direction, bool temp)
 {
 	this->position = { (float)x, (float)y };
 	this->direction = direction;
 
 	coord = POS_TO_COORD(position);
 	coordSize = g_itemSpecs[itemId].coordSize;
+
+	if (temp)
+		return S_OK;
 
 	for (int y = 0; y < coordSize.y; y++)
 	{
@@ -24,17 +28,6 @@ HRESULT Structure::Init(int x, int y, DIRECTION direction)
 		}
 	}
 	
-	return S_OK;
-}
-
-HRESULT Structure::TempInit(int x, int y, DIRECTION direction)
-{
-	this->position = { (float)x, (float)y };
-	this->direction = direction;
-
-	coord = POS_TO_COORD(position);
-	coordSize = g_itemSpecs[itemId].coordSize;
-
 	return S_OK;
 }
 
@@ -80,6 +73,7 @@ Structure* Structure::CreateStructure(ItemEnum itemId)
 	case ASSEMBLING_MACHINE_1:	return new AssemblingMachine1();
 	case BURNER_MINING_DRILL:	return new BurnerMiningDrill();
 	case TRANSPORT_BELT:		return new TransportBelt();
+	case BURNER_INSERTER:		return new BurnerInserter();
 	}
 	return nullptr;
 }

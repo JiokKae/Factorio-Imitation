@@ -1,10 +1,10 @@
 #include "BurnerMiningDrill.h"
 #include "GLImage.h"
 
-HRESULT BurnerMiningDrill::Init(int x, int y, DIRECTION direction)
+HRESULT BurnerMiningDrill::Init(int x, int y, DIRECTION direction, bool temp)
 {
 	itemId = ItemEnum::BURNER_MINING_DRILL;
-	Structure::Init(x, y, direction);
+	Structure::Init(x, y, direction, temp);
 
 	image = new GLImage[DIRECTION_END]();
 	image[DIRECTION::NORTH].Init(	"Entity/BurnerMiningDrill-N", 4, 8);
@@ -56,14 +56,26 @@ void BurnerMiningDrill::Update()
 	}
 }
 
+void BurnerMiningDrill::FirstRender(Shader* lpShader)
+{
+	glm::ivec2 maxFrame = image->GetMaxFrame();
+	int frame = abs(int(g_time * 30) % (maxFrame.x * maxFrame.y * 2 - 1) - maxFrame.x * maxFrame.y + 1);
+
+	int frameX = frame % maxFrame.x;
+	int frameY = maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y;
+
+	shadow[direction].Render(lpShader, position.x + shadowAniOffset[direction].x, position.y + shadowAniOffset[direction].y,
+		frameX, frameY);
+}
+
 void BurnerMiningDrill::Render(Shader* lpShader)
 {
-	static int oframe;
-	int frame = oframe/600;
 	glm::ivec2 maxFrame = image->GetMaxFrame();
-	shadow[direction].Render(lpShader, position.x + shadowAniOffset[direction].x, position.y + shadowAniOffset[direction].y,
-		maxFrame.x - 1 - frame % maxFrame.x, frame / maxFrame.x % maxFrame.y);
+	int frame = abs(int(g_time * 30) % (maxFrame.x * maxFrame.y * 2 - 1) - maxFrame.x * maxFrame.y + 1);
+
+	int frameX = frame % maxFrame.x;
+	int frameY = maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y;
+
 	image[direction].Render(lpShader, position.x, position.y,
-		maxFrame.x - 1 - frame % maxFrame.x, frame / maxFrame.x % maxFrame.y);
-	oframe++;
+		frameX, frameY);
 }

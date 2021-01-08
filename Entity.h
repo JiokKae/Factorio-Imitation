@@ -12,6 +12,7 @@ public:
 	virtual HRESULT Init();
 	virtual void Release();
 	virtual void Update();
+	virtual void FirstRender(Shader* lpShader) {};
 	virtual void Render(Shader* lpShader);
 	virtual void LateRender(Shader* lpShader) {};
 

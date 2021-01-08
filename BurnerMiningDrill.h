@@ -25,10 +25,11 @@ private:
 	glm::ivec2 miningArea;
 
 public:
-	virtual HRESULT Init(int x, int y, DIRECTION direction) override;
+	virtual HRESULT Init(int x, int y, DIRECTION direction, bool temp = false) override;
 	virtual void Release();
 	virtual void Update();
-	virtual void Render(Shader* lpShader);
+	virtual void FirstRender(Shader* lpShader) override;
+	virtual void Render(Shader* lpShader) override;
 
 };
 

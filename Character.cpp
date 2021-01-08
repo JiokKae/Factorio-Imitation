@@ -27,7 +27,6 @@ HRESULT Character::Init()
 	shadow[MINING].SetAlpha(0.6f);
 	shadowAniOffset[MINING] = { 50.0f, 5.0f };
 
-
 	animationSpeed[IDLE] = 0.105f;
 	animationSpeed[RUNNING] = 0.025f;
 	animationSpeed[MINING] = 0.022f;
@@ -39,6 +38,7 @@ HRESULT Character::Init()
 	inventory->AddItem(new ItemInfo(IRON_PLATE, 3));
 	inventory->AddItem(new ItemInfo(ASSEMBLING_MACHINE_1, 30));
 	inventory->AddItem(new ItemInfo(TRANSPORT_BELT, 200));
+	inventory->AddItem(new ItemInfo(BURNER_INSERTER, 123));
 
 	speed = 566.0f;
 	return S_OK;

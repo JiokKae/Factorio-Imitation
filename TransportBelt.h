@@ -25,11 +25,11 @@ private:
 	ImageIndex renderState;
 
 public:
-	virtual HRESULT Init(int x, int y, DIRECTION direction) override;
-	virtual HRESULT TempInit(int x, int y, DIRECTION direction) override;
+	virtual HRESULT Init(int x, int y, DIRECTION direction, bool temp = false) override;
 	virtual void Release();
 	virtual void Update();
-	virtual void Render(Shader* lpShader);
+	virtual void FirstRender(Shader* lpShader) override;
+	virtual void Render(Shader* lpShader) override;
 	virtual void LateRender(Shader* lpShader) override;
 
 	virtual void SetPosition(Vec2 position) override;
