@@ -13,6 +13,7 @@ protected:
 
 public:
 	virtual HRESULT Init(int x, int y, DIRECTION direction);
+	virtual HRESULT TempInit(int x, int y, DIRECTION direction);
 	virtual void Release();
 	virtual void Update();
 	virtual void Render(Shader* lpShader);

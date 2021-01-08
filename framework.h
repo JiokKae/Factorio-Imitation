@@ -68,7 +68,7 @@ struct ItemSpec {
 
 struct Vec2 : public glm::vec2
 {
-	Vec2(float x = 0, float y = 0) : glm::vec2(x, y) {};
+	Vec2(float x = 0, float y = 0) { this->x = static_cast<float>(x); this->y = static_cast<float>(y); };
 	//std::vector<Vec2> v;
 	bool operator<(const Vec2& vec) const;
 	bool operator>(const Vec2& vec) const;

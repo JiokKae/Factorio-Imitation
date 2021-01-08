@@ -10,15 +10,12 @@
 HRESULT StructureBuilder::Init(EntityManager* entityManager)
 {
     this->entityManager = entityManager;
-    itemBuildImage = new GLImage();
-    entityDirection = DIRECTION::NORTH;
     canBuildDistance = 700.0f;
     return S_OK;
 }
 
 void StructureBuilder::Release()
 {
-    SAFE_RELEASE(itemBuildImage);
 }
 
 void StructureBuilder::Update(vec2* playerPos)
@@ -61,6 +58,8 @@ void StructureBuilder::Update(vec2* playerPos)
             buildPos.y = int(g_cursorPosition.y + TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
     }
 
+    tempStructure->SetPosition( Vec2(buildPos.x, buildPos.y) );
+    tempStructure->Update();
     ivec2 buildCoord = POS_TO_COORD(buildPos);
     if (distance((vec2)buildPos, *playerPos) < canBuildDistance && CheckCanBuild(buildCoord, spec.coordSize))
     {
@@ -71,7 +70,7 @@ void StructureBuilder::Update(vec2* playerPos)
             
             Structure* structure = Structure::CreateStructure((ItemEnum)itemId);
            
-            structure->Init(buildPos.x, buildPos.y, DIRECTION::NORTH);
+            structure->Init(buildPos.x, buildPos.y, tempStructure->GetDirection());
             entityManager->AddEntity(structure);
         }
     }
@@ -91,7 +90,8 @@ void StructureBuilder::Render(Shader* shader)
     else
         shader->setVec3("material.diffuseColor", vec3(1.0f, 0.0f, 0.0f));
 
-    itemBuildImage->Render(shader, buildPos.x, buildPos.y);
+    tempStructure->Render(shader);
+    tempStructure->LateRender(shader);
 
     shader->setVec3("material.diffuseColor", vec3(1.0f, 1.0f, 1.0f));
 }
@@ -102,11 +102,20 @@ void StructureBuilder::Active(int itemId)
     this->itemId = itemId;
     ItemSpec spec = g_itemSpecs[itemId];
 
-    entityDirection = DIRECTION::NORTH;
-    if(spec.directionCount > 1)
-        itemBuildImage->Init(string("Entity/" + spec.name + g_directionToLpChar[entityDirection]).c_str(), spec.maxFrame.x, spec.maxFrame.y);
+    if (tempStructure)
+    {
+        if (tempStructure->GetItemId() != itemId)
+        {
+            SAFE_RELEASE(tempStructure);
+            tempStructure = Structure::CreateStructure((ItemEnum)itemId);
+            tempStructure->TempInit(0, 0, NORTH);
+        }
+    }
     else
-        itemBuildImage->Init(string("Entity/" + spec.name).c_str(), spec.maxFrame.x, spec.maxFrame.y);
+    {
+        tempStructure = Structure::CreateStructure((ItemEnum)itemId);
+        tempStructure->TempInit(0, 0, NORTH);
+    }
 }
 
 void StructureBuilder::Deactive()

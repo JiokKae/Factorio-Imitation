@@ -58,6 +58,63 @@ HRESULT TransportBelt::Init(int x, int y, DIRECTION direction)
 	return S_OK;
 }
 
+HRESULT TransportBelt::TempInit(int x, int y, DIRECTION direction)
+{
+	itemId = ItemEnum::TRANSPORT_BELT;
+	Structure::TempInit(x, y, direction);
+
+	image = new GLImage();
+	image->Init(string("Entity/" + g_itemSpecs[itemId].name).c_str(), 16, 20);
+
+	aroundBelts = new TransportBelt * [DIRECTION_END]();
+	Tile* tile = TileManager::GetSingleton()->GetLpTile(coord.x, coord.y);
+	for (int i = 0; i < DIRECTION_END; i++)
+	{
+		Tile* aroundTile = tile->GetAroundTile((DIRECTION)i);
+		if (aroundTile)
+		{
+			Structure* structure = aroundTile->GetLpSturcture();
+			if (structure && structure->GetItemId() == TRANSPORT_BELT)
+			{
+				aroundBelts[(DIRECTION)i] = (TransportBelt*)structure;
+			}
+		}
+	}
+
+	imageFrameYByDirection[NORTH][ImageIndex::TOP] = 2;
+	imageFrameYByDirection[NORTH][ImageIndex::BOTTOM] = 7;
+	imageFrameYByDirection[NORTH][ImageIndex::UP] = 17;
+	imageFrameYByDirection[NORTH][ImageIndex::LEFT_UP] = 13;
+	imageFrameYByDirection[NORTH][ImageIndex::RIGHT_UP] = 15;
+
+	imageFrameYByDirection[EAST][ImageIndex::TOP] = 0;
+	imageFrameYByDirection[EAST][ImageIndex::BOTTOM] = 5;
+	imageFrameYByDirection[EAST][ImageIndex::UP] = 19;
+	imageFrameYByDirection[EAST][ImageIndex::LEFT_UP] = 14;
+	imageFrameYByDirection[EAST][ImageIndex::RIGHT_UP] = 11;
+
+	imageFrameYByDirection[SOUTH][ImageIndex::TOP] = 6;
+	imageFrameYByDirection[SOUTH][ImageIndex::BOTTOM] = 3;
+	imageFrameYByDirection[SOUTH][ImageIndex::UP] = 16;
+	imageFrameYByDirection[SOUTH][ImageIndex::LEFT_UP] = 10;
+	imageFrameYByDirection[SOUTH][ImageIndex::RIGHT_UP] = 8;
+
+	imageFrameYByDirection[WEST][ImageIndex::TOP] = 4;
+	imageFrameYByDirection[WEST][ImageIndex::BOTTOM] = 1;
+	imageFrameYByDirection[WEST][ImageIndex::UP] = 18;
+	imageFrameYByDirection[WEST][ImageIndex::LEFT_UP] = 9;
+	imageFrameYByDirection[WEST][ImageIndex::RIGHT_UP] = 12;
+
+	imageTopPosOffset[NORTH] = { 0,  TILE_SIZE };
+	imageTopPosOffset[EAST] = { TILE_SIZE, 0 };
+	imageTopPosOffset[SOUTH] = { 0, -TILE_SIZE };
+	imageTopPosOffset[WEST] = { -TILE_SIZE, 0 };
+
+	passable = true;
+
+	return S_OK;
+}
+
 void TransportBelt::Release()
 {
 	SAFE_ARR_DELETE(aroundBelts);
@@ -66,21 +123,7 @@ void TransportBelt::Release()
 
 void TransportBelt::Update()
 {
-	if (PtInFRect(GetFRect(), g_cursorPosition))
-	{
-		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
-		{
-			UIManager::GetSingleton()->ActiveUI("BurnerMiningDrillUI");
-		}
-
-		if (KeyManager::GetSingleton()->IsOnceKeyDown('R'))
-		{
-			SoundManager::GetSingleton()->Play("Rotate-medium", 0.6f);
-			direction = DIRECTION(direction + 1);
-			if (direction == DIRECTION_END)
-				direction = DIRECTION::NORTH;
-		}
-	}
+	Structure::Update();
 
 	// 뒤에 벨트가 있다면
 	if (aroundBelts[OPPOSITE_DIR(direction)] && aroundBelts[OPPOSITE_DIR(direction)]->GetDirection() == direction)
@@ -145,6 +188,28 @@ void TransportBelt::LateRender(Shader* lpShader)
 		else
 			image->Render(lpShader, position.x - imageTopPosOffset[direction].x, position.y - imageTopPosOffset[direction].y, frame % maxFrame.x, imageFrameYByDirection[direction][ImageIndex::BOTTOM]);
 	}	
+}
+
+void TransportBelt::SetPosition(Vec2 position)
+{
+	Entity::SetPosition(position);
+	coord = POS_TO_COORD(this->position);
+
+	Tile* tile = TileManager::GetSingleton()->GetLpTile(coord.x, coord.y);
+	for (int i = 0; i < DIRECTION_END; i++)
+	{
+		aroundBelts[(DIRECTION)i] = nullptr;
+		Tile* aroundTile = tile->GetAroundTile((DIRECTION)i);
+		if (aroundTile)
+		{
+			Structure* structure = aroundTile->GetLpSturcture();
+			if (structure && structure->GetItemId() == TRANSPORT_BELT)
+			{
+				aroundBelts[(DIRECTION)i] = (TransportBelt*)structure;
+				//((TransportBelt*)structure)->SetAroundBelts(DIRECTION((i + 2) % DIRECTION_END), this);
+			}
+		}
+	}
 }
 
 void TransportBelt::SetAroundBelts(DIRECTION direction, TransportBelt* aroundBelt)

@@ -27,6 +27,17 @@ HRESULT Structure::Init(int x, int y, DIRECTION direction)
 	return S_OK;
 }
 
+HRESULT Structure::TempInit(int x, int y, DIRECTION direction)
+{
+	this->position = { (float)x, (float)y };
+	this->direction = direction;
+
+	coord = POS_TO_COORD(position);
+	coordSize = g_itemSpecs[itemId].coordSize;
+
+	return S_OK;
+}
+
 void Structure::Release()
 {
 	glm::ivec2 coord = POS_TO_COORD(position);
@@ -48,6 +59,14 @@ void Structure::Release()
 
 void Structure::Update()
 {
+	if (PtInFRect(GetFRect(), g_cursorPosition))
+	{
+		if (KeyManager::GetSingleton()->IsOnceKeyDown('R'))
+		{
+			SoundManager::GetSingleton()->Play("Rotate-medium", 0.6f);
+			direction = (DIRECTION)RIGHT_DIR(direction);
+		}
+	}
 }
 
 void Structure::Render(Shader* lpShader)

@@ -5,17 +5,16 @@
 using namespace glm;
 
 class Shader;
-class GLImage;
+class Structure;
 class EntityManager;
 class StructureBuilder : public GameNode
 {
-	GLImage* itemBuildImage;	// 구조물의 이미지
 	bool buildable;				// 구조물을 지을수 있는지?
 	float canBuildDistance;		// 구조물의 건설 거리 제한
 	ivec2 buildPos;				// 건설할 포지션
-	bool active;				// VSB의 활성화 여부
-	DIRECTION entityDirection;	// 구조물의 방향
+	bool active;				// SB의 활성화 여부
 	int itemId;
+	Structure* tempStructure;	// 임시 구조물 객체
 
 	// 참조용
 	EntityManager* entityManager;
@@ -28,8 +27,10 @@ public:
 	void Active(int itemId);
 	void Deactive();
 	bool CheckCanBuild(ivec2 coord, ivec2 coordSize);
-
-	StructureBuilder() {};
+	bool IsActive() { return active; }
+	StructureBuilder() 
+		: tempStructure(nullptr)
+	{};
 	virtual ~StructureBuilder() {};
 };
 

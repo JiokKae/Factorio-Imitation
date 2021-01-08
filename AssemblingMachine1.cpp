@@ -6,10 +6,10 @@ HRESULT AssemblingMachine1::Init(int x, int y, DIRECTION direction)
 	itemId = ItemEnum::ASSEMBLING_MACHINE_1;
 	Structure::Init(x, y, direction);
 
-	image = new GLImage[DIRECTION_END]();
-	image[DIRECTION::NORTH].Init(string("Entity/" + g_itemSpecs[itemId].name).c_str(), 8, 4);
+	image = new GLImage();
+	image->Init(string("Entity/" + g_itemSpecs[itemId].name).c_str(), 8, 4);
 
-	shadow = new GLImage[DIRECTION_END]();
+	shadow = new GLImage();
 	shadow[DIRECTION::NORTH].Init(string("Entity/" + g_itemSpecs[itemId].name + "-shadow").c_str(), 8, 4);
 	shadow[DIRECTION::NORTH].SetAlpha(0.6f);
 	shadowAniOffset[DIRECTION::NORTH] = { 50, 0 };
@@ -30,19 +30,13 @@ void AssemblingMachine1::Release()
 
 void AssemblingMachine1::Update()
 {
+	Structure::Update();
+
 	if (PtInFRect(GetFRect(), g_cursorPosition))
 	{
 		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
 		{
 			UIManager::GetSingleton()->ActiveUI("BurnerMiningDrillUI");
-		}
-
-		if (KeyManager::GetSingleton()->IsOnceKeyDown('R'))
-		{
-			SoundManager::GetSingleton()->Play("Rotate-medium", 0.6f);
-			direction = DIRECTION(direction + 1);
-			if (direction == DIRECTION_END)
-				direction = DIRECTION::NORTH;
 		}
 	}
 }
