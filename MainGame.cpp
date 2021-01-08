@@ -133,6 +133,7 @@ void MainGame::ImageLoad()
 	textureManager->AddTexture("Icons/BurnerMiningDrill",	"graphics/icons/burner-mining-drill.png");
 	textureManager->AddTexture("Icons/IronPlate",			"graphics/icons/iron-plate.png");
 	textureManager->AddTexture("Icons/AssemblingMachine1",	"graphics/icons/assembling-machine-1.png");
+	textureManager->AddTexture("Icons/TransportBelt",		"graphics/icons/transport-belt.png");
 
 	textureManager->AddTexture("Terrain/Dirt_1",			"graphics/terrain/hr-dirt-1.png");
 

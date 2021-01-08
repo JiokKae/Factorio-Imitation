@@ -7,8 +7,9 @@ class Entity;
 class Character;
 class EntityManager : public GameNode
 {
-	multimap<GLfloat, Entity*, greater<GLfloat>> mapEntitys;
-	multimap<GLfloat, Entity*>::iterator it;
+	multimap<Vec2, Entity*, greater<Vec2>> mapEntitys;
+	multimap<Vec2, Entity*>::iterator it;
+
 public:
 	virtual HRESULT Init();
 	virtual void Release();

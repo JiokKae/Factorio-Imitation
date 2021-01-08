@@ -6,6 +6,7 @@
 HRESULT Character::Init()
 {
 	position = { 0.0f, 0.0f };
+	
 	direction = Direction::up;
 	image = new GLImage[State::END]();
 	image[IDLE].Init("Entity/Character-level1_idle", 22, 8);

@@ -1,10 +1,10 @@
 #include "BurnerMiningDrill.h"
 #include "GLImage.h"
 
-HRESULT BurnerMiningDrill::Init(int x, int y)
+HRESULT BurnerMiningDrill::Init(int x, int y, DIRECTION direction)
 {
 	itemId = ItemEnum::BURNER_MINING_DRILL;
-	Structure::Init(x, y);
+	Structure::Init(x, y, direction);
 
 	image = new GLImage[DIRECTION_END]();
 	image[DIRECTION::NORTH].Init(	"Entity/BurnerMiningDrill-N", 4, 8);

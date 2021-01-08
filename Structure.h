@@ -12,7 +12,7 @@ protected:
 	int itemId;
 
 public:
-	virtual HRESULT Init(int x, int y);
+	virtual HRESULT Init(int x, int y, DIRECTION direction);
 	virtual void Release();
 	virtual void Update();
 	virtual void Render(Shader* lpShader);

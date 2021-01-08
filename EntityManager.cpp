@@ -35,6 +35,7 @@ void EntityManager::LateRender(Shader* shader, GLfloat playerPosY)
 	{
 		if (it->second->GetPosition().y <= playerPosY && !it->second->IsPassable())
 			it->second->Render(shader);
+        it->second->LateRender(shader);
 	}
 }
 
@@ -75,7 +76,7 @@ void EntityManager::Collision(Character* player)
 
 void EntityManager::AddEntity(Entity* entity)
 {
-    mapEntitys.insert(make_pair(entity->GetPosition().y, entity));
+    mapEntitys.insert(make_pair(entity->GetPosition(), entity));
 }
 
 void EntityManager::DeleteEntity(Entity* entity)

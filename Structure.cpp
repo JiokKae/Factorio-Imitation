@@ -4,9 +4,11 @@
 #include "TransportBelt.h"
 #include "Tile.h"
 
-HRESULT Structure::Init(int x, int y)
+HRESULT Structure::Init(int x, int y, DIRECTION direction)
 {
-	position = { x, y };
+	this->position = { (float)x, (float)y };
+	this->direction = direction;
+
 	coord = POS_TO_COORD(position);
 	coordSize = g_itemSpecs[itemId].coordSize;
 

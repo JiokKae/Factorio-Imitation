@@ -68,8 +68,10 @@ void StructureBuilder::Update(vec2* playerPos)
         if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
         {
             SoundManager::GetSingleton()->Play("Build-medium", 0.6f);
+            
             Structure* structure = Structure::CreateStructure((ItemEnum)itemId);
-            structure->Init(buildPos.x, buildPos.y);
+           
+            structure->Init(buildPos.x, buildPos.y, DIRECTION::NORTH);
             entityManager->AddEntity(structure);
         }
     }

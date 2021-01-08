@@ -148,7 +148,7 @@ HRESULT PlayScene::Init()
         for (int j = 0; j < 10; j++)
         {   
             structure = Structure::CreateStructure(ItemEnum::BURNER_MINING_DRILL);
-            structure->Init(j * 128, i * 128);
+            structure->Init(j * 128, i * 128, DIRECTION::NORTH);
             entityManager->AddEntity(structure);
         }
     }

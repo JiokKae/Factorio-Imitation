@@ -5,7 +5,7 @@ class Shader;
 class Entity : public GameNode
 {
 protected:
-	glm::vec2 position;
+	Vec2 position;
 	bool passable;
 
 public:
@@ -13,10 +13,13 @@ public:
 	virtual void Release();
 	virtual void Update();
 	virtual void Render(Shader* lpShader);
+	virtual void LateRender(Shader* lpShader) {};
 
-	bool IsPassable()		{ return passable; }
-	glm::vec2 GetPosition() { return position; }
+	bool IsPassable()	{ return passable; }
+	Vec2 GetPosition()	{ return position; }
 
 	virtual FRECT GetCollisionFRect() { return FRECT(); };
 
+	Entity() {};
+	~Entity() {};
 };

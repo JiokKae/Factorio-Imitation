@@ -78,9 +78,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 				TimerManager::GetSingleton()->CheckUpdateTime();
 				g_mainGame.Render();
 				TimerManager::GetSingleton()->CheckRenderTime();
+				g_time += TimerManager::GetSingleton()->GetTimeElapsed();
 			}
-
-			g_time += TimerManager::GetSingleton()->GetTimeElapsed();
 		}
 	}
 

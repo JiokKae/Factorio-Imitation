@@ -1,10 +1,10 @@
 #include "AssemblingMachine1.h"
 #include "GLImage.h"
 
-HRESULT AssemblingMachine1::Init(int x, int y)
+HRESULT AssemblingMachine1::Init(int x, int y, DIRECTION direction)
 {
 	itemId = ItemEnum::ASSEMBLING_MACHINE_1;
-	Structure::Init(x, y);
+	Structure::Init(x, y, direction);
 
 	image = new GLImage[DIRECTION_END]();
 	image[DIRECTION::NORTH].Init(string("Entity/" + g_itemSpecs[itemId].name).c_str(), 8, 4);

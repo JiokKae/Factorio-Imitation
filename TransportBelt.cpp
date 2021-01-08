@@ -1,9 +1,9 @@
 #include "TransportBelt.h"
 #include "Tile.h"
-HRESULT TransportBelt::Init(int x, int y)
+HRESULT TransportBelt::Init(int x, int y, DIRECTION direction)
 {
 	itemId = ItemEnum::TRANSPORT_BELT;
-	Structure::Init(x, y);
+	Structure::Init(x, y, direction);
 
 	image = new GLImage();
 	image->Init(string("Entity/" + g_itemSpecs[itemId].name).c_str(), 16, 20);
@@ -23,6 +23,35 @@ HRESULT TransportBelt::Init(int x, int y)
 			}
 		}
 	}
+
+	imageFrameYByDirection[NORTH][ImageIndex::TOP] =		2;
+	imageFrameYByDirection[NORTH][ImageIndex::BOTTOM] =		7;
+	imageFrameYByDirection[NORTH][ImageIndex::UP] =			17;
+	imageFrameYByDirection[NORTH][ImageIndex::LEFT_UP] =	13;
+	imageFrameYByDirection[NORTH][ImageIndex::RIGHT_UP] =	15;
+
+	imageFrameYByDirection[EAST][ImageIndex::TOP] =			0;
+	imageFrameYByDirection[EAST][ImageIndex::BOTTOM] =		5;
+	imageFrameYByDirection[EAST][ImageIndex::UP] =			19;
+	imageFrameYByDirection[EAST][ImageIndex::LEFT_UP] =		14;
+	imageFrameYByDirection[EAST][ImageIndex::RIGHT_UP] =	11;
+
+	imageFrameYByDirection[SOUTH][ImageIndex::TOP] =		6;
+	imageFrameYByDirection[SOUTH][ImageIndex::BOTTOM] =		3;
+	imageFrameYByDirection[SOUTH][ImageIndex::UP] =			16;
+	imageFrameYByDirection[SOUTH][ImageIndex::LEFT_UP] =	10;
+	imageFrameYByDirection[SOUTH][ImageIndex::RIGHT_UP] =	8;
+
+	imageFrameYByDirection[WEST][ImageIndex::TOP] =			4;
+	imageFrameYByDirection[WEST][ImageIndex::BOTTOM] =		1;
+	imageFrameYByDirection[WEST][ImageIndex::UP] =			18;
+	imageFrameYByDirection[WEST][ImageIndex::LEFT_UP] =		9;
+	imageFrameYByDirection[WEST][ImageIndex::RIGHT_UP] =	12;
+
+	imageTopPosOffset[NORTH] =	{ 0,  TILE_SIZE };
+	imageTopPosOffset[EAST] =	{  TILE_SIZE, 0 };
+	imageTopPosOffset[SOUTH] =	{ 0, -TILE_SIZE };
+	imageTopPosOffset[WEST] =	{ -TILE_SIZE, 0 };
 
 	passable = true;
 
@@ -52,41 +81,70 @@ void TransportBelt::Update()
 				direction = DIRECTION::NORTH;
 		}
 	}
+
+	// 뒤에 벨트가 있다면
+	if (aroundBelts[OPPOSITE_DIR(direction)] && aroundBelts[OPPOSITE_DIR(direction)]->GetDirection() == direction)
+		renderState = UP;
+
+	// 뒤에 벨트가 없다면
+	else
+	{
+		// 양쪽 검사
+		bool left = aroundBelts[LEFT_DIR(direction)] && aroundBelts[LEFT_DIR(direction)]->GetDirection() == RIGHT_DIR(direction);
+		bool right = aroundBelts[RIGHT_DIR(direction)] && aroundBelts[RIGHT_DIR(direction)]->GetDirection() == LEFT_DIR(direction);
+		if (left ^ right)	// 둘중 하나만 열려 있다면
+		{
+			if (left)
+				renderState = LEFT_UP;
+			else
+				renderState = RIGHT_UP;
+		}
+		else	// 둘다 없거나 둘다 있거나
+			renderState = UP;
+	}
+
 }
 
 void TransportBelt::Render(Shader* lpShader)
 {
-	static int oframe;
-	int frame = oframe / 600;
+	int frame = g_time * 30;
 	glm::ivec2 maxFrame = image->GetMaxFrame();
-	switch (direction)
+
+	image->Render(lpShader, position.x, position.y, frame % maxFrame.x, imageFrameYByDirection[direction][renderState]);
+
+}
+
+void TransportBelt::LateRender(Shader* lpShader)
+{
+	int frame = g_time * 30;
+	glm::ivec2 maxFrame = image->GetMaxFrame();
+
+	TransportBelt* upBelt = aroundBelts[direction];
+	if (upBelt)
 	{
-	case NORTH:
-		if(aroundBelts[EAST] && aroundBelts[EAST]->GetDirection() == WEST)
-			image->Render(lpShader, position.x, position.y,	frame % maxFrame.x, 15);
-		else
-			image->Render(lpShader, position.x, position.y, frame % maxFrame.x, 17);
-		break;
-	case EAST:
-		if (aroundBelts[SOUTH] && aroundBelts[SOUTH]->GetDirection() == NORTH)
-			image->Render(lpShader, position.x, position.y, frame % maxFrame.x, 11);
-		else
-			image->Render(lpShader, position.x, position.y,	frame % maxFrame.x, 19);
-		break;
-	case SOUTH:
-		if (aroundBelts[WEST] && aroundBelts[WEST]->GetDirection() == EAST)
-			image->Render(lpShader, position.x, position.y, frame % maxFrame.x, 8);
-		else
-			image->Render(lpShader, position.x, position.y,	frame % maxFrame.x, 16);
-		break;
-	case WEST:
-		if (aroundBelts[NORTH] && aroundBelts[NORTH]->GetDirection() == SOUTH)
-			image->Render(lpShader, position.x, position.y, frame % maxFrame.x, 12);
-		else
-			image->Render(lpShader, position.x, position.y,	frame % maxFrame.x, 18);
-		break;
+		if (!(	upBelt->GetDirection() == OPPOSITE_DIR(direction)
+			||	upBelt->GetDirection() == direction					&& upBelt->GetRenderState() == UP
+			||	upBelt->GetDirection() == LEFT_DIR(direction)		&& upBelt->GetRenderState() == LEFT_UP
+			||	upBelt->GetDirection() == RIGHT_DIR(direction)		&& upBelt->GetRenderState() == RIGHT_UP))
+			image->Render(lpShader, position.x + imageTopPosOffset[direction].x, position.y + imageTopPosOffset[direction].y, frame % maxFrame.x, imageFrameYByDirection[direction][ImageIndex::TOP]);
 	}
-	oframe++;
+	else
+		image->Render(lpShader, position.x + imageTopPosOffset[direction].x, position.y + imageTopPosOffset[direction].y, frame % maxFrame.x, imageFrameYByDirection[direction][ImageIndex::TOP]);
+
+	if (renderState == UP)
+	{
+		TransportBelt* downBelt = aroundBelts[OPPOSITE_DIR(direction)];
+		if (downBelt)
+		{
+			if (!(downBelt->GetDirection() == direction
+				|| downBelt->GetDirection() == OPPOSITE_DIR(direction) && downBelt->GetRenderState() == UP
+				|| downBelt->GetDirection() == LEFT_DIR(direction) && downBelt->GetRenderState() == RIGHT_UP
+				|| downBelt->GetDirection() == RIGHT_DIR(direction) && downBelt->GetRenderState() == LEFT_UP))
+				image->Render(lpShader, position.x - imageTopPosOffset[direction].x, position.y - imageTopPosOffset[direction].y, frame % maxFrame.x, imageFrameYByDirection[direction][ImageIndex::BOTTOM]);
+		}
+		else
+			image->Render(lpShader, position.x - imageTopPosOffset[direction].x, position.y - imageTopPosOffset[direction].y, frame % maxFrame.x, imageFrameYByDirection[direction][ImageIndex::BOTTOM]);
+	}	
 }
 
 void TransportBelt::SetAroundBelts(DIRECTION direction, TransportBelt* aroundBelt)

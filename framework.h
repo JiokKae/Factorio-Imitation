@@ -66,6 +66,18 @@ struct ItemSpec {
 	glm::ivec2 maxFrame;
 };
 
+struct Vec2 : public glm::vec2
+{
+	Vec2(float x = 0, float y = 0) : glm::vec2(x, y) {};
+	//std::vector<Vec2> v;
+	bool operator<(const Vec2& vec) const;
+	bool operator>(const Vec2& vec) const;
+	//Vec2(std::initializer_list<Vec2> l) : v{ l }
+	//{
+	//	std::cout << "constructed with a " << l.size() << "-element list\n";
+	//}
+};
+
 struct ItemInfo {
 	int id;
 	int amount;
@@ -91,6 +103,10 @@ enum DIRECTION {
 	WEST,
 	DIRECTION_END
 };
+
+#define OPPOSITE_DIR(x) ((x + 2) % DIRECTION_END)
+#define LEFT_DIR(x)		((x + 3) % DIRECTION_END)
+#define RIGHT_DIR(x)	((x + 1) % DIRECTION_END)
 
 extern HWND			g_hWnd;
 extern float		g_time;

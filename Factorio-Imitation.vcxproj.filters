@@ -425,6 +425,9 @@
     <ClCompile Include="TransportBelt.cpp">
       <Filter>MainGame\Entity\Structure</Filter>
     </ClCompile>
+    <ClCompile Include="framework.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="1.colors.frag">
