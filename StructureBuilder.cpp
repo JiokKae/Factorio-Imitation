@@ -7,9 +7,9 @@
 #include "HandUI.h"
 #include "Texture.h"
 #include "Structure.h"
-HRESULT StructureBuilder::Init(EntityManager* entityManager)
+HRESULT StructureBuilder::Init()
 {
-    this->entityManager = entityManager;
+    this->entityManager = EntityManager::GetSingleton();
     canBuildDistance = 700.0f;
     return S_OK;
 }
@@ -66,7 +66,13 @@ void StructureBuilder::Update(vec2* playerPos)
         buildable = true;
         if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
         {
-            SoundManager::GetSingleton()->Play("Build-medium", 0.6f);
+            // build sound
+            if(tempStructure->GetCoordSize().x + tempStructure->GetCoordSize().y > 4)
+                SoundManager::GetSingleton()->Play("Build-large", 0.6f);
+            else if (tempStructure->GetCoordSize().x + tempStructure->GetCoordSize().y > 2)
+                SoundManager::GetSingleton()->Play("Build-medium", 0.6f);
+            else
+                SoundManager::GetSingleton()->Play("Build-small", 0.6f);
             
             Structure* structure = Structure::CreateStructure((ItemEnum)itemId);
            

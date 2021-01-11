@@ -27,7 +27,7 @@ void TextureManager::Release()
 	ReleaseSingleton();
 }
 
-Texture* TextureManager::AddTexture(string strKey, char const* path, bool flip)
+Texture* TextureManager::AddTexture(string strKey, char const* path, bool mipmap, bool flip, GLint filter)
 {
 	Texture* texture = nullptr;
 	texture = FindTexture(strKey);
@@ -36,7 +36,7 @@ Texture* TextureManager::AddTexture(string strKey, char const* path, bool flip)
 		return texture;
 	}
 	texture = new Texture();
-	if (FAILED(texture->Init(path, flip)))
+	if (FAILED(texture->Init(path, mipmap, flip, filter)))
 	{
 		SAFE_RELEASE(texture);
 		return nullptr;

@@ -109,20 +109,20 @@ void TileManager::Render(RECT cameraRect)
             if (!CheckRectCollision(currChunk->GetRect(), cameraRect))
                 continue;
 
-            instancingShader->setVec2("chunkCoord", currChunk->GetCoord());
+            instancingShader->setVec2("offset", currChunk->GetCoord() * 2048);
 
             for (int y = 0; y < 32; y++)
             {
                 for (int x = 0; x < 32; x++)
                 {
-                    /*
                     tileCurrFrame[y * CHUNK_IN_TILE + x] = { x % 64, y % 4 };
-                    */
+                    /*
                     Tile* tile = currChunk->GetLpTile(x, y);
                     if(tile->GetLpSturcture() != nullptr)
                         tileCurrFrame[y * CHUNK_IN_TILE + x] = { x % 64, y % 4 };
                     else
                         tileCurrFrame[y * CHUNK_IN_TILE + x] = { 100, 100 };
+                    */
                 }
             }
             tilesVAO->SetVBOData(1, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
@@ -147,7 +147,7 @@ void TileManager::Render(RECT cameraRect)
             if (!CheckRectCollision(currChunk->GetRect(), cameraRect))
                 continue;
 
-            instancingShader->setVec2("chunkCoord", currChunk->GetCoord());
+            instancingShader->setVec2("offset", currChunk->GetCoord() * 2048);
 
             for (int y = 0; y < 32; y++)
             {
@@ -163,7 +163,7 @@ void TileManager::Render(RECT cameraRect)
             {
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, oreImages[kind].GetLpSourceTexture()->GetID());
-                glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 1024);
+                //glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 1024);
             }
         }
     }

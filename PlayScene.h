@@ -2,13 +2,10 @@
 #include "Scene.h"
 
 class Camera;
-class Shader;
-class Character;
 class PointLight;
 class TileManager;
 class TextRenderer;
 class DirectionalLight;
-class EntityManager;
 class StructureBuilder;
 class PlayScene : public Scene
 {
@@ -20,7 +17,6 @@ class PlayScene : public Scene
 
 	Shader* UIShader;
 	TileManager* tileRenderer;
-	Character* player;
 
 	TextRenderer* textRenderer;
 
@@ -41,7 +37,6 @@ public:
 		: Scene(width, height)
 		, lightingShader(nullptr)
 		, tileRenderer(nullptr)
-		, player(nullptr)
 		, camera(nullptr)
 		, textRenderer(nullptr)
 		, entityManager(nullptr)

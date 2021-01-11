@@ -1,57 +1,37 @@
 #include "CharacterUI.h"
-#include "InventorySlotUI.h"
-#include "Inventory.h"
+#include "InventoryUI.h"
 #include "DeactiveButtonUI.h"
-#include "GLImage.h"
-#include "Shader.h"
 
 HRESULT CharacterUI::Init(Inventory* inventory)
 {
 	image = new GLImage();
 	image->Init("UI/CharacterUI");
 	
-	slotUI = new InventorySlotUI[SLOT_SIZE]();
-	for (int y = 0; y < SLOT_Y; y++)
-	{
-		for (int x = 0; x < SLOT_X; x++)
-		{
-			slotUI[y * SLOT_X + x].Init(x, y);
-			slotUI[y * SLOT_X + x].SetParent(this);
-		}
-	}
-
-	this->inventory = inventory;
+	inventoryUI = new InventoryUI();
+	inventoryUI->Init(inventory);
+	inventoryUI->SetParent(this);
+	inventoryUI->SetLocalPosition(glm::vec2(-397.5, 153));
 
 	deactiveButtonUI = new DeactiveButtonUI();
 	deactiveButtonUI->Init();
 	deactiveButtonUI->SetParent(this);
-	deactiveButtonUI->SetLocalPosition({ 419, 231 });
+	deactiveButtonUI->SetLocalPosition(glm::vec2(419, 231));
 
 	return S_OK;
 }
 
 void CharacterUI::Release()
 {
-	for (int i = 0; i < SLOT_SIZE; i++)
-	{
-		slotUI[i].Release();
-	}
-	SAFE_ARR_DELETE(slotUI);
+	SAFE_RELEASE(image);
+	SAFE_RELEASE(inventoryUI);
+	SAFE_RELEASE(deactiveButtonUI);
 }
 
 void CharacterUI::Update()
 {
 	if (active)
 	{
-		vector<ItemInfo*> arr = inventory->GetItemInfoArray();
-		for (int i = 0; i < arr.size(); i++)
-		{
-			slotUI[i].Update(arr[i]);
-		}
-		for (int i = arr.size(); i < SLOT_SIZE; i++)
-		{
-			slotUI[i].Update(nullptr);
-		}
+		inventoryUI->Update();
 		deactiveButtonUI->Update();
 		if (PtInFRect(GetFrect(), { g_ptMouse.x, g_ptMouse.y }))
 		{
@@ -66,15 +46,7 @@ void CharacterUI::Render(Shader* lpShader)
 	{
 		image->Render(lpShader, GetPosition().x, GetPosition().y);
 
-		for (int i = 0; i < SLOT_SIZE; i++)
-		{
-			slotUI[i].Render(lpShader);
-		}
-		for (int i = 0; i < SLOT_SIZE; i++)
-		{
-			
-		}
-		
+		inventoryUI->Render(lpShader);
 		deactiveButtonUI->Render(lpShader);
 	}
 }

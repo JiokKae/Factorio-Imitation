@@ -17,6 +17,7 @@ public:
 	HRESULT Init();
 	void Release();
 	void Update();
+	void HandUpdate();
 	void Render(Shader* lpShader);
 
 	UI* AddUI(string strKey, UI* lpUi);
@@ -27,7 +28,9 @@ public:
 	bool IsMouseOnUI();
 	void ActiveUI(string strKey);
 	void DeactiveUI();
-	HandUI* GetLpHandUI() { return handUI; }
+
+	UI* GetLpCurrUI()		{ return currUI; }
+	HandUI* GetLpHandUI()	{ return handUI; }
 
 	UIManager()
 		: currUI(nullptr) 

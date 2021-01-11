@@ -1,7 +1,6 @@
 #pragma once
 #include "GameNode.h"
 
-class Shader;
 class Entity : public GameNode
 {
 protected:

@@ -22,8 +22,10 @@ HRESULT GLImage::Init(char const* sourceTexture, int maxFrameX, int maxFrameY, i
     frameWidth = width / maxFrame.x;
     frameHeight = height / maxFrame.y;
     
-    zoom = 1.0f;
-    
+    scale = glm::vec2(1.0f, 1.0f);
+    angle = 0.0f;
+    offset = glm::vec2(0.0f, 0.0f);
+
     float vertices[] = {
         // positions                        // texture coords
         -frameWidth / 2, -frameHeight / 2,  0.0f, 0.0f,
@@ -70,7 +72,9 @@ void GLImage::Render(Shader* shader, float destX, float destY, int currFrameX, i
     // world transformation
     glm::mat4 planeModel;
     planeModel = glm::translate(planeModel, position);
-    planeModel = glm::scale(planeModel, glm::vec3(zoom));
+    planeModel = glm::rotate(planeModel, angle, glm::vec3(0.0f, 0.0f, 1.0f));
+    planeModel = glm::scale(planeModel, glm::vec3(scale, 0.0f));
+    planeModel = glm::translate(planeModel, glm::vec3(offset, 0.0f));
     shader->setMat4("model", planeModel);
 
     // bind diffuse map

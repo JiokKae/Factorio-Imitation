@@ -11,7 +11,7 @@ class Texture
 	GLenum format;
 
 public:
-	HRESULT Init(char const* path, bool flip = true);
+	HRESULT Init(char const* path, bool mipmap = true, bool flip = true, GLint filter = GL_NEAREST);
 	void Release();
 
 	unsigned int GetID()	{ return ID; }

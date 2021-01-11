@@ -10,7 +10,7 @@ protected:
 	glm::ivec2 coordSize;
 	DIRECTION direction;
 	int itemId;
-
+	bool temp;
 public:
 	virtual HRESULT Init(int x, int y, DIRECTION direction, bool temp = false);
 	virtual void Release();
@@ -20,7 +20,8 @@ public:
 	static Structure* CreateStructure(ItemEnum itemId);
 
 	int GetItemId() { return itemId; }
-	DIRECTION GetDirection() { return direction; }
+	DIRECTION GetDirection()	{ return direction; }
+	glm::ivec2 GetCoordSize()	{ return coordSize; }
 	FRECT GetFRect();
 	virtual FRECT GetCollisionFRect() override;
 

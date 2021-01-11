@@ -27,9 +27,8 @@ HRESULT PlayScene::Init()
 
     UIManager::GetSingleton()->Init();
 
-    // player
-    player = new Character();
-    player->Init();
+    entityManager = EntityManager::GetSingleton();
+    entityManager->Init();
 
     tileRenderer = TileManager::GetSingleton();
     tileRenderer->Init();
@@ -38,7 +37,7 @@ HRESULT PlayScene::Init()
     camera = new Camera();
     camera->Init();
     camera->SetPosition({ 0.0f, 0.0f, 1.0f });
-    camera->SetTarget(player->GetLpPosition());
+    camera->SetTarget(entityManager->GetPlayer()->GetLpPosition());
 
     numOfPointLight = 4;
 
@@ -68,12 +67,12 @@ HRESULT PlayScene::Init()
     
     // UI Init
     CharacterUI* characterUI = new CharacterUI();
-    characterUI->Init(player->GetLpInventory());
+    characterUI->Init(entityManager->GetPlayer()->GetLpInventory());
     characterUI->SetLocalPosition(glm::vec2(width / 2, height / 2));
     UIManager::GetSingleton()->AddUI("CharacterUI", characterUI);
 
-    UI* burnerMiningDrillUI = new BurnerMiningDrillUI();
-    burnerMiningDrillUI->Init();
+    BurnerMiningDrillUI* burnerMiningDrillUI = new BurnerMiningDrillUI();
+    burnerMiningDrillUI->Init(entityManager->GetPlayer()->GetLpInventory());
     burnerMiningDrillUI->SetLocalPosition(glm::vec2(width / 2, height / 2));
     UIManager::GetSingleton()->AddUI("BurnerMiningDrillUI", burnerMiningDrillUI);
 
@@ -138,9 +137,6 @@ HRESULT PlayScene::Init()
     textRenderer = TextRenderer::GetSingleton();
     textRenderer->Init();
     textRenderer->Load("Fonts/NotoSans-Bold.ttf", 24);
-
-    entityManager = new EntityManager();
-    entityManager->Init();
     
     Structure* structure;
     for (int i = 0; i < 10; i++)
@@ -154,7 +150,8 @@ HRESULT PlayScene::Init()
     }
 
     structureBuilder = new StructureBuilder();
-    structureBuilder->Init(entityManager);
+    structureBuilder->Init();
+
 	return S_OK;
 }
 
@@ -169,7 +166,6 @@ void PlayScene::Release()
         tileRenderer = nullptr;
     }
 
-    SAFE_RELEASE(player);
     SAFE_DELETE(UIShader);
 	SAFE_DELETE(lightingShader);
     SAFE_RELEASE(camera);
@@ -196,13 +192,11 @@ void PlayScene::Update()
 
     UIManager::GetSingleton()->Update();
 
-    entityManager->Update();
+    entityManager->Update(camera->GetFRect(width, height));
+
+    UIManager::GetSingleton()->HandUpdate();
 
     tileRenderer->Update();
-
-    player->Update();
-    
-    entityManager->Collision(player);
 
     g_cursorPosition = { (g_ptMouse.x - width / 2) / camera->GetZoom() + camera->GetPosition().x,
                     (g_ptMouse.y - height / 2) / camera->GetZoom() + camera->GetPosition().y };
@@ -219,8 +213,7 @@ void PlayScene::Update()
     else
         structureBuilder->Deactive();
 
-    
-    structureBuilder->Update(player->GetLpPosition());
+    structureBuilder->Update(entityManager->GetPlayer()->GetLpPosition());
 	camera->Update();
     
 }
@@ -235,7 +228,7 @@ void PlayScene::Render(HDC hdc)
     
     glBindBuffer(GL_UNIFORM_BUFFER, uboLights);
     // player point light(dynamic)
-    pointLights[0].position = glm::vec3(player->GetLpPosition()->x, player->GetLpPosition()->y, 0.01f);
+    pointLights[0].position = glm::vec3(entityManager->GetPlayer()->GetLpPosition()->x, entityManager->GetPlayer()->GetLpPosition()->y, 0.01f);
     glBufferSubData(GL_UNIFORM_BUFFER, DirectionalLight::std140Size(), sizeof(glm::vec3), glm::value_ptr(pointLights[0].position));
     // directional light(dynamic)
     dirLight->diffuse = glm::vec3((sin(timeGetTime() / 3000.0f) + 1));
@@ -263,17 +256,13 @@ void PlayScene::Render(HDC hdc)
     glBufferSubData(GL_UNIFORM_BUFFER,                  0, sizeof(glm::mat4), glm::value_ptr(UIprojection));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-
     tileRenderer->Render(camera->GetRect(width, height));
     float tileRenderer_time = TimerManager::GetSingleton()->CheckTime();
 
-    entityManager->Render(lightingShader, player->GetPosition().y);
+    entityManager->Render(lightingShader);
     float entityManager_time = TimerManager::GetSingleton()->CheckTime();
 
-    player->Render(lightingShader);
-    float player_time = TimerManager::GetSingleton()->CheckTime();
-
-    entityManager->LateRender(lightingShader, player->GetPosition().y);
+    entityManager->LateRender(lightingShader);
 
     structureBuilder->Render(lightingShader);
     float structureBuilder_time = TimerManager::GetSingleton()->CheckTime();
@@ -302,7 +291,6 @@ void PlayScene::Render(HDC hdc)
     textRenderer->RenderText("UpdateTime: " + to_string(TimerManager::GetSingleton()->updateTime),                  10, height - 250);
     textRenderer->RenderText("tileRenderer_time:         " + to_string(tileRenderer_time),                          10, height - 280);                           
     textRenderer->RenderText("entityManager_time:      " + to_string(entityManager_time),                           10, height - 310);                           
-    textRenderer->RenderText("player_time:           " + to_string(player_time),                                    10, height - 340);
     textRenderer->RenderText("structureBuilder_time: " + to_string(structureBuilder_time),                          10, height - 370);
     textRenderer->RenderText("UIManager_time:          " + to_string(UIManager_time),                               10, height - 400);
     textRenderer->RenderText("TextRender_time:         " + to_string(TimerManager::GetSingleton()->CheckTime()),    10, height - 430);

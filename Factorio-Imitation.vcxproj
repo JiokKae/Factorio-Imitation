@@ -173,7 +173,10 @@
     <ClInclude Include="HandUI.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="InventorySlotUI.h" />
+    <ClInclude Include="InventoryUI.h" />
+    <ClInclude Include="ItemOnGround.h" />
     <ClInclude Include="ItemEnum.h" />
+    <ClInclude Include="ItemOnGrounds.h" />
     <ClInclude Include="Ore.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="PointLight.h" />
@@ -230,6 +233,9 @@
     <ClCompile Include="HandUI.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="InventorySlotUI.cpp" />
+    <ClCompile Include="InventoryUI.cpp" />
+    <ClCompile Include="ItemOnGround.cpp" />
+    <ClCompile Include="ItemOnGrounds.cpp" />
     <ClCompile Include="Ore.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="PointLight.cpp" />

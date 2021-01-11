@@ -13,13 +13,14 @@ class GLImage
 	float frameWidth;
 	float frameHeight;
 	VertexArrayObject* imageVAO;
-
-	float alpha;
-	float zoom;
+	glm::vec2 offset;				// 이미지의 오프셋
+	float alpha;					// 이미지의 투명도
+	glm::vec2 scale;				// 이미지의 스케일
+	float angle;					// 이미지의 회전 각도
 	bool isInit;
 
 public:
-	//빈 비트맵 이미지를 만든다.
+	// 이미지 초기화
 	HRESULT Init(char const* sourceTexture, int maxFrameX = 1, int maxFrameY = 1, int width = -1, int height = -1);
 
 	// 메모리 해제
@@ -28,16 +29,18 @@ public:
 	void Render(Shader* shader, float destX, float destY, int currFrameX = 0, int currFrameY = 0);
 	void AnimationRender(Shader* shader, float destX, float destY, Animation* ani);
 
-	void SetZoom(float zoom)				{ this->zoom = zoom; }
+	void SetAngle(float angle)				{ this->angle = angle; }
 	void SetAlpha(float alpha)				{ this->alpha = alpha; }
+	void SetScale(glm::vec2 scale)			{ this->scale = scale; }
+	void SetOffset(glm::vec2 offset)		{ this->offset = offset; }
 	void SetSourceTexture(Texture* texture) { this->sourceTexture = texture; }
 
-	float GetZoom()						{ return zoom; }
+	glm::vec2 GetScale()				{ return scale; }
 	float GetFrameWidth()				{ return frameWidth; }
 	float GetFrameHeight()				{ return frameHeight; }
 	glm::ivec2 GetMaxFrame()			{ return maxFrame; }
-	float GetZoomedFrameWidth()			{ return frameWidth * zoom; }
-	float GetZoomedFrameHeight()		{ return frameHeight * zoom; }
+	float GetZoomedFrameWidth()			{ return frameWidth * scale.x; }
+	float GetZoomedFrameHeight()		{ return frameHeight * scale.y; }
 	Texture* GetLpSourceTexture()		{ return sourceTexture; }
 
 	GLImage()

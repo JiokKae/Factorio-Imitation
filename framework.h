@@ -28,6 +28,23 @@
 
 using namespace std;
 
+struct Vec2 : public glm::vec2
+{
+	Vec2(float x = 0, float y = 0) { this->x = static_cast<float>(x); this->y = static_cast<float>(y); };
+
+	bool operator<(const Vec2& vec) const;
+	bool operator>(const Vec2& vec) const;
+};
+
+typedef struct tagFRECT
+{
+	float left;
+	float top;
+	float right;
+	float bottom;
+} FRECT, * LPFRECT;
+
+// Singletons
 #include "KeyManager.h"
 #include "TimerManager.h"
 #include "ImageManager.h"
@@ -37,8 +54,11 @@ using namespace std;
 #include "TextRenderer.h"
 #include "UIManager.h"
 #include "TileManager.h"
-#include "Camera.h"
+#include "EntityManager.h"
+
+// Useful
 #include "GLImage.h"
+#include "Shader.h"
 
 #define WINSIZE_X	900
 #define WINSIZE_Y	900
@@ -58,24 +78,18 @@ using namespace std;
 #define TILECOORDX_TO_CHUNKCOORDX(x)	( (x < 0)? int(x) / CHUNK_IN_TILE - 1 : int(x) / CHUNK_IN_TILE )
 #define TILECOORD_TO_CHUNKCOORD(coord)	{ TILECOORDX_TO_CHUNKCOORDX(coord.x), TILECOORDX_TO_CHUNKCOORDX(coord.y) }
 
+// Inventory
+#define SLOT_X	10
+#define SLOT_Y	9
+#define SLOT_SIZE	(SLOT_X * SLOT_Y)
+
 struct ItemSpec {
 	string name;
 	bool buildable;
 	glm::ivec2 coordSize;
 	int directionCount;
 	glm::ivec2 maxFrame;
-};
-
-struct Vec2 : public glm::vec2
-{
-	Vec2(float x = 0, float y = 0) { this->x = static_cast<float>(x); this->y = static_cast<float>(y); };
-	//std::vector<Vec2> v;
-	bool operator<(const Vec2& vec) const;
-	bool operator>(const Vec2& vec) const;
-	//Vec2(std::initializer_list<Vec2> l) : v{ l }
-	//{
-	//	std::cout << "constructed with a " << l.size() << "-element list\n";
-	//}
+	bool passable;
 };
 
 struct ItemInfo {
@@ -147,13 +161,6 @@ struct TileInfoArgument
 	}
 };
 
-typedef struct tagFRECT 
-{
-	float left;
-	float top;
-	float right;
-	float bottom;
-} FRECT, *LPFRECT;
 
 inline void SetWindowSize(int startX, int startY, int sizeX, int sizeY)
 {

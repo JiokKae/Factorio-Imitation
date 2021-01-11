@@ -31,6 +31,7 @@ public:
     glm::vec3 GetPosition() { return position; }
     glm::mat4 GetViewMatrix();
     RECT GetRect(int winWidth, int winHeight);
+    FRECT GetFRect(int winWidth, int winHeight);
 
     void SetTarget(glm::vec2* targetPos) { this->target = targetPos; }
     void SetPosition(glm::vec3 position) { this->position = position; }

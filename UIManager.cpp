@@ -35,7 +35,10 @@ void UIManager::Update()
 {
 	if (currUI)
 		currUI->Update();
+}
 
+void UIManager::HandUpdate()
+{
 	handUI->Update();
 }
 

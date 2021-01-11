@@ -285,6 +285,15 @@
     <ClInclude Include="StructureBuilder.h">
       <Filter>MainGame\Entity\Structure</Filter>
     </ClInclude>
+    <ClInclude Include="InventoryUI.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemOnGround.h">
+      <Filter>MainGame\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemOnGrounds.h">
+      <Filter>MainGame\Entity</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -445,6 +454,15 @@
     </ClCompile>
     <ClCompile Include="StructureBuilder.cpp">
       <Filter>MainGame\Entity\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryUI.cpp">
+      <Filter>MainGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemOnGround.cpp">
+      <Filter>MainGame\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemOnGrounds.cpp">
+      <Filter>MainGame\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

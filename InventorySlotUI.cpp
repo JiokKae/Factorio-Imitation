@@ -14,8 +14,8 @@ HRESULT InventorySlotUI::Init(int x, int y)
 	hand = new GLImage();
 	hand->Init("Icons/Hand", 1, 1, 32, 32);
 
-	localPosition.x = x * (GetWidth() + 2) -397.5;
-	localPosition.y = -y * (GetHeight() + 2) + 153;
+	localPosition.x = x * (GetWidth() + 2);
+	localPosition.y = -y * (GetHeight() + 2);
 
 	onMouse = false;
 	return S_OK;

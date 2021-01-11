@@ -54,8 +54,6 @@ HRESULT TransportBelt::Init(int x, int y, DIRECTION direction, bool temp)
 	imageTopPosOffset[SOUTH] =	{ 0, -TILE_SIZE };
 	imageTopPosOffset[WEST] =	{ -TILE_SIZE, 0 };
 
-	passable = true;
-
 	return S_OK;
 }
 

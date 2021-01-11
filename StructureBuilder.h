@@ -19,7 +19,7 @@ class StructureBuilder : public GameNode
 	// ÂüÁ¶¿ë
 	EntityManager* entityManager;
 public:
-	virtual HRESULT Init(EntityManager*);
+	virtual HRESULT Init();
 	virtual void Release();
 	virtual void Update(vec2* playerPos);
 	virtual void Render(Shader* shader);

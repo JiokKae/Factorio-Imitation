@@ -7,9 +7,9 @@ void HandUI::Update()
 	{
 		SelectSlotUI(nullptr);
 	}
-	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
+	if (selectedSlotUI)
 	{
-		if (selectedSlotUI)
+		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
 		{
 			ItemInfo* slot = selectedSlotUI->GetLpItemSlot();
 			if (slot)

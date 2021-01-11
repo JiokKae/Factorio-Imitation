@@ -19,10 +19,6 @@ void Ore::Update()
 {
 }
 
-void Ore::Render(Shader* lpShader, float destX, float destY)
-{
-}
-
 int Ore::AmountToImageFrameY()
 {
 	if (amount > 10000)

@@ -3,17 +3,15 @@
 #include "framework.h"
 
 class Inventory;
-class InventoryUI;
-class DeactiveButtonUI;
-class CharacterUI : public UI
+class InventorySlotUI;
+class InventoryUI : public UI
 {
-	InventoryUI* inventoryUI;
-	DeactiveButtonUI* deactiveButtonUI;
+	Inventory* inventory;
+	InventorySlotUI* slotUI;
 
 public:
 	virtual HRESULT Init(Inventory* inventory);
 	virtual void Release() override;
 	virtual void Update() override;
 	virtual void Render(Shader* lpShader) override;
-
 };

@@ -9,11 +9,12 @@ HRESULT Structure::Init(int x, int y, DIRECTION direction, bool temp)
 {
 	this->position = { (float)x, (float)y };
 	this->direction = direction;
+	this->temp = temp;
+	this->coord = POS_TO_COORD(position);
+	this->passable = g_itemSpecs[itemId].passable;
+	this->coordSize = g_itemSpecs[itemId].coordSize;
 
-	coord = POS_TO_COORD(position);
-	coordSize = g_itemSpecs[itemId].coordSize;
-
-	if (temp)
+	if (this->temp)
 		return S_OK;
 
 	for (int y = 0; y < coordSize.y; y++)
@@ -33,7 +34,8 @@ HRESULT Structure::Init(int x, int y, DIRECTION direction, bool temp)
 
 void Structure::Release()
 {
-	glm::ivec2 coord = POS_TO_COORD(position);
+	if (this->temp)
+		return;
 
 	for (int y = 0; y < coordSize.y; y++)
 	{
@@ -43,11 +45,9 @@ void Structure::Release()
 				coord.x - coordSize.x / 2 + x,
 				coord.y - coordSize.y / 2 + y
 			);
-			tile->LinkStructure(this);
+			tile->UnlinkStructure();
 		}
 	}
-
-	TileManager::GetSingleton()->GetLpTile((int)position.x / 64, (int)position.y / 64)->UnlinkStructure();
 }
 
 void Structure::Update()
@@ -56,7 +56,14 @@ void Structure::Update()
 	{
 		if (KeyManager::GetSingleton()->IsOnceKeyDown('R'))
 		{
-			SoundManager::GetSingleton()->Play("Rotate-medium", 0.6f);
+			// rotate sound
+			if (coordSize.x + coordSize.y > 4)
+				SoundManager::GetSingleton()->Play("Rotate-big", 0.6f);
+			else if (coordSize.x + coordSize.y > 2)
+				SoundManager::GetSingleton()->Play("Rotate-medium", 0.6f);
+			else
+				SoundManager::GetSingleton()->Play("Rotate-small", 0.6f);
+
 			direction = (DIRECTION)RIGHT_DIR(direction);
 		}
 	}

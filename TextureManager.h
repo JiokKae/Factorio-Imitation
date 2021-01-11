@@ -11,7 +11,7 @@ public:
 	HRESULT Init();
 	void Release();
 
-	Texture* AddTexture(string strKey, char const* path, bool flip = true);
+	Texture* AddTexture(string strKey, char const* path, bool mipmap = true, bool flip = true, GLint filter = GL_LINEAR);
 
 	void DeleteTexture(string strKey);
 	Texture* FindTexture(string strKey);

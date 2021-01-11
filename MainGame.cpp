@@ -38,8 +38,13 @@ HRESULT MainGame::Init()
 	TextureManager::GetSingleton()->Init();
 
 	// Add Sound
+	SoundManager::GetSingleton()->AddSound("Rotate-small",	"sound/rotate-small.ogg", false, false);
 	SoundManager::GetSingleton()->AddSound("Rotate-medium", "sound/rotate-medium.ogg", false, false);
-	SoundManager::GetSingleton()->AddSound("Build-medium", "sound/build-medium.ogg", false, false);
+	SoundManager::GetSingleton()->AddSound("Rotate-big",	"sound/rotate-big.ogg", false, false);
+
+	SoundManager::GetSingleton()->AddSound("Build-small",	"sound/build-small.ogg", false, false);
+	SoundManager::GetSingleton()->AddSound("Build-medium",	"sound/build-medium.ogg", false, false);
+	SoundManager::GetSingleton()->AddSound("Build-large",	"sound/build-large.ogg", false, false);
 
 	// Add Scene
 	SceneManager::GetSingleton()->AddScene("TitleScene", new TitleScene(1600, 900));
@@ -121,12 +126,22 @@ void MainGame::ImageLoad()
 	textureManager->AddTexture("Entity/AssemblingMachine1",			"graphics/entity/assembling_machine_1/hr-assembling-machine-1.png");
 	textureManager->AddTexture("Entity/AssemblingMachine1-shadow",	"graphics/entity/assembling_machine_1/hr-assembling-machine-1-shadow.png");
 
-	textureManager->AddTexture("Entity/TransportBelt",				"graphics/entity/transport_belt/hr-transport-belt.png");
+	textureManager->AddTexture("Entity/TransportBelt",				"graphics/entity/transport_belt/hr-transport-belt.png", true, true, GL_NEAREST);
+
+	textureManager->AddTexture("Entity/BurnerInserter-platform",			"graphics/entity/burner_inserter/hr-burner-inserter-platform.png");
+	textureManager->AddTexture("Entity/BurnerInserter-handBase",			"graphics/entity/burner_inserter/hr-burner-inserter-hand-base.png");
+	textureManager->AddTexture("Entity/BurnerInserter-handBase-shadow",		"graphics/entity/burner_inserter/hr-burner-inserter-hand-base-shadow.png");
+	textureManager->AddTexture("Entity/BurnerInserter-handClosed",			"graphics/entity/burner_inserter/hr-burner-inserter-hand-closed.png");
+	textureManager->AddTexture("Entity/BurnerInserter-handClosed-shadow",	"graphics/entity/burner_inserter/hr-burner-inserter-hand-closed-shadow.png");
+	textureManager->AddTexture("Entity/BurnerInserter-handOpen",			"graphics/entity/burner_inserter/hr-burner-inserter-hand-open.png");
+	textureManager->AddTexture("Entity/BurnerInserter-handOpen-shadow",		"graphics/entity/burner_inserter/hr-burner-inserter-hand-open-shadow.png");
 
 	textureManager->AddTexture("UI/CharacterUI",			"graphics/ui/CharacterUI.png");
 	textureManager->AddTexture("UI/InventorySlotUI",		"graphics/ui/InventorySlotUI.png");
 	textureManager->AddTexture("UI/BunerMiningDrillUI",		"graphics/ui/BunerMiningDrillUI.png");
 	textureManager->AddTexture("UI/DeactiveButtonUI",		"graphics/ui/DeactiveButtonUI.png");
+	textureManager->AddTexture("UI/RedProgressiveBarUI",	"graphics/ui/redProgressiveBarUI.png", false);
+	textureManager->AddTexture("UI/GreenProgressiveBarUI",	"graphics/ui/greenProgressiveBarUI.png", false);
 
 	textureManager->AddTexture("Icons/Hand",				"graphics/icons/hand.png");
 	textureManager->AddTexture("Icons/Coal",				"graphics/icons/coal.png");
@@ -135,6 +150,7 @@ void MainGame::ImageLoad()
 	textureManager->AddTexture("Icons/AssemblingMachine1",	"graphics/icons/assembling-machine-1.png");
 	textureManager->AddTexture("Icons/TransportBelt",		"graphics/icons/transport-belt.png");
 	textureManager->AddTexture("Icons/BurnerInserter",		"graphics/icons/burner-inserter.png");
+	textureManager->AddTexture("Icons/AllItems",			"graphics/icons/all-items.png", true, true, GL_NEAREST);
 
 	textureManager->AddTexture("Terrain/Dirt_1",			"graphics/terrain/hr-dirt-1.png");
 
