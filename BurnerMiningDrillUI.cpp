@@ -2,6 +2,7 @@
 #include "InventoryUI.h"
 #include "DeactiveButtonUI.h"
 #include "BurnerMiningDrill.h"
+#include "FuelSlotUI.h"
 
 HRESULT BurnerMiningDrillUI::Init(Inventory* inventory)
 {
@@ -26,16 +27,21 @@ HRESULT BurnerMiningDrillUI::Init(Inventory* inventory)
 	greenProgressiveBar->Init("UI/GreenProgressiveBarUI");
 	greenProgressiveBar->SetOffset(glm::vec2(greenProgressiveBar->GetFrameWidth() / 2, 0.0f));
 
+	fuelSlotUI = new FuelSlotUI();
+	fuelSlotUI->Init();
+	fuelSlotUI->SetParent(this);
+	fuelSlotUI->SetLocalPosition(glm::vec2(-72, 199));
 	return S_OK;
 }
 
 void BurnerMiningDrillUI::Release()
 {
-	SAFE_RELEASE(image);
-	SAFE_RELEASE(inventoryUI);
-	SAFE_RELEASE(deactiveButtonUI);
-	SAFE_RELEASE(redProgressiveBar);
+	SAFE_RELEASE(fuelSlotUI);
 	SAFE_RELEASE(greenProgressiveBar);
+	SAFE_RELEASE(redProgressiveBar);
+	SAFE_RELEASE(deactiveButtonUI);
+	SAFE_RELEASE(inventoryUI);
+	SAFE_RELEASE(image);
 }
 
 void BurnerMiningDrillUI::Update()
@@ -46,6 +52,7 @@ void BurnerMiningDrillUI::Update()
 		deactiveButtonUI->Update();
 		redProgressiveBar->SetScale(glm::vec2(currBurnerMiningDrill->GetCurrPower() / currBurnerMiningDrill->GetMaxPower(), 1.0f));
 		greenProgressiveBar->SetScale(glm::vec2(currBurnerMiningDrill->GetProductionPercent(), 1.0f));
+		fuelSlotUI->Update(currBurnerMiningDrill->GetWaitingItemInfo());
 		if (PtInFRect(GetFrect(), { g_ptMouse.x, g_ptMouse.y }))
 		{
 			KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON);
@@ -60,7 +67,8 @@ void BurnerMiningDrillUI::Render(Shader* lpShader)
 		image->Render(lpShader, GetPosition().x, GetPosition().y);
 		inventoryUI->Render(lpShader);
 		deactiveButtonUI->Render(lpShader);
-		redProgressiveBar->Render(lpShader, GetPosition().x + 77 - redProgressiveBar->GetFrameWidth() / 2, GetPosition().y + 199);
+		redProgressiveBar->Render(lpShader, GetPosition().x + 77 - redProgressiveBar->GetFrameWidth() / 2, GetPosition().y + 198.5);
 		greenProgressiveBar->Render(lpShader, GetPosition().x + 37 - greenProgressiveBar->GetFrameWidth() / 2, GetPosition().y + 238);
+		fuelSlotUI->Render(lpShader);
 	}
 }

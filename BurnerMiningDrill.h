@@ -22,7 +22,7 @@ private:
 	GLImage* shadow;
 	glm::vec2 imageAniOffset[DIRECTION_END];
 	glm::vec2 shadowAniOffset[DIRECTION_END];
-
+	
 	STATUS status;			// 채광 드릴의 상태
 	float miningSpeed;		// 채광 스피드
 	float miningPower;		// 채광 소모파워	kw
@@ -46,6 +46,7 @@ public:
 	float GetMaxPower()				{ return maxPower; }
 	float GetCurrPower()			{ return currPower; }
 	float GetProductionPercent()	{ return productionPercent; }	
+	ItemInfo* GetWaitingItemInfo()	{ return waitingItemInfo; }
 	bool IsMiningAreaEmpty();
 
 	BurnerMiningDrill()

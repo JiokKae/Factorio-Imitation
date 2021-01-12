@@ -3,6 +3,7 @@
 #include "framework.h"
 
 class Inventory;
+class FuelSlotUI;
 class InventoryUI;
 class DeactiveButtonUI;
 class BurnerMiningDrill;
@@ -12,6 +13,7 @@ class BurnerMiningDrillUI : public UI
 	DeactiveButtonUI* deactiveButtonUI;
 	BurnerMiningDrill* currBurnerMiningDrill;
 
+	FuelSlotUI* fuelSlotUI;
 	GLImage* redProgressiveBar;
 	GLImage* greenProgressiveBar;
 public:

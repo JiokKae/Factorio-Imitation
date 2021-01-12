@@ -136,21 +136,22 @@ void MainGame::ImageLoad()
 	textureManager->AddTexture("Entity/BurnerInserter-handOpen",			"graphics/entity/burner_inserter/hr-burner-inserter-hand-open.png");
 	textureManager->AddTexture("Entity/BurnerInserter-handOpen-shadow",		"graphics/entity/burner_inserter/hr-burner-inserter-hand-open-shadow.png");
 
-	textureManager->AddTexture("UI/CharacterUI",			"graphics/ui/CharacterUI.png");
-	textureManager->AddTexture("UI/InventorySlotUI",		"graphics/ui/InventorySlotUI.png");
-	textureManager->AddTexture("UI/BunerMiningDrillUI",		"graphics/ui/BunerMiningDrillUI.png");
-	textureManager->AddTexture("UI/DeactiveButtonUI",		"graphics/ui/DeactiveButtonUI.png");
-	textureManager->AddTexture("UI/RedProgressiveBarUI",	"graphics/ui/redProgressiveBarUI.png", false);
-	textureManager->AddTexture("UI/GreenProgressiveBarUI",	"graphics/ui/greenProgressiveBarUI.png", false);
+	textureManager->AddTexture("UI/CharacterUI",			"graphics/ui/CharacterUI.png",				false);
+	textureManager->AddTexture("UI/SlotUI",					"graphics/ui/slotUI.png",					false);
+	textureManager->AddTexture("UI/BunerMiningDrillUI",		"graphics/ui/BunerMiningDrillUI.png",		false);
+	textureManager->AddTexture("UI/DeactiveButtonUI",		"graphics/ui/DeactiveButtonUI.png",			false);
+	textureManager->AddTexture("UI/RedProgressiveBarUI",	"graphics/ui/redProgressiveBarUI.png",		false);
+	textureManager->AddTexture("UI/GreenProgressiveBarUI",	"graphics/ui/greenProgressiveBarUI.png",	false);
+	textureManager->AddTexture("UI/FuelSlotUI",				"graphics/ui/fuelSlotUI.png");			
 
 	textureManager->AddTexture("Icons/Hand",				"graphics/icons/hand.png");
-	textureManager->AddTexture("Icons/Coal",				"graphics/icons/coal.png");
-	textureManager->AddTexture("Icons/BurnerMiningDrill",	"graphics/icons/burner-mining-drill.png");
-	textureManager->AddTexture("Icons/IronPlate",			"graphics/icons/iron-plate.png");
-	textureManager->AddTexture("Icons/AssemblingMachine1",	"graphics/icons/assembling-machine-1.png");
-	textureManager->AddTexture("Icons/TransportBelt",		"graphics/icons/transport-belt.png");
-	textureManager->AddTexture("Icons/BurnerInserter",		"graphics/icons/burner-inserter.png");
-	textureManager->AddTexture("Icons/AllItems",			"graphics/icons/all-items.png", true, true, GL_NEAREST);
+	textureManager->AddTexture("Icons/Coal",				"graphics/icons/coal.png",					false);
+	textureManager->AddTexture("Icons/BurnerMiningDrill",	"graphics/icons/burner-mining-drill.png",	false);
+	textureManager->AddTexture("Icons/IronPlate",			"graphics/icons/iron-plate.png",			false);
+	textureManager->AddTexture("Icons/AssemblingMachine1",	"graphics/icons/assembling-machine-1.png",	false);
+	textureManager->AddTexture("Icons/TransportBelt",		"graphics/icons/transport-belt.png",		false);
+	textureManager->AddTexture("Icons/BurnerInserter",		"graphics/icons/burner-inserter.png",		false);
+	textureManager->AddTexture("Icons/AllItems",			"graphics/icons/all-items.png",				true, true, GL_NEAREST);
 
 	textureManager->AddTexture("Terrain/Dirt_1",			"graphics/terrain/hr-dirt-1.png");
 

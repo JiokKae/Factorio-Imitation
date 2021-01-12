@@ -4,14 +4,18 @@ class InventorySlotUI;
 struct ItemInfo;
 class HandUI : public UI
 {
-	InventorySlotUI* selectedSlotUI;
+	ItemInfo* handItem;
+
+	GLImage* itemImage;
 
 public:
-	void Update() override;
-	void Render(Shader* shader) override;
+	virtual HRESULT Init() override;
+	virtual void Release() override;
+	virtual void Update() override;
+	virtual void Render(Shader* shader) override;
 
-	void SelectSlotUI(InventorySlotUI* slotUI);
+	ItemInfo* GetHandItem() { return handItem; }
 
-	ItemInfo* GetLpSelectedSlot();
+	bool IsEmpty();
 };
 

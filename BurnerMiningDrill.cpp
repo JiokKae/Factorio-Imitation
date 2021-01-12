@@ -52,7 +52,7 @@ HRESULT BurnerMiningDrill::Init(int x, int y, DIRECTION direction, bool temp)
 	if (targetTile == nullptr)
 		status = NO_MINABLE_RESOURCES;
 
-	waitingItemInfo = new ItemInfo(ItemEnum::COAL, 1);
+	waitingItemInfo = new ItemInfo(ItemEnum::COAL, 0);
 
 
 	return S_OK;
@@ -73,13 +73,19 @@ void BurnerMiningDrill::Update()
 {
 	Structure::Update();
 
+	if (temp)
+		return;
+
 	if (PtInFRect(GetFRect(), g_cursorPosition))
 	{
 		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
 		{
-			UIManager::GetSingleton()->ActiveUI("BurnerMiningDrillUI");
-			BurnerMiningDrillUI* bmdUI = (BurnerMiningDrillUI*)UIManager::GetSingleton()->GetLpCurrUI();
-			bmdUI->SetCurrBurnerMiningDrill(this);
+			{
+				UIManager::GetSingleton()->ActiveUI("BurnerMiningDrillUI");
+				BurnerMiningDrillUI* bmdUI = (BurnerMiningDrillUI*)UIManager::GetSingleton()->GetLpCurrUI();
+				bmdUI->SetCurrBurnerMiningDrill(this);
+			}
+			
 		}
 	}
 
@@ -91,8 +97,8 @@ void BurnerMiningDrill::Update()
 			if (waitingItemInfo->amount > 0)
 			{
 				waitingItemInfo->amount--;
-				currPower += 2000;
-				maxPower = 2000;
+				currPower += g_itemSpecs[waitingItemInfo->id].fuelValue;
+				maxPower = g_itemSpecs[waitingItemInfo->id].fuelValue;
 				status = WORKING;
 			}
 		}	
@@ -118,7 +124,9 @@ void BurnerMiningDrill::Update()
 				targetTile->GetLpOre()->AddAmount(-1);
 				ItemOnGround* item = new ItemOnGround();
 				item->Init(ItemEnum::COAL);
+
 				item->SetPosition(Vec2(position.x + 32, position.y - 80));
+
 				EntityManager::GetSingleton()->AddItemOnGround(item);
 				productionPercent -= 1.0f;
 

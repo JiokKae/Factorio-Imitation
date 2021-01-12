@@ -74,10 +74,13 @@ void StructureBuilder::Update(vec2* playerPos)
             else
                 SoundManager::GetSingleton()->Play("Build-small", 0.6f);
             
+            UIManager::GetSingleton()->GetLpHandUI()->GetHandItem()->amount--;
             Structure* structure = Structure::CreateStructure((ItemEnum)itemId);
            
             structure->Init(buildPos.x, buildPos.y, tempStructure->GetDirection());
             entityManager->AddEntity(structure);
+
+            KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON);
         }
     }
     else

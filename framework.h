@@ -90,13 +90,15 @@ struct ItemSpec {
 	int directionCount;
 	glm::ivec2 maxFrame;
 	bool passable;
+	bool fuel;
+	float fuelValue;
 };
 
 struct ItemInfo {
 	int id;
 	int amount;
 
-	ItemInfo(int id, int amount)
+	ItemInfo(int id = 0, int amount = 0)
 	{
 		this->id = id;
 		this->amount = amount;

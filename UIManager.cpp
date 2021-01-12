@@ -4,6 +4,7 @@
 HRESULT UIManager::Init()
 {
 	handUI = new HandUI();
+	handUI->Init();
 
 	return S_OK;
 }

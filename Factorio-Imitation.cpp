@@ -15,14 +15,14 @@ glm::vec2	g_cursorPosition;	// 마우스 커서의 포지션
 glm::vec2	g_cursorCoord;		// 마우스 커서의 좌표
 float		g_time;
 ItemSpec	g_itemSpecs[] = {
-//		name					buildable	coordSize	direction	maxFrame	passable
+//		name					buildable	coordSize	direction	maxFrame	passable	fuel,	fuelValue
 //														Count
-	{	"AssemblingMachine1",	true,		{ 3, 3 },	1,			{ 8, 4 },	false,		},
-	{	"BurnerMiningDrill",	true,		{ 2, 2 },	4,			{ 4, 8 },	false,		},
-	{	"IronPlate",			false,		{ 0, 0 },	0,			{ 1, 1 },	false,		},
-	{	"Coal" ,				false,		{ 0, 0 },	0,			{ 1, 1 },	false,		},
-	{	"TransportBelt",		true,		{ 1, 1 },	1,			{ 16, 20 },	true,		},
-	{	"BurnerInserter",		true,		{ 1, 1 },	4,			{ 4, 1 },	false,		},
+	{	"AssemblingMachine1",	true,		{ 3, 3 },	1,			{ 8, 4 },	FALSE,		FALSE,	NULL,	},
+	{	"BurnerMiningDrill",	true,		{ 2, 2 },	4,			{ 4, 8 },	FALSE,		FALSE,	NULL,	},
+	{	"IronPlate",			FALSE,		{ 0, 0 },	NULL,		{ 1, 1 },	FALSE,		FALSE,	NULL,	},
+	{	"Coal" ,				FALSE,		{ 0, 0 },	NULL,		{ 1, 1 },	FALSE,		true,	2000,	},
+	{	"TransportBelt",		true,		{ 1, 1 },	1,			{ 16, 20 },	true,		FALSE,	NULL,	},
+	{	"BurnerInserter",		true,		{ 1, 1 },	4,			{ 4, 1 },	FALSE,		FALSE,	NULL,	},
 };
 const char* g_directionToLpChar[] = {
 	"-N",

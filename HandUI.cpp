@@ -1,78 +1,63 @@
 #include "HandUI.h"
 #include "InventorySlotUI.h"
 #include "ItemOnGround.h"
-//#include "ItemEnum.h"
+#include "Character.h"
+#include "Inventory.h"
+
+HRESULT HandUI::Init()
+{
+	itemImage = new GLImage();
+	itemImage->Init("Icons/Coal", 1, 1, 32, 32);
+
+	handItem = new ItemInfo();
+
+	return S_OK;
+}
+
+void HandUI::Release()
+{
+	SAFE_DELETE(handItem);
+	SAFE_DELETE(itemImage);
+}
 
 void HandUI::Update()
 {
+	// 손 비우기 기능
 	if (KeyManager::GetSingleton()->IsOnceKeyDown('Q'))
 	{
-		SelectSlotUI(nullptr);
+		EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->AddItem(new ItemInfo(*handItem));
+		handItem->amount = 0;
 	}
-	if (selectedSlotUI)
-	{
-		if (KeyManager::GetSingleton()->IsOnceKeyDown('Z'))
-		{
-			ItemInfo* slot = selectedSlotUI->GetLpItemSlot();
-			if (slot)
-			{
-				slot->AddAmount(-1);
-				if (slot->amount == 0)
-					SelectSlotUI(nullptr);
 
-				ItemOnGround* item = new ItemOnGround();
-				item->Init((ItemEnum)slot->id);
-				item->SetPosition(g_cursorPosition);
-				EntityManager::GetSingleton()->AddItemOnGround(item);
-			}
+	// 핸드아이템에 따라 바뀌는 이미지
+	itemImage->SetSourceTexture(TextureManager::GetSingleton()->FindTexture("Icons/" + g_itemSpecs[handItem->id].name));
+
+	if (KeyManager::GetSingleton()->IsOnceKeyDown('Z'))
+	{
+		if (handItem->amount)
+		{
+			handItem->AddAmount(-1);
+
+			ItemOnGround* item = new ItemOnGround();
+			item->Init((ItemEnum)handItem->id);
+			item->SetPosition(g_cursorPosition);
+			EntityManager::GetSingleton()->AddItemOnGround(item);
 		}
 	}
 }
 
 void HandUI::Render(Shader* shader)
 {
-	if (selectedSlotUI)
-		selectedSlotUI->HandRender(shader);
-}
-
-void HandUI::SelectSlotUI(InventorySlotUI* slotUI)
-{
-	// 선택된 슬롯이 있다면
-	if (this->selectedSlotUI)
+	if (handItem->amount)
 	{
-		// 동일한 슬롯을 선택했다면
-		if (this->selectedSlotUI == slotUI)
-		{
-			// 선택된 슬롯 선택해제
-			this->selectedSlotUI->SetIsSelected(false);
-			selectedSlotUI = nullptr;
-		}
-		// 새로운 슬롯을 선택했다면
-		else
-		{
-			// 선택된 슬롯 전환
-			this->selectedSlotUI->SetIsSelected(false);
-			this->selectedSlotUI = slotUI;
+		if (!g_itemSpecs[handItem->id].buildable || UIManager::GetSingleton()->IsMouseOnUI())
+			itemImage->Render(shader, g_ptMouse.x + 16, g_ptMouse.y - 16);
 
-			if (this->selectedSlotUI)
-				this->selectedSlotUI->SetIsSelected(true);
-		}
-	}
-	// 선택된 슬롯이 없다면
-	else
-	{
-		// 새로운 슬롯 선택
-		this->selectedSlotUI = slotUI;
-
-		if(this->selectedSlotUI)
-			this->selectedSlotUI->SetIsSelected(true);
+		TextRenderer::GetSingleton()->RenderText(to_string(handItem->amount), g_ptMouse.x + 16 - to_string(handItem->amount).length() * 6 + 17, g_ptMouse.y - 16 - 7.0f, 0.46f);
 	}
 }
 
-ItemInfo* HandUI::GetLpSelectedSlot()
+bool HandUI::IsEmpty()
 {
-	if (selectedSlotUI)
-		return selectedSlotUI->GetLpItemSlot();
-	else
-		return nullptr;
+	return handItem->amount == 0;
 }

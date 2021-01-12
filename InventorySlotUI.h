@@ -6,8 +6,9 @@ class InventorySlotUI : public UI
 	ItemInfo* itemInfo;
 
 	bool onMouse;
-	bool isMouseDown;
-	bool isSelected;
+	bool isLMouseDown;
+	bool isRMouseDown;
+
 	GLImage* itemImage;
 
 	GLImage* hand;
@@ -16,11 +17,8 @@ public:
 	virtual void Release();
 	virtual void Update(ItemInfo* itemInfo);
 	virtual void Render(Shader* lpShader);
-	void HandRender(Shader* lpShader);
 
-	void OnClick() override;
-
-	void SetIsSelected(bool selected) { this->isSelected = selected; }
+	void OnClick(int key) override;
 
 	ItemInfo* GetLpItemSlot() { return itemInfo; }
 };

@@ -168,6 +168,7 @@
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="FreeCamera.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="FuelSlotUI.h" />
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="GLImage.h" />
     <ClInclude Include="HandUI.h" />
@@ -228,6 +229,7 @@
     <ClCompile Include="framework.cpp" />
     <ClCompile Include="FreeCamera.cpp" />
     <ClCompile Include="Factorio-Imitation.cpp" />
+    <ClCompile Include="FuelSlotUI.cpp" />
     <ClCompile Include="GameNode.cpp" />
     <ClCompile Include="GLImage.cpp" />
     <ClCompile Include="HandUI.cpp" />

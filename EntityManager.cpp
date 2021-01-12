@@ -44,8 +44,8 @@ void EntityManager::Update(FRECT cameraFrect)
 
     if (!UIManager::GetSingleton()->IsMouseOnUI())
     {
-        ItemInfo* info = UIManager::GetSingleton()->GetLpHandUI()->GetLpSelectedSlot();
-        if (info && g_itemSpecs[info->id].buildable)
+        ItemInfo* info = UIManager::GetSingleton()->GetLpHandUI()->GetHandItem();
+        if (info->amount && g_itemSpecs[info->id].buildable)
             structureBuilder->Active(info->id);
         else
             structureBuilder->Deactive();

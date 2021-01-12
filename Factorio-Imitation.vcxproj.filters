@@ -121,6 +121,27 @@
     <Filter Include="MainGame\Entity\Structure\BurnerInserter">
       <UniqueIdentifier>{a6ae06b0-37cf-4f38-95e8-a34d480bc12d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\UI\BurnerMiningDrillUI">
+      <UniqueIdentifier>{3d7838ec-b738-4c8d-9f47-8d611a987db4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\CharacterUI">
+      <UniqueIdentifier>{7543c071-6d39-404a-9e40-61ba7f70f2dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\DeactiveButtonUI">
+      <UniqueIdentifier>{5244c5e1-beea-48fd-bafe-fba86a86593e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\InventoryUI">
+      <UniqueIdentifier>{50623911-81a8-4ea8-999a-e57b877b37e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\FuelSlotUI">
+      <UniqueIdentifier>{c1695168-f75a-494c-98f7-ec97523b0afd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\HandUI">
+      <UniqueIdentifier>{9fe3016b-af32-4960-95e4-dd69f53d0813}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\InventorySlotUI">
+      <UniqueIdentifier>{64bfa3bb-e2ae-4f95-8561-e257c1f27c81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -210,14 +231,8 @@
     <ClInclude Include="UI.h">
       <Filter>GLFrameWork\UI</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterUI.h">
-      <Filter>MainGame\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>MainGame\Tile</Filter>
-    </ClInclude>
-    <ClInclude Include="InventorySlotUI.h">
-      <Filter>MainGame\UI</Filter>
     </ClInclude>
     <ClInclude Include="Ore.h">
       <Filter>MainGame\Entity\Ore</Filter>
@@ -246,19 +261,10 @@
     <ClInclude Include="Entity.h">
       <Filter>MainGame\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="BurnerMiningDrillUI.h">
-      <Filter>MainGame\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="DeactiveButtonUI.h">
-      <Filter>MainGame\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Inventory.h">
       <Filter>MainGame\Character</Filter>
     </ClInclude>
     <ClInclude Include="UIManager.h">
-      <Filter>MainGame\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="HandUI.h">
       <Filter>MainGame\UI</Filter>
     </ClInclude>
     <ClInclude Include="ItemEnum.h">
@@ -285,14 +291,32 @@
     <ClInclude Include="StructureBuilder.h">
       <Filter>MainGame\Entity\Structure</Filter>
     </ClInclude>
-    <ClInclude Include="InventoryUI.h">
-      <Filter>MainGame\UI</Filter>
-    </ClInclude>
     <ClInclude Include="ItemOnGround.h">
       <Filter>MainGame\Entity</Filter>
     </ClInclude>
     <ClInclude Include="ItemOnGrounds.h">
       <Filter>MainGame\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="BurnerMiningDrillUI.h">
+      <Filter>MainGame\UI\BurnerMiningDrillUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterUI.h">
+      <Filter>MainGame\UI\CharacterUI</Filter>
+    </ClInclude>
+    <ClInclude Include="DeactiveButtonUI.h">
+      <Filter>MainGame\UI\DeactiveButtonUI</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryUI.h">
+      <Filter>MainGame\UI\InventoryUI</Filter>
+    </ClInclude>
+    <ClInclude Include="FuelSlotUI.h">
+      <Filter>MainGame\UI\FuelSlotUI</Filter>
+    </ClInclude>
+    <ClInclude Include="HandUI.h">
+      <Filter>MainGame\UI\HandUI</Filter>
+    </ClInclude>
+    <ClInclude Include="InventorySlotUI.h">
+      <Filter>MainGame\UI\InventorySlotUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -380,14 +404,8 @@
     <ClCompile Include="UI.cpp">
       <Filter>GLFrameWork\UI</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterUI.cpp">
-      <Filter>MainGame\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>MainGame\Tile</Filter>
-    </ClCompile>
-    <ClCompile Include="InventorySlotUI.cpp">
-      <Filter>MainGame\UI</Filter>
     </ClCompile>
     <ClCompile Include="Ore.cpp">
       <Filter>MainGame\Entity\Ore</Filter>
@@ -416,19 +434,10 @@
     <ClCompile Include="Entity.cpp">
       <Filter>MainGame\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="BurnerMiningDrillUI.cpp">
-      <Filter>MainGame\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="DeactiveButtonUI.cpp">
-      <Filter>MainGame\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Inventory.cpp">
       <Filter>MainGame\Character</Filter>
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
-      <Filter>MainGame\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="HandUI.cpp">
       <Filter>MainGame\UI</Filter>
     </ClCompile>
     <ClCompile Include="EntityManager.cpp">
@@ -455,14 +464,32 @@
     <ClCompile Include="StructureBuilder.cpp">
       <Filter>MainGame\Entity\Structure</Filter>
     </ClCompile>
-    <ClCompile Include="InventoryUI.cpp">
-      <Filter>MainGame\UI</Filter>
-    </ClCompile>
     <ClCompile Include="ItemOnGround.cpp">
       <Filter>MainGame\Entity</Filter>
     </ClCompile>
     <ClCompile Include="ItemOnGrounds.cpp">
       <Filter>MainGame\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="BurnerMiningDrillUI.cpp">
+      <Filter>MainGame\UI\BurnerMiningDrillUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterUI.cpp">
+      <Filter>MainGame\UI\CharacterUI</Filter>
+    </ClCompile>
+    <ClCompile Include="DeactiveButtonUI.cpp">
+      <Filter>MainGame\UI\DeactiveButtonUI</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryUI.cpp">
+      <Filter>MainGame\UI\InventoryUI</Filter>
+    </ClCompile>
+    <ClCompile Include="FuelSlotUI.cpp">
+      <Filter>MainGame\UI\FuelSlotUI</Filter>
+    </ClCompile>
+    <ClCompile Include="HandUI.cpp">
+      <Filter>MainGame\UI\HandUI</Filter>
+    </ClCompile>
+    <ClCompile Include="InventorySlotUI.cpp">
+      <Filter>MainGame\UI\InventorySlotUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
