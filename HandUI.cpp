@@ -1,5 +1,7 @@
 #include "HandUI.h"
 #include "InventorySlotUI.h"
+#include "ItemOnGround.h"
+//#include "ItemEnum.h"
 
 void HandUI::Update()
 {
@@ -9,7 +11,7 @@ void HandUI::Update()
 	}
 	if (selectedSlotUI)
 	{
-		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
+		if (KeyManager::GetSingleton()->IsOnceKeyDown('Z'))
 		{
 			ItemInfo* slot = selectedSlotUI->GetLpItemSlot();
 			if (slot)
@@ -17,6 +19,11 @@ void HandUI::Update()
 				slot->AddAmount(-1);
 				if (slot->amount == 0)
 					SelectSlotUI(nullptr);
+
+				ItemOnGround* item = new ItemOnGround();
+				item->Init((ItemEnum)slot->id);
+				item->SetPosition(g_cursorPosition);
+				EntityManager::GetSingleton()->AddItemOnGround(item);
 			}
 		}
 	}

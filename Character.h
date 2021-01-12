@@ -57,6 +57,7 @@ public:
 	glm::vec2* GetLpPosition() { return &position; }
 	glm::vec3 GetVec3Direction();
 	virtual FRECT GetCollisionFRect() override;
+	FRECT GetPickUpFRect();
 	Inventory* GetLpInventory();
 
 	Character() {};

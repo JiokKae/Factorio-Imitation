@@ -1,7 +1,6 @@
 #include "PlayScene.h"
 #include "CharacterUI.h"
 #include "Character.h"
-#include "Shader.h"
 #include "Camera.h"
 #include "Tile.h"
 #include "TileManager.h"
@@ -10,9 +9,7 @@
 #include "BurnerMiningDrillUI.h"
 #include "EntityManager.h"
 #include "Ore.h"
-#include "GLImage.h"
-#include "StructureBuilder.h"
-#include "HandUI.h"
+
 #include "Structure.h"
 
 HRESULT PlayScene::Init()
@@ -37,7 +34,7 @@ HRESULT PlayScene::Init()
     camera = new Camera();
     camera->Init();
     camera->SetPosition({ 0.0f, 0.0f, 1.0f });
-    camera->SetTarget(entityManager->GetPlayer()->GetLpPosition());
+    camera->SetTarget(entityManager->GetLpPlayer()->GetLpPosition());
 
     numOfPointLight = 4;
 
@@ -67,12 +64,12 @@ HRESULT PlayScene::Init()
     
     // UI Init
     CharacterUI* characterUI = new CharacterUI();
-    characterUI->Init(entityManager->GetPlayer()->GetLpInventory());
+    characterUI->Init(entityManager->GetLpPlayer()->GetLpInventory());
     characterUI->SetLocalPosition(glm::vec2(width / 2, height / 2));
     UIManager::GetSingleton()->AddUI("CharacterUI", characterUI);
 
     BurnerMiningDrillUI* burnerMiningDrillUI = new BurnerMiningDrillUI();
-    burnerMiningDrillUI->Init(entityManager->GetPlayer()->GetLpInventory());
+    burnerMiningDrillUI->Init(entityManager->GetLpPlayer()->GetLpInventory());
     burnerMiningDrillUI->SetLocalPosition(glm::vec2(width / 2, height / 2));
     UIManager::GetSingleton()->AddUI("BurnerMiningDrillUI", burnerMiningDrillUI);
 
@@ -139,9 +136,9 @@ HRESULT PlayScene::Init()
     textRenderer->Load("Fonts/NotoSans-Bold.ttf", 24);
     
     Structure* structure;
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 5; i++)
     {
-        for (int j = 0; j < 10; j++)
+        for (int j = 0; j < 5; j++)
         {   
             structure = Structure::CreateStructure(ItemEnum::BURNER_MINING_DRILL);
             structure->Init(j * 128, i * 128, DIRECTION::NORTH);
@@ -149,15 +146,12 @@ HRESULT PlayScene::Init()
         }
     }
 
-    structureBuilder = new StructureBuilder();
-    structureBuilder->Init();
 
 	return S_OK;
 }
 
 void PlayScene::Release()
 {
-    SAFE_RELEASE(structureBuilder);
     SAFE_RELEASE(entityManager);
     SAFE_RELEASE(textRenderer);
     if (tileRenderer) 
@@ -202,18 +196,6 @@ void PlayScene::Update()
                     (g_ptMouse.y - height / 2) / camera->GetZoom() + camera->GetPosition().y };
     g_cursorCoord = POS_TO_COORD(g_cursorPosition);
 
-    if (!UIManager::GetSingleton()->IsMouseOnUI())
-    {
-        ItemInfo* info = UIManager::GetSingleton()->GetLpHandUI()->GetLpSelectedSlot();
-        if (info && g_itemSpecs[info->id].buildable)
-            structureBuilder->Active(info->id);
-        else
-            structureBuilder->Deactive();
-    }
-    else
-        structureBuilder->Deactive();
-
-    structureBuilder->Update(entityManager->GetPlayer()->GetLpPosition());
 	camera->Update();
     
 }
@@ -228,7 +210,7 @@ void PlayScene::Render(HDC hdc)
     
     glBindBuffer(GL_UNIFORM_BUFFER, uboLights);
     // player point light(dynamic)
-    pointLights[0].position = glm::vec3(entityManager->GetPlayer()->GetLpPosition()->x, entityManager->GetPlayer()->GetLpPosition()->y, 0.01f);
+    pointLights[0].position = glm::vec3(entityManager->GetLpPlayer()->GetLpPosition()->x, entityManager->GetLpPlayer()->GetLpPosition()->y, 0.01f);
     glBufferSubData(GL_UNIFORM_BUFFER, DirectionalLight::std140Size(), sizeof(glm::vec3), glm::value_ptr(pointLights[0].position));
     // directional light(dynamic)
     dirLight->diffuse = glm::vec3((sin(timeGetTime() / 3000.0f) + 1));
@@ -262,11 +244,6 @@ void PlayScene::Render(HDC hdc)
     entityManager->Render(lightingShader);
     float entityManager_time = TimerManager::GetSingleton()->CheckTime();
 
-    entityManager->LateRender(lightingShader);
-
-    structureBuilder->Render(lightingShader);
-    float structureBuilder_time = TimerManager::GetSingleton()->CheckTime();
-
     UIManager::GetSingleton()->Render(UIShader);
     float UIManager_time = TimerManager::GetSingleton()->CheckTime();
    
@@ -291,10 +268,9 @@ void PlayScene::Render(HDC hdc)
     textRenderer->RenderText("UpdateTime: " + to_string(TimerManager::GetSingleton()->updateTime),                  10, height - 250);
     textRenderer->RenderText("tileRenderer_time:         " + to_string(tileRenderer_time),                          10, height - 280);                           
     textRenderer->RenderText("entityManager_time:      " + to_string(entityManager_time),                           10, height - 310);                           
-    textRenderer->RenderText("structureBuilder_time: " + to_string(structureBuilder_time),                          10, height - 370);
-    textRenderer->RenderText("UIManager_time:          " + to_string(UIManager_time),                               10, height - 400);
-    textRenderer->RenderText("TextRender_time:         " + to_string(TimerManager::GetSingleton()->CheckTime()),    10, height - 430);
-    textRenderer->RenderText("RenderTime:              " + to_string(TimerManager::GetSingleton()->renderTime),     10, height - 460);
+    textRenderer->RenderText("UIManager_time:          " + to_string(UIManager_time),                               10, height - 340);
+    textRenderer->RenderText("TextRender_time:         " + to_string(TimerManager::GetSingleton()->CheckTime()),    10, height - 370);
+    textRenderer->RenderText("RenderTime:              " + to_string(TimerManager::GetSingleton()->renderTime),     10, height - 400);
 
 	glFlush();
 }

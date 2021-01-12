@@ -7,6 +7,7 @@ class Entity;
 class Character;
 class ItemOnGround;
 class ItemOnGrounds;
+class StructureBuilder;
 class EntityManager : public Singleton<EntityManager>
 {
 	multimap<Vec2, Entity*, greater<Vec2>> mapEntitys;
@@ -15,23 +16,27 @@ class EntityManager : public Singleton<EntityManager>
 	ItemOnGrounds* itemOnGrounds;
 
 	Character* player;
+
+	StructureBuilder* structureBuilder;
+
 public:
 	virtual HRESULT Init();
 	virtual void Release();
 	virtual void Update(FRECT cameraFrect);
 	virtual void Render(Shader* shader);
-	void LateRender(Shader* shader);
 
-	Character* GetPlayer() { return player; }
-
+	Character* GetLpPlayer()					{ return player; }
+	StructureBuilder* GetLpStructureBuilder()	{ return structureBuilder; }
 	void Collision();
 
 	void AddEntity(Entity* entity);
 	void AddItemOnGround(ItemOnGround* item);
 	void DeleteEntity(Entity* entity);
 
-	EntityManager() 
+	EntityManager()
 		: player(nullptr)
+		, itemOnGrounds(nullptr)
+		, structureBuilder(nullptr)
 	{};
 	virtual ~EntityManager() {};
 };

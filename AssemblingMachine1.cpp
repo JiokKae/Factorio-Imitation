@@ -32,7 +32,7 @@ void AssemblingMachine1::Update()
 	{
 		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
 		{
-			UIManager::GetSingleton()->ActiveUI("BurnerMiningDrillUI");
+			//UIManager::GetSingleton()->ActiveUI("BurnerMiningDrillUI");
 		}
 	}
 }

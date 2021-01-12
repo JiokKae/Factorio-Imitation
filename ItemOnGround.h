@@ -9,5 +9,6 @@ class ItemOnGround : public Entity
 public:
     virtual void Init(ItemEnum itemId);
     ItemEnum GetItemEnum() { return itemId; }
+    virtual FRECT GetCollisionFRect() override;
 };
 

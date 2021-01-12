@@ -1,9 +1,11 @@
 #include "Structure.h"
+#include "StructureBuilder.h"
 #include "AssemblingMachine1.h"
 #include "BurnerMiningDrill.h"
 #include "TransportBelt.h"
 #include "BurnerInserter.h"
 #include "Tile.h"
+#include "HandUI.h"
 
 HRESULT Structure::Init(int x, int y, DIRECTION direction, bool temp)
 {
@@ -52,7 +54,22 @@ void Structure::Release()
 
 void Structure::Update()
 {
-	if (PtInFRect(GetFRect(), g_cursorPosition))
+	if (EntityManager::GetSingleton()->GetLpStructureBuilder()->IsActive())
+	{
+		if (temp && KeyManager::GetSingleton()->IsOnceKeyDown('R'))
+		{
+			// rotate sound
+			if (coordSize.x + coordSize.y > 4)
+				SoundManager::GetSingleton()->Play("Rotate-big", 0.6f);
+			else if (coordSize.x + coordSize.y > 2)
+				SoundManager::GetSingleton()->Play("Rotate-medium", 0.6f);
+			else
+				SoundManager::GetSingleton()->Play("Rotate-small", 0.6f);
+
+			direction = (DIRECTION)RIGHT_DIR(direction);
+		}
+	}
+	else if (PtInFRect(GetFRect(), g_cursorPosition))
 	{
 		if (KeyManager::GetSingleton()->IsOnceKeyDown('R'))
 		{
@@ -67,6 +84,7 @@ void Structure::Update()
 			direction = (DIRECTION)RIGHT_DIR(direction);
 		}
 	}
+
 }
 
 void Structure::Render(Shader* lpShader)

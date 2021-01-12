@@ -3,6 +3,8 @@
 #include "VertexArrayObject.h"
 #include "VertexBufferObject.h"
 #include "Texture.h"
+#include "Character.h"
+#include "Inventory.h"
 
 HRESULT ItemOnGrounds::Init()
 {
@@ -65,9 +67,31 @@ void ItemOnGrounds::Release()
 
 void ItemOnGrounds::Update(FRECT cameraFRect)
 {
-    vecItemsInScreen.clear();
-    for (it = mapItems.begin(); it != mapItems.end(); it++)
+    // 아이템 줍기 처리
+    if (KeyManager::GetSingleton()->IsStayKeyDown('F'))
     {
+        Character* player = EntityManager::GetSingleton()->GetLpPlayer();
+        FRECT playerRect = player->GetPickUpFRect();
+        for (it = mapItems.begin(); it != mapItems.end();)
+        {
+            if (CheckRectCollision(playerRect, it->second->GetCollisionFRect()))
+            {
+                it->second->Release();
+                player->GetLpInventory()->AddItem(new ItemInfo(it->second->GetItemEnum(), 1));
+                delete it->second;
+                it = mapItems.erase(it);
+                if (it == mapItems.end())
+                    break;
+            }
+            else
+                ++it;
+        }
+    }
+
+    vecItemsInScreen.clear();
+    for (it = mapItems.begin(); it != mapItems.end(); ++it)
+    {
+        
         it->second->Update();
         if (PtInFRect(cameraFRect, it->second->GetPosition()))
         {

@@ -2,6 +2,8 @@
 #include "Entity.h"
 #include "Character.h"
 #include "ItemOnGrounds.h"
+#include "StructureBuilder.h"
+#include "HandUI.h"
 
 HRESULT EntityManager::Init()
 {    
@@ -9,14 +11,20 @@ HRESULT EntityManager::Init()
     player = new Character();
     player->Init();
 
+    // item on ground
     itemOnGrounds = new ItemOnGrounds();
     itemOnGrounds->Init();
        
+    // structure builder
+    structureBuilder = new StructureBuilder();
+    structureBuilder->Init();
+
     return S_OK;
 }
 
 void EntityManager::Release()
 {
+    SAFE_RELEASE(structureBuilder);
     SAFE_RELEASE(itemOnGrounds);
     SAFE_RELEASE(player);
 
@@ -33,6 +41,19 @@ void EntityManager::Update(FRECT cameraFrect)
     player->Update();
 
     Collision();
+
+    if (!UIManager::GetSingleton()->IsMouseOnUI())
+    {
+        ItemInfo* info = UIManager::GetSingleton()->GetLpHandUI()->GetLpSelectedSlot();
+        if (info && g_itemSpecs[info->id].buildable)
+            structureBuilder->Active(info->id);
+        else
+            structureBuilder->Deactive();
+    }
+    else
+        structureBuilder->Deactive();
+
+    structureBuilder->Update(player->GetLpPosition());
 }
 
 void EntityManager::Render(Shader* shader)
@@ -55,16 +76,15 @@ void EntityManager::Render(Shader* shader)
 	}
 
     player->Render(shader);
-}
 
-void EntityManager::LateRender(Shader* shader)
-{
-	for (it = mapEntitys.begin(); it != mapEntitys.end(); it++)
-	{
-		if (it->second->GetPosition().y <= player->GetPosition().y && !it->second->IsPassable())
+    for (it = mapEntitys.begin(); it != mapEntitys.end(); it++)
+    {
+        if (it->second->GetPosition().y <= player->GetPosition().y && !it->second->IsPassable())
             it->second->Render(shader);
         it->second->LateRender(shader);
-	}
+    }
+
+    structureBuilder->Render(shader);
 }
 
 void EntityManager::Collision()
@@ -109,7 +129,7 @@ void EntityManager::AddEntity(Entity* entity)
 
 void EntityManager::DeleteEntity(Entity* entity)
 {
-	//vecEntitys.erase(std::remove(vecEntitys.begin(), vecEntitys.end(), entity), vecEntitys.end());
+    //vecEntitys.erase(std::remove(vecEntitys.begin(), vecEntitys.end(), entity), vecEntitys.end());
 
 }
 

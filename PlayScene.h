@@ -6,7 +6,6 @@ class PointLight;
 class TileManager;
 class TextRenderer;
 class DirectionalLight;
-class StructureBuilder;
 class PlayScene : public Scene
 {
 	Camera* camera;
@@ -25,8 +24,6 @@ class PlayScene : public Scene
 	int numOfPointLight;
 
 	EntityManager* entityManager;
-
-	StructureBuilder* structureBuilder;
 public:
 	virtual HRESULT Init();
 	virtual void Release();

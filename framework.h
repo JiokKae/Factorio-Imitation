@@ -30,8 +30,8 @@ using namespace std;
 
 struct Vec2 : public glm::vec2
 {
-	Vec2(float x = 0, float y = 0) { this->x = static_cast<float>(x); this->y = static_cast<float>(y); };
-
+	Vec2(float x = 0, float y = 0)	{ this->x = static_cast<float>(x); this->y = static_cast<float>(y); };
+	Vec2(glm::vec2 v)				{ this->x = v.x; this->y = v.y; };
 	bool operator<(const Vec2& vec) const;
 	bool operator>(const Vec2& vec) const;
 };
@@ -239,6 +239,19 @@ inline bool IntersectFRect(LPFRECT lpfrcDst, const FRECT* lpfrcSrc1, const FRECT
 			lpfrcDst->bottom = lpfrcSrc2->bottom;
 	}
 	
+
+	return true;
+}
+
+inline bool CheckRectCollision(FRECT rc1, FRECT rc2)
+{
+	if (rc1.right < rc2.left ||
+		rc1.left > rc2.right ||
+		rc1.top < rc2.bottom ||
+		rc1.bottom > rc2.top)
+	{
+		return false;
+	}
 
 	return true;
 }

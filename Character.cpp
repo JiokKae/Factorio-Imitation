@@ -257,6 +257,16 @@ FRECT Character::GetCollisionFRect()
 	return rect;
 }
 
+FRECT Character::GetPickUpFRect()
+{
+	FRECT rect;
+	rect.left =		position.x - (TILE_SIZE / 2);
+	rect.right =	position.x + (TILE_SIZE / 2);
+	rect.top =		position.y + (TILE_SIZE / 2);
+	rect.bottom =	position.y - (TILE_SIZE / 2);
+	return rect;
+}
+
 Inventory* Character::GetLpInventory()
 {
 	return inventory;

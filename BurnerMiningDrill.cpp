@@ -52,7 +52,7 @@ HRESULT BurnerMiningDrill::Init(int x, int y, DIRECTION direction, bool temp)
 	if (targetTile == nullptr)
 		status = NO_MINABLE_RESOURCES;
 
-	waitingItemInfo = new ItemInfo(ItemEnum::COAL, 3);
+	waitingItemInfo = new ItemInfo(ItemEnum::COAL, 1);
 
 
 	return S_OK;

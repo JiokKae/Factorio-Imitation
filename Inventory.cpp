@@ -6,6 +6,7 @@ void Inventory::AddItem(ItemInfo* itemInfo)
 	if (it != mapInventory.end())
 	{
 		it->second->amount += itemInfo->amount;
+		delete itemInfo;
 	}
 	else
 	{
