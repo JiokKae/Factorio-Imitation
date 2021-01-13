@@ -3,7 +3,7 @@
 class FuelSlotUI : public UI
 {
 	GLImage* slotImage;
-	GLImage* itemImage;
+	GLImage* allItemImage;
 
 	ItemInfo* itemInfo;
 

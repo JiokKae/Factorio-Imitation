@@ -46,6 +46,24 @@ typedef struct tagFRECT
 	float bottom;
 } FRECT, * LPFRECT;
 
+struct ItemInfo {
+	int id;
+	int amount;
+
+	ItemInfo(int id = 0, int amount = 0)
+	{
+		this->id = id;
+		this->amount = amount;
+	}
+
+	void AddAmount(int amount)
+	{
+		this->amount += amount;
+		if (this->amount < 0)
+			this->amount = 0;
+	}
+};
+
 // Singletons
 #include "KeyManager.h"
 #include "TimerManager.h"
@@ -57,6 +75,7 @@ typedef struct tagFRECT
 #include "UIManager.h"
 #include "TileManager.h"
 #include "EntityManager.h"
+#include "RecipeManager.h"
 
 // Useful
 #include "GLImage.h"
@@ -68,9 +87,10 @@ typedef struct tagFRECT
 #define WINSIZE_TITLE_Y		900
 #define WINSIZE_TILE_MAP_X	1600
 #define WINSIZE_TILE_MAP_Y	900
-#define SAFE_DELETE(p) 		{if (p) delete p, p = nullptr; }
-#define SAFE_ARR_DELETE(p) 	{if (p) delete[] p, p = nullptr; }
-#define SAFE_RELEASE(p) 	{if (p) p->Release(), delete p, p = nullptr; }
+#define SAFE_DELETE(p) 				{ if (p) delete p, p = nullptr; }
+#define SAFE_ARR_DELETE(p) 			{ if (p) delete[] p, p = nullptr; }
+#define SAFE_RELEASE(p) 			{ if (p) p->Release(), delete p, p = nullptr; }
+#define SAFE_ARR_RELEASE(p, size)	{ if (p)	{ for (int i = 0; i < size; i++) { p[i].Release(); } delete[] p, p = nullptr; } }
 
 #define TILE_SIZE		64
 #define CHUNK_IN_TILE	32
@@ -92,28 +112,9 @@ struct ItemSpec {
 	bool buildable;
 	glm::ivec2 coordSize;
 	int directionCount;
-	glm::ivec2 maxFrame;
 	bool passable;
 	bool fuel;
 	float fuelValue;
-};
-
-struct ItemInfo {
-	int id;
-	int amount;
-
-	ItemInfo(int id = 0, int amount = 0)
-	{
-		this->id = id;
-		this->amount = amount;
-	}
-
-	void AddAmount(int amount)
-	{
-		this->amount += amount;
-		if (this->amount < 0)
-			this->amount = 0;
-	}
 };
 
 enum DIRECTION {

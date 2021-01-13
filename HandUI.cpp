@@ -6,8 +6,8 @@
 
 HRESULT HandUI::Init()
 {
-	itemImage = new GLImage();
-	itemImage->Init("Icons/Coal", 1, 1, 32, 32);
+	allItemImage = new GLImage();
+	allItemImage->Init("Icons/AllItems", 8, 8, 0.25f, 0.25f, 512, 512);
 
 	handItem = new ItemInfo();
 
@@ -17,7 +17,7 @@ HRESULT HandUI::Init()
 void HandUI::Release()
 {
 	SAFE_DELETE(handItem);
-	SAFE_DELETE(itemImage);
+	SAFE_DELETE(allItemImage);
 }
 
 void HandUI::Update()
@@ -28,9 +28,6 @@ void HandUI::Update()
 		EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->AddItem(new ItemInfo(*handItem));
 		handItem->amount = 0;
 	}
-
-	// 핸드아이템에 따라 바뀌는 이미지
-	itemImage->SetSourceTexture(TextureManager::GetSingleton()->FindTexture("Icons/" + g_itemSpecs[handItem->id].name));
 
 	if (KeyManager::GetSingleton()->IsOnceKeyDown('Z'))
 	{
@@ -51,7 +48,10 @@ void HandUI::Render(Shader* shader)
 	if (handItem->amount)
 	{
 		if (!g_itemSpecs[handItem->id].buildable || UIManager::GetSingleton()->IsMouseOnUI())
-			itemImage->Render(shader, g_ptMouse.x + 16, g_ptMouse.y - 16);
+		{
+			glm::ivec2 maxFrame = allItemImage->GetMaxFrame();
+			allItemImage->Render(shader, g_ptMouse.x + 16, g_ptMouse.y - 16, handItem->id % maxFrame.x, maxFrame.y - 1 - handItem->id / maxFrame.y);
+		}
 
 		TextRenderer::GetSingleton()->RenderText(to_string(handItem->amount), g_ptMouse.x + 16 - to_string(handItem->amount).length() * 6 + 17, g_ptMouse.y - 16 - 7.0f, 0.46f);
 	}

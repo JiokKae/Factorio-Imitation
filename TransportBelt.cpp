@@ -1,12 +1,28 @@
 #include "TransportBelt.h"
 #include "Tile.h"
+
+int TransportBelt::imageFrameYByDirection[DIRECTION_END][TransportBelt::ImageIndex::END] = {
+//			TOP			BOTTOM		UP			LEFT_UP		RIGHT_UP
+			2,			7,			17,			13,			15,			// NORTH
+			0,			5,			19,			14,			11,			// EAST
+			6,			3,			16,			10,			8,			// SOUTH
+			4,			1,			18,			9,			12,			// WEST
+};
+
+glm::ivec2 TransportBelt::imageTopPosOffset[DIRECTION_END] = {
+	{ 0,  TILE_SIZE },	// NORTH
+	{  TILE_SIZE, 0 },	// EAST
+	{ 0, -TILE_SIZE },	// SOUTH
+	{ -TILE_SIZE, 0 },	// WEST
+};
+
 HRESULT TransportBelt::Init(int x, int y, DIRECTION direction, bool temp)
 {
 	itemId = ItemEnum::TRANSPORT_BELT;
 	Structure::Init(x, y, direction, temp);
 
 	image = new GLImage();
-	image->Init(string("Entity/" + g_itemSpecs[itemId].name).c_str(), 16, 20);
+	image->Init("Entity/TransportBelt", 16, 20);
 
 	aroundBelts = new TransportBelt*[DIRECTION_END]();
 	Tile* tile = TileManager::GetSingleton()->GetLpTile(coord.x, coord.y);
@@ -24,35 +40,6 @@ HRESULT TransportBelt::Init(int x, int y, DIRECTION direction, bool temp)
 			}
 		}
 	}
-
-	imageFrameYByDirection[NORTH][ImageIndex::TOP] =		2;
-	imageFrameYByDirection[NORTH][ImageIndex::BOTTOM] =		7;
-	imageFrameYByDirection[NORTH][ImageIndex::UP] =			17;
-	imageFrameYByDirection[NORTH][ImageIndex::LEFT_UP] =	13;
-	imageFrameYByDirection[NORTH][ImageIndex::RIGHT_UP] =	15;
-
-	imageFrameYByDirection[EAST][ImageIndex::TOP] =			0;
-	imageFrameYByDirection[EAST][ImageIndex::BOTTOM] =		5;
-	imageFrameYByDirection[EAST][ImageIndex::UP] =			19;
-	imageFrameYByDirection[EAST][ImageIndex::LEFT_UP] =		14;
-	imageFrameYByDirection[EAST][ImageIndex::RIGHT_UP] =	11;
-
-	imageFrameYByDirection[SOUTH][ImageIndex::TOP] =		6;
-	imageFrameYByDirection[SOUTH][ImageIndex::BOTTOM] =		3;
-	imageFrameYByDirection[SOUTH][ImageIndex::UP] =			16;
-	imageFrameYByDirection[SOUTH][ImageIndex::LEFT_UP] =	10;
-	imageFrameYByDirection[SOUTH][ImageIndex::RIGHT_UP] =	8;
-
-	imageFrameYByDirection[WEST][ImageIndex::TOP] =			4;
-	imageFrameYByDirection[WEST][ImageIndex::BOTTOM] =		1;
-	imageFrameYByDirection[WEST][ImageIndex::UP] =			18;
-	imageFrameYByDirection[WEST][ImageIndex::LEFT_UP] =		9;
-	imageFrameYByDirection[WEST][ImageIndex::RIGHT_UP] =	12;
-
-	imageTopPosOffset[NORTH] =	{ 0,  TILE_SIZE };
-	imageTopPosOffset[EAST] =	{  TILE_SIZE, 0 };
-	imageTopPosOffset[SOUTH] =	{ 0, -TILE_SIZE };
-	imageTopPosOffset[WEST] =	{ -TILE_SIZE, 0 };
 
 	return S_OK;
 }

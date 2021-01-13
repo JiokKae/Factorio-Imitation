@@ -7,28 +7,31 @@
 HRESULT BurnerMiningDrill::Init(int x, int y, DIRECTION direction, bool temp)
 {
 	itemId = ItemEnum::BURNER_MINING_DRILL;
+	usingClickEvent = true;
 	Structure::Init(x, y, direction, temp);
 
 	image = new GLImage[DIRECTION_END]();
-	image[DIRECTION::NORTH].Init(	"Entity/BurnerMiningDrill-N", 4, 8);
-	image[DIRECTION::EAST].Init(	"Entity/BurnerMiningDrill-E", 4, 8);
-	image[DIRECTION::SOUTH].Init(	"Entity/BurnerMiningDrill-S", 4, 8);
-	image[DIRECTION::WEST].Init(	"Entity/BurnerMiningDrill-W", 4, 8);
+	image[NORTH].Init(	"Entity/BurnerMiningDrill-N", 4, 8);
+	image[EAST].Init(	"Entity/BurnerMiningDrill-E", 4, 8);
+	image[SOUTH].Init(	"Entity/BurnerMiningDrill-S", 4, 8);
+	image[WEST].Init(	"Entity/BurnerMiningDrill-W", 4, 8);
 
 	shadow = new GLImage[DIRECTION_END]();
-	shadow[DIRECTION::NORTH].Init("Entity/BurnerMiningDrill-N-shadow", 4, 8);
-	shadow[DIRECTION::NORTH].SetAlpha(0.6f);
-	shadowAniOffset[DIRECTION::NORTH] = {50, 0};
-	shadow[DIRECTION::EAST].Init("Entity/BurnerMiningDrill-E-shadow", 4, 8);
-	shadow[DIRECTION::EAST].SetAlpha(0.6f);
-	shadow[DIRECTION::SOUTH].Init("Entity/BurnerMiningDrill-S-shadow", 4, 8);
-	shadow[DIRECTION::SOUTH].SetAlpha(0.6f);
-	shadow[DIRECTION::WEST].Init("Entity/BurnerMiningDrill-W-shadow", 4, 8);
-	shadow[DIRECTION::WEST].SetAlpha(0.6f);
+	shadow[NORTH].Init("Entity/BurnerMiningDrill-N-shadow", 4, 8);
+	shadow[NORTH].SetAlpha(0.6f);
+	shadowAniOffset[NORTH] = { 50, 0 };
+	shadow[EAST].Init("Entity/BurnerMiningDrill-E-shadow", 4, 8);
+	shadow[EAST].SetAlpha(0.6f);
+	shadowAniOffset[EAST] = { 10, 0 };
+	shadow[SOUTH].Init("Entity/BurnerMiningDrill-S-shadow", 4, 8);
+	shadow[SOUTH].SetAlpha(0.6f);
+	shadow[WEST].Init("Entity/BurnerMiningDrill-W-shadow", 4, 8);
+	shadow[WEST].SetAlpha(0.6f);
+	shadowAniOffset[WEST] = { 10, 0 };
 
 	miningArea = glm::ivec2(2, 2);
-	miningPower = 150.0f;
 	miningSpeed = 0.25f;
+	energyConsumption = 150.0f;
 
 	// 타겟 타일 설정
 	miningAreaTiles = new Tile*[4]();
@@ -60,13 +63,8 @@ HRESULT BurnerMiningDrill::Init(int x, int y, DIRECTION direction, bool temp)
 
 void BurnerMiningDrill::Release()
 {
-	for (int i = 0; i < 4; i++)
-		image->Release();
-	SAFE_ARR_DELETE(image);
-
-	for (int i = 0; i < 4; i++)
-		shadow->Release();
-	SAFE_ARR_DELETE(shadow);
+	SAFE_ARR_RELEASE(image, 4);
+	SAFE_ARR_RELEASE(shadow, 4);
 }
 
 void BurnerMiningDrill::Update()
@@ -75,16 +73,6 @@ void BurnerMiningDrill::Update()
 
 	if (temp)
 		return;
-
-	if (PtInFRect(GetFRect(), g_cursorPosition))
-	{
-		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
-		{
-			UIManager::GetSingleton()->ActiveUI("BurnerMiningDrillUI");
-			BurnerMiningDrillUI* bmdUI = (BurnerMiningDrillUI*)UIManager::GetSingleton()->GetLpCurrUI();
-			bmdUI->SetCurrBurnerMiningDrill(this);
-		}
-	}
 
 	switch (status)
 	{
@@ -103,74 +91,7 @@ void BurnerMiningDrill::Update()
 
 	case BurnerMiningDrill::WAITING_SPACE:
 	{
-		Tile* outputTile = nullptr;
-		switch (direction)
-		{
-		case NORTH:
-			outputTile = miningAreaTiles[2]->GetAroundTile(direction);
-			break;
-		case EAST:
-			outputTile = miningAreaTiles[3]->GetAroundTile(direction);
-			break;
-		case SOUTH:
-			outputTile = miningAreaTiles[1]->GetAroundTile(direction);
-			break;
-		case WEST:
-			outputTile = miningAreaTiles[0]->GetAroundTile(direction);
-			break;
-		}
-		if (outputTile->GetLpSturcture())
-		{
-			if (outputTile->GetLpSturcture()->InputItem(new ItemInfo(COAL, 1)))
-			{
-				targetTile->GetLpOre()->AddAmount(-1);
-				productionPercent -= 1.0f;
-				if (IsMiningAreaEmpty())
-				{
-					status = NO_MINABLE_RESOURCES;
-					break;
-				}
-
-				for (int i = 0; i < miningArea.length(); i++)
-				{
-					if (miningAreaTiles[i]->GetLpOre()->GetAmount() > 0)
-					{
-						targetTile = miningAreaTiles[i];
-						break;
-					}
-				}
-				status = WORKING;
-			}
-		}
-		else
-		{
-			glm::ivec2 outCoord = outputTile->GetCoord();
-			glm::vec2 outPos = glm::vec2(COORD_TO_POS(outCoord));
-			targetTile->GetLpOre()->AddAmount(-1);
-			ItemOnGround* item = new ItemOnGround();
-			item->Init(ItemEnum::COAL);
-
-			item->SetPosition(outPos);
-
-			EntityManager::GetSingleton()->AddItemOnGround(item);
-			productionPercent -= 1.0f;
-
-			if (IsMiningAreaEmpty())
-			{
-				status = NO_MINABLE_RESOURCES;
-				break;
-			}
-
-			for (int i = 0; i < miningArea.length(); i++)
-			{
-				if (miningAreaTiles[i]->GetLpOre()->GetAmount() > 0)
-				{
-					targetTile = miningAreaTiles[i];
-					break;
-				}
-			}
-			status = WORKING;
-		}
+		OutputItem();
 		break;
 	}
 
@@ -182,7 +103,7 @@ void BurnerMiningDrill::Update()
 		}
 		else
 		{
-			currPower -= miningPower * TimerManager::GetSingleton()->GetTimeElapsed();
+			currPower -= energyConsumption * TimerManager::GetSingleton()->GetTimeElapsed();
 			productionPercent += miningSpeed * TimerManager::GetSingleton()->GetTimeElapsed();
 
 			// 채광 완료
@@ -228,7 +149,7 @@ void BurnerMiningDrill::Render(Shader* lpShader)
 		frameX, frameY);
 }
 
-bool BurnerMiningDrill::InputItem(ItemInfo* inputItem)
+bool BurnerMiningDrill::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 {
 	// 받는 아이템이 연료라면
 	if (g_itemSpecs[inputItem->id].fuel)
@@ -240,6 +161,7 @@ bool BurnerMiningDrill::InputItem(ItemInfo* inputItem)
 			if (waitingItemInfo->id == inputItem->id)
 			{
 				waitingItemInfo->amount += inputItem->amount;
+				SAFE_DELETE(inputItem);
 				return true;
 			}
 		}
@@ -248,11 +170,96 @@ bool BurnerMiningDrill::InputItem(ItemInfo* inputItem)
 		{
 			waitingItemInfo->id = inputItem->id;
 			waitingItemInfo->amount = inputItem->amount;
+			SAFE_DELETE(inputItem);
 			return true;
 		}
 	}
 
+	SAFE_DELETE(inputItem);
 	return false;
+}
+
+bool BurnerMiningDrill::OutputItem()
+{
+	Tile* outputTile = nullptr;
+	switch (direction)
+	{
+	case NORTH:
+		outputTile = miningAreaTiles[2]->GetAroundTile(direction);
+		break;
+	case EAST:
+		outputTile = miningAreaTiles[3]->GetAroundTile(direction);
+		break;
+	case SOUTH:
+		outputTile = miningAreaTiles[1]->GetAroundTile(direction);
+		break;
+	case WEST:
+		outputTile = miningAreaTiles[0]->GetAroundTile(direction);
+		break;
+	}
+	glm::vec2 outputPos = {};
+
+	if (outputTile->GetLpSturcture())
+	{
+		if (outputTile->GetLpSturcture()->InputItem(new ItemInfo(COAL, 1), glm::vec2(0.0f)))
+		{
+			targetTile->GetLpOre()->AddAmount(-1);
+			productionPercent -= 1.0f;
+			if (IsMiningAreaEmpty())
+			{
+				status = NO_MINABLE_RESOURCES;
+				return false;
+			}
+
+			for (int i = 0; i < miningArea.length(); i++)
+			{
+				if (miningAreaTiles[i]->GetLpOre()->GetAmount() > 0)
+				{
+					targetTile = miningAreaTiles[i];
+					break;
+				}
+			}
+			status = WORKING;
+		}
+	}
+	else
+	{
+		glm::ivec2 outCoord = outputTile->GetCoord();
+		glm::vec2 outTilePos = glm::vec2(COORD_TO_POS(outCoord));
+		targetTile->GetLpOre()->AddAmount(-1);
+
+		ItemOnGround* item = new ItemOnGround();
+		item->Init(ItemEnum::COAL);
+		item->SetPosition(outTilePos + outputPos);
+		EntityManager::GetSingleton()->AddItemOnGround(item);
+
+		productionPercent -= 1.0f;
+
+		if (IsMiningAreaEmpty())
+		{
+			status = NO_MINABLE_RESOURCES;
+			return false;
+		}
+
+		for (int i = 0; i < miningArea.length(); i++)
+		{
+			if (miningAreaTiles[i]->GetLpOre()->GetAmount() > 0)
+			{
+				targetTile = miningAreaTiles[i];
+				break;
+			}
+		}
+		status = WORKING;
+	}
+
+	return false;
+}
+
+void BurnerMiningDrill::ClickEvent()
+{
+	UIManager::GetSingleton()->ActiveUI("BurnerMiningDrillUI");
+	BurnerMiningDrillUI* bmdUI = (BurnerMiningDrillUI*)UIManager::GetSingleton()->GetLpCurrUI();
+	bmdUI->SetCurrBurnerMiningDrill(this);
 }
 
 bool BurnerMiningDrill::IsMiningAreaEmpty()

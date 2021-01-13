@@ -36,15 +36,9 @@ HRESULT MainGame::Init()
 	SceneManager::GetSingleton()->Init();
 	SoundManager::GetSingleton()->Init();
 	TextureManager::GetSingleton()->Init();
+	RecipeManager::GetSingleton()->Init();
 
-	// Add Sound
-	SoundManager::GetSingleton()->AddSound("Rotate-small",	"sound/rotate-small.ogg", false, false);
-	SoundManager::GetSingleton()->AddSound("Rotate-medium", "sound/rotate-medium.ogg", false, false);
-	SoundManager::GetSingleton()->AddSound("Rotate-big",	"sound/rotate-big.ogg", false, false);
-
-	SoundManager::GetSingleton()->AddSound("Build-small",	"sound/build-small.ogg", false, false);
-	SoundManager::GetSingleton()->AddSound("Build-medium",	"sound/build-medium.ogg", false, false);
-	SoundManager::GetSingleton()->AddSound("Build-large",	"sound/build-large.ogg", false, false);
+	SoundLoad();
 
 	// Add Scene
 	SceneManager::GetSingleton()->AddScene("TitleScene", new TitleScene(1600, 900));
@@ -69,6 +63,7 @@ HRESULT MainGame::Init()
 void MainGame::Release()
 {
 	// Singleton Release
+	RecipeManager::GetSingleton()->Release();
 	TextureManager::GetSingleton()->Release();
 	SceneManager::GetSingleton()->Release();
 	TimerManager::GetSingleton()->Release();
@@ -136,28 +131,43 @@ void MainGame::ImageLoad()
 	textureManager->AddTexture("Entity/BurnerInserter-handOpen",			"graphics/entity/burner_inserter/hr-burner-inserter-hand-open.png");
 	textureManager->AddTexture("Entity/BurnerInserter-handOpen-shadow",		"graphics/entity/burner_inserter/hr-burner-inserter-hand-open-shadow.png");
 
+	textureManager->AddTexture("Entity/StoneFurnace",			"graphics/entity/stone_furnace/hr-stone-furnace.png");
+	textureManager->AddTexture("Entity/StoneFurnace-shadow",	"graphics/entity/stone_furnace/hr-stone-furnace-shadow.png");
+	textureManager->AddTexture("Entity/StoneFurnace-fire",		"graphics/entity/stone_furnace/hr-stone-furnace-fire.png");
+
 	textureManager->AddTexture("UI/CharacterUI",			"graphics/ui/CharacterUI.png",				false);
 	textureManager->AddTexture("UI/SlotUI",					"graphics/ui/slotUI.png",					false);
 	textureManager->AddTexture("UI/BunerMiningDrillUI",		"graphics/ui/BunerMiningDrillUI.png",		false);
 	textureManager->AddTexture("UI/DeactiveButtonUI",		"graphics/ui/DeactiveButtonUI.png",			false);
 	textureManager->AddTexture("UI/RedProgressiveBarUI",	"graphics/ui/redProgressiveBarUI.png",		false);
 	textureManager->AddTexture("UI/GreenProgressiveBarUI",	"graphics/ui/greenProgressiveBarUI.png",	false);
-	textureManager->AddTexture("UI/FuelSlotUI",				"graphics/ui/fuelSlotUI.png");			
+	textureManager->AddTexture("UI/FuelSlotUI",				"graphics/ui/fuelSlotUI.png",				false);
+	textureManager->AddTexture("UI/StoneFurnaceUI",			"graphics/ui/stoneFurnaceUI.png",			false);
 
 	textureManager->AddTexture("Icons/Hand",				"graphics/icons/hand.png");
-	textureManager->AddTexture("Icons/Coal",				"graphics/icons/coal.png",					false);
-	textureManager->AddTexture("Icons/BurnerMiningDrill",	"graphics/icons/burner-mining-drill.png",	false);
-	textureManager->AddTexture("Icons/IronPlate",			"graphics/icons/iron-plate.png",			false);
-	textureManager->AddTexture("Icons/AssemblingMachine1",	"graphics/icons/assembling-machine-1.png",	false);
-	textureManager->AddTexture("Icons/TransportBelt",		"graphics/icons/transport-belt.png",		false);
-	textureManager->AddTexture("Icons/BurnerInserter",		"graphics/icons/burner-inserter.png",		false);
-	textureManager->AddTexture("Icons/AllItems",			"graphics/icons/all-items.png",				true, true, GL_NEAREST);
+	textureManager->AddTexture("Icons/AllItems",			"graphics/icons/all-items.png");
 
 	textureManager->AddTexture("Terrain/Dirt_1",			"graphics/terrain/hr-dirt-1.png");
 
 	textureManager->AddTexture("IronOre",					"graphics/entity/iron_ore/hr-iron-ore.png");
+}
 
-	textureManager->AddTexture("Checker",					"graphics/Checker.png");
+void MainGame::SoundLoad()
+{
+	SoundManager::GetSingleton()->AddSound("Rotate-small",	"sound/rotate-small.ogg", false, false);
+	SoundManager::GetSingleton()->AddSound("Rotate-medium", "sound/rotate-medium.ogg", false, false);
+	SoundManager::GetSingleton()->AddSound("Rotate-big",	"sound/rotate-big.ogg", false, false);
+
+	SoundManager::GetSingleton()->AddSound("Build-small",	"sound/build-small.ogg", false, false);
+	SoundManager::GetSingleton()->AddSound("Build-medium",	"sound/build-medium.ogg", false, false);
+	SoundManager::GetSingleton()->AddSound("Build-large",	"sound/build-large.ogg", false, false);
+
+	SoundManager::GetSingleton()->AddSound("GUI-ToolButton", "sound/gui-tool-button.ogg", false, false);
+
+	SoundManager::GetSingleton()->AddSound("Machine-open",	"sound/machine-open.ogg", false, false);
+	SoundManager::GetSingleton()->AddSound("Machine-close", "sound/machine-close.ogg", false, false);
+
+	SoundManager::GetSingleton()->AddSound("PickedUpItem",	"sound/picked-up-item.ogg", false, false);
 }
 
 LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)

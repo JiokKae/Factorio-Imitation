@@ -6,7 +6,7 @@ class HandUI : public UI
 {
 	ItemInfo* handItem;
 
-	GLImage* itemImage;
+	GLImage* allItemImage;
 
 public:
 	virtual HRESULT Init() override;

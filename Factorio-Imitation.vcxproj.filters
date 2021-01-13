@@ -82,9 +82,6 @@
     <Filter Include="MainGame\Scene\PlayScene">
       <UniqueIdentifier>{533fe382-1ad8-4ff8-b730-28348027c827}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GLFrameWork\UI">
-      <UniqueIdentifier>{9d2c7c8f-18c1-473e-ae8f-502674d68784}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainGame\UI">
       <UniqueIdentifier>{c53c5724-0256-4215-b8e8-c4b64e6514c7}</UniqueIdentifier>
     </Filter>
@@ -141,6 +138,18 @@
     </Filter>
     <Filter Include="MainGame\UI\InventorySlotUI">
       <UniqueIdentifier>{64bfa3bb-e2ae-4f95-8561-e257c1f27c81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Entity\Structure\StoneFurnace">
+      <UniqueIdentifier>{0ba6f8a7-63aa-4b85-ae23-86d41193665d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\StoneFurnaceUI">
+      <UniqueIdentifier>{c7ada55c-2d8f-4ca4-b9f5-71c113f9fb97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GLFrameWork\UI">
+      <UniqueIdentifier>{edfe1fec-8fce-47f4-b125-9c64785e83ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Recipe">
+      <UniqueIdentifier>{63d1f8b6-a7ea-4b13-a43b-70eeb1aa22fc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -227,9 +236,6 @@
     </ClInclude>
     <ClInclude Include="TileMapToolScene.h">
       <Filter>MainGame\Scene\TileMapToolScene</Filter>
-    </ClInclude>
-    <ClInclude Include="UI.h">
-      <Filter>GLFrameWork\UI</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>MainGame\Tile</Filter>
@@ -318,6 +324,24 @@
     <ClInclude Include="InventorySlotUI.h">
       <Filter>MainGame\UI\InventorySlotUI</Filter>
     </ClInclude>
+    <ClInclude Include="StoneFurnace.h">
+      <Filter>MainGame\Entity\Structure\StoneFurnace</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneFurnaceUI.h">
+      <Filter>MainGame\UI\StoneFurnaceUI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>GLFrameWork\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGameUIFactory.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Recipe.h">
+      <Filter>MainGame\Recipe</Filter>
+    </ClInclude>
+    <ClInclude Include="RecipeManager.h">
+      <Filter>MainGame\Recipe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -400,9 +424,6 @@
     </ClCompile>
     <ClCompile Include="TileMapToolScene.cpp">
       <Filter>MainGame\Scene\TileMapToolScene</Filter>
-    </ClCompile>
-    <ClCompile Include="UI.cpp">
-      <Filter>GLFrameWork\UI</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>MainGame\Tile</Filter>
@@ -490,6 +511,24 @@
     </ClCompile>
     <ClCompile Include="InventorySlotUI.cpp">
       <Filter>MainGame\UI\InventorySlotUI</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneFurnace.cpp">
+      <Filter>MainGame\Entity\Structure\StoneFurnace</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneFurnaceUI.cpp">
+      <Filter>MainGame\UI\StoneFurnaceUI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>GLFrameWork\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGameUIFactory.cpp">
+      <Filter>MainGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Recipe.cpp">
+      <Filter>MainGame\Recipe</Filter>
+    </ClCompile>
+    <ClCompile Include="RecipeManager.cpp">
+      <Filter>MainGame\Recipe</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

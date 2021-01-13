@@ -1,17 +1,17 @@
 #pragma once
 #include "UI.h"
-#include "framework.h"
 
 class Inventory;
+class Recipe;
 class FuelSlotUI;
 class InventoryUI;
 class DeactiveButtonUI;
-class BurnerMiningDrill;
-class BurnerMiningDrillUI : public UI
+class StoneFurnace;
+class StoneFurnaceUI : public UI
 {
 	InventoryUI* inventoryUI;
 	DeactiveButtonUI* deactiveButtonUI;
-	BurnerMiningDrill* currBurnerMiningDrill;
+	StoneFurnace* currStoneFurnace;
 
 	FuelSlotUI* fuelSlotUI;
 	GLImage* redProgressiveBar;
@@ -22,6 +22,6 @@ public:
 	virtual void Update() override;
 	virtual void Render(Shader* lpShader) override;
 
-	void SetCurrBurnerMiningDrill(BurnerMiningDrill* burnerMiningDrill) { this->currBurnerMiningDrill = burnerMiningDrill; }
+	void SetCurrStoneFurnace(StoneFurnace* burnerMiningDrill) { this->currStoneFurnace = burnerMiningDrill; }
 };
 

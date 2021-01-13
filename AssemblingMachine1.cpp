@@ -7,11 +7,11 @@ HRESULT AssemblingMachine1::Init(int x, int y, DIRECTION direction, bool temp)
 	Structure::Init(x, y, direction, temp);
 
 	image = new GLImage();
-	image->Init(string("Entity/" + g_itemSpecs[itemId].name).c_str(), 8, 4);
+	image->Init("Entity/AssemblingMachine1", 8, 4);
 	image->SetAlpha(1.0f);
 
 	shadow = new GLImage();
-	shadow->Init(string("Entity/" + g_itemSpecs[itemId].name + "-shadow").c_str(), 8, 4);
+	shadow->Init("Entity/AssemblingMachine1-shadow", 8, 4);
 	shadow->SetAlpha(0.5f);
 	shadowAniOffset = { 16, -6 };
 

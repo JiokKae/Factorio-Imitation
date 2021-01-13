@@ -18,10 +18,10 @@ public:
 	};
 	
 private:
+	static int imageFrameYByDirection[DIRECTION_END][ImageIndex::END];
+	static glm::ivec2 imageTopPosOffset[DIRECTION_END];
 	GLImage* image;
 	TransportBelt** aroundBelts;
-	int imageFrameYByDirection[DIRECTION_END][ImageIndex::END];
-	glm::ivec2 imageTopPosOffset[DIRECTION_END];
 	ImageIndex renderState;
 
 public:

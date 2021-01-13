@@ -9,13 +9,13 @@
 HRESULT ItemOnGrounds::Init()
 {
     allItemsImage = new GLImage();
-    allItemsImage->Init("Icons/AllItems", 8, 8);
+    allItemsImage->Init("Icons/AllItems", 8, 8, 0.25f, 0.25f);
 
     instancingShader = new Shader("InstancingVertexShader.glsl", "StandardFragmentShader.glsl");
     instancingShader->use();
 
     // VertexShader uniform var
-    instancingShader->setVec2("maxFrame", glm::vec2(8, 8));
+    instancingShader->setVec2("maxFrame", allItemsImage->GetMaxFrame());
     instancingShader->setMat4("model", glm::mat4());
     instancingShader->setVec2("offset", glm::vec2(0.0f, 0.0f));
     instancingShader->setFloat("vertexScale", 1.0f);
@@ -72,32 +72,36 @@ void ItemOnGrounds::Update(FRECT cameraFRect)
     {
         Character* player = EntityManager::GetSingleton()->GetLpPlayer();
         FRECT playerRect = player->GetPickUpFRect();
-        for (it = mapItems.begin(); it != mapItems.end();)
+        bool pickedUp = false;
+        for (it = vecItems.begin(); it != vecItems.end();)
         {
-            if (CheckRectCollision(playerRect, it->second->GetCollisionFRect()))
+            if (CheckRectCollision(playerRect, (*it)->GetCollisionFRect()))
             {
-                it->second->Release();
-                player->GetLpInventory()->AddItem(new ItemInfo(it->second->GetItemEnum(), 1));
-                delete it->second;
-                it = mapItems.erase(it);
-                if (it == mapItems.end())
+                pickedUp = true;
+                (*it)->Release();
+                player->GetLpInventory()->AddItem(new ItemInfo((*it)->GetItemEnum(), 1));
+                delete (*it);
+                it = vecItems.erase(it);
+                if (it == vecItems.end())
                     break;
             }
             else
                 ++it;
         }
+        if (pickedUp)
+            SoundManager::GetSingleton()->Play("PickedUpItem", 0.6f);
     }
 
     vecItemsInScreen.clear();
-    for (it = mapItems.begin(); it != mapItems.end(); ++it)
+    for (it = vecItems.begin(); it != vecItems.end(); ++it)
     {
-        
-        it->second->Update();
-        if (PtInFRect(cameraFRect, it->second->GetPosition()))
+        (*it)->Update();
+        if (PtInFRect(cameraFRect, (*it)->GetPosition()))
         {
-            vecItemsInScreen.push_back(it->second);
+            vecItemsInScreen.push_back(*it);
         }
     }
+    sort(vecItems.begin(), vecItems.end(), [](ItemOnGround* a, ItemOnGround* b) { return a->GetPosition() > b->GetPosition(); });
 }
 
 void ItemOnGrounds::Render()
@@ -106,14 +110,7 @@ void ItemOnGrounds::Render()
     glm::vec2* infoDatas = new glm::vec2[renderItemSize]();
     
     instancingShader->use();
-    instancingShader->setVec2("maxFrame", glm::vec2(8, 8));
-    instancingShader->setMat4("model", glm::mat4());
-    instancingShader->setVec2("offset", glm::vec2(0.0f, 0.0f));
-    instancingShader->setFloat("vertexScale", 1.0f);
-
-    instancingShader->setInt("material.diffuse", 0);
-    instancingShader->setVec3("material.diffuseColor", glm::vec3(1.0f, 1.0f, 1.0f));
-    instancingShader->setFloat("alpha", 1.0f);
+    instancingShader->setVec2("margin", allItemsImage->GetMargin());
 
     glBindVertexArray(itemsVAO->GetID());
 
@@ -135,5 +132,5 @@ void ItemOnGrounds::Render()
 
 void ItemOnGrounds::AddItem(ItemOnGround* item)
 {
-    mapItems.insert(make_pair(item->GetPosition(), item));
+    vecItems.push_back(item);
 }

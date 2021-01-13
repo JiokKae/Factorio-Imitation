@@ -10,7 +10,7 @@ class InventoryUI : public UI
 	InventorySlotUI* slotUI;
 
 public:
-	virtual HRESULT Init(Inventory* inventory);
+	virtual HRESULT Init() override;
 	virtual void Release() override;
 	virtual void Update() override;
 	virtual void Render(Shader* lpShader) override;

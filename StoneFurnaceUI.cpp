@@ -1,23 +1,23 @@
-#include "BurnerMiningDrillUI.h"
+#include "StoneFurnaceUI.h"
 #include "InventoryUI.h"
 #include "DeactiveButtonUI.h"
-#include "BurnerMiningDrill.h"
+#include "StoneFurnace.h"
 #include "FuelSlotUI.h"
 
-HRESULT BurnerMiningDrillUI::Init()
+HRESULT StoneFurnaceUI::Init()
 {
 	image = new GLImage();
-	image->Init("UI/BunerMiningDrillUI");
+	image->Init("UI/StoneFurnaceUI");
 
 	inventoryUI = new InventoryUI();
 	inventoryUI->Init();
 	inventoryUI->SetParent(this);
-	inventoryUI->SetLocalPosition(glm::vec2(-180, 59));
+	inventoryUI->SetLocalPosition(glm::vec2(-180, 53));
 
 	deactiveButtonUI = new DeactiveButtonUI();
 	deactiveButtonUI->Init();
 	deactiveButtonUI->SetParent(this);
-	deactiveButtonUI->SetLocalPosition(glm::vec2(200, 286));
+	deactiveButtonUI->SetLocalPosition(glm::vec2(200, 290));
 
 	redProgressiveBar = new GLImage();
 	redProgressiveBar->Init("UI/RedProgressiveBarUI");
@@ -30,11 +30,11 @@ HRESULT BurnerMiningDrillUI::Init()
 	fuelSlotUI = new FuelSlotUI();
 	fuelSlotUI->Init();
 	fuelSlotUI->SetParent(this);
-	fuelSlotUI->SetLocalPosition(glm::vec2(-72, 199));
+	fuelSlotUI->SetLocalPosition(glm::vec2(-72, 170));
 	return S_OK;
 }
 
-void BurnerMiningDrillUI::Release()
+void StoneFurnaceUI::Release()
 {
 	SAFE_RELEASE(fuelSlotUI);
 	SAFE_RELEASE(greenProgressiveBar);
@@ -44,15 +44,15 @@ void BurnerMiningDrillUI::Release()
 	SAFE_RELEASE(image);
 }
 
-void BurnerMiningDrillUI::Update()
+void StoneFurnaceUI::Update()
 {
 	if (active)
 	{
 		inventoryUI->Update();
 		deactiveButtonUI->Update();
-		redProgressiveBar->SetScale(glm::vec2(currBurnerMiningDrill->GetCurrPower() / currBurnerMiningDrill->GetMaxPower(), 1.0f));
-		greenProgressiveBar->SetScale(glm::vec2(currBurnerMiningDrill->GetProductionPercent(), 1.0f));
-		fuelSlotUI->Update(currBurnerMiningDrill->GetWaitingItemInfo());
+		redProgressiveBar->SetScale(glm::vec2(currStoneFurnace->GetCurrPower() / currStoneFurnace->GetMaxPower(), 1.0f));
+		greenProgressiveBar->SetScale(glm::vec2(currStoneFurnace->GetProductionPercent(), 1.0f));
+		fuelSlotUI->Update(currStoneFurnace->GetFuel());
 		if (PtInFRect(GetFrect(), { g_ptMouse.x, g_ptMouse.y }))
 		{
 			KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON);
@@ -60,7 +60,7 @@ void BurnerMiningDrillUI::Update()
 	}
 }
 
-void BurnerMiningDrillUI::Render(Shader* lpShader)
+void StoneFurnaceUI::Render(Shader* lpShader)
 {
 	if (active)
 	{

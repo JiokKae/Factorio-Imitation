@@ -1,15 +1,14 @@
 #include "PlayScene.h"
-#include "CharacterUI.h"
 #include "Character.h"
 #include "Camera.h"
 #include "Tile.h"
 #include "TileManager.h"
 #include "PointLight.h"
 #include "DirectionalLight.h"
-#include "BurnerMiningDrillUI.h"
 #include "EntityManager.h"
 #include "Ore.h"
-
+#include "MainGameUIFactory.h"
+#include "UI.h"
 #include "Structure.h"
 
 HRESULT PlayScene::Init()
@@ -63,15 +62,20 @@ HRESULT PlayScene::Init()
     UIShader = new Shader("UIVertexShader.glsl", "UIFragmentShader.glsl");
     
     // UI Init
-    CharacterUI* characterUI = new CharacterUI();
-    characterUI->Init(entityManager->GetLpPlayer()->GetLpInventory());
+    UI* characterUI = MainGameUIFactory::CreateUI(MainGameUIFactory::CHARACTER_UI);
+    characterUI->Init();
     characterUI->SetLocalPosition(glm::vec2(width / 2, height / 2));
     UIManager::GetSingleton()->AddUI("CharacterUI", characterUI);
 
-    BurnerMiningDrillUI* burnerMiningDrillUI = new BurnerMiningDrillUI();
-    burnerMiningDrillUI->Init(entityManager->GetLpPlayer()->GetLpInventory());
+    UI* burnerMiningDrillUI = MainGameUIFactory::CreateUI(MainGameUIFactory::BURNER_MINING_DRILL_UI);
+    burnerMiningDrillUI->Init();
     burnerMiningDrillUI->SetLocalPosition(glm::vec2(width / 2, height / 2));
     UIManager::GetSingleton()->AddUI("BurnerMiningDrillUI", burnerMiningDrillUI);
+
+    UI* stoneFurnaceUI = MainGameUIFactory::CreateUI(MainGameUIFactory::STONE_FURNACE_UI);
+    stoneFurnaceUI->Init();
+    stoneFurnaceUI->SetLocalPosition(glm::vec2(width / 2, height / 2));
+    UIManager::GetSingleton()->AddUI("StoneFurnaceUI", stoneFurnaceUI);
 
 	// shader configuration
 	// --------------------
@@ -145,7 +149,6 @@ HRESULT PlayScene::Init()
             entityManager->AddEntity(structure);
         }
     }
-
 
 	return S_OK;
 }

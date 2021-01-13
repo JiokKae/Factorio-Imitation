@@ -16,7 +16,7 @@ public:
 	void Render();				// 프레임 단위 출력 (이미지, 텍스트 등)
 
 	void ImageLoad();
-
+	void SoundLoad();
 	MainGame() {};
 
 	LRESULT MainProc(HWND hWnd, UINT iMessage,

@@ -5,8 +5,8 @@
 class ItemOnGround;
 class ItemOnGrounds : public GameNode
 {
-	multimap<ItemOnGround*, greater<Vec2>> mapItems;
-	multimap<Vec2, ItemOnGround*>::iterator it;
+	vector<ItemOnGround*> vecItems;
+	vector<ItemOnGround*>::iterator it;
 
 	vector<ItemOnGround*> vecItemsInScreen;
 
@@ -14,6 +14,7 @@ class ItemOnGrounds : public GameNode
 
 	Shader* instancingShader;
 	VertexArrayObject* itemsVAO;
+
 public:
 	virtual HRESULT Init();
 	virtual void Release();

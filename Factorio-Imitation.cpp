@@ -5,7 +5,7 @@
 #include "MainGame.h"
 
 // 전역 변수:
-HINSTANCE	g_hInstance;                          // 현재 인스턴스입니다.
+HINSTANCE	g_hInstance;	// 현재 인스턴스입니다.
 HWND		g_hWnd;
 MainGame	g_mainGame;
 LPSTR		g_lpszClass = (LPSTR)TEXT("Factorio-Imitation");
@@ -15,15 +15,28 @@ glm::vec2	g_cursorPosition;	// 마우스 커서의 포지션
 glm::vec2	g_cursorCoord;		// 마우스 커서의 좌표
 float		g_time;
 ItemSpec	g_itemSpecs[] = {
-//		name					buildable	coordSize	direction	maxFrame	passable	fuel,	fuelValue
+//		name					buildable	coordSize	direction	passable	fuel,	fuelValue
 //														Count
-	{	"AssemblingMachine1",	true,		{ 3, 3 },	1,			{ 8, 4 },	FALSE,		FALSE,	NULL,	},
-	{	"BurnerMiningDrill",	true,		{ 2, 2 },	4,			{ 4, 8 },	FALSE,		FALSE,	NULL,	},
-	{	"IronPlate",			FALSE,		{ 0, 0 },	NULL,		{ 1, 1 },	FALSE,		FALSE,	NULL,	},
-	{	"Coal" ,				FALSE,		{ 0, 0 },	NULL,		{ 1, 1 },	FALSE,		true,	2000,	},
-	{	"TransportBelt",		true,		{ 1, 1 },	1,			{ 16, 20 },	true,		FALSE,	NULL,	},
-	{	"BurnerInserter",		true,		{ 1, 1 },	4,			{ 4, 1 },	FALSE,		FALSE,	NULL,	},
+	{	"Assembling Machine 1",	true,		{ 3, 3 },	1,			FALSE,		FALSE,	NULL,		},
+	{	"Burner Mining Drill",	true,		{ 2, 2 },	4,			FALSE,		FALSE,	NULL,		},
+	{	"Iron Plate",			FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
+	{	"Coal",					FALSE,		{ 0, 0 },	NULL,		FALSE,		true,	4000,		},
+	{	"Transport Belt",		true,		{ 1, 1 },	4,			true,		FALSE,	NULL,		},
+	{	"Burner Inserter",		true,		{ 1, 1 },	4,			FALSE,		FALSE,	NULL,		},
+	{	"Wood",					FALSE,		{ 0, 0 },	NULL,		FALSE,		true,	2000,		},
+	{	"Stone Furnace",		true,		{ 2, 2 },	1,			FALSE,		FALSE,	NULL,		},
+	{	"Solid Fuel",			FALSE,		{ 0, 0 },	NULL,		FALSE,		true,	12000,		},
+	{	"Rocket Fuel",			FALSE,		{ 0, 0 },	NULL,		FALSE,		true,	100000,		},
+	{	"Nuclear Fuel",			FALSE,		{ 0, 0 },	NULL,		FALSE,		true,	1210000,	},
+	{	"Iron Ore",				FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
+	{	"Copper Ore",			FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
+	{	"Copper Plate",			FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
+	{	"Stone",				FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
+	{	"Stone Brick",			FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
+	{	"Steel Plate",			FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
 };
+enum ItemEnum;	// 정의 피킹용
+
 const char* g_directionToLpChar[] = {
 	"-N",
 	"-E",
@@ -31,7 +44,6 @@ const char* g_directionToLpChar[] = {
 	"-W",
 };
 
-enum ItemEnum;	// 정의 피킹용
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);

@@ -25,7 +25,7 @@ private:
 	
 	STATUS status;			// 채광 드릴의 상태
 	float miningSpeed;		// 채광 스피드
-	float miningPower;		// 채광 소모파워	kw
+	float energyConsumption;		// 채광 소모파워	kw
 	glm::ivec2 miningArea;	// 채광 영역
 
 	float currPower;
@@ -36,13 +36,18 @@ private:
 	Tile** miningAreaTiles;
 	Tile* targetTile;
 	float time;				// 시간
+
 public:
 	virtual HRESULT Init(int x, int y, DIRECTION direction, bool temp = false) override;
 	virtual void Release();
 	virtual void Update();
 	virtual void FirstRender(Shader* lpShader) override;
 	virtual void Render(Shader* lpShader) override;
-	virtual bool InputItem(ItemInfo* inputItem) override;
+
+	virtual bool InputItem(ItemInfo* inputItem, glm::vec2 pos) override;
+	virtual bool OutputItem() override;
+	virtual void ClickEvent() override;
+
 	float GetMaxPower()				{ return maxPower; }
 	float GetCurrPower()			{ return currPower; }
 	float GetProductionPercent()	{ return productionPercent; }	

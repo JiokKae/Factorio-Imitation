@@ -26,6 +26,7 @@ void DeactiveButtonUI::Update()
 			{
 				if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LBUTTON))
 				{
+					SoundManager::GetSingleton()->Play("GUI-ToolButton", 0.6f);
 					UIManager::GetSingleton()->DeactiveUI();
 				}
 			}

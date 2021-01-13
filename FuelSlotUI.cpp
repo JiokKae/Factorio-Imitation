@@ -9,8 +9,8 @@ HRESULT FuelSlotUI::Init()
 	slotImage = new GLImage();
 	slotImage->Init("UI/SlotUI", 3, 1);
 
-	itemImage = new GLImage();
-	itemImage->Init("Icons/Coal", 1, 1, 32, 32);
+	allItemImage = new GLImage();
+	allItemImage->Init("Icons/AllItems", 8, 8, 0.25f, 0.25f, 512, 512);
 
 	itemInfo = new ItemInfo(0, 0);
 
@@ -20,7 +20,7 @@ HRESULT FuelSlotUI::Init()
 void FuelSlotUI::Release()
 {
 	SAFE_DELETE(itemInfo);
-	SAFE_RELEASE(itemImage);
+	SAFE_RELEASE(allItemImage);
 	SAFE_RELEASE(slotImage);
 	SAFE_RELEASE(image);
 }
@@ -31,13 +31,9 @@ void FuelSlotUI::Update(ItemInfo* itemInfo)
 	{
 		this->itemInfo = itemInfo;
 
-		if (itemInfo)
-			itemImage->SetSourceTexture(TextureManager::GetSingleton()->FindTexture("Icons/" + g_itemSpecs[itemInfo->id].name));
-
 		if (PtInFRect(GetFrect(), { g_ptMouse.x, g_ptMouse.y }))
 		{
 			onMouse = true;
-
 			if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
 			{
 				isLMouseDown = true;
@@ -72,7 +68,8 @@ void FuelSlotUI::Render(Shader* shader)
 		if (itemInfo && itemInfo->amount != 0)
 		{
 			slotImage->Render(shader, GetPosition().x, GetPosition().y, onMouse + isLMouseDown, 0);
-			itemImage->Render(shader, GetPosition().x, GetPosition().y);
+			glm::ivec2 maxFrame = allItemImage->GetMaxFrame();
+			allItemImage->Render(shader, GetPosition().x, GetPosition().y, itemInfo->id % maxFrame.x, maxFrame.y - 1 - itemInfo->id / maxFrame.y);
 			TextRenderer::GetSingleton()->RenderText(to_string(itemInfo->amount), GetPosition().x - to_string(itemInfo->amount).length() * 6 + 17, GetPosition().y - 7.0f, 0.46f);
 		}
 		else
@@ -144,8 +141,19 @@ void FuelSlotUI::OnClick(int key)
 			// 핸드가 연료라면
 			if (g_itemSpecs[hand->id].fuel)
 			{
-				// 슬롯과 같은 연료라면
-				if (hand->id == itemInfo->id)
+				// 슬롯에 연료가 있다면
+				if (itemInfo->amount)
+				{
+					// 슬롯과 같은 연료라면
+					if (hand->id == itemInfo->id)
+					{
+						// 핸드에서 하나만 슬롯으로
+						itemInfo->amount += 1;
+						hand->amount -= 1;
+					}
+				}
+				// 슬롯에 연료가 없다면
+				else
 				{
 					// 핸드에서 하나만 슬롯으로
 					itemInfo->amount += 1;
@@ -163,39 +171,4 @@ void FuelSlotUI::OnClick(int key)
 		}
 		break;
 	}
-
-	/*
-
-	ItemInfo* handItem = UIManager::GetSingleton()->GetLpHandUI()->GetHandItem();
-	// 핸드 아이템이 있으면
-	if (handItem)
-	{
-		// 핸드 아이템이 연료인지 확인후
-		if (g_itemSpecs[handItem->id].fuel)
-		{
-			// 같은 연료일 때 합치기
-			if (itemInfo->id == handItem->id)
-			{
-				itemInfo->AddAmount(handItem->amount);
-				handItem->amount = 0;
-				UIManager::GetSingleton()->GetLpHandUI()->SelectSlotUI(nullptr);
-			}
-			// 서로 다른 연료일 때 바꾸기
-			else
-			{
-				ItemInfo tempItemInfo(handItem->id, handItem->amount);
-				*handItem = *itemInfo;
-				*itemInfo = tempItemInfo;
-			}
-		}
-	}
-	else
-	{
-		UIManager::GetSingleton()->GetLpHandUI()->SetDividedItem(*itemInfo);
-		itemInfo->amount = 0;
-	}
-
-	*/
-	
-
 }

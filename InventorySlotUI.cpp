@@ -9,8 +9,8 @@ HRESULT InventorySlotUI::Init(int x, int y)
 	image = new GLImage();
 	image->Init("UI/SlotUI", 3, 1);
 	
-	itemImage = new GLImage();
-	itemImage->Init("Icons/Coal", 1, 1, 32, 32);
+	allItemImage = new GLImage();
+	allItemImage->Init("Icons/AllItems", 8, 8, 0.25f, 0.25f, 512, 512);
 
 	hand = new GLImage();
 	hand->Init("Icons/Hand", 1, 1, 32, 32);
@@ -33,9 +33,6 @@ void InventorySlotUI::Update(ItemInfo* itemInfo)
 	if (active)
 	{
 		this->itemInfo = itemInfo;
-
-		if (itemInfo)
-			itemImage->SetSourceTexture(TextureManager::GetSingleton()->FindTexture("Icons/" + g_itemSpecs[itemInfo->id].name ));
 
 		if (PtInFRect(GetFrect(), { g_ptMouse.x, g_ptMouse.y }))
 		{
@@ -74,15 +71,20 @@ void InventorySlotUI::Render(Shader* lpShader)
 		image->Render(lpShader, GetPosition().x, GetPosition().y, onMouse + (isLMouseDown || isRMouseDown), 0);
 		if (itemInfo && itemInfo->amount != 0)
 		{
-			itemImage->Render(lpShader, GetPosition().x, GetPosition().y);
+			glm::ivec2 maxFrame = allItemImage->GetMaxFrame();
+			allItemImage->Render(lpShader, GetPosition().x, GetPosition().y, itemInfo->id % maxFrame.x, maxFrame.y - 1 - itemInfo->id / maxFrame.y);
 			TextRenderer::GetSingleton()->RenderText(to_string(itemInfo->amount), GetPosition().x - to_string(itemInfo->amount).length() * 6 + 17, GetPosition().y - 7.0f, 0.46f);
-			/*
-			if (isSelected)
-			{
-				hand->Render(lpShader, GetPosition().x, GetPosition().y);
-			}
-			*/
+			
 		}
+	}
+}
+
+void InventorySlotUI::LateRender(Shader* shader)
+{
+	if (itemInfo && itemInfo->amount != 0)
+	{
+		if (onMouse)
+			TextRenderer::GetSingleton()->RenderText(g_itemSpecs[itemInfo->id].name, g_ptMouse.x + 20, g_ptMouse.y - 20, 1.0f, glm::vec3(1.0f));
 	}
 }
 

@@ -11,7 +11,7 @@ class CharacterUI : public UI
 	DeactiveButtonUI* deactiveButtonUI;
 
 public:
-	virtual HRESULT Init(Inventory* inventory);
+	virtual HRESULT Init();
 	virtual void Release() override;
 	virtual void Update() override;
 	virtual void Render(Shader* lpShader) override;

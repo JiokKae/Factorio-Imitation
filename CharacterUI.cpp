@@ -2,13 +2,13 @@
 #include "InventoryUI.h"
 #include "DeactiveButtonUI.h"
 
-HRESULT CharacterUI::Init(Inventory* inventory)
+HRESULT CharacterUI::Init()
 {
 	image = new GLImage();
 	image->Init("UI/CharacterUI");
 	
 	inventoryUI = new InventoryUI();
-	inventoryUI->Init(inventory);
+	inventoryUI->Init();
 	inventoryUI->SetParent(this);
 	inventoryUI->SetLocalPosition(glm::vec2(-397.5, 153));
 

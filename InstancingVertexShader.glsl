@@ -12,6 +12,7 @@ layout (std140, binding = 0) uniform Matrices
 uniform vec2 maxFrame;
 uniform mat4 model;
 uniform vec2 offset;
+uniform vec2 margin;
 uniform float vertexScale;
 
 out StandardVertexShaderOut
@@ -23,7 +24,8 @@ out StandardVertexShaderOut
 void main()
 {
 	o.FragPos = vec3(model * vec4(vertex.xy * vertexScale + instanceOffset + offset, 0.0f, 1.0));
-	o.TexCoords = (vertex.zw + instanceCurrFrame) / maxFrame;
+	
+	o.TexCoords = (vertex.zw * (1 - margin * 2) + margin + instanceCurrFrame) / maxFrame;
 
 	gl_Position = projection * view * model * vec4(vertex.xy * vertexScale + instanceOffset + offset, 0.0f, 1.0);
 }

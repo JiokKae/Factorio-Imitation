@@ -5,7 +5,7 @@
 #include "VertexArrayObject.h"
 #include "VertexBufferObject.h"
 
-HRESULT GLImage::Init(char const* sourceTexture, int maxFrameX, int maxFrameY, int width, int height)
+HRESULT GLImage::Init(char const* sourceTexture, int maxFrameX, int maxFrameY, float marginX, float marginY, int width, int height)
 {
 	this->sourceTexture = TextureManager::GetSingleton()->FindTexture(sourceTexture);
     if (sourceTexture == nullptr)
@@ -21,7 +21,8 @@ HRESULT GLImage::Init(char const* sourceTexture, int maxFrameX, int maxFrameY, i
 	maxFrame.y = maxFrameY;
     frameWidth = width / maxFrame.x;
     frameHeight = height / maxFrame.y;
-    
+    margin.x = marginX;
+    margin.y = marginY;
     scale = glm::vec2(1.0f, 1.0f);
     angle = 0.0f;
     offset = glm::vec2(0.0f, 0.0f);
@@ -66,6 +67,7 @@ void GLImage::Render(Shader* shader, float destX, float destY, int currFrameX, i
 
     shader->setVec2("currFrame", { currFrameX, currFrameY });
     shader->setVec2("maxFrame", maxFrame);
+    shader->setVec2("margin", margin);
     shader->setFloat("alpha", alpha);
 
     glm::vec3 position = glm::vec3(destX, destY, 0.0f);

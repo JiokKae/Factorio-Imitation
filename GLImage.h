@@ -17,11 +17,12 @@ class GLImage
 	float alpha;					// 이미지의 투명도
 	glm::vec2 scale;				// 이미지의 스케일
 	float angle;					// 이미지의 회전 각도
+	glm::vec2 margin;				// 이미지의 마진
 	bool isInit;
 
 public:
 	// 이미지 초기화
-	HRESULT Init(char const* sourceTexture, int maxFrameX = 1, int maxFrameY = 1, int width = -1, int height = -1);
+	HRESULT Init(char const* sourceTexture, int maxFrameX = 1, int maxFrameY = 1, float marginX = 0, float marginY = 0, int width = -1, int height = -1);
 
 	// 메모리 해제
 	void Release();
@@ -38,6 +39,7 @@ public:
 	glm::vec2 GetScale()				{ return scale; }
 	float GetFrameWidth()				{ return frameWidth; }
 	float GetFrameHeight()				{ return frameHeight; }
+	glm::vec2 GetMargin()				{ return margin; }
 	glm::ivec2 GetMaxFrame()			{ return maxFrame; }
 	float GetZoomedFrameWidth()			{ return frameWidth * scale.x; }
 	float GetZoomedFrameHeight()		{ return frameHeight * scale.y; }
