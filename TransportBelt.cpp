@@ -140,7 +140,7 @@ void TransportBelt::LateRender(Shader* lpShader)
 void TransportBelt::SetPosition(Vec2 position)
 {
 	Entity::SetPosition(position);
-	coord = POS_TO_COORD(this->position);
+	coord = glm::ivec2(POS_TO_COORD(this->position));
 
 	Tile* tile = TileManager::GetSingleton()->GetLpTile(coord.x, coord.y);
 	for (int i = 0; i < DIRECTION_END; i++)

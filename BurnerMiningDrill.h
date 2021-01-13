@@ -42,7 +42,7 @@ public:
 	virtual void Update();
 	virtual void FirstRender(Shader* lpShader) override;
 	virtual void Render(Shader* lpShader) override;
-
+	virtual bool InputItem(ItemInfo* inputItem) override;
 	float GetMaxPower()				{ return maxPower; }
 	float GetCurrPower()			{ return currPower; }
 	float GetProductionPercent()	{ return productionPercent; }	

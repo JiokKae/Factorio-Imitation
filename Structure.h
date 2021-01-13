@@ -24,6 +24,8 @@ public:
 	glm::ivec2 GetCoordSize()	{ return coordSize; }
 	FRECT GetFRect();
 	virtual FRECT GetCollisionFRect() override;
+	virtual bool InputItem(ItemInfo* item) { return false; };
+
 
 	Structure() {};
 	~Structure() {};

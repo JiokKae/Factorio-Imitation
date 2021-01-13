@@ -80,12 +80,9 @@ void BurnerMiningDrill::Update()
 	{
 		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
 		{
-			{
-				UIManager::GetSingleton()->ActiveUI("BurnerMiningDrillUI");
-				BurnerMiningDrillUI* bmdUI = (BurnerMiningDrillUI*)UIManager::GetSingleton()->GetLpCurrUI();
-				bmdUI->SetCurrBurnerMiningDrill(this);
-			}
-			
+			UIManager::GetSingleton()->ActiveUI("BurnerMiningDrillUI");
+			BurnerMiningDrillUI* bmdUI = (BurnerMiningDrillUI*)UIManager::GetSingleton()->GetLpCurrUI();
+			bmdUI->SetCurrBurnerMiningDrill(this);
 		}
 	}
 
@@ -105,7 +102,77 @@ void BurnerMiningDrill::Update()
 		break;
 
 	case BurnerMiningDrill::WAITING_SPACE:
+	{
+		Tile* outputTile = nullptr;
+		switch (direction)
+		{
+		case NORTH:
+			outputTile = miningAreaTiles[2]->GetAroundTile(direction);
+			break;
+		case EAST:
+			outputTile = miningAreaTiles[3]->GetAroundTile(direction);
+			break;
+		case SOUTH:
+			outputTile = miningAreaTiles[1]->GetAroundTile(direction);
+			break;
+		case WEST:
+			outputTile = miningAreaTiles[0]->GetAroundTile(direction);
+			break;
+		}
+		if (outputTile->GetLpSturcture())
+		{
+			if (outputTile->GetLpSturcture()->InputItem(new ItemInfo(COAL, 1)))
+			{
+				targetTile->GetLpOre()->AddAmount(-1);
+				productionPercent -= 1.0f;
+				if (IsMiningAreaEmpty())
+				{
+					status = NO_MINABLE_RESOURCES;
+					break;
+				}
+
+				for (int i = 0; i < miningArea.length(); i++)
+				{
+					if (miningAreaTiles[i]->GetLpOre()->GetAmount() > 0)
+					{
+						targetTile = miningAreaTiles[i];
+						break;
+					}
+				}
+				status = WORKING;
+			}
+		}
+		else
+		{
+			glm::ivec2 outCoord = outputTile->GetCoord();
+			glm::vec2 outPos = glm::vec2(COORD_TO_POS(outCoord));
+			targetTile->GetLpOre()->AddAmount(-1);
+			ItemOnGround* item = new ItemOnGround();
+			item->Init(ItemEnum::COAL);
+
+			item->SetPosition(outPos);
+
+			EntityManager::GetSingleton()->AddItemOnGround(item);
+			productionPercent -= 1.0f;
+
+			if (IsMiningAreaEmpty())
+			{
+				status = NO_MINABLE_RESOURCES;
+				break;
+			}
+
+			for (int i = 0; i < miningArea.length(); i++)
+			{
+				if (miningAreaTiles[i]->GetLpOre()->GetAmount() > 0)
+				{
+					targetTile = miningAreaTiles[i];
+					break;
+				}
+			}
+			status = WORKING;
+		}
 		break;
+	}
 
 	case BurnerMiningDrill::WORKING:
 		if (currPower <= 0)
@@ -121,29 +188,7 @@ void BurnerMiningDrill::Update()
 			// 채광 완료
 			if (productionPercent >= 1.0f)
 			{
-				targetTile->GetLpOre()->AddAmount(-1);
-				ItemOnGround* item = new ItemOnGround();
-				item->Init(ItemEnum::COAL);
-
-				item->SetPosition(Vec2(position.x + 32, position.y - 80));
-
-				EntityManager::GetSingleton()->AddItemOnGround(item);
-				productionPercent -= 1.0f;
-
-				if (IsMiningAreaEmpty())
-				{
-					status = NO_MINABLE_RESOURCES;
-					break;
-				}
-
-				for (int i = 0; i < miningArea.length(); i++)
-				{
-					if (miningAreaTiles[i]->GetLpOre()->GetAmount() > 0)
-					{
-						targetTile = miningAreaTiles[i];
-						break;
-					}
-				}
+				status = WAITING_SPACE;
 			}
 
 			time += TimerManager::GetSingleton()->GetTimeElapsed();
@@ -181,6 +226,33 @@ void BurnerMiningDrill::Render(Shader* lpShader)
 
 	image[direction].Render(lpShader, position.x, position.y,
 		frameX, frameY);
+}
+
+bool BurnerMiningDrill::InputItem(ItemInfo* inputItem)
+{
+	// 받는 아이템이 연료라면
+	if (g_itemSpecs[inputItem->id].fuel)
+	{
+		// 연료 슬롯에 연료가 있다면
+		if (waitingItemInfo->amount)
+		{
+			// 연료 종류가 같을 때만
+			if (waitingItemInfo->id == inputItem->id)
+			{
+				waitingItemInfo->amount += inputItem->amount;
+				return true;
+			}
+		}
+		// 연료 슬롯에 연료가 없다면
+		else
+		{
+			waitingItemInfo->id = inputItem->id;
+			waitingItemInfo->amount = inputItem->amount;
+			return true;
+		}
+	}
+
+	return false;
 }
 
 bool BurnerMiningDrill::IsMiningAreaEmpty()

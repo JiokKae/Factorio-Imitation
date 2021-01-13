@@ -12,7 +12,7 @@ HRESULT Structure::Init(int x, int y, DIRECTION direction, bool temp)
 	this->position = { (float)x, (float)y };
 	this->direction = direction;
 	this->temp = temp;
-	this->coord = POS_TO_COORD(position);
+	this->coord = ivec2(POS_TO_COORD(position));
 	this->passable = g_itemSpecs[itemId].passable;
 	this->coordSize = g_itemSpecs[itemId].coordSize;
 

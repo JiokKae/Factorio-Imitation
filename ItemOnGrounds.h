@@ -5,7 +5,7 @@
 class ItemOnGround;
 class ItemOnGrounds : public GameNode
 {
-	multimap<Vec2, ItemOnGround*, greater<Vec2>> mapItems;
+	multimap<ItemOnGround*, greater<Vec2>> mapItems;
 	multimap<Vec2, ItemOnGround*>::iterator it;
 
 	vector<ItemOnGround*> vecItemsInScreen;

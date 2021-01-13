@@ -60,7 +60,7 @@ void StructureBuilder::Update(vec2* playerPos)
 
     tempStructure->SetPosition( Vec2(buildPos.x, buildPos.y) );
     tempStructure->Update();
-    ivec2 buildCoord = POS_TO_COORD(buildPos);
+    ivec2 buildCoord = ivec2(POS_TO_COORD(buildPos));
     if (distance((vec2)buildPos, *playerPos) < canBuildDistance && CheckCanBuild(buildCoord, spec.coordSize))
     {
         buildable = true;

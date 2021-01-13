@@ -30,7 +30,9 @@ using namespace std;
 
 struct Vec2 : public glm::vec2
 {
-	Vec2(float x = 0, float y = 0)	{ this->x = static_cast<float>(x); this->y = static_cast<float>(y); };
+	Vec2() : glm::vec2() {};
+	template <typename T>
+	Vec2(T const& s1, T const& s2) : glm::vec2(s1, s2) { };
 	Vec2(glm::vec2 v)				{ this->x = v.x; this->y = v.y; };
 	bool operator<(const Vec2& vec) const;
 	bool operator>(const Vec2& vec) const;
@@ -75,6 +77,8 @@ typedef struct tagFRECT
 
 #define POSX_TO_COORDX(x)				( (x < 0)? int(x) / TILE_SIZE - 1 : int(x) / TILE_SIZE )
 #define POS_TO_COORD(pos)				{ POSX_TO_COORDX(pos.x), POSX_TO_COORDX(pos.y) }
+#define COORDX_TO_POSX(x)				( x * TILE_SIZE + TILE_SIZE / 2 )
+#define COORD_TO_POS(coord)				{ COORDX_TO_POSX(coord.x), COORDX_TO_POSX(coord.y) }
 #define TILECOORDX_TO_CHUNKCOORDX(x)	( (x < 0)? int(x) / CHUNK_IN_TILE - 1 : int(x) / CHUNK_IN_TILE )
 #define TILECOORD_TO_CHUNKCOORD(coord)	{ TILECOORDX_TO_CHUNKCOORDX(coord.x), TILECOORDX_TO_CHUNKCOORDX(coord.y) }
 

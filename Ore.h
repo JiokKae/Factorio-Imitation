@@ -24,7 +24,7 @@ public:
 	int GetAmount()		{ return amount; }
 	int GetRandFrameX() { return randFrameX; }
 
-	void AddAmount(int value) { this->amount -= value; }
+	void AddAmount(int value) { this->amount += value; }
 
 	int AmountToImageFrameY();
 

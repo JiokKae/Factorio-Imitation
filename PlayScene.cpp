@@ -194,7 +194,7 @@ void PlayScene::Update()
 
     g_cursorPosition = { (g_ptMouse.x - width / 2) / camera->GetZoom() + camera->GetPosition().x,
                     (g_ptMouse.y - height / 2) / camera->GetZoom() + camera->GetPosition().y };
-    g_cursorCoord = POS_TO_COORD(g_cursorPosition);
+    g_cursorCoord = vec2(POS_TO_COORD(g_cursorPosition));
 
 	camera->Update();
     
