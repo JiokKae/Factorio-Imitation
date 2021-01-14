@@ -4,6 +4,7 @@ HRESULT BurnerInserter::Init(int x, int y, DIRECTION direction, bool temp)
 {
 	itemId = ItemEnum::BURNER_INSERTER;
 	Structure::Init(x, y, direction, temp);
+	status = WORKING;
 
 	platformImage = new GLImage();
 	platformImage->Init("Entity/BurnerInserter-platform", 4, 1);
@@ -25,6 +26,8 @@ HRESULT BurnerInserter::Init(int x, int y, DIRECTION direction, bool temp)
 
 void BurnerInserter::Release()
 {
+	Structure::Release();
+
 	SAFE_RELEASE(handOpenImage);
 	SAFE_RELEASE(handBaseImage);
 	SAFE_RELEASE(platformImage);

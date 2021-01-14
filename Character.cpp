@@ -2,7 +2,9 @@
 #include "Animation.h"
 #include "GLImage.h"
 #include "Inventory.h"
-
+#include "Structure.h"
+#include "Tile.h"
+#include "TransportBelt.h"
 HRESULT Character::Init()
 {
 	position = { 0.0f, 0.0f };
@@ -32,6 +34,8 @@ HRESULT Character::Init()
 	animationSpeed[MINING] = 0.022f;
 	
 	inventory = new Inventory();
+	inventory->Init();
+
 	inventory->AddItem(new ItemInfo(COAL, 500));
 	inventory->AddItem(new ItemInfo(BURNER_MINING_DRILL, 40));
 	inventory->AddItem(new ItemInfo(IRON_PLATE, 30));
@@ -46,7 +50,7 @@ HRESULT Character::Init()
 	inventory->AddItem(new ItemInfo(NUCLEAR_FUEL, 15));
 	for (int i = 0; i < ItemEnum::END; i++)
 	{
-		inventory->AddItem(new ItemInfo(i, 3));
+		inventory->AddItem(new ItemInfo(i, 200));
 	}
 
 	speed = 566.0f;
@@ -80,6 +84,13 @@ void Character::Update()
 		break;
 	}
 
+	glm::vec2 coord = POS_TO_COORD(position);
+	Structure* structure = TileManager::GetSingleton()->GetLpTile(coord.x, coord.y)->GetLpSturcture();
+	if (structure && TransportBelt::IsTransportBelt(structure->GetItemId()))
+	{
+		TransportBelt* belt = (TransportBelt*)structure;
+		belt->FlowItem(this, false);
+	}
 
 	while (accumulateTime > animationSpeed[state])
 	{
@@ -155,7 +166,7 @@ void Character::Idle()
 		ChangeState(State::RUNNING);
 	}
 
-	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RBUTTON))
+	if (0 && KeyManager::GetSingleton()->IsOnceKeyDown(VK_RBUTTON))
 	{
 		ChangeState(State::MINING);
 	}
@@ -212,7 +223,7 @@ void Character::Running()
 	}
 	direction = newDirection;
 
-	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RBUTTON))
+	if (0 && KeyManager::GetSingleton()->IsOnceKeyDown(VK_RBUTTON))
 	{
 		ChangeState(State::MINING);
 	}

@@ -42,7 +42,7 @@ void Button::Release()
 
 void Button::Update()
 {
-	if (PtInRect(&rc, { (int)g_ptMouse.x, (int)g_ptMouse.y}))
+	if (PtInRect(&rc, { (int)g_ptMouse.x, WINSIZE_TITLE_Y - (int)g_ptMouse.y }))
 	{
 		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
 		{
@@ -51,7 +51,7 @@ void Button::Update()
 		else if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LBUTTON) && state == BUTTON_STATE::DOWN)
 		{
 			state = BUTTON_STATE::UP;
-
+			SoundManager::GetSingleton()->Play("GUI-ButtonMini", 0.8f);
 			// 버튼 기능 수행
 			ButtonFunc();
 		}

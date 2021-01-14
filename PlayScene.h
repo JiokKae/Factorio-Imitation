@@ -25,7 +25,6 @@ class PlayScene : public Scene
 
 	EntityManager* entityManager;
 
-	bool debuggingMode;
 public:
 	virtual HRESULT Init();
 	virtual void Release();

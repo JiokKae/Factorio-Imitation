@@ -5,7 +5,7 @@
 
 HRESULT TenCubeSpaceScene::Init()
 {
-	SetWindowSize((1920 - WINSIZE_X) / 2, (1080 - WINSIZE_Y) / 2, WINSIZE_X, WINSIZE_Y);
+	SetWindowSize((1920 - width) / 2, (1080 - height) / 2, width, height);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);

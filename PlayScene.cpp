@@ -21,8 +21,6 @@ HRESULT PlayScene::Init()
     glBlendEquation(GL_FUNC_ADD); // this is default
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    debuggingMode = true;
-
     UIManager::GetSingleton()->Init();
 
     entityManager = EntityManager::GetSingleton();
@@ -165,10 +163,6 @@ void PlayScene::Release()
 
 void PlayScene::Update()
 {
-    if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_F5))
-    {
-        debuggingMode = !debuggingMode;
-    }
 	if (KeyManager::GetSingleton()->IsStayKeyDown(VK_ESCAPE))
 	{
 		SceneManager::GetSingleton()->ChangeScene("TitleScene");
@@ -212,7 +206,7 @@ void PlayScene::Render(HDC hdc)
     pointLights[0].position = glm::vec3(entityManager->GetLpPlayer()->GetLpPosition()->x, entityManager->GetLpPlayer()->GetLpPosition()->y, 0.01f);
     glBufferSubData(GL_UNIFORM_BUFFER, DirectionalLight::std140Size(), sizeof(glm::vec3), glm::value_ptr(pointLights[0].position));
     // directional light(dynamic)
-    dirLight->diffuse = glm::vec3((sin(timeGetTime() / 3000.0f) + 1));
+    dirLight->diffuse = glm::vec3((sin(g_time / 3000.0f) + 1));
     //dirLight->diffuse = glm::vec3(0.0f);
     glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::vec4), sizeof(glm::vec3), glm::value_ptr(dirLight->diffuse));
 
@@ -249,7 +243,7 @@ void PlayScene::Render(HDC hdc)
     char str[128];
     textRenderer->RenderText("FPS: " + to_string(TimerManager::GetSingleton()->GetFPS()),                           10, height - 10);
 
-    if (debuggingMode)
+    if (g_debuggingMode)
     {
          textRenderer->RenderText("g_ptMouse : " + to_string(g_ptMouse.x) + ", " + to_string(g_ptMouse.y),               10, height - 40);
          sprintf_s(str, "cameraPos: (%.1f, %.1f)", camera->GetPosition().x, camera->GetPosition().y);

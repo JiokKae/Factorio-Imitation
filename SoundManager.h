@@ -12,7 +12,7 @@
 
 using namespace FMOD;
 
-#define SOUNDBUFFER		10
+#define SOUNDBUFFER		30
 
 class SoundManager : public Singleton<SoundManager>
 {

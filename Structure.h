@@ -30,7 +30,7 @@ protected:
 
 public:
 	virtual HRESULT Init(int x, int y, DIRECTION direction, bool temp = false);
-	virtual void Release();
+	virtual void Release() override;
 	virtual void Update();
 	virtual void Render(Shader* lpShader);
 	virtual void Render(Shader* shader, float x, float y);

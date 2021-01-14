@@ -5,7 +5,7 @@
 
 HRESULT LightingScene::Init()
 {
-    SetWindowSize((1920 - WINSIZE_X) / 2, (1080 - WINSIZE_Y) / 2, WINSIZE_X, WINSIZE_Y);
+    SetWindowSize((1920 - width) / 2, (1080 - height) / 2, width, height);
     glDepthFunc(GL_LESS);
 
 	// camera

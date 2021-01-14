@@ -154,6 +154,9 @@
     <Filter Include="MainGame\UI\StoneFurnaceUI">
       <UniqueIdentifier>{c7ada55c-2d8f-4ca4-b9f5-71c113f9fb97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Entity\Structure\WoodenChest">
+      <UniqueIdentifier>{9b2bdabc-9e82-4db7-b8e8-5b6a37adb896}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -348,6 +351,15 @@
     <ClInclude Include="SlotUI.h">
       <Filter>MainGame\UI\SlotUI</Filter>
     </ClInclude>
+    <ClInclude Include="FastTransportBelt.h">
+      <Filter>MainGame\Entity\Structure\TransportBelt</Filter>
+    </ClInclude>
+    <ClInclude Include="ExpressTransportBelt.h">
+      <Filter>MainGame\Entity\Structure\TransportBelt</Filter>
+    </ClInclude>
+    <ClInclude Include="WoodenChest.h">
+      <Filter>MainGame\Entity\Structure\WoodenChest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -538,6 +550,15 @@
     </ClCompile>
     <ClCompile Include="SlotUI.cpp">
       <Filter>MainGame\UI\SlotUI</Filter>
+    </ClCompile>
+    <ClCompile Include="FastTransportBelt.cpp">
+      <Filter>MainGame\Entity\Structure\TransportBelt</Filter>
+    </ClCompile>
+    <ClCompile Include="ExpressTransportBelt.cpp">
+      <Filter>MainGame\Entity\Structure\TransportBelt</Filter>
+    </ClCompile>
+    <ClCompile Include="WoodenChest.cpp">
+      <Filter>MainGame\Entity\Structure\WoodenChest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -20,7 +20,9 @@ glm::ivec2 TransportBelt::imageTopPosOffset[DIRECTION_END] = {
 HRESULT TransportBelt::Init(int x, int y, DIRECTION direction, bool temp)
 {
 	itemId = ItemEnum::TRANSPORT_BELT;
+	speed = 45.0f;
 	Structure::Init(x, y, direction, temp);
+	status = WORKING;
 
 	image = new GLImage();
 	image->Init("Entity/TransportBelt", 16, 20);
@@ -33,7 +35,7 @@ HRESULT TransportBelt::Init(int x, int y, DIRECTION direction, bool temp)
 		if (aroundTile)
 		{
 			Structure* structure = aroundTile->GetLpSturcture();
-			if (structure && structure->GetItemId() == TRANSPORT_BELT)
+			if (structure && IsTransportBelt(structure->GetItemId()))
 			{
 				aroundBelts[(DIRECTION)i] = (TransportBelt*)structure;
 				if(!temp)
@@ -42,11 +44,14 @@ HRESULT TransportBelt::Init(int x, int y, DIRECTION direction, bool temp)
 		}
 	}
 
+
 	return S_OK;
 }
 
 void TransportBelt::Release()
 {
+	Structure::Release();
+
 	SAFE_ARR_DELETE(aroundBelts);
 	SAFE_DELETE(image);
 }
@@ -80,7 +85,7 @@ void TransportBelt::Update()
 
 void TransportBelt::FirstRender(Shader* lpShader)
 {
-	int frame = g_time * 30;
+	int frame = g_time * speed;
 	glm::ivec2 maxFrame = image->GetMaxFrame();
 
 	image->Render(lpShader, position.x, position.y, frame % maxFrame.x, imageFrameYByDirection[direction][renderState]);
@@ -88,7 +93,7 @@ void TransportBelt::FirstRender(Shader* lpShader)
 
 void TransportBelt::Render(Shader* lpShader)
 {
-	int frame = g_time * 30;
+	int frame = g_time * speed;
 	glm::ivec2 maxFrame = image->GetMaxFrame();
 
 	TransportBelt* upBelt = aroundBelts[direction];
@@ -126,7 +131,7 @@ void TransportBelt::LateRender(Shader* lpShader)
 
 void TransportBelt::Render(Shader* shader, float posX, float posY)
 {
-	int frame = g_time * 30;
+	int frame = g_time * speed;
 	glm::ivec2 maxFrame = image->GetMaxFrame();
 
 	image->Render(shader, posX, posY, frame % maxFrame.x, imageFrameYByDirection[direction][renderState]);
@@ -160,37 +165,94 @@ void TransportBelt::Render(Shader* shader, float posX, float posY)
 
 }
 
-void TransportBelt::FlowItem(ItemOnGround* item)
+void TransportBelt::FlowItem(Entity* item, bool isItem)
 {
-	item->SetPosition(item->GetPosition() + Vec2(0.0, 7.5 * 14 * TimerManager::GetSingleton()->GetTimeElapsed()));
+	Vec2 itemPosition = item->GetPosition();
+
+	switch (renderState)
+	{
+	case TransportBelt::UP:
+	{
+		Vec2 flowVector;
+		switch (direction)
+		{
+		case NORTH:
+			flowVector = Vec2(0.0f, speed * 2.0f);
+			if (itemPosition.x < position.x)
+				itemPosition.x = position.x - 15;
+			else
+				itemPosition.x = position.x + 15;
+			break;
+		case EAST:
+			flowVector = Vec2(speed * 2.0f, 0.0f);
+			if (itemPosition.y < position.y)
+				itemPosition.y = position.y - 15;
+			else
+				itemPosition.y = position.y + 15;
+			break;
+		case SOUTH:
+			flowVector = Vec2(0.0f, -speed * 2.0f);
+			if (itemPosition.x < position.x)
+				itemPosition.x = position.x - 15;
+			else
+				itemPosition.x = position.x + 15;
+			break;
+		case WEST:
+			flowVector = Vec2(-speed * 2.0f, 0.0f);
+			if (itemPosition.y < position.y)
+				itemPosition.y = position.y - 15;
+			else
+				itemPosition.y = position.y + 15;
+			break;
+		}
+		if(isItem)
+			item->SetPosition(itemPosition + flowVector * TimerManager::GetSingleton()->GetTimeElapsed());
+		else
+			item->SetPosition(item->GetPosition() + flowVector * TimerManager::GetSingleton()->GetTimeElapsed());
+		break;
+	}
+	case TransportBelt::LEFT_UP:
+	{
+		Vec2 zeroPoint;
+		switch (direction)
+		{
+		case NORTH:	zeroPoint = Vec2(position.x - TILE_SIZE / 2, position.y + TILE_SIZE / 2); break;
+		case EAST:	zeroPoint = Vec2(position.x + TILE_SIZE / 2, position.y + TILE_SIZE / 2); break;
+		case SOUTH:	zeroPoint = Vec2(position.x + TILE_SIZE / 2, position.y - TILE_SIZE / 2); break;
+		case WEST:	zeroPoint = Vec2(position.x - TILE_SIZE / 2, position.y - TILE_SIZE / 2); break;
+		}
+		float angle = glm::atan((itemPosition.y - zeroPoint.y) , (itemPosition.x - zeroPoint.x)) + glm::pi<double>() / 2.025f;
+		item->SetPosition(itemPosition + Vec2(cos(angle), sin(angle)) * speed * 2.0f * TimerManager::GetSingleton()->GetTimeElapsed());
+		break;
+	}
+	
+	case TransportBelt::RIGHT_UP:
+	{
+		Vec2 zeroPoint;
+		switch (direction)
+		{
+		case NORTH:	zeroPoint = Vec2(position.x + TILE_SIZE / 2, position.y + TILE_SIZE / 2); break;
+		case EAST:	zeroPoint = Vec2(position.x + TILE_SIZE / 2, position.y - TILE_SIZE / 2); break;
+		case SOUTH:	zeroPoint = Vec2(position.x - TILE_SIZE / 2, position.y - TILE_SIZE / 2); break;
+		case WEST:	zeroPoint = Vec2(position.x - TILE_SIZE / 2, position.y + TILE_SIZE / 2); break;
+		}
+		float angle = glm::atan((itemPosition.y - zeroPoint.y), (itemPosition.x - zeroPoint.x)) + glm::pi<double>() / 2.025f;
+		item->SetPosition(itemPosition + Vec2(-cos(angle), -sin(angle)) * speed * 2.0f * TimerManager::GetSingleton()->GetTimeElapsed());
+		break;
+	}
+	
+	}
 }
 
 bool TransportBelt::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 {
-	if (pos.x >= 32)
-	{
-		ItemOnGround* item = new ItemOnGround();
-		item->Init((ItemEnum)inputItem->id);
-		item->SetPosition(this->position + pos);
-		leftline.push_back(item);
-		EntityManager::GetSingleton()->AddItemOnGround(item);
+	ItemOnGround* item = new ItemOnGround();
+	item->Init((ItemEnum)inputItem->id);
+	item->SetPosition(this->position + pos);
+	EntityManager::GetSingleton()->AddItemOnGround(item);
 
-		SAFE_DELETE(inputItem);
-		return true;
-	}
-	else
-	{
-		ItemOnGround* item = new ItemOnGround();
-		item->Init((ItemEnum)inputItem->id);
-		item->SetPosition(this->position + pos);
-		rightline.push_back(item);
-		EntityManager::GetSingleton()->AddItemOnGround(item);
-
-		SAFE_DELETE(inputItem);
-		return true;
-	}
 	SAFE_DELETE(inputItem);
-	return false;
+	return true;
 }
 
 void TransportBelt::SetPosition(Vec2 position)
@@ -206,7 +268,7 @@ void TransportBelt::SetPosition(Vec2 position)
 		if (aroundTile)
 		{
 			Structure* structure = aroundTile->GetLpSturcture();
-			if (structure && structure->GetItemId() == TRANSPORT_BELT)
+			if (structure && IsTransportBelt(structure->GetItemId()))
 			{
 				aroundBelts[(DIRECTION)i] = (TransportBelt*)structure;
 				//((TransportBelt*)structure)->SetAroundBelts(DIRECTION((i + 2) % DIRECTION_END), this);
@@ -218,4 +280,16 @@ void TransportBelt::SetPosition(Vec2 position)
 void TransportBelt::SetAroundBelts(DIRECTION direction, TransportBelt* aroundBelt)
 {
 	aroundBelts[direction] = aroundBelt;
+}
+
+bool TransportBelt::IsTransportBelt(int itemEnum)
+{
+	switch (itemEnum)
+	{
+	case TRANSPORT_BELT:
+	case FAST_TRANSPORT_BELT:
+	case EXPRESS_TRANSPORT_BELT:
+		return true;
+	}
+	return false;
 }

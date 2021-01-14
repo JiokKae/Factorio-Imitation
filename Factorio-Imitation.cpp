@@ -15,26 +15,30 @@ glm::vec2	g_cursorPosition;	// 마우스 커서의 포지션
 glm::vec2	g_cursorCoord;		// 마우스 커서의 좌표
 glm::vec2	g_currScreenSize;	// 현재 씬 윈도우의 크기
 float		g_time;
+bool		g_debuggingMode;
 ItemSpec	g_itemSpecs[] = {
-//		name					buildable	coordSize	direction	passable	fuel,	fuelValue
-//														Count
-	{	"Assembling Machine 1",	true,		{ 3, 3 },	1,			FALSE,		FALSE,	NULL,		},
-	{	"Burner Mining Drill",	true,		{ 2, 2 },	4,			FALSE,		FALSE,	NULL,		},
-	{	"Iron Plate",			FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
-	{	"Coal",					FALSE,		{ 0, 0 },	NULL,		FALSE,		true,	4000,		},
-	{	"Transport Belt",		true,		{ 1, 1 },	4,			true,		FALSE,	NULL,		},
-	{	"Burner Inserter",		true,		{ 1, 1 },	4,			FALSE,		FALSE,	NULL,		},
-	{	"Wood",					FALSE,		{ 0, 0 },	NULL,		FALSE,		true,	2000,		},
-	{	"Stone Furnace",		true,		{ 2, 2 },	1,			FALSE,		FALSE,	NULL,		},
-	{	"Solid Fuel",			FALSE,		{ 0, 0 },	NULL,		FALSE,		true,	12000,		},
-	{	"Rocket Fuel",			FALSE,		{ 0, 0 },	NULL,		FALSE,		true,	100000,		},
-	{	"Nuclear Fuel",			FALSE,		{ 0, 0 },	NULL,		FALSE,		true,	1210000,	},
-	{	"Iron Ore",				FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
-	{	"Copper Ore",			FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
-	{	"Copper Plate",			FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
-	{	"Stone",				FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
-	{	"Stone Brick",			FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
-	{	"Steel Plate",			FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
+//		name						buildable	coordSize	direction	passable	fuel,	fuelValue
+//															Count
+	{	"Assembling Machine 1",		true,		{ 3, 3 },	1,			FALSE,		FALSE,	NULL,		},
+	{	"Burner Mining Drill",		true,		{ 2, 2 },	4,			FALSE,		FALSE,	NULL,		},
+	{	"Iron Plate",				FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
+	{	"Coal",						FALSE,		{ 0, 0 },	NULL,		FALSE,		true,	4000,		},
+	{	"Transport Belt",			true,		{ 1, 1 },	4,			true,		FALSE,	NULL,		},
+	{	"Burner Inserter",			true,		{ 1, 1 },	4,			FALSE,		FALSE,	NULL,		},
+	{	"Wood",						FALSE,		{ 0, 0 },	NULL,		FALSE,		true,	2000,		},
+	{	"Stone Furnace",			true,		{ 2, 2 },	1,			FALSE,		FALSE,	NULL,		},
+	{	"Solid Fuel",				FALSE,		{ 0, 0 },	NULL,		FALSE,		true,	12000,		},
+	{	"Rocket Fuel",				FALSE,		{ 0, 0 },	NULL,		FALSE,		true,	100000,		},
+	{	"Nuclear Fuel",				FALSE,		{ 0, 0 },	NULL,		FALSE,		true,	1210000,	},
+	{	"Iron Ore",					FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
+	{	"Copper Ore",				FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
+	{	"Copper Plate",				FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
+	{	"Stone",					FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
+	{	"Stone Brick",				FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
+	{	"Steel Plate",				FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
+	{	"Wooden Chest",				true,		{ 1, 1 },	1,			FALSE,		FALSE,	NULL,		},
+	{	"Fast Transport Belt",		true,		{ 1, 1 },	4,			true,		FALSE,	NULL,		},
+	{	"Express Transport Belt",	true,		{ 1, 1 },	4,			true,		FALSE,	NULL,		},
 };
 enum ItemEnum;	// 정의 피킹용
 

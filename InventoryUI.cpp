@@ -14,9 +14,6 @@ HRESULT InventoryUI::Init()
 			slotUI[y * SLOT_X + x].SetParent(this);
 		}
 	}
-
-	this->inventory = EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory();
-
 	return S_OK;
 }
 
@@ -27,7 +24,7 @@ void InventoryUI::Release()
 
 void InventoryUI::Update()
 {
-	vector<ItemInfo*> arr = inventory->GetItemInfoArray();
+	vector<ItemInfo*> arr = EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->GetItemInfoArray();
 	for (int i = 0; i < arr.size(); i++)
 	{
 		slotUI[i].Update(arr[i]);

@@ -20,37 +20,27 @@ HRESULT SceneManager::Init()
 void SceneManager::Release()
 {
 	map<string, Scene*>::iterator it;
-	for (it = mapSceneData.begin(); it != mapSceneData.end(); )
+	it = mapSceneData.begin();
+	while (it != mapSceneData.end())
 	{
-		if (it->second)
-		{
-			(it->second)->Release();
-			delete (it->second);
-			it = mapSceneData.erase(it);
-		}
-		else
-		{
-			it++;
-		}
+		SAFE_RELEASE(it->second);
+		it = mapSceneData.erase(it);
 	}
 	mapSceneData.clear();
-
-	for (it = mapLoadingSceneData.begin(); it != mapLoadingSceneData.end(); )
+	
+	it = mapLoadingSceneData.begin();
+	while (it != mapLoadingSceneData.end())
 	{
-		if (it->second)
-		{
-			(it->second)->Release();
-			delete (it->second);
-			it = mapLoadingSceneData.erase(it);
-		}
-		else
-		{
-			it++;
-		}
+		SAFE_RELEASE(it->second);
+		it = mapLoadingSceneData.erase(it);
 	}
 	mapLoadingSceneData.clear();
 
 	SAFE_RELEASE(backBuffer);
+
+	currScene = nullptr;
+	loadingScene = nullptr;
+	readyScene = nullptr;
 
 	ReleaseSingleton();
 }
@@ -65,7 +55,7 @@ void SceneManager::Render(HDC hdc)
 {
 	if (currScene)
 	{
-		if (((Scene*)currScene)->IsUseBackBuffer())
+		if (currScene->IsUseBackBuffer())
 		{
 			currScene->Render(backDC);
 			TimerManager::GetSingleton()->Render(backDC);

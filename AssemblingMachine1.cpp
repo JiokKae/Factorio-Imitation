@@ -20,6 +20,8 @@ HRESULT AssemblingMachine1::Init(int x, int y, DIRECTION direction, bool temp)
 
 void AssemblingMachine1::Release()
 {
+	Structure::Release();
+
 	SAFE_RELEASE(image);
 	SAFE_RELEASE(shadow);
 }
@@ -27,14 +29,6 @@ void AssemblingMachine1::Release()
 void AssemblingMachine1::Update()
 {
 	Structure::Update();
-
-	if (PtInFRect(GetFRect(), g_cursorPosition))
-	{
-		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
-		{
-			//UIManager::GetSingleton()->ActiveUI("BurnerMiningDrillUI");
-		}
-	}
 }
 
 void AssemblingMachine1::FirstRender(Shader* shader)

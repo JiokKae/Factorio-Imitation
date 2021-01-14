@@ -1,7 +1,8 @@
 #pragma once
 #include "UI.h"
-class InventorySlotUI;
+
 struct ItemInfo;
+class Structure;
 class HandUI : public UI
 {
 	ItemInfo* handItem;
@@ -10,6 +11,11 @@ class HandUI : public UI
 
 	GLImage* background;
 	GLImage* backgroundName;
+
+	GLImage* dismantleBar;
+	GLImage* dismantleEmptyBar;
+	float dismantlePercent;
+	Structure* dismantleStructure;
 public:
 	virtual HRESULT Init() override;
 	virtual void Release() override;
@@ -17,7 +23,7 @@ public:
 	virtual void Render(Shader* shader) override;
 
 	ItemInfo* GetHandItem() { return handItem; }
-
+	bool DismantleStructure(Structure* structure);
 	bool IsEmpty();
 };
 

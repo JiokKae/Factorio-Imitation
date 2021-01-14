@@ -12,10 +12,10 @@ void ItemOnGround::Update()
 {
 	glm::vec2 coord = POS_TO_COORD(position);
 	Structure* structure = TileManager::GetSingleton()->GetLpTile(coord.x, coord.y)->GetLpSturcture();
-	if (structure && structure->GetItemId() == TRANSPORT_BELT)
+	if (structure && TransportBelt::IsTransportBelt(structure->GetItemId()))
 	{
 		TransportBelt* belt = (TransportBelt*)structure;
-		belt->FlowItem(this);
+		belt->FlowItem(this, true);
 	}
 }
 

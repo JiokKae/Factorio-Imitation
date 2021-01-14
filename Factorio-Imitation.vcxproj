@@ -166,6 +166,8 @@
     <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="ExpressTransportBelt.h" />
+    <ClInclude Include="FastTransportBelt.h" />
     <ClInclude Include="FreeCamera.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="FuelSlotUI.h" />
@@ -215,6 +217,7 @@
     <ClInclude Include="VertexArrayObject.h" />
     <ClInclude Include="VertexBufferObject.h" />
     <ClInclude Include="StructureBuilder.h" />
+    <ClInclude Include="WoodenChest.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
@@ -232,6 +235,8 @@
     <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="ExpressTransportBelt.cpp" />
+    <ClCompile Include="FastTransportBelt.cpp" />
     <ClCompile Include="framework.cpp" />
     <ClCompile Include="FreeCamera.cpp" />
     <ClCompile Include="Factorio-Imitation.cpp" />
@@ -280,6 +285,7 @@
     <ClCompile Include="VertexArrayObject.cpp" />
     <ClCompile Include="VertexBufferObject.cpp" />
     <ClCompile Include="StructureBuilder.cpp" />
+    <ClCompile Include="WoodenChest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="1.colors.frag" />

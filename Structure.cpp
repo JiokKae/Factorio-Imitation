@@ -7,6 +7,11 @@
 #include "TransportBelt.h"
 #include "BurnerInserter.h"
 #include "StoneFurnace.h"
+#include "WoodenChest.h"
+#include "FastTransportBelt.h"
+#include "ExpressTransportBelt.h"
+#include "Character.h"
+#include "Inventory.h"
 
 const char* Structure::statusString[STATUS::END] = {
 	"No Power",
@@ -104,11 +109,14 @@ Structure* Structure::CreateStructure(ItemEnum itemId)
 {
 	switch (itemId)
 	{
-	case ASSEMBLING_MACHINE_1:	return new AssemblingMachine1();
-	case BURNER_MINING_DRILL:	return new BurnerMiningDrill();
-	case TRANSPORT_BELT:		return new TransportBelt();
-	case BURNER_INSERTER:		return new BurnerInserter();
-	case STONE_FURNACE:			return new StoneFurnace();
+	case ASSEMBLING_MACHINE_1:		return new AssemblingMachine1();
+	case BURNER_MINING_DRILL:		return new BurnerMiningDrill();
+	case TRANSPORT_BELT:			return new TransportBelt();
+	case BURNER_INSERTER:			return new BurnerInserter();
+	case STONE_FURNACE:				return new StoneFurnace();
+	case WOODEN_CHEST:				return new WoodenChest();
+	case FAST_TRANSPORT_BELT:		return new FastTransportBelt();
+	case EXPRESS_TRANSPORT_BELT:	return new ExpressTransportBelt();
 	}
 	return nullptr;
 }

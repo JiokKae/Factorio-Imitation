@@ -64,6 +64,8 @@ HRESULT BurnerMiningDrill::Init(int x, int y, DIRECTION direction, bool temp)
 
 void BurnerMiningDrill::Release()
 {
+	Structure::Release();
+
 	SAFE_ARR_RELEASE(image, 4);
 	SAFE_ARR_RELEASE(shadow, 4);
 }
@@ -187,26 +189,30 @@ bool BurnerMiningDrill::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 bool BurnerMiningDrill::OutputItem()
 {
 	Tile* outputTile = nullptr;
+	glm::vec2 outputPos = {};
 	switch (direction)
 	{
 	case NORTH:
 		outputTile = miningAreaTiles[2]->GetAroundTile(direction);
+		outputPos = glm::vec2(0, -15);
 		break;
 	case EAST:
 		outputTile = miningAreaTiles[3]->GetAroundTile(direction);
+		outputPos = glm::vec2(-15, 0);
 		break;
 	case SOUTH:
 		outputTile = miningAreaTiles[1]->GetAroundTile(direction);
+		outputPos = glm::vec2(0, 15);
 		break;
 	case WEST:
 		outputTile = miningAreaTiles[0]->GetAroundTile(direction);
+		outputPos = glm::vec2(15, 0);
 		break;
 	}
-	glm::vec2 outputPos = {};
 
 	if (outputTile->GetLpSturcture())
 	{
-		if (outputTile->GetLpSturcture()->InputItem(new ItemInfo(targetTile->GetLpOre()->GetItemEnum(), 1), glm::vec2(0.0f)))
+		if (outputTile->GetLpSturcture()->InputItem(new ItemInfo(targetTile->GetLpOre()->GetItemEnum(), 1), outputPos))
 		{
 			targetTile->GetLpOre()->AddAmount(-1);
 			productionPercent -= 1.0f;

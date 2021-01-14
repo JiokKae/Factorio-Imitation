@@ -28,6 +28,11 @@ void EntityManager::Release()
     SAFE_RELEASE(itemOnGrounds);
     SAFE_RELEASE(player);
 
+    it = mapEntitys.begin();
+    while (it != mapEntitys.end())
+    {
+        it = mapEntitys.erase(it);
+    }
     mapEntitys.clear();
 
     ReleaseSingleton();
@@ -131,7 +136,18 @@ void EntityManager::AddEntity(Entity* entity)
 
 void EntityManager::DeleteEntity(Entity* entity)
 {
-    //vecEntitys.erase(std::remove(vecEntitys.begin(), vecEntitys.end(), entity), vecEntitys.end());
+    it = mapEntitys.begin();
+    while (it != mapEntitys.end())
+    {
+        if (it->second == entity)
+        {
+            SAFE_RELEASE(entity);
+            mapEntitys.erase(it);
+            break;
+        }
+        else
+            ++it;
+    }
 
 }
 

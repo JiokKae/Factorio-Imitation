@@ -46,7 +46,7 @@ void FreeCamera::Update()
 	RECT winRect = GetWindowRect();
 
 	float xoffset = g_ptMouse.x - WINSIZE_X / 2;
-	float yoffset = -g_ptMouse.y + WINSIZE_Y / 2; // y 좌표의 범위는 밑에서부터 위로가기 때문에 반대로 바꿉니다.
+	float yoffset = g_ptMouse.y - WINSIZE_Y / 2; // y 좌표의 범위는 밑에서부터 위로가기 때문에 반대로 바꿉니다.
 	SetCursorPos(winRect.left+ WINSIZE_X / 2, winRect.top + WINSIZE_Y / 2);
 	xoffset *= mouseSensitivity;
 	yoffset *= mouseSensitivity;

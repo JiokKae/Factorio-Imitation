@@ -47,6 +47,8 @@ HRESULT StoneFurnace::Init(int x, int y, DIRECTION direction, bool temp)
 
 void StoneFurnace::Release()
 {
+	Structure::Release();
+
 	SAFE_RELEASE(mainImage);
 	SAFE_RELEASE(shadowImage);
 	SAFE_RELEASE(fireImage);
