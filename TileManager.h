@@ -13,10 +13,12 @@ private:
 	map<int, map<int, Chunk*>>::iterator bigIt;
 	map<int, Chunk*>::iterator smallIt;
 	GLImage* tileImages;
-	GLImage* oreImages;
+	map<int, GLImage*> mapOreImages;
 
 	Shader* instancingShader;
 	VertexArrayObject* tilesVAO;
+	glm::vec2* tileCurrFrame;
+	glm::vec2* tileOffset;
 public:
 	virtual HRESULT Init();
 	virtual void Release();
@@ -29,7 +31,6 @@ public:
 
 	TileManager() 
 		: tileImages(nullptr)
-		, oreImages(nullptr)
 	{};
 };
 

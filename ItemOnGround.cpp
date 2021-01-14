@@ -1,8 +1,22 @@
 #include "ItemOnGround.h"
+#include "Tile.h"
+#include "Structure.h"
+#include "TransportBelt.h"
 
 void ItemOnGround::Init(ItemEnum itemId)
 {
 	this->itemId = itemId;
+}
+
+void ItemOnGround::Update()
+{
+	glm::vec2 coord = POS_TO_COORD(position);
+	Structure* structure = TileManager::GetSingleton()->GetLpTile(coord.x, coord.y)->GetLpSturcture();
+	if (structure && structure->GetItemId() == TRANSPORT_BELT)
+	{
+		TransportBelt* belt = (TransportBelt*)structure;
+		belt->FlowItem(this);
+	}
 }
 
 FRECT ItemOnGround::GetCollisionFRect()

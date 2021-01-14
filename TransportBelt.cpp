@@ -1,6 +1,7 @@
 #include "TransportBelt.h"
 #include "Tile.h"
-
+#include "ItemOnGround.h"
+#include "ItemOnGrounds.h"
 int TransportBelt::imageFrameYByDirection[DIRECTION_END][TransportBelt::ImageIndex::END] = {
 //			TOP			BOTTOM		UP			LEFT_UP		RIGHT_UP
 			2,			7,			17,			13,			15,			// NORTH
@@ -121,7 +122,75 @@ void TransportBelt::Render(Shader* lpShader)
 
 void TransportBelt::LateRender(Shader* lpShader)
 {
+}
 
+void TransportBelt::Render(Shader* shader, float posX, float posY)
+{
+	int frame = g_time * 30;
+	glm::ivec2 maxFrame = image->GetMaxFrame();
+
+	image->Render(shader, posX, posY, frame % maxFrame.x, imageFrameYByDirection[direction][renderState]);
+
+	TransportBelt* upBelt = aroundBelts[direction];
+	if (upBelt)
+	{
+		if (!(upBelt->GetDirection() == OPPOSITE_DIR(direction)
+			|| upBelt->GetDirection() == direction && upBelt->GetRenderState() == UP
+			|| upBelt->GetDirection() == LEFT_DIR(direction) && upBelt->GetRenderState() == LEFT_UP
+			|| upBelt->GetDirection() == RIGHT_DIR(direction) && upBelt->GetRenderState() == RIGHT_UP))
+			image->Render(shader, posX + imageTopPosOffset[direction].x, posY + imageTopPosOffset[direction].y, frame % maxFrame.x, imageFrameYByDirection[direction][ImageIndex::TOP]);
+	}
+	else
+		image->Render(shader, posX + imageTopPosOffset[direction].x, posY + imageTopPosOffset[direction].y, frame % maxFrame.x, imageFrameYByDirection[direction][ImageIndex::TOP]);
+
+	if (renderState == UP)
+	{
+		TransportBelt* downBelt = aroundBelts[OPPOSITE_DIR(direction)];
+		if (downBelt)
+		{
+			if (!(downBelt->GetDirection() == direction
+				|| downBelt->GetDirection() == OPPOSITE_DIR(direction) && downBelt->GetRenderState() == UP
+				|| downBelt->GetDirection() == LEFT_DIR(direction) && downBelt->GetRenderState() == RIGHT_UP
+				|| downBelt->GetDirection() == RIGHT_DIR(direction) && downBelt->GetRenderState() == LEFT_UP))
+				image->Render(shader, posX - imageTopPosOffset[direction].x, posY - imageTopPosOffset[direction].y, frame % maxFrame.x, imageFrameYByDirection[direction][ImageIndex::BOTTOM]);
+		}
+		else
+			image->Render(shader, posX - imageTopPosOffset[direction].x, posY - imageTopPosOffset[direction].y, frame % maxFrame.x, imageFrameYByDirection[direction][ImageIndex::BOTTOM]);
+	}
+
+}
+
+void TransportBelt::FlowItem(ItemOnGround* item)
+{
+	item->SetPosition(item->GetPosition() + Vec2(0.0, 7.5 * 14 * TimerManager::GetSingleton()->GetTimeElapsed()));
+}
+
+bool TransportBelt::InputItem(ItemInfo* inputItem, glm::vec2 pos)
+{
+	if (pos.x >= 32)
+	{
+		ItemOnGround* item = new ItemOnGround();
+		item->Init((ItemEnum)inputItem->id);
+		item->SetPosition(this->position + pos);
+		leftline.push_back(item);
+		EntityManager::GetSingleton()->AddItemOnGround(item);
+
+		SAFE_DELETE(inputItem);
+		return true;
+	}
+	else
+	{
+		ItemOnGround* item = new ItemOnGround();
+		item->Init((ItemEnum)inputItem->id);
+		item->SetPosition(this->position + pos);
+		rightline.push_back(item);
+		EntityManager::GetSingleton()->AddItemOnGround(item);
+
+		SAFE_DELETE(inputItem);
+		return true;
+	}
+	SAFE_DELETE(inputItem);
+	return false;
 }
 
 void TransportBelt::SetPosition(Vec2 position)

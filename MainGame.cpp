@@ -38,6 +38,9 @@ HRESULT MainGame::Init()
 	TextureManager::GetSingleton()->Init();
 	RecipeManager::GetSingleton()->Init();
 
+	// TextRenderer Init
+	TextRenderer::GetSingleton()->Init();
+	TextRenderer::GetSingleton()->Load("Fonts/NotoSans-Bold.ttf", 24);
 	SoundLoad();
 
 	// Add Scene
@@ -63,6 +66,7 @@ HRESULT MainGame::Init()
 void MainGame::Release()
 {
 	// Singleton Release
+	TextRenderer::GetSingleton()->Release();
 	RecipeManager::GetSingleton()->Release();
 	TextureManager::GetSingleton()->Release();
 	SceneManager::GetSingleton()->Release();
@@ -135,6 +139,9 @@ void MainGame::ImageLoad()
 	textureManager->AddTexture("Entity/StoneFurnace-shadow",	"graphics/entity/stone_furnace/hr-stone-furnace-shadow.png");
 	textureManager->AddTexture("Entity/StoneFurnace-fire",		"graphics/entity/stone_furnace/hr-stone-furnace-fire.png");
 
+	textureManager->AddTexture("Entity/IronOre",			"graphics/entity/iron_ore/hr-iron-ore.png");
+	textureManager->AddTexture("Entity/Coal",				"graphics/entity/coal/hr-coal.png");
+
 	textureManager->AddTexture("UI/CharacterUI",			"graphics/ui/CharacterUI.png",				false);
 	textureManager->AddTexture("UI/SlotUI",					"graphics/ui/slotUI.png",					false);
 	textureManager->AddTexture("UI/BunerMiningDrillUI",		"graphics/ui/BunerMiningDrillUI.png",		false);
@@ -143,13 +150,14 @@ void MainGame::ImageLoad()
 	textureManager->AddTexture("UI/GreenProgressiveBarUI",	"graphics/ui/greenProgressiveBarUI.png",	false);
 	textureManager->AddTexture("UI/FuelSlotUI",				"graphics/ui/fuelSlotUI.png",				false);
 	textureManager->AddTexture("UI/StoneFurnaceUI",			"graphics/ui/stoneFurnaceUI.png",			false);
-
+	textureManager->AddTexture("UI/BackgroundUI",			"graphics/ui/BacgroundUI.png",				false);
+	textureManager->AddTexture("UI/BackgroundNameUI",		"graphics/ui/BacgroundNameUI.png",			false);
+	
 	textureManager->AddTexture("Icons/Hand",				"graphics/icons/hand.png");
 	textureManager->AddTexture("Icons/AllItems",			"graphics/icons/all-items.png");
 
 	textureManager->AddTexture("Terrain/Dirt_1",			"graphics/terrain/hr-dirt-1.png");
 
-	textureManager->AddTexture("IronOre",					"graphics/entity/iron_ore/hr-iron-ore.png");
 }
 
 void MainGame::SoundLoad()

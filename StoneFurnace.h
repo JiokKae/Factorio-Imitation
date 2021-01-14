@@ -8,16 +8,6 @@ class Tile;
 class Recipe;
 class StoneFurnace : public Structure
 {
-public:
-	enum STATUS {
-		NO_POWER,
-		NO_RECIPE,
-		WORKING,
-		ITEM_PRODUCTION_OVERLOAD,
-		DESTORY,
-		END
-	};
-
 private:
 	GLImage* mainImage;
 	GLImage* shadowImage;
@@ -48,12 +38,13 @@ public:
 	virtual void Update();
 	virtual void FirstRender(Shader* lpShader) override;
 	virtual void Render(Shader* lpShader) override;
-	
+	virtual void Render(Shader* shader, float posX, float posY) override;
+
 	virtual bool InputItem(ItemInfo* inputItem, glm::vec2 pos) override;
 	virtual void ClickEvent() override;
 	
 	Recipe* FindRecipeByIngredient(int itemEnum);
-	string ToString() override;
+	virtual string ToString() override;
 
 
 	float GetMaxPower()				{ return maxPower; }

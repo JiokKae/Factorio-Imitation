@@ -7,26 +7,15 @@ class GLImage;
 class Tile;
 class BurnerMiningDrill : public Structure
 {
-public:
-	enum STATUS {
-		NOPOWER,
-		WORKING,
-		WAITING_SPACE,
-		NO_MINABLE_RESOURCES,
-		DESTORY,
-		END
-	};
-
 private:
 	GLImage* image;
 	GLImage* shadow;
 	glm::vec2 imageAniOffset[DIRECTION_END];
 	glm::vec2 shadowAniOffset[DIRECTION_END];
 	
-	STATUS status;			// 채광 드릴의 상태
-	float miningSpeed;		// 채광 스피드
-	float energyConsumption;		// 채광 소모파워	kw
-	glm::ivec2 miningArea;	// 채광 영역
+	float miningSpeed;			// 채광 스피드
+	float energyConsumption;	// 채광 소모파워	kw
+	glm::ivec2 miningArea;		// 채광 영역
 
 	float currPower;
 	float maxPower;
@@ -41,8 +30,9 @@ public:
 	virtual HRESULT Init(int x, int y, DIRECTION direction, bool temp = false) override;
 	virtual void Release();
 	virtual void Update();
-	virtual void FirstRender(Shader* lpShader) override;
-	virtual void Render(Shader* lpShader) override;
+	virtual void FirstRender(Shader* shader) override;
+	virtual void Render(Shader* shader) override;
+	virtual void Render(Shader* shader, float posX, float posY) override;
 
 	virtual bool InputItem(ItemInfo* inputItem, glm::vec2 pos) override;
 	virtual bool OutputItem() override;
@@ -58,7 +48,6 @@ public:
 	BurnerMiningDrill()
 		: image(nullptr)
 		, shadow(nullptr)
-		, status(NOPOWER)
 		, currPower(0.0f)
 		, productionPercent(0.0f)
 		, waitingItemInfo(nullptr)

@@ -213,6 +213,7 @@ extern POINT		g_ptMouse;
 extern float		g_mousezDelta;
 extern glm::vec2	g_cursorPosition;	// 마우스 커서의 포지션
 extern glm::vec2	g_cursorCoord;		// 마우스 커서의 좌표
+extern glm::vec2	g_currScreenSize;	// 현재 씬 윈도우의 크기
 extern ItemSpec		g_itemSpecs[];
 extern const char*	g_directionToLpChar[];
 

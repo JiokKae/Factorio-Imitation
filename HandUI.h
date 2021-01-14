@@ -8,6 +8,8 @@ class HandUI : public UI
 
 	GLImage* allItemImage;
 
+	GLImage* background;
+	GLImage* backgroundName;
 public:
 	virtual HRESULT Init() override;
 	virtual void Release() override;

@@ -18,5 +18,8 @@ public:
 	virtual void FirstRender(Shader* lpShader) override;
 	virtual void Render(Shader* lpShader) override;
 	virtual void LateRender(Shader* lpShader) override;
+	virtual void Render(Shader* shader, float posX, float posY) override;
+
+	virtual string ToString() override;
 };
 

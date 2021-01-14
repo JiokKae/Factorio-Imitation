@@ -197,6 +197,20 @@ void StoneFurnace::Render(Shader* lpShader)
 		fireImage->Render(lpShader, position.x, position.y, frameX, frameY);
 }
 
+void StoneFurnace::Render(Shader* shader, float posX, float posY)
+{
+	mainImage->Render(shader, posX, posY);
+
+	glm::ivec2 maxFrame = fireImage->GetMaxFrame();
+	int frame = time * 30;
+
+	int frameX = frame % maxFrame.x;
+	int frameY = maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y;
+
+	if (status == WORKING)
+		fireImage->Render(shader, posX, posY, frameX, frameY);
+}
+
 bool StoneFurnace::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 {
 	// 받는 아이템이 연료라면
@@ -273,5 +287,7 @@ Recipe* StoneFurnace::FindRecipeByIngredient(int itemEnum)
 
 string StoneFurnace::ToString()
 {
-	return string("StoneFurnace (") + to_string(coord.x) + string(", ") + to_string(coord.y) + string(") status : ") + to_string(status);
+	char buf[128];
+	wsprintf(buf, " Coord: (%d, %d)\n Status: %s", coord.x, coord.y, statusString[status]);
+	return string(buf);
 };

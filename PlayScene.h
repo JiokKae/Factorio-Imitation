@@ -24,6 +24,8 @@ class PlayScene : public Scene
 	int numOfPointLight;
 
 	EntityManager* entityManager;
+
+	bool debuggingMode;
 public:
 	virtual HRESULT Init();
 	virtual void Release();

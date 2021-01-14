@@ -3,11 +3,20 @@
 #include "ItemOnGround.h"
 #include "Character.h"
 #include "Inventory.h"
+#include "Structure.h"
+#include "Tile.h"
 
 HRESULT HandUI::Init()
 {
 	allItemImage = new GLImage();
 	allItemImage->Init("Icons/AllItems", 8, 8, 0.25f, 0.25f, 512, 512);
+
+	background = new GLImage();
+	background->Init("UI/BackgroundUI");
+	background->SetAlpha(0.7f);
+
+	backgroundName = new GLImage();
+	backgroundName->Init("UI/BackgroundNameUI");
 
 	handItem = new ItemInfo();
 
@@ -16,8 +25,12 @@ HRESULT HandUI::Init()
 
 void HandUI::Release()
 {
+	SAFE_RELEASE(allItemImage);
+	SAFE_RELEASE(background);
+	SAFE_RELEASE(backgroundName);
+
+
 	SAFE_DELETE(handItem);
-	SAFE_DELETE(allItemImage);
 }
 
 void HandUI::Update()
@@ -55,6 +68,23 @@ void HandUI::Render(Shader* shader)
 
 		TextRenderer::GetSingleton()->RenderText(to_string(handItem->amount), g_ptMouse.x + 16 - to_string(handItem->amount).length() * 6 + 17, g_ptMouse.y - 16 - 7.0f, 0.46f);
 	}
+	if (!UIManager::GetSingleton()->IsMouseOnUI())
+	{
+		Tile* tile = TileManager::GetSingleton()->GetLPTileUnderMouse();
+		if (tile)
+		{
+			Structure* structure = tile->GetLpSturcture();
+			if (structure)
+			{
+				background->Render(shader, g_currScreenSize.x - 128, g_currScreenSize.y / 2);
+				backgroundName->Render(shader, g_currScreenSize.x - 128, g_currScreenSize.y / 2 - 7);
+				structure->Render(shader, g_currScreenSize.x - 128, g_currScreenSize.y / 2 + 128);
+				TextRenderer::GetSingleton()->RenderText(" " + g_itemSpecs[structure->GetItemId()].name, g_currScreenSize.x - 250, g_currScreenSize.y / 2, 0.8f, glm::vec3(0.0f));
+				TextRenderer::GetSingleton()->RenderText(structure->ToString(), g_currScreenSize.x - 250, g_currScreenSize.y / 2 - 40, 0.6f);
+			}
+		}
+	}
+	
 }
 
 bool HandUI::IsEmpty()

@@ -37,12 +37,23 @@ void AssemblingMachine1::Update()
 	}
 }
 
-void AssemblingMachine1::Render(Shader* lpShader)
+void AssemblingMachine1::FirstRender(Shader* shader)
 {
 	int frame = g_time * 30;
 	glm::ivec2 maxFrame = image->GetMaxFrame();
-	shadow->Render(lpShader, position.x + shadowAniOffset.x, position.y + shadowAniOffset.y,
+	shadow->Render(shader, position.x + shadowAniOffset.x, position.y + shadowAniOffset.y,
 		frame % maxFrame.x, maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y);
-	image->Render(lpShader, position.x, position.y, 
+}
+
+void AssemblingMachine1::Render(Shader* shader)
+{
+	Render(shader, position.x, position.y);
+}
+
+void AssemblingMachine1::Render(Shader* shader, float posX, float posY)
+{
+	int frame = g_time * 30;
+	glm::ivec2 maxFrame = image->GetMaxFrame();
+	image->Render(shader, posX, posY,
 		frame % maxFrame.x, maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y);
 }

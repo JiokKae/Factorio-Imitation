@@ -19,15 +19,16 @@ HRESULT BurnerMiningDrill::Init(int x, int y, DIRECTION direction, bool temp)
 	shadow = new GLImage[DIRECTION_END]();
 	shadow[NORTH].Init("Entity/BurnerMiningDrill-N-shadow", 4, 8);
 	shadow[NORTH].SetAlpha(0.6f);
-	shadowAniOffset[NORTH] = { 50, 0 };
+	shadowAniOffset[NORTH] = { 40, 0 };
 	shadow[EAST].Init("Entity/BurnerMiningDrill-E-shadow", 4, 8);
 	shadow[EAST].SetAlpha(0.6f);
-	shadowAniOffset[EAST] = { 10, 0 };
+	shadowAniOffset[EAST] = { 20, 0 };
 	shadow[SOUTH].Init("Entity/BurnerMiningDrill-S-shadow", 4, 8);
 	shadow[SOUTH].SetAlpha(0.6f);
+	shadowAniOffset[SOUTH] = { 20, 0 };
 	shadow[WEST].Init("Entity/BurnerMiningDrill-W-shadow", 4, 8);
 	shadow[WEST].SetAlpha(0.6f);
-	shadowAniOffset[WEST] = { 10, 0 };
+	shadowAniOffset[WEST] = { 20, 0 };
 
 	miningArea = glm::ivec2(2, 2);
 	miningSpeed = 0.25f;
@@ -76,7 +77,7 @@ void BurnerMiningDrill::Update()
 
 	switch (status)
 	{
-	case BurnerMiningDrill::NOPOWER:
+	case Structure::NO_POWER:
 		if (waitingItemInfo)
 		{
 			if (waitingItemInfo->amount > 0)
@@ -89,16 +90,16 @@ void BurnerMiningDrill::Update()
 		}	
 		break;
 
-	case BurnerMiningDrill::WAITING_SPACE:
+	case Structure::WAITING_SPACE:
 	{
 		OutputItem();
 		break;
 	}
 
-	case BurnerMiningDrill::WORKING:
+	case Structure::WORKING:
 		if (currPower <= 0)
 		{
-			status = NOPOWER;
+			status = NO_POWER;
 			break;
 		}
 		else
@@ -116,9 +117,9 @@ void BurnerMiningDrill::Update()
 		}
 		break;
 
-	case BurnerMiningDrill::NO_MINABLE_RESOURCES:
+	case Structure::NO_MINABLE_RESOURCES:
 		break;
-	case BurnerMiningDrill::DESTORY:
+	case Structure::DESTORY:
 		break;
 
 	}
@@ -137,7 +138,12 @@ void BurnerMiningDrill::FirstRender(Shader* lpShader)
 		frameX, frameY);
 }
 
-void BurnerMiningDrill::Render(Shader* lpShader)
+void BurnerMiningDrill::Render(Shader* shader)
+{
+	Render(shader, position.x, position.y);
+}
+
+void BurnerMiningDrill::Render(Shader* shader, float posX, float posY)
 {
 	glm::ivec2 maxFrame = image->GetMaxFrame();
 	int frame = abs(int(time * 30) % (maxFrame.x * maxFrame.y * 2 - 1) - maxFrame.x * maxFrame.y + 1);
@@ -145,8 +151,7 @@ void BurnerMiningDrill::Render(Shader* lpShader)
 	int frameX = frame % maxFrame.x;
 	int frameY = maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y;
 
-	image[direction].Render(lpShader, position.x, position.y,
-		frameX, frameY);
+	image[direction].Render(shader, posX, posY, frameX, frameY);
 }
 
 bool BurnerMiningDrill::InputItem(ItemInfo* inputItem, glm::vec2 pos)
@@ -229,7 +234,7 @@ bool BurnerMiningDrill::OutputItem()
 		targetTile->GetLpOre()->AddAmount(-1);
 
 		ItemOnGround* item = new ItemOnGround();
-		item->Init(ItemEnum::COAL);
+		item->Init((ItemEnum)targetTile->GetLpOre()->GetItemEnum());
 		item->SetPosition(outTilePos + outputPos);
 		EntityManager::GetSingleton()->AddItemOnGround(item);
 
@@ -264,7 +269,9 @@ void BurnerMiningDrill::ClickEvent()
 
 string BurnerMiningDrill::ToString()
 {
-	return string("BurnerMiningDrill (") + to_string(coord.x) + string(", ") + to_string(coord.y) + string(") status : ") + to_string(status);
+	char buf[128];
+	wsprintf(buf, "");
+	return Structure::ToString() + string(buf);
 };
 
 bool BurnerMiningDrill::IsMiningAreaEmpty()

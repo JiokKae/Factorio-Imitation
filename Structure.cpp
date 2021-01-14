@@ -8,14 +8,25 @@
 #include "BurnerInserter.h"
 #include "StoneFurnace.h"
 
+const char* Structure::statusString[STATUS::END] = {
+	"No Power",
+	"Working",
+	"Waiting for space in destination",
+	"No minable resources",
+	"Destroy",
+	"No Recipe",
+	"Item production overload",
+};
+
 HRESULT Structure::Init(int x, int y, DIRECTION direction, bool temp)
 {
-	this->position = { (float)x, (float)y };
+	this->position = { x, y };
 	this->direction = direction;
 	this->temp = temp;
 	this->coord = ivec2(POS_TO_COORD(position));
 	this->passable = g_itemSpecs[itemId].passable;
 	this->coordSize = g_itemSpecs[itemId].coordSize;
+	this->status = NO_POWER;
 
 	if (this->temp)
 		return S_OK;
@@ -85,6 +96,10 @@ void Structure::Render(Shader* lpShader)
 {
 }
 
+void Structure::Render(Shader* shader, float x, float y)
+{
+}
+
 Structure* Structure::CreateStructure(ItemEnum itemId)
 {
 	switch (itemId)
@@ -96,6 +111,13 @@ Structure* Structure::CreateStructure(ItemEnum itemId)
 	case STONE_FURNACE:			return new StoneFurnace();
 	}
 	return nullptr;
+}
+
+string Structure::ToString()
+{
+	char buf[128];
+	wsprintf(buf, " Coord: (%d, %d)\n Status: %s", coord.x, coord.y, statusString[status]);
+	return string(buf);
 }
 
 FRECT Structure::GetFRect()

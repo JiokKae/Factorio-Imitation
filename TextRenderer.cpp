@@ -26,6 +26,9 @@ HRESULT TextRenderer::Init()
 
 void TextRenderer::Release()
 {
+    SAFE_DELETE(TextShader);
+
+    ReleaseSingleton();
 }
 
 void TextRenderer::Load(std::string font, unsigned int fontSize)
@@ -96,11 +99,20 @@ void TextRenderer::RenderText(std::string text, float x, float y, float scale, g
     this->TextShader->setVec3("textColor", color);
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(this->VAO);
+    
+    int startX = x;
 
     // iterate through all characters
     std::string::const_iterator c;
     for (c = text.begin(); c != text.end(); c++)
     {
+        if (*c == '\n')
+        {
+            x = startX;
+            y -= (this->Characters['H'].Size.y * 1.8f) * scale;
+            continue;
+        }
+
         Text::Character ch = Characters[*c];
 
         float xpos = x + ch.Bearing.x * scale;

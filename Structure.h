@@ -5,19 +5,35 @@
 class Shader;
 class Structure : public Entity
 {
+public:
+	enum STATUS {
+		NO_POWER,
+		WORKING,
+		WAITING_SPACE,
+		NO_MINABLE_RESOURCES,
+		DESTORY,
+		NO_RECIPE,
+		ITEM_PRODUCTION_OVERLOAD,
+		END
+	};
+	static const char* statusString[STATUS::END];
+
 protected:
 	glm::ivec2 coord;
 	glm::ivec2 coordSize;
 	DIRECTION direction;
 	int itemId;
+	STATUS status;			// 건물의 상태
 
 	bool temp;				// 임시 건물인지
 	bool usingClickEvent;	// 클릭 이벤트를 사용하는지
+
 public:
 	virtual HRESULT Init(int x, int y, DIRECTION direction, bool temp = false);
 	virtual void Release();
 	virtual void Update();
 	virtual void Render(Shader* lpShader);
+	virtual void Render(Shader* shader, float x, float y);
 
 	static Structure* CreateStructure(ItemEnum itemId);
 
@@ -25,7 +41,7 @@ public:
 	virtual void ClickEvent() {};
 	virtual bool InputItem(ItemInfo* item, glm::vec2 pos) { return false; };
 	virtual bool OutputItem() { return false; };
-	virtual string ToString() { return string("Structure") + to_string(coord.x) + string(", ") + to_string(coord.y); };
+	virtual string ToString();
 
 	int GetItemId()				{ return itemId; }
 	FRECT GetFRect();

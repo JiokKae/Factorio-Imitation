@@ -29,6 +29,8 @@ void EntityManager::Release()
     SAFE_RELEASE(player);
 
     mapEntitys.clear();
+
+    ReleaseSingleton();
 }
 
 void EntityManager::Update(FRECT cameraFrect)

@@ -9,7 +9,7 @@ private:
 	int randFrameX;
 
 public:
-	virtual HRESULT Init();
+	virtual HRESULT Init(int x, int y);
 	virtual void Release();
 	virtual void Update();
 

@@ -11,7 +11,7 @@ HRESULT Tile::Init(int x, int y)
 	kind = KIND::DIRT_1;
 
 	ore = new Ore();
-	ore->Init();
+	ore->Init(x, y);
 
 	return S_OK;
 }

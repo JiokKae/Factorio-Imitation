@@ -3,12 +3,21 @@
 #include "Shader.h"
 #include "ItemEnum.h"
 
-HRESULT Ore::Init()
+HRESULT Ore::Init(int x, int y)
 {
-	itemEnum = IRON_ORE;
-	amount = rand() % 12000;
-	if (amount > 8000)
+	if (rand() % 2)
+		itemEnum = IRON_ORE;
+	else
+		itemEnum = COAL;
+
+	amount = int(10.0f - glm::distance(glm::vec2(16, 16), glm::vec2(abs(x%32), abs(y%32)))) * (300 + rand() % 200);
+	if (amount < 0)
 		amount = 0;
+//	amount = rand() % 12000;
+	//if (amount > 2000)
+//		amount = 0;
+
+
 	randFrameX = rand() % 8;
 	return S_OK;
 }

@@ -80,3 +80,19 @@ void BurnerInserter::LateRender(Shader* lpShader)
 		position.y + cos(glm::radians(handBaseAngle)) * 120 * handBaseScale.y + 10);
 	handBaseImage->Render(lpShader, position.x, position.y + 10);
 }
+
+void BurnerInserter::Render(Shader* shader, float posX, float posY)
+{
+	platformImage->Render(shader, posX, posY, OPPOSITE_DIR(direction), 0);
+	handOpenImage->Render(shader,
+		posX - sin(glm::radians(handBaseAngle)) * 120 * handBaseScale.y,
+		posY + cos(glm::radians(handBaseAngle)) * 120 * handBaseScale.y + 10);
+	handBaseImage->Render(shader, posX, posY + 10);
+}
+
+string BurnerInserter::ToString()
+{
+	char buf[128];
+	wsprintf(buf, " Coord: (%d, %d)\n Status: %s", coord.x, coord.y, statusString[status]);
+	return string(buf);
+};

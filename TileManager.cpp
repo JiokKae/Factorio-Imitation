@@ -11,12 +11,13 @@
 
 HRESULT TileManager::Init()
 {
-    
     tileImages = new GLImage[int(Tile::KIND::END)]();
     tileImages[int(Tile::KIND::DIRT_1)].Init("Terrain/Dirt_1", 4096, 576, 64, 9);
     
-    oreImages = new GLImage[1]();
-    oreImages[0].Init("IronOre", 8, 8, 0.0f, 0.0f, 1024, 1024);
+    mapOreImages[IRON_ORE] = new GLImage();
+    mapOreImages[IRON_ORE]->Init("Entity/IronOre", 8, 8);
+    mapOreImages[COAL] = new GLImage();
+    mapOreImages[COAL]->Init("Entity/Coal", 8, 8);
     
     // 14 * 14 청크 생성
     for (int y = -7; y < 7; y++)
@@ -61,20 +62,28 @@ HRESULT TileManager::Init()
     tilesVAO->SetDivisor(1, 1);
     
     // offsetVBO Init (각 인스턴스의 위치 오프셋을 저장하는 VBO)
-
-    //set Data
-    glm::vec2* tileOffset = new glm::vec2[CHUNK_IN_TILE * CHUNK_IN_TILE];
-    for (int y = 0; y < CHUNK_IN_TILE; y++)
-        for (int x = 0; x < CHUNK_IN_TILE; x++)
-            tileOffset[y * CHUNK_IN_TILE + x] = { x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2 }; 
-    
     VBO* offsetVBO = new VBO();
-    offsetVBO->SetData(sizeof(glm::vec2) * 1024, &tileOffset[0], GL_STATIC_DRAW); // vec2(currFrame.x, currFrame.y) * 1024
+    offsetVBO->SetData(sizeof(glm::vec2) * 1024, NULL, GL_DYNAMIC_DRAW); // vec2(currFrame.x, currFrame.y) * 1024
     tilesVAO->AddVBO(2, offsetVBO, 2);
     tilesVAO->SetDivisor(2, 1);
 
-    delete[] tileOffset;
-
+    tileCurrFrame = new glm::vec2[CHUNK_IN_TILE * CHUNK_IN_TILE];
+    tileOffset = new glm::vec2[CHUNK_IN_TILE * CHUNK_IN_TILE];
+    for (int y = 0; y < 32; y++)
+    {
+        for (int x = 0; x < 32; x++)
+        {
+            tileCurrFrame[y * CHUNK_IN_TILE + x] = { x % 64, y % 4 };
+            /*
+            Tile* tile = currChunk->GetLpTile(x, y);
+            if(tile->GetLpSturcture() != nullptr)
+                tileCurrFrame[y * CHUNK_IN_TILE + x] = { x % 64, y % 4 };
+            else
+                tileCurrFrame[y * CHUNK_IN_TILE + x] = { 100, 100 };
+            */
+            tileOffset[y * CHUNK_IN_TILE + x] = { x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2 };
+        }
+    }
 	return S_OK;
 }
 
@@ -83,7 +92,17 @@ void TileManager::Release()
     SAFE_DELETE(tilesVAO);
     SAFE_DELETE(instancingShader);
     SAFE_RELEASE(tileImages);
-    SAFE_RELEASE(oreImages);
+
+    map<int, GLImage*>::iterator it;
+    for (it = mapOreImages.begin(); it!=mapOreImages.end(); ++it)
+    {
+        SAFE_RELEASE(it->second);
+    }
+    mapOreImages.clear();
+
+    SAFE_ARR_DELETE(tileOffset);
+    SAFE_ARR_DELETE(tileCurrFrame);
+    
     ReleaseSingleton();
 }
 
@@ -94,7 +113,8 @@ void TileManager::Update()
 
 void TileManager::Render(RECT cameraRect)
 {
-    glm::vec2 tileCurrFrame[1024];
+    glm::vec2 oreCurrFrame[1024];
+    glm::vec2* oreOffset = new glm::vec2[CHUNK_IN_TILE * CHUNK_IN_TILE];
 
     instancingShader->use();
     glBindVertexArray(tilesVAO->GetID());
@@ -112,22 +132,8 @@ void TileManager::Render(RECT cameraRect)
 
             instancingShader->setVec2("offset", currChunk->GetCoord() * 2048);
 
-            for (int y = 0; y < 32; y++)
-            {
-                for (int x = 0; x < 32; x++)
-                {
-                    tileCurrFrame[y * CHUNK_IN_TILE + x] = { x % 64, y % 4 };
-                    /*
-                    Tile* tile = currChunk->GetLpTile(x, y);
-                    if(tile->GetLpSturcture() != nullptr)
-                        tileCurrFrame[y * CHUNK_IN_TILE + x] = { x % 64, y % 4 };
-                    else
-                        tileCurrFrame[y * CHUNK_IN_TILE + x] = { 100, 100 };
-                    */
-                }
-            }
             tilesVAO->SetVBOData(1, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
-
+            tilesVAO->SetVBOData(2, sizeof(glm::vec2) * 1024, &tileOffset[0], GL_DYNAMIC_DRAW);
             for (int kind = 0; kind < int(Tile::KIND::END); kind++)
             {
                 glActiveTexture(GL_TEXTURE0);
@@ -150,25 +156,35 @@ void TileManager::Render(RECT cameraRect)
 
             instancingShader->setVec2("offset", currChunk->GetCoord() * 2048);
 
-            for (int y = 0; y < 32; y++)
+            map<int, GLImage*>::iterator it;
+            for (it = mapOreImages.begin(); it != mapOreImages.end(); ++it)
             {
-                for (int x = 0; x < 32; x++)
+                int count = 0;
+                
+                for (int y = 0; y < 32; y++)
                 {
-                    Ore* ore = currChunk->GetLpTile(x, y)->GetLpOre();
-                    tileCurrFrame[y * CHUNK_IN_TILE + x] = { ore->GetRandFrameX(), ore->AmountToImageFrameY() };
+                    for (int x = 0; x < 32; x++)
+                    {
+                        Ore* ore = currChunk->GetLpTile(x, y)->GetLpOre();
+                        if (ore->GetItemEnum() == it->first && ore->GetAmount() > 0) 
+                        {
+                            oreCurrFrame[count] = { ore->GetRandFrameX(), ore->AmountToImageFrameY() };
+                            oreOffset[count] = { x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2 };
+                            count++;
+                        }
+                    }
                 }
-            }
-            tilesVAO->SetVBOData(1, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
-
-            for (int kind = 0; kind < 1; kind++)
-            {
+                tilesVAO->SetVBOData(1, sizeof(glm::vec2) * count, &oreCurrFrame[0], GL_DYNAMIC_DRAW);
+                tilesVAO->SetVBOData(2, sizeof(glm::vec2) * count, &oreOffset[0], GL_DYNAMIC_DRAW);
                 glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, oreImages[kind].GetLpSourceTexture()->GetID());
-                glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 1024);
+                glBindTexture(GL_TEXTURE_2D, it->second->GetLpSourceTexture()->GetID());
+                glDrawArraysInstanced(GL_TRIANGLES, 0, 6, count);
             }
         }
     }
     glBindVertexArray(0);
+
+    delete[] oreOffset;
 }
 
 Tile* TileManager::GetLpTile(int coordX, int coordY)
