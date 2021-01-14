@@ -3,7 +3,7 @@
 HRESULT Recipe::Init(ItemInfo output, float craftingTime, vector<ItemInfo> vecIngredients)
 {
 	this->output = output;
-	this->craftingItme = craftingItme;
+	this->craftingTime = craftingTime;
 	this->vecIngredients = vecIngredients;
 	return S_OK;
 }

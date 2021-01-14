@@ -5,7 +5,7 @@
 class Recipe
 {
 	ItemInfo output;
-	float craftingItme;
+	float craftingTime;
 	vector<ItemInfo> vecIngredients;
 
 public:
@@ -14,6 +14,8 @@ public:
 
 	bool IsIngredient(int itemEnum);
 
-	float GetCraftingTime() { return craftingItme; }
+	ItemInfo GetOutput()				{ return output; }
+	float GetCraftingTime()				{ return craftingTime; }
+	ItemInfo GetIngredient(int index)	{ return vecIngredients[index]; }
 };
 

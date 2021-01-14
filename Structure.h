@@ -25,6 +25,7 @@ public:
 	virtual void ClickEvent() {};
 	virtual bool InputItem(ItemInfo* item, glm::vec2 pos) { return false; };
 	virtual bool OutputItem() { return false; };
+	virtual string ToString() { return string("Structure") + to_string(coord.x) + string(", ") + to_string(coord.y); };
 
 	int GetItemId()				{ return itemId; }
 	FRECT GetFRect();

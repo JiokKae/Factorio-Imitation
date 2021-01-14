@@ -3,6 +3,7 @@
 
 class Inventory;
 class Recipe;
+class SlotUI;
 class FuelSlotUI;
 class InventoryUI;
 class DeactiveButtonUI;
@@ -14,6 +15,9 @@ class StoneFurnaceUI : public UI
 	StoneFurnace* currStoneFurnace;
 
 	FuelSlotUI* fuelSlotUI;
+	SlotUI* resourceSlotUI;
+	SlotUI* resultSlotUI;
+
 	GLImage* redProgressiveBar;
 	GLImage* greenProgressiveBar;
 public:
@@ -22,6 +26,6 @@ public:
 	virtual void Update() override;
 	virtual void Render(Shader* lpShader) override;
 
-	void SetCurrStoneFurnace(StoneFurnace* burnerMiningDrill) { this->currStoneFurnace = burnerMiningDrill; }
+	void SetCurrStoneFurnace(StoneFurnace* stoneFurnace) { this->currStoneFurnace = stoneFurnace; }
 };
 

@@ -264,16 +264,21 @@ void PlayScene::Render(HDC hdc)
     {
         sprintf_s(str, "Ore Amount: (%d)", tile->GetLpOre()->GetAmount() );
         textRenderer->RenderText(string(str),                                                                       10, height - 160);
-        sprintf_s(str, "StructureAddress: (%p)", tile->GetLpSturcture());
+        Structure* structure = tile->GetLpSturcture();
+        sprintf_s(str, "StructureAddress: (%p)", structure);
         textRenderer->RenderText(string(str),                                                                       10, height - 190);
+        if (structure)
+        {
+            textRenderer->RenderText("Structure: " + structure->ToString(), 10, height - 220);
+        }
     }
-    textRenderer->RenderText("Zoom: " + to_string(camera->GetZoom()),                                               10, height - 220);
-    textRenderer->RenderText("UpdateTime: " + to_string(TimerManager::GetSingleton()->updateTime),                  10, height - 250);
-    textRenderer->RenderText("tileRenderer_time:         " + to_string(tileRenderer_time),                          10, height - 280);                           
-    textRenderer->RenderText("entityManager_time:      " + to_string(entityManager_time),                           10, height - 310);                           
-    textRenderer->RenderText("UIManager_time:          " + to_string(UIManager_time),                               10, height - 340);
-    textRenderer->RenderText("TextRender_time:         " + to_string(TimerManager::GetSingleton()->CheckTime()),    10, height - 370);
-    textRenderer->RenderText("RenderTime:              " + to_string(TimerManager::GetSingleton()->renderTime),     10, height - 400);
+    textRenderer->RenderText("Zoom: " + to_string(camera->GetZoom()),                                               10, height - 250);
+    textRenderer->RenderText("UpdateTime: " + to_string(TimerManager::GetSingleton()->updateTime),                  10, height - 280);
+    textRenderer->RenderText("tileRenderer_time:         " + to_string(tileRenderer_time),                          10, height - 310);                           
+    textRenderer->RenderText("entityManager_time:      " + to_string(entityManager_time),                           10, height - 340);                           
+    textRenderer->RenderText("UIManager_time:          " + to_string(UIManager_time),                               10, height - 370);
+    textRenderer->RenderText("TextRender_time:         " + to_string(TimerManager::GetSingleton()->CheckTime()),    10, height - 400);
+    textRenderer->RenderText("RenderTime:              " + to_string(TimerManager::GetSingleton()->renderTime),     10, height - 430);
 
 	glFlush();
 }

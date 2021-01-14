@@ -1,9 +1,11 @@
 #include "Ore.h"
 #include "GLImage.h"
 #include "Shader.h"
+#include "ItemEnum.h"
 
 HRESULT Ore::Init()
 {
+	itemEnum = IRON_ORE;
 	amount = rand() % 12000;
 	if (amount > 8000)
 		amount = 0;

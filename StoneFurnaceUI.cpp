@@ -3,6 +3,7 @@
 #include "DeactiveButtonUI.h"
 #include "StoneFurnace.h"
 #include "FuelSlotUI.h"
+#include "SlotUI.h"
 
 HRESULT StoneFurnaceUI::Init()
 {
@@ -27,21 +28,37 @@ HRESULT StoneFurnaceUI::Init()
 	greenProgressiveBar->Init("UI/GreenProgressiveBarUI");
 	greenProgressiveBar->SetOffset(glm::vec2(greenProgressiveBar->GetFrameWidth() / 2, 0.0f));
 
+	// slots init
 	fuelSlotUI = new FuelSlotUI();
 	fuelSlotUI->Init();
 	fuelSlotUI->SetParent(this);
 	fuelSlotUI->SetLocalPosition(glm::vec2(-72, 170));
+
+	resourceSlotUI = new SlotUI();
+	resourceSlotUI->Init();
+	resourceSlotUI->SetParent(this);
+	resourceSlotUI->SetLocalPosition(glm::vec2(-72, 237));
+
+	resultSlotUI = new SlotUI();
+	resultSlotUI->Init();
+	resultSlotUI->SetParent(this);
+	resultSlotUI->SetLocalPosition(glm::vec2(181, 237));
+
 	return S_OK;
 }
 
 void StoneFurnaceUI::Release()
 {
-	SAFE_RELEASE(fuelSlotUI);
 	SAFE_RELEASE(greenProgressiveBar);
 	SAFE_RELEASE(redProgressiveBar);
 	SAFE_RELEASE(deactiveButtonUI);
 	SAFE_RELEASE(inventoryUI);
 	SAFE_RELEASE(image);
+
+	// slots release
+	SAFE_RELEASE(fuelSlotUI);
+	SAFE_RELEASE(resourceSlotUI);
+	SAFE_RELEASE(resultSlotUI);
 }
 
 void StoneFurnaceUI::Update()
@@ -51,8 +68,13 @@ void StoneFurnaceUI::Update()
 		inventoryUI->Update();
 		deactiveButtonUI->Update();
 		redProgressiveBar->SetScale(glm::vec2(currStoneFurnace->GetCurrPower() / currStoneFurnace->GetMaxPower(), 1.0f));
-		greenProgressiveBar->SetScale(glm::vec2(currStoneFurnace->GetProductionPercent(), 1.0f));
+		greenProgressiveBar->SetScale(glm::vec2(currStoneFurnace->GetProductionPercent() * 0.81f, 1.0f));
+		
+		// slots update
 		fuelSlotUI->Update(currStoneFurnace->GetFuel());
+		resourceSlotUI->Update(currStoneFurnace->GetResource());
+		resultSlotUI->Update(currStoneFurnace->GetResult());
+
 		if (PtInFRect(GetFrect(), { g_ptMouse.x, g_ptMouse.y }))
 		{
 			KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON);
@@ -67,8 +89,10 @@ void StoneFurnaceUI::Render(Shader* lpShader)
 		image->Render(lpShader, GetPosition().x, GetPosition().y);
 		inventoryUI->Render(lpShader);
 		deactiveButtonUI->Render(lpShader);
-		redProgressiveBar->Render(lpShader, GetPosition().x + 77 - redProgressiveBar->GetFrameWidth() / 2, GetPosition().y + 198.5);
-		greenProgressiveBar->Render(lpShader, GetPosition().x + 37 - greenProgressiveBar->GetFrameWidth() / 2, GetPosition().y + 238);
+		redProgressiveBar->Render(lpShader, GetPosition().x + 76 - redProgressiveBar->GetFrameWidth() / 2, GetPosition().y + 170);
+		greenProgressiveBar->Render(lpShader, GetPosition().x + 80 - greenProgressiveBar->GetFrameWidth() / 2, GetPosition().y + 238);
 		fuelSlotUI->Render(lpShader);
+		resourceSlotUI->Render(lpShader);
+		resultSlotUI->Render(lpShader);
 	}
 }

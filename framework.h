@@ -49,12 +49,7 @@ typedef struct tagFRECT
 struct ItemInfo {
 	int id;
 	int amount;
-
-	ItemInfo(int id = 0, int amount = 0)
-	{
-		this->id = id;
-		this->amount = amount;
-	}
+	vector<int> vecAbleItems;
 
 	void AddAmount(int amount)
 	{
@@ -62,6 +57,88 @@ struct ItemInfo {
 		if (this->amount < 0)
 			this->amount = 0;
 	}
+	void SetAbleItems(vector<int> vecAbleItems)
+	{
+		this->vecAbleItems = vecAbleItems;
+	}
+
+	void AddAbleItem(int itemEnum)
+	{
+		vecAbleItems.push_back(itemEnum);
+	}
+
+	bool InputItem(ItemInfo* itemInfo)
+	{
+		// 무제한 슬롯일 때
+		if (vecAbleItems.size() == 0)
+		{
+			// 같은 아이템이라면
+			if (itemInfo->amount && itemInfo->id == id)
+			{
+				amount += itemInfo->amount;
+				itemInfo->amount = 0;
+			}
+			// 다른 아이템이라면
+			else
+			{
+				ItemInfo temp(id, amount);
+				id = itemInfo->id;
+				amount = itemInfo->amount;
+				itemInfo->id = temp.id;
+				itemInfo->amount = temp.amount;
+			}
+			return true;
+		}
+		// 제한있는 슬롯일 때
+		else
+		{
+			// 들어온 아이템이 있을 때
+			if (itemInfo->amount)
+			{
+				for (int i = 0; i < vecAbleItems.size(); i++)
+				{
+					// 허용된 아이템이라면
+					if (itemInfo->id == vecAbleItems[i])
+					{
+						// 같은 아이템이라면
+						if (itemInfo->amount && itemInfo->id == id)
+						{
+							amount += itemInfo->amount;
+							itemInfo->amount = 0;
+						}
+						// 다른 아이템이라면
+						else
+						{
+							ItemInfo temp(id, amount);
+							id = itemInfo->id;
+							amount = itemInfo->amount;
+							itemInfo->id = temp.id;
+							itemInfo->amount = temp.amount;
+						}
+						return true;
+					}
+				}
+			}
+			// 들어온 아이템이 없을 때
+			else
+			{
+				ItemInfo temp(id, amount);
+				amount = itemInfo->amount;
+				itemInfo->id = temp.id;
+				itemInfo->amount = temp.amount;
+				return true;
+			}
+		}
+		// 허용되지 않은 아이템 처리
+		return false;
+	}
+
+	ItemInfo(int id = 0, int amount = 0)
+	{
+		this->id = id;
+		this->amount = amount;
+	}
+
 };
 
 // Singletons

@@ -6,11 +6,7 @@
 #include "Inventory.h"
 HRESULT InventorySlotUI::Init(int x, int y)
 {
-	image = new GLImage();
-	image->Init("UI/SlotUI", 3, 1);
-	
-	allItemImage = new GLImage();
-	allItemImage->Init("Icons/AllItems", 8, 8, 0.25f, 0.25f, 512, 512);
+	SlotUI::Init();
 
 	hand = new GLImage();
 	hand->Init("Icons/Hand", 1, 1, 32, 32);
@@ -18,74 +14,14 @@ HRESULT InventorySlotUI::Init(int x, int y)
 	localPosition.x = x * (GetWidth() + 2);
 	localPosition.y = -y * (GetHeight() + 2);
 
-	onMouse = false;
-	isLMouseDown = false;
-	isRMouseDown = false;
 	return S_OK;
 }
 
 void InventorySlotUI::Release()
 {
-}
+	SlotUI::Release();
 
-void InventorySlotUI::Update(ItemInfo* itemInfo)
-{
-	if (active)
-	{
-		this->itemInfo = itemInfo;
-
-		if (PtInFRect(GetFrect(), { g_ptMouse.x, g_ptMouse.y }))
-		{
-			onMouse = true;
-			if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
-			{
-				isLMouseDown = true;
-				if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
-					OnClick(VK_LBUTTON);
-			}
-			else
-				isLMouseDown = false;
-
-			if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
-			{
-				isRMouseDown = true;
-				if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RBUTTON))
-					OnClick(VK_RBUTTON);
-			}
-			else
-				isRMouseDown = false;
-		}
-		else
-		{
-			onMouse = false;
-			isLMouseDown = false;
-			isRMouseDown = false;
-		}
-	}
-}
-
-void InventorySlotUI::Render(Shader* lpShader)
-{
-	if (active)
-	{
-		image->Render(lpShader, GetPosition().x, GetPosition().y, onMouse + (isLMouseDown || isRMouseDown), 0);
-		if (itemInfo && itemInfo->amount != 0)
-		{
-			glm::ivec2 maxFrame = allItemImage->GetMaxFrame();
-			allItemImage->Render(lpShader, GetPosition().x, GetPosition().y, itemInfo->id % maxFrame.x, maxFrame.y - 1 - itemInfo->id / maxFrame.y);
-			TextRenderer::GetSingleton()->RenderText(to_string(itemInfo->amount), GetPosition().x - to_string(itemInfo->amount).length() * 6 + 17, GetPosition().y - 7.0f, 0.46f);
-			
-		}
-	}
-}
-
-void InventorySlotUI::LateRender(Shader* shader)
-{
-	if (itemInfo && itemInfo->amount != 0)
-	{
-		if (onMouse)
-			TextRenderer::GetSingleton()->RenderText(g_itemSpecs[itemInfo->id].name, g_ptMouse.x + 20, g_ptMouse.y - 20, 1.0f, glm::vec3(1.0f));
-	}
+	SAFE_RELEASE(hand);
 }
 
 void InventorySlotUI::OnClick(int key)

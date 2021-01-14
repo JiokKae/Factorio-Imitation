@@ -127,29 +127,32 @@
     <Filter Include="MainGame\UI\DeactiveButtonUI">
       <UniqueIdentifier>{5244c5e1-beea-48fd-bafe-fba86a86593e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\UI\InventoryUI">
-      <UniqueIdentifier>{50623911-81a8-4ea8-999a-e57b877b37e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainGame\UI\FuelSlotUI">
-      <UniqueIdentifier>{c1695168-f75a-494c-98f7-ec97523b0afd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainGame\UI\HandUI">
       <UniqueIdentifier>{9fe3016b-af32-4960-95e4-dd69f53d0813}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\UI\InventorySlotUI">
-      <UniqueIdentifier>{64bfa3bb-e2ae-4f95-8561-e257c1f27c81}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainGame\Entity\Structure\StoneFurnace">
       <UniqueIdentifier>{0ba6f8a7-63aa-4b85-ae23-86d41193665d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainGame\UI\StoneFurnaceUI">
-      <UniqueIdentifier>{c7ada55c-2d8f-4ca4-b9f5-71c113f9fb97}</UniqueIdentifier>
     </Filter>
     <Filter Include="GLFrameWork\UI">
       <UniqueIdentifier>{edfe1fec-8fce-47f4-b125-9c64785e83ba}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainGame\Recipe">
       <UniqueIdentifier>{63d1f8b6-a7ea-4b13-a43b-70eeb1aa22fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\SlotUI">
+      <UniqueIdentifier>{8007ef8a-1665-4888-ab7a-f4eb21a78fc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\InventoryUI">
+      <UniqueIdentifier>{50623911-81a8-4ea8-999a-e57b877b37e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\SlotUI\InventorySlotUI">
+      <UniqueIdentifier>{64bfa3bb-e2ae-4f95-8561-e257c1f27c81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\SlotUI\FuelSlotUI">
+      <UniqueIdentifier>{c1695168-f75a-494c-98f7-ec97523b0afd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\StoneFurnaceUI">
+      <UniqueIdentifier>{c7ada55c-2d8f-4ca4-b9f5-71c113f9fb97}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -316,13 +319,13 @@
       <Filter>MainGame\UI\InventoryUI</Filter>
     </ClInclude>
     <ClInclude Include="FuelSlotUI.h">
-      <Filter>MainGame\UI\FuelSlotUI</Filter>
+      <Filter>MainGame\UI\SlotUI\FuelSlotUI</Filter>
     </ClInclude>
     <ClInclude Include="HandUI.h">
       <Filter>MainGame\UI\HandUI</Filter>
     </ClInclude>
     <ClInclude Include="InventorySlotUI.h">
-      <Filter>MainGame\UI\InventorySlotUI</Filter>
+      <Filter>MainGame\UI\SlotUI\InventorySlotUI</Filter>
     </ClInclude>
     <ClInclude Include="StoneFurnace.h">
       <Filter>MainGame\Entity\Structure\StoneFurnace</Filter>
@@ -341,6 +344,9 @@
     </ClInclude>
     <ClInclude Include="RecipeManager.h">
       <Filter>MainGame\Recipe</Filter>
+    </ClInclude>
+    <ClInclude Include="SlotUI.h">
+      <Filter>MainGame\UI\SlotUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -504,13 +510,13 @@
       <Filter>MainGame\UI\InventoryUI</Filter>
     </ClCompile>
     <ClCompile Include="FuelSlotUI.cpp">
-      <Filter>MainGame\UI\FuelSlotUI</Filter>
+      <Filter>MainGame\UI\SlotUI\FuelSlotUI</Filter>
     </ClCompile>
     <ClCompile Include="HandUI.cpp">
       <Filter>MainGame\UI\HandUI</Filter>
     </ClCompile>
     <ClCompile Include="InventorySlotUI.cpp">
-      <Filter>MainGame\UI\InventorySlotUI</Filter>
+      <Filter>MainGame\UI\SlotUI\InventorySlotUI</Filter>
     </ClCompile>
     <ClCompile Include="StoneFurnace.cpp">
       <Filter>MainGame\Entity\Structure\StoneFurnace</Filter>
@@ -529,6 +535,9 @@
     </ClCompile>
     <ClCompile Include="RecipeManager.cpp">
       <Filter>MainGame\Recipe</Filter>
+    </ClCompile>
+    <ClCompile Include="SlotUI.cpp">
+      <Filter>MainGame\UI\SlotUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

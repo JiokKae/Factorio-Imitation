@@ -7,6 +7,7 @@
 #include "Chunk.h"
 #include "VertexArrayObject.h"
 #include "VertexBufferObject.h"
+#include "ItemEnum.h"
 
 HRESULT TileManager::Init()
 {
@@ -14,8 +15,8 @@ HRESULT TileManager::Init()
     tileImages = new GLImage[int(Tile::KIND::END)]();
     tileImages[int(Tile::KIND::DIRT_1)].Init("Terrain/Dirt_1", 4096, 576, 64, 9);
     
-    oreImages = new GLImage[int(Ore::KIND::END)]();
-    oreImages[int(Ore::KIND::IRON_ORE)].Init("IronOre", 1024, 1024, 8, 8);
+    oreImages = new GLImage[1]();
+    oreImages[0].Init("IronOre", 8, 8, 0.0f, 0.0f, 1024, 1024);
     
     // 14 * 14 没农 积己
     for (int y = -7; y < 7; y++)
@@ -159,11 +160,11 @@ void TileManager::Render(RECT cameraRect)
             }
             tilesVAO->SetVBOData(1, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
 
-            for (int kind = 0; kind < int(Ore::KIND::END); kind++)
+            for (int kind = 0; kind < 1; kind++)
             {
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, oreImages[kind].GetLpSourceTexture()->GetID());
-                //glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 1024);
+                glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 1024);
             }
         }
     }

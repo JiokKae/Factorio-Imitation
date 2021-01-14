@@ -24,18 +24,23 @@ HRESULT StoneFurnace::Init(int x, int y, DIRECTION direction, bool temp)
 	energyConsumption = 90.0f;
 	craftingSpeed = 1.0f;
 
-	// 아이템 슬롯 세팅
-	fuel =			new ItemInfo();
-	resource =		new ItemInfo();
-	usingResource = new ItemInfo();
-	result =		new ItemInfo();
-	newResult =		new ItemInfo();
-
 	// 레시피 세팅
 	vecRecipes.push_back(RecipeManager::GetSingleton()->FindRecipe(IRON_PLATE));
 	vecRecipes.push_back(RecipeManager::GetSingleton()->FindRecipe(COPPER_PLATE));
 	vecRecipes.push_back(RecipeManager::GetSingleton()->FindRecipe(STONE_BRICK));
 	vecRecipes.push_back(RecipeManager::GetSingleton()->FindRecipe(STEEL_PLATE));
+
+	// 아이템 슬롯 세팅
+	fuel = new ItemInfo();
+	resource = new ItemInfo();
+	result = new ItemInfo();
+	for (int i = 0; i < vecRecipes.size(); i++)
+	{
+		resource->AddAbleItem(vecRecipes[i]->GetIngredient(0).id);
+		result->AddAbleItem(vecRecipes[i]->GetOutput().id);
+	}
+	usingResource = new ItemInfo();
+	newResult = new ItemInfo();
 
 	return S_OK;
 }
@@ -79,7 +84,7 @@ void StoneFurnace::Update()
 		{
 			status = NO_POWER;
 		}
-		else if (resource->amount)
+		else if (resource->amount && resource->amount >= FindRecipeByIngredient(resource->id)->GetIngredient(0).amount)
 		{
 			status = WORKING;
 		}
@@ -87,13 +92,13 @@ void StoneFurnace::Update()
 
 	case StoneFurnace::WORKING:
 		// 에너지가 없고 연료가 없다면
-		if (currPower <= 0 && fuel->amount < 0)
+		if (currPower <= 0 && fuel->amount <= 0)
 		{
 			status = NO_POWER;
 			break;
 		}
 		// 재료가 없고 사용중인 재료가 없다면
-		else if (resource->amount == 0 && usingResource->amount == 0)
+		else if (resource->amount < FindRecipeByIngredient(resource->id)->GetIngredient(0).amount && usingResource->amount <= 0)
 		{
 			status = NO_RECIPE;
 			break;
@@ -116,17 +121,30 @@ void StoneFurnace::Update()
 				maxPower = g_itemSpecs[fuel->id].fuelValue;
 			}
 
+			// 사용중인 재료 없을 때 재료 투입
+			if (usingResource->amount <= 0)
+			{
+				currRecipe = FindRecipeByIngredient(resource->id);
+				resource->amount -= currRecipe->GetIngredient(0).amount;
+				usingResource->amount += currRecipe->GetIngredient(0).amount;
+			}
 
 			// 에너지 소모
 			currPower -= energyConsumption * TimerManager::GetSingleton()->GetTimeElapsed();
 			craftedTime += craftingSpeed * TimerManager::GetSingleton()->GetTimeElapsed();
 
-			// 채광 완료
+			// 제작 완료
 			if (craftedTime >= currRecipe->GetCraftingTime())
 			{
+				usingResource->amount -= currRecipe->GetIngredient(0).amount;
+				newResult->id = currRecipe->GetOutput().id;
+				newResult->amount = currRecipe->GetOutput().amount;
+				craftedTime -= currRecipe->GetCraftingTime();
+
 				status = ITEM_PRODUCTION_OVERLOAD;
 			}
 
+			productionPercent = craftedTime / currRecipe->GetCraftingTime();
 			time += TimerManager::GetSingleton()->GetTimeElapsed();
 		}
 		break;
@@ -206,6 +224,31 @@ bool StoneFurnace::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 			return true;
 		}
 	}
+	else if (FindRecipeByIngredient(inputItem->id))
+	{
+		// 재료 슬롯에 재료가 있다면
+		if (resource->amount)
+		{
+			// 재료 종류가 같을 때만
+			if (resource->id == inputItem->id)
+			{
+				resource->amount += inputItem->amount;
+
+				SAFE_DELETE(inputItem);
+				return true;
+			}
+		}
+		// 재료 슬롯이 비어 있다면
+		else
+		{
+			resource->id = inputItem->id;
+			resource->amount = inputItem->amount;
+
+			SAFE_DELETE(inputItem);
+			return true;
+		}
+		
+	}
 
 	SAFE_DELETE(inputItem);
 	return false;
@@ -227,3 +270,8 @@ Recipe* StoneFurnace::FindRecipeByIngredient(int itemEnum)
 	}
 	return nullptr;
 }
+
+string StoneFurnace::ToString()
+{
+	return string("StoneFurnace (") + to_string(coord.x) + string(", ") + to_string(coord.y) + string(") status : ") + to_string(status);
+};

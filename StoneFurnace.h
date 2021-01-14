@@ -30,7 +30,7 @@ private:
 	float currPower;
 	float maxPower;
 	float craftedTime;			// 제작한 시간
-
+	float productionPercent;	// 생산 퍼센트
 	ItemInfo* fuel;
 	ItemInfo* resource;
 	ItemInfo* result;
@@ -53,11 +53,15 @@ public:
 	virtual void ClickEvent() override;
 	
 	Recipe* FindRecipeByIngredient(int itemEnum);
+	string ToString() override;
 
-	float GetMaxPower() { return maxPower; }
-	float GetCurrPower() { return currPower; }
-	float GetProductionPercent() { return craftedTime; }
-	ItemInfo* GetFuel() { return fuel; }
+
+	float GetMaxPower()				{ return maxPower; }
+	float GetCurrPower()			{ return currPower; }
+	float GetProductionPercent()	{ return productionPercent; }
+	ItemInfo* GetFuel()				{ return fuel; }
+	ItemInfo* GetResource()			{ return resource; }
+	ItemInfo* GetResult()			{ return result; }
 
 	StoneFurnace()
 		: mainImage(nullptr)

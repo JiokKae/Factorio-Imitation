@@ -156,6 +156,7 @@ void FuelSlotUI::OnClick(int key)
 				else
 				{
 					// 핸드에서 하나만 슬롯으로
+					itemInfo->id = hand->id;
 					itemInfo->amount += 1;
 					hand->amount -= 1;
 				}

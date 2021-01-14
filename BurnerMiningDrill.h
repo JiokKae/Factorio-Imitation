@@ -47,6 +47,7 @@ public:
 	virtual bool InputItem(ItemInfo* inputItem, glm::vec2 pos) override;
 	virtual bool OutputItem() override;
 	virtual void ClickEvent() override;
+	virtual string ToString() override;
 
 	float GetMaxPower()				{ return maxPower; }
 	float GetCurrPower()			{ return currPower; }

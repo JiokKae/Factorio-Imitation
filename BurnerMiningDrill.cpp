@@ -201,7 +201,7 @@ bool BurnerMiningDrill::OutputItem()
 
 	if (outputTile->GetLpSturcture())
 	{
-		if (outputTile->GetLpSturcture()->InputItem(new ItemInfo(COAL, 1), glm::vec2(0.0f)))
+		if (outputTile->GetLpSturcture()->InputItem(new ItemInfo(targetTile->GetLpOre()->GetItemEnum(), 1), glm::vec2(0.0f)))
 		{
 			targetTile->GetLpOre()->AddAmount(-1);
 			productionPercent -= 1.0f;
@@ -261,6 +261,11 @@ void BurnerMiningDrill::ClickEvent()
 	BurnerMiningDrillUI* bmdUI = (BurnerMiningDrillUI*)UIManager::GetSingleton()->GetLpCurrUI();
 	bmdUI->SetCurrBurnerMiningDrill(this);
 }
+
+string BurnerMiningDrill::ToString()
+{
+	return string("BurnerMiningDrill (") + to_string(coord.x) + string(", ") + to_string(coord.y) + string(") status : ") + to_string(status);
+};
 
 bool BurnerMiningDrill::IsMiningAreaEmpty()
 {
