@@ -62,7 +62,7 @@ void HandUI::Update()
 		}
 	}
 
-	dismantleBar->SetScale(glm::vec2(dismantlePercent, 1.0f));
+	dismantleBar->SetScale(glm::vec2(dismantlePercent / 0.6f, 1.0f));
 }
 
 void HandUI::Render(Shader* shader)
