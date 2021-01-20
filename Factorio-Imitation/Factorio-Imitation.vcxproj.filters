@@ -562,43 +562,43 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="1.colors.frag">
+    <None Include="shader/1.colors.frag">
       <Filter>MainGame\Shader</Filter>
     </None>
-    <None Include="1.colors.vert">
+    <None Include="shader/1.colors.vert">
       <Filter>MainGame\Shader</Filter>
     </None>
-    <None Include="1.light_cube.frag">
+    <None Include="shader/1.light_cube.frag">
       <Filter>MainGame\Shader</Filter>
     </None>
-    <None Include="1.light_cube.vert">
+    <None Include="shader/1.light_cube.vert">
       <Filter>MainGame\Shader</Filter>
     </None>
-    <None Include="SimpleFragmentShader.glsl">
+    <None Include="shader/InstancingVertexShader.glsl">
       <Filter>MainGame\Shader</Filter>
     </None>
-    <None Include="SimpleVertexShader.glsl">
+    <None Include="shader/SimpleFragmentShader.glsl">
       <Filter>MainGame\Shader</Filter>
     </None>
-    <None Include="StandardFragmentShader.glsl">
+    <None Include="shader/SimpleVertexShader.glsl">
       <Filter>MainGame\Shader</Filter>
     </None>
-    <None Include="StandardVertexShader.glsl">
+    <None Include="shader/StandardFragmentShader.glsl">
       <Filter>MainGame\Shader</Filter>
     </None>
-    <None Include="UIVertexShader.glsl">
+    <None Include="shader/StandardVertexShader.glsl">
       <Filter>MainGame\Shader</Filter>
     </None>
-    <None Include="UIFragmentShader.glsl">
+    <None Include="shader/Text2DFragmentShader.glsl">
       <Filter>MainGame\Shader</Filter>
     </None>
-    <None Include="Text2DVertexShader.glsl">
+    <None Include="shader/Text2DVertexShader.glsl">
       <Filter>MainGame\Shader</Filter>
     </None>
-    <None Include="Text2DFragmentShader.glsl">
+    <None Include="shader/UIFragmentShader.glsl">
       <Filter>MainGame\Shader</Filter>
     </None>
-    <None Include="InstancingVertexShader.glsl">
+    <None Include="shader/UIVertexShader.glsl">
       <Filter>MainGame\Shader</Filter>
     </None>
   </ItemGroup>
