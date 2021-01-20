@@ -13,8 +13,8 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
     try
     {
         // 파일 열기
-        vShaderFile.open(vertexPath);
-        fShaderFile.open(fragmentPath);
+        vShaderFile.open(("shader/" + string(vertexPath)).c_str());
+        fShaderFile.open(("shader/" + string(fragmentPath)).c_str());
         std::stringstream vShaderStream, fShaderStream;
         // stream에 파일의 버퍼 내용을 읽기
         vShaderStream << vShaderFile.rdbuf();
