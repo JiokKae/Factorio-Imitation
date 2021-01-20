@@ -15,6 +15,7 @@ HRESULT BurnerInserter::Init(int x, int y, DIRECTION direction, bool temp)
 	handBaseImage->SetScale(handBaseScale);
 	handBaseImage->SetOffset(glm::vec2(0.0f, 60.0f));
 	handBaseAngle = 0.0f;
+	handBaseXYangle = 60.0f;
 
 	handOpenImage = new GLImage();
 	handOpenImage->Init("Entity/BurnerInserter-handOpen");
@@ -38,15 +39,16 @@ void BurnerInserter::Update()
 	Structure::Update();
 
 	float destAngle;
-
+	handBaseXYangle = (sin(g_time) + 1) / 2 * 90;
+	//handBaseAngle = (sin(g_time) - 1)/2 * 360;
 	// 핸드베이스 업데이트
 	handBaseImage->SetAngle(glm::radians(handBaseAngle));
 	float scaleY = ((cos(glm::radians(handBaseAngle)) + 1.0f) / 4.0f + 0.4f);
-	handBaseScale.y = 0.4f * scaleY;
+	handBaseScale.y = 0.4f * scaleY + sin(glm::radians(handBaseXYangle)) * 0.2f;
 	handBaseImage->SetScale(handBaseScale);
 
 	
-	float destAngles[4] = { 0.0f, -60.0f, -180.0f, -300.0f };
+	float destAngles[4] = { 0.0f, -handBaseXYangle, -180.0f, -360.0f + handBaseXYangle };
 	destAngle = destAngles[direction];
 
 	if (destAngle == 0.0f && handBaseAngle < 0)
@@ -54,10 +56,10 @@ void BurnerInserter::Update()
 	handBaseAngle = Lerp(handBaseAngle, destAngle, 0.05f);
 
 	// 핸드 오픈 업데이트
-	float handOpenDestAngles[4] = { 0.0f, -120.0f, -180.0f, -240.0f };
+	float handOpenDestAngles[4] = { 0.0f, -180.0f + handBaseXYangle, -180.0f, -180.0f - handBaseXYangle };
 	destAngle = handOpenDestAngles[direction];
 
-	float handOpenScaleY = ((cos(glm::radians(handBaseAngle + 180)) + 1.0f) / 4.0f + 0.4f);
+	float handOpenScaleY = 1.0f;// ((cos(glm::radians(handBaseAngle + 180)) + 1.0f) / 4.0f + 0.4f);
 	if (destAngle == 0.0f && handOpenAngle < 0)
 		handOpenAngle += 360.0f;
 	handOpenAngle = Lerp(handOpenAngle, destAngle, 0.05f);

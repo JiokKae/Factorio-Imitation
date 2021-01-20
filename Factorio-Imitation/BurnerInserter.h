@@ -7,6 +7,7 @@ class BurnerInserter : public Structure
 	GLImage* handBaseImage;
 	glm::vec2 handBaseScale;
 	float handBaseAngle;
+	float handBaseXYangle;
 
 	GLImage* handOpenImage;
 	float handOpenAngle;
