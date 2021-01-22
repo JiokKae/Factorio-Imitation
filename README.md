@@ -18,3 +18,13 @@
     * 운송 벨트 (Transport Belt)
     * 투입기 (Inserter)
     * 돌 용광로 (Stone Furnace)
+
+## 구현부
+
+### 캐릭터 (Character)
+* 조작
+* 애니메이션
+* 인벤토리
+
+### 구조물 (Structure) / 화력 채광 드릴 (Burner Mining Drill)
+* 타일에 있는 광물을 채취
