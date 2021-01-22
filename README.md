@@ -12,14 +12,14 @@
     * 인스턴싱 (Instancing)
 
 ## 구현 목록
-* 캐릭터 (Character)
+* [캐릭터 (Character)](#구현부)
 * 구조물 (Structure)
     * 화력 채광 드릴 (Burner Mining Drill)
     * 운송 벨트 (Transport Belt)
     * 투입기 (Inserter)
     * 돌 용광로 (Stone Furnace)
 
-## 구현부
+## 정의부
 
 ### 캐릭터 (Character)
 * 조작
