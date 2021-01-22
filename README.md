@@ -26,8 +26,8 @@
 ## 구현 목록
 * [캐릭터 (Character)](#캐릭터-character)
 * 구조물 (Structure)
-	* 화력 채광 드릴 (Burner Mining Drill)
-	* 운송 벨트 (Transport Belt)
+	* [화력 채광 드릴 (Burner Mining Drill)](#화력-채광-드릴-burner-mining-drill)
+	* [운송 벨트 (Transport Belt)](#운송-벨트-transport-belt)
 	* 투입기 (Inserter)
 	* 돌 용광로 (Stone Furnace)
     
@@ -58,12 +58,13 @@
 	* 보유중인 아이템을 획득하면 기존의 아이템과 합쳐진다.
 
 ### 화력 채광 드릴 (Burner Mining Drill)
-	구조물 (Structure) /
+	구조물 (Structure)/ 화력 채광 드릴 (Burner Mining Drill)
 * 타일에 있는 광물을 채취한다.
 * 연료를 에너지로 사용한다.
 * 배출구로 광물을 배출한다.
 
-### 구조물 (Structure) / 운송 벨트 (Transport Belt)
+### 운송 벨트 (Transport Belt)
+	구조물 (Structure)/ 운송 벨트 (Transport Belt)
 * 벨트위에 올라가있는 아이템들을 진행 방향으로 이동시킨다.
 * 벨트의 종류에 따라 속도가 다르다.
 * 사방의 운송벨트와 상호 작용하여 진행 방향이 바뀐다
