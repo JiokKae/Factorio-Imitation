@@ -1,7 +1,8 @@
 # Factorio-Imitation
 
 ## 사용한 라이브러리
-* WinAPI (Windows API)
+* [WinAPI (Windows API)](https://docs.microsoft.com/en-us/windows/win32/)
+* [OpenGL](https://www.opengl.org/)
 * [GLM (OpenGL Mathematics)](https://github.com/g-truc/glm)
 * [GLEW (OpenGL Extension Wrangler Library)](http://glew.sourceforge.net/)
 * [stb_image (Image Loader)](https://github.com/nothings/stb#stb)
@@ -60,3 +61,8 @@
 * 타일에 있는 광물을 채취한다.
 * 연료를 에너지로 사용한다.
 * 배출구로 광물을 배출한다.
+
+### 구조물 (Structure) / 운송 벨트 (Transport Belt)
+* 벨트위에 올라가있는 아이템들을 진행 방향으로 이동시킨다.
+* 벨트의 종류에 따라 속도가 다르다.
+* 사방의 운송벨트와 상호 작용하여 진행 방향이 바뀐다
