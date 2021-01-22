@@ -28,8 +28,8 @@
 #### 구조물 (Structure)
 * [화력 채광 드릴 (Burner Mining Drill)](#화력-채광-드릴-burner-mining-drill)
 * [운송 벨트 (Transport Belt)](#운송-벨트-transport-belt)
-* 투입기 (Inserter)
-* 돌 용광로 (Stone Furnace)
+* [투입기 (Inserter)](#투입기-inserter)
+* [돌 용광로 (Stone Furnace)](#돌-용광로-stone-furnace)
     
     
 ## 정의부
@@ -42,7 +42,7 @@
 * 서로 비슷한 요소들을 한번에 GPU로 넘겨주어 한번에 렌더한다.  
 * CPU와 GPU간의 통신이 반복되지 않아 딜레이가 적어 속도가 빠르다.  
 
-* 기술이 사용된 객체: 타일(Tile), 광물(Ore), 땅 위의 아이템(Item On Ground)
+* 기술이 사용된 객체: [타일(Tile)](#타일-tile), 광물(Ore), [땅 위의 아이템(Item On Ground)](#땅-위의-아이템-item-on-ground)
 
 ### [캐릭터 (Character)](#캐릭터-character)
 * 조작
@@ -57,31 +57,31 @@
 * 인벤토리
 	* 보유중인 아이템을 획득하면 기존의 아이템과 합쳐진다.
 
-### 화력 채광 드릴 (Burner Mining Drill)
+### [화력 채광 드릴 (Burner Mining Drill)](#구조물-structure)
 	구조물 (Structure)/ 화력 채광 드릴 (Burner Mining Drill)
 * 타일에 있는 광물을 채취한다.
 * 연료를 에너지로 사용한다.
 * 배출구로 광물을 배출한다.
 
-### 운송 벨트 (Transport Belt)
+### [운송 벨트 (Transport Belt)](#구조물-structure)
 	구조물 (Structure)/ 운송 벨트 (Transport Belt)
 * 벨트위에 올라가있는 아이템들을 진행 방향으로 이동시킨다.
 * 벨트의 종류에 따라 속도가 다르다.
 * 사방의 운송벨트와 상호 작용하여 진행 방향이 바뀐다
 
-### 투입기 (Inserter)
+### [투입기 (Inserter)](#구조물-structure)
 	구조물 (Structure)/ 투입기 (Inserter)
 * 구조물에 아이템을 투입한다.
 * 구조물에서 아이템을 반출한다.
 * 방향에 따라 이미지가 회전한다.
 
-### 돌 용광로 (Stone Furnace)
+### [돌 용광로 (Stone Furnace)](#구조물-structure)
 	구조물 (Structure)/ 투입기 (Inserter)
 * 굽기 제작법이 있는 아이템들을 가공한다.
 * 연료를 에너지로 사용한다.
 * 다른 구조물로부터 아이템을 받을 수 있다.
 
-### 구조물 빌더 (Structure Builder)
+### [구조물 빌더 (Structure Builder)](#구조물-structure)
 * 임시 구조물
 	* 마우스 좌표에 임시로 구조물을 배치하여 표시한다.
 * 활성화
@@ -104,7 +104,8 @@
 * 엔티티 저장
 	* multimap 사용
 	* 엔티티들이 왼쪽 위부터 출력되어야한다.
-#### 땅위의 아이템
+	
+#### 땅위의 아이템 (Item On Ground)
 * 인스턴싱 기법을 사용하여 아이템들을 일괄적으로 렌더한다.
 
 * 구조물 빌더
