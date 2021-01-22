@@ -24,9 +24,11 @@ public:
 	bitset<KEY_MAX_COUNT> GetKeyUp() { return keyUp; }
 	bitset<KEY_MAX_COUNT> GetKeyDown() { return keyDown; }
 
+private:
 	void SetKeyUp(int key, bool state) { keyUp.set(key, state); }
 	void SetKeyDown(int key, bool state) { keyDown.set(key, state); }
 
+public:
 	KeyManager();
 	~KeyManager();
 };

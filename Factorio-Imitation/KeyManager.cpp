@@ -8,8 +8,6 @@ HRESULT KeyManager::Init()
 	{
 		SetKeyDown(i, false);
 		SetKeyUp(i, true);
-		//keyUp[i] = true;
-		//keyDown[i] = false;
 	}
 
 	return S_OK;
@@ -22,6 +20,9 @@ void KeyManager::Release()
 
 bool KeyManager::IsOnceKeyDown(int key)
 {
+	if (!g_hWndFocus)
+		return false;
+
 	// GetAsyncKeyState(VK_...)
 	/*
 		함수 호출 시점에 가상키(VK_...)가 어떤 상태인지 확인이 가능
@@ -33,9 +34,9 @@ bool KeyManager::IsOnceKeyDown(int key)
 
 	if (GetAsyncKeyState(key) & 0x8000)
 	{
-		if (!GetKeyDown()[key] /*keyDown[key] == false*/)
+		if (!keyDown[key])
 		{
-			SetKeyDown(key, true) /*keyDown[key] = true*/;
+			SetKeyDown(key, true);
 			return true;
 		}
 	}
@@ -49,6 +50,9 @@ bool KeyManager::IsOnceKeyDown(int key)
 
 bool KeyManager::IsOnceKeyUp(int key)
 {
+	if (!g_hWndFocus)
+		return false;
+
 	if (GetAsyncKeyState(key) & 0x8000)	// return false인 경우
 	{
 		SetKeyUp(key, false);
@@ -67,6 +71,9 @@ bool KeyManager::IsOnceKeyUp(int key)
 
 bool KeyManager::IsStayKeyDown(int key)
 {
+	if (!g_hWndFocus)
+		return false;
+
 	if (GetAsyncKeyState(key) & 0x8000)
 		return true;
 

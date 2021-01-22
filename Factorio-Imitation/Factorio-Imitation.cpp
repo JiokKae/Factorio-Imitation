@@ -7,6 +7,7 @@
 // 전역 변수:
 HINSTANCE	g_hInstance;	// 현재 인스턴스입니다.
 HWND		g_hWnd;
+bool		g_hWndFocus;	// 현재 윈도우가 포커스 되어있는지 여부
 MainGame	g_mainGame;
 LPSTR		g_lpszClass = (LPSTR)TEXT("Factorio-Imitation");
 POINT		g_ptMouse;
@@ -81,6 +82,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	MSG message;
 	while (true)
 	{
+		if (g_hWnd == GetFocus())
+			g_hWndFocus = true;
+		else
+			g_hWndFocus = false;
+
 		if (PeekMessage(&message, 0, 0, 0, PM_REMOVE))
 		{
 			if (message.message == WM_QUIT)

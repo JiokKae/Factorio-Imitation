@@ -266,7 +266,7 @@ void PlayScene::Render(HDC hdc)
          textRenderer->RenderText("TextRender_time:         " + to_string(TimerManager::GetSingleton()->CheckTime()),    10, height - 340);
          textRenderer->RenderText("RenderTime:              " + to_string(TimerManager::GetSingleton()->renderTime),     10, height - 370);
     }
-
+    
 	glFlush();
 }
 

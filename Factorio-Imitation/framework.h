@@ -207,6 +207,7 @@ enum DIRECTION {
 #define RIGHT_DIR(x)	((x + 1) % DIRECTION_END)
 
 extern HWND			g_hWnd;
+extern bool			g_hWndFocus;	// 현재 윈도우가 포커스 되어있는지 여부
 extern float		g_time;
 extern HINSTANCE	g_hInstance;
 extern POINT		g_ptMouse;
