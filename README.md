@@ -24,7 +24,7 @@
    * multimap
    
 ## 구현 목록
-#### [캐릭터 (Character)](#캐릭터-character)
+#### [캐릭터 (Character)](#캐릭터-character-1)
 #### 구조물 (Structure)
 * [화력 채광 드릴 (Burner Mining Drill)](#화력-채광-드릴-burner-mining-drill)
 * [운송 벨트 (Transport Belt)](#운송-벨트-transport-belt)
@@ -44,7 +44,7 @@
 
 * 기술이 사용된 객체: 타일(Tile), 광물(Ore), 땅 위의 아이템(Item On Ground)
 
-### [캐릭터 (Character)]
+### [캐릭터 (Character)](#캐릭터-character)
 * 조작
 	* 이동
 	* 건설
