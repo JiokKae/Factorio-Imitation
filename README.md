@@ -30,12 +30,13 @@
 * [운송 벨트 (Transport Belt)](#운송-벨트-transport-belt)
 * [투입기 (Inserter)](#투입기-inserter)
 * [돌 용광로 (Stone Furnace)](#돌-용광로-stone-furnace)
+    ---
     
     
 ## 정의부
 
 ### OpenGL(Open Graphics Library)
-* 하드웨어 가속으로 컴퓨터 그래픽을 처리
+* 하드웨어 가속으로 컴퓨터 그래픽을 처리할 수 있게 돕는 라이브러리이다. 
 * 2D, 3D 그래픽 라이브러리
 
 ### 인스턴싱 (Instancing)
