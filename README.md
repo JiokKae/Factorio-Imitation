@@ -1,6 +1,6 @@
 # Factorio-Imitation
 
-## 사용한 라이브러리
+## 라이브러리
 * [WinAPI (Windows API)](https://docs.microsoft.com/en-us/windows/win32/)
 * [OpenGL](https://www.opengl.org/)
 * [GLM (OpenGL Mathematics)](https://github.com/g-truc/glm)
@@ -24,12 +24,12 @@
    * multimap
    
 ## 구현 목록
-* [캐릭터 (Character)](#캐릭터-character)
-* 구조물 (Structure)
-	* [화력 채광 드릴 (Burner Mining Drill)](#화력-채광-드릴-burner-mining-drill)
-	* [운송 벨트 (Transport Belt)](#운송-벨트-transport-belt)
-	* 투입기 (Inserter)
-	* 돌 용광로 (Stone Furnace)
+#### [캐릭터 (Character)](#캐릭터-character)
+#### 구조물 (Structure)
+* [화력 채광 드릴 (Burner Mining Drill)](#화력-채광-드릴-burner-mining-drill)
+* [운송 벨트 (Transport Belt)](#운송-벨트-transport-belt)
+* 투입기 (Inserter)
+* 돌 용광로 (Stone Furnace)
     
     
 ## 정의부
@@ -44,7 +44,7 @@
 
 * 기술이 사용된 객체: 타일(Tile), 광물(Ore), 땅 위의 아이템(Item On Ground)
 
-### 캐릭터 (Character)
+### [캐릭터 (Character)]
 * 조작
 	* 이동
 	* 건설
