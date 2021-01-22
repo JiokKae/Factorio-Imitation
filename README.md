@@ -30,7 +30,7 @@
 * [운송 벨트 (Transport Belt)](#운송-벨트-transport-belt)
 * [투입기 (Inserter)](#투입기-inserter)
 * [돌 용광로 (Stone Furnace)](#돌-용광로-stone-furnace)
-    ---
+---
     
     
 ## 정의부
