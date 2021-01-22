@@ -12,7 +12,7 @@
     * 인스턴싱 (Instancing)
 
 ## 구현 목록
-* [캐릭터 (Character)](#캐릭터_(Character))
+* [캐릭터 (Character)](#캐릭터-character)
 * 구조물 (Structure)
     * 화력 채광 드릴 (Burner Mining Drill)
     * 운송 벨트 (Transport Belt)
@@ -21,7 +21,7 @@
 
 ## 정의부
 
-### 캐릭터_(Character)
+### 캐릭터 (Character)
 * 조작
 * 애니메이션
 * 인벤토리
