@@ -2,8 +2,8 @@
 
 ## 사용한 라이브러리
 * WinAPI (Windows API)
-* [GLM (OpenGL Mathematics)](glm.g-truc.net/0.9.8/index.html)
-* [GLEW (OpenGL Extension Wrangler Library)](glew.sourceforge.net/)
+* [GLM (OpenGL Mathematics)](http://glm.g-truc.net/)
+* [GLEW (OpenGL Extension Wrangler Library)](http://glew.sourceforge.net/)
 * [stb_image (Image Loader)](https://github.com/nothings/stb#stb)
 
 ## 사용한 기술
