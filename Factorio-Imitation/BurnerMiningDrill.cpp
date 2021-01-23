@@ -240,8 +240,7 @@ bool BurnerMiningDrill::OutputItem()
 		targetTile->GetLpOre()->AddAmount(-1);
 
 		ItemOnGround* item = new ItemOnGround();
-		item->Init((ItemEnum)targetTile->GetLpOre()->GetItemEnum());
-		item->SetPosition(outTilePos + outputPos);
+		item->Init((ItemEnum)targetTile->GetLpOre()->GetItemEnum(), outTilePos + outputPos);
 		EntityManager::GetSingleton()->AddItemOnGround(item);
 
 		productionPercent -= 1.0f;

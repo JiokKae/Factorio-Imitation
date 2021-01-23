@@ -212,6 +212,13 @@ Tile* TileManager::GetLpTile(int coordX, int coordY)
         return nullptr;
 }
 
+Tile* TileManager::GetLpTile(float positionX, float positionY)
+{
+    glm::vec2 position = { positionX, positionY };
+    glm::ivec2 coord = POS_TO_COORD(position);
+    return GetLpTile(coord.x, coord.y);
+}
+
 Tile* TileManager::GetLPTileUnderMouse()
 {
     return GetLpTile(g_cursorCoord.x, g_cursorCoord.y);

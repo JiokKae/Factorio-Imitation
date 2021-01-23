@@ -39,3 +39,20 @@ Tile* Tile::GetAroundTile(DIRECTION direction)
 	}
 	return nullptr;
 }
+
+void Tile::LinkItemOnGround(ItemOnGround* item)
+{
+	items.push_back(item);
+}
+
+void Tile::UnlinkItemOnGround(ItemOnGround* item)
+{
+	for (auto it = items.begin(); it != items.end(); ++it)
+	{
+		if (*it == item) 
+		{
+			items.erase(it);
+			return;
+		}
+	}
+}

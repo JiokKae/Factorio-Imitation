@@ -13,10 +13,10 @@ LPSTR		g_lpszClass = (LPSTR)TEXT("Factorio-Imitation");
 POINT		g_ptMouse;
 float		g_mousezDelta;
 glm::vec2	g_cursorPosition;	// 마우스 커서의 포지션
-glm::vec2	g_cursorCoord;		// 마우스 커서의 좌표
+glm::ivec2	g_cursorCoord;		// 마우스 커서의 좌표
 glm::vec2	g_currScreenSize;	// 현재 씬 윈도우의 크기
 float		g_time;
-bool		g_debuggingMode;
+bool		g_debuggingMode = true;
 ItemSpec	g_itemSpecs[] = {
 //		name						buildable	coordSize	direction	passable	fuel,	fuelValue
 //															Count

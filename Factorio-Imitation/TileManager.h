@@ -25,7 +25,8 @@ public:
 	virtual void Update();
 	virtual void Render(RECT cameraRect);
 
-	Tile* GetLpTile(int x, int y);
+	Tile* GetLpTile(int coordX, int coordY);
+	Tile* GetLpTile(float positionX, float positionY);
 	Tile* GetLPTileUnderMouse();
 	Chunk* GetLpChunk(int x, int y);
 

@@ -247,8 +247,7 @@ void TransportBelt::FlowItem(Entity* item, bool isItem)
 bool TransportBelt::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 {
 	ItemOnGround* item = new ItemOnGround();
-	item->Init((ItemEnum)inputItem->id);
-	item->SetPosition(this->position + pos);
+	item->Init((ItemEnum)inputItem->id, this->position + pos);
 	EntityManager::GetSingleton()->AddItemOnGround(item);
 
 	SAFE_DELETE(inputItem);

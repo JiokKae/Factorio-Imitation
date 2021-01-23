@@ -186,7 +186,7 @@ void PlayScene::Update()
 
     g_cursorPosition = { (g_ptMouse.x - width / 2) / camera->GetZoom() + camera->GetPosition().x,
                     (g_ptMouse.y - height / 2) / camera->GetZoom() + camera->GetPosition().y };
-    g_cursorCoord = vec2(POS_TO_COORD(g_cursorPosition));
+    g_cursorCoord = ivec2(POS_TO_COORD(g_cursorPosition));
 
     g_currScreenSize = vec2(width, height);
 	camera->Update();
@@ -250,21 +250,23 @@ void PlayScene::Render(HDC hdc)
          textRenderer->RenderText(string(str),                                                                           10, height - 70);
          sprintf_s(str, "g_cursorPosition: (%.1f, %.1f)", g_cursorPosition.x, g_cursorPosition.y );
          textRenderer->RenderText(string(str),                                                                           10, height - 100);
-         sprintf_s(str, "Cursor: (%d, %d)", (int)g_cursorCoord.x, (int)g_cursorCoord.y);
+         sprintf_s(str, "Cursor: (%d, %d)", g_cursorCoord.x, g_cursorCoord.y);
          textRenderer->RenderText(string(str),                                                                           10, height - 130);
          Tile* tile = TileManager::GetSingleton()->GetLPTileUnderMouse();
          if (tile)
          {
-             sprintf_s(str, "Ore Amount: (%d)", tile->GetLpOre()->GetAmount() );
+             sprintf_s(str, "Ore Amount: %d", tile->GetLpOre()->GetAmount() );
              textRenderer->RenderText(string(str),                                                                       10, height - 160);
+             sprintf_s(str, "Item Amount: %d", tile->GetItems().size() );
+             textRenderer->RenderText(string(str),                                                                       10, height - 190);
          }
-         textRenderer->RenderText("Zoom: " + to_string(camera->GetZoom()),                                               10, height - 190);
-         textRenderer->RenderText("UpdateTime: " + to_string(TimerManager::GetSingleton()->updateTime),                  10, height - 220);
-         textRenderer->RenderText("tileRenderer_time:         " + to_string(tileRenderer_time),                          10, height - 250);                           
-         textRenderer->RenderText("entityManager_time:      " + to_string(entityManager_time),                           10, height - 280);                           
-         textRenderer->RenderText("UIManager_time:          " + to_string(UIManager_time),                               10, height - 310);
-         textRenderer->RenderText("TextRender_time:         " + to_string(TimerManager::GetSingleton()->CheckTime()),    10, height - 340);
-         textRenderer->RenderText("RenderTime:              " + to_string(TimerManager::GetSingleton()->renderTime),     10, height - 370);
+         textRenderer->RenderText("Zoom: " + to_string(camera->GetZoom()),                                               10, height - 220);
+         textRenderer->RenderText("UpdateTime: " + to_string(TimerManager::GetSingleton()->updateTime),                  10, height - 250);
+         textRenderer->RenderText("tileRenderer_time:         " + to_string(tileRenderer_time),                          10, height - 280);                           
+         textRenderer->RenderText("entityManager_time:      " + to_string(entityManager_time),                           10, height - 310);                           
+         textRenderer->RenderText("UIManager_time:          " + to_string(UIManager_time),                               10, height - 340);
+         textRenderer->RenderText("TextRender_time:         " + to_string(TimerManager::GetSingleton()->CheckTime()),    10, height - 370);
+         textRenderer->RenderText("RenderTime:              " + to_string(TimerManager::GetSingleton()->renderTime),     10, height - 400);
     }
     
 	glFlush();

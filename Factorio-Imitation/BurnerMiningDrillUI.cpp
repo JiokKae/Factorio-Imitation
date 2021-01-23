@@ -53,10 +53,12 @@ void BurnerMiningDrillUI::Update()
 		redProgressiveBar->SetScale(glm::vec2(currBurnerMiningDrill->GetCurrPower() / currBurnerMiningDrill->GetMaxPower(), 1.0f));
 		greenProgressiveBar->SetScale(glm::vec2(currBurnerMiningDrill->GetProductionPercent(), 1.0f));
 		fuelSlotUI->Update(currBurnerMiningDrill->GetWaitingItemInfo());
+		
 		if (PtInFRect(GetFrect(), { g_ptMouse.x, g_ptMouse.y }))
 		{
 			KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON);
 		}
+		
 	}
 }
 
