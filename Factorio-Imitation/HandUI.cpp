@@ -43,10 +43,13 @@ void HandUI::Release()
 void HandUI::Update()
 {
 	// 손 비우기 기능
-	if (KeyManager::GetSingleton()->IsOnceKeyDown('Q'))
+	if (handItem->amount != 0)
 	{
-		EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->AddItem(new ItemInfo(*handItem));
-		handItem->amount = 0;
+		if (KeyManager::GetSingleton()->IsOnceKeyDown('Q'))
+		{
+			EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->AddItem(new ItemInfo(*handItem));
+			handItem->amount = 0;
+		}
 	}
 
 	if (KeyManager::GetSingleton()->IsOnceKeyDown('Z'))

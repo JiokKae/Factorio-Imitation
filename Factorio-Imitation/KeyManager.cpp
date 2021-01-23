@@ -36,7 +36,12 @@ bool KeyManager::IsOnceKeyDown(int key)
 	{
 		if (!keyDown[key])
 		{
+			keyDownTime[key] = g_time;
 			SetKeyDown(key, true);
+			return true;
+		}
+		else if (keyDownTime[key] == g_time)
+		{
 			return true;
 		}
 	}
@@ -61,7 +66,12 @@ bool KeyManager::IsOnceKeyUp(int key)
 	{
 		if (!GetKeyUp()[key])
 		{
+			keyUpTime[key] = g_time;
 			SetKeyUp(key, true);
+			return true;
+		}
+		else if (keyUpTime[key] == g_time) 
+		{
 			return true;
 		}
 	}

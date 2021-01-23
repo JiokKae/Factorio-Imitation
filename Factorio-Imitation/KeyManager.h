@@ -12,7 +12,8 @@ class KeyManager : public Singleton<KeyManager>
 private:
 	bitset<KEY_MAX_COUNT>	keyUp;
 	bitset<KEY_MAX_COUNT>	keyDown;
-
+	float keyDownTime[KEY_MAX_COUNT];
+	float keyUpTime[KEY_MAX_COUNT];
 public:
 	HRESULT Init();
 	void Release();

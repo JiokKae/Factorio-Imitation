@@ -35,20 +35,23 @@ void SlotUI::Update(ItemInfo* itemInfo)
 		if (PtInFRect(GetFrect(), { g_ptMouse.x, g_ptMouse.y }))
 		{
 			onMouse = true;
+			if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
+				OnClick(VK_LBUTTON);
+
 			if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
 			{
 				isLMouseDown = true;
-				if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
-					OnClick(VK_LBUTTON);
 			}
 			else
 				isLMouseDown = false;
 
+			if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RBUTTON))
+				OnClick(VK_RBUTTON);
+
 			if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
 			{
 				isRMouseDown = true;
-				if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RBUTTON))
-					OnClick(VK_RBUTTON);
+
 			}
 			else
 				isRMouseDown = false;

@@ -224,6 +224,7 @@ void Character::Running()
 	direction = newDirection;
 
 	if (0 && KeyManager::GetSingleton()->IsOnceKeyDown(VK_RBUTTON))
+	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RBUTTON))
 	{
 		ChangeState(State::MINING);
 	}

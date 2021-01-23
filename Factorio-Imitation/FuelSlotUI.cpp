@@ -25,56 +25,20 @@ void FuelSlotUI::Release()
 	SAFE_RELEASE(image);
 }
 
-void FuelSlotUI::Update(ItemInfo* itemInfo)
-{
-	if (active)
-	{
-		this->itemInfo = itemInfo;
-
-		if (PtInFRect(GetFrect(), { g_ptMouse.x, g_ptMouse.y }))
-		{
-			onMouse = true;
-			if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
-			{
-				isLMouseDown = true;
-				if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
-					OnClick(VK_LBUTTON);
-			}
-			else
-				isLMouseDown = false;
-
-			if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
-			{
-				isRMouseDown = true;
-				if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RBUTTON))
-					OnClick(VK_RBUTTON);
-			}
-			else
-				isRMouseDown = false;
-		}
-		else
-		{
-			onMouse = false;
-			isLMouseDown = false;
-			isRMouseDown = false;
-		}
-	}
-}
-
 void FuelSlotUI::Render(Shader* shader)
 {
 	if (active)
 	{
 		if (itemInfo && itemInfo->amount != 0)
 		{
-			slotImage->Render(shader, GetPosition().x, GetPosition().y, onMouse + isLMouseDown, 0);
+			slotImage->Render(shader, GetPosition().x, GetPosition().y, onMouse + (isLMouseDown || isRMouseDown), 0);
 			glm::ivec2 maxFrame = allItemImage->GetMaxFrame();
 			allItemImage->Render(shader, GetPosition().x, GetPosition().y, itemInfo->id % maxFrame.x, maxFrame.y - 1 - itemInfo->id / maxFrame.y);
 			TextRenderer::GetSingleton()->RenderText(to_string(itemInfo->amount), GetPosition().x - to_string(itemInfo->amount).length() * 6 + 17, GetPosition().y - 7.0f, 0.46f);
 		}
 		else
 		{
-			image->Render(shader, GetPosition().x, GetPosition().y, onMouse + isLMouseDown, 0);
+			image->Render(shader, GetPosition().x, GetPosition().y, onMouse + (isLMouseDown || isRMouseDown), 0);
 		}
 	}
 }
