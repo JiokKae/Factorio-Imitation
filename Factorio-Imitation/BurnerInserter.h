@@ -11,6 +11,7 @@ class BurnerInserter : public Structure
 	GLImage* handOpenImage;
 	float handOpenAngle;
 
+	GLImage* allItemsImage;
 public:
 	virtual HRESULT Init(int x, int y, DIRECTION direction, bool temp = false) override;
 	virtual void Release();
