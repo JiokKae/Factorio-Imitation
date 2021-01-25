@@ -270,6 +270,31 @@ bool StoneFurnace::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 	return false;
 }
 
+bool StoneFurnace::TakeOutItem(ItemInfo* outItem)
+{
+	// 내보낼 생산품이 있다면
+	if (result->amount)
+	{
+		// 생산품의 개수가 반출 요구치를 넘으면
+		if (result->amount >= outItem->amount)
+		{
+			result->amount -= outItem->amount;
+			outItem->id = result->id;
+		}
+		// 생산품의 개수가 반출 요구치를 넘지 못하면
+		else
+		{
+			outItem->id = result->id;
+			outItem->amount = result->amount;
+			result->amount = 0;
+		}
+		return true;
+	}
+	// 내보낼 생산품이 없다면
+	else
+		return false;
+}
+
 void StoneFurnace::ClickEvent()
 {
 	UIManager::GetSingleton()->ActiveUI("StoneFurnaceUI");

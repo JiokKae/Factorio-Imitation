@@ -9,6 +9,7 @@ layout (std140, binding = 2) uniform UIMatrices
 uniform mat4 model;
 uniform vec2 currFrame;
 uniform vec2 maxFrame;
+uniform vec2 margin;
 
 out UIVertexShaderOut
 {
@@ -17,6 +18,6 @@ out UIVertexShaderOut
 
 void main()
 {
-	o.TexCoords = (vertex.zw + currFrame) / maxFrame;
+	o.TexCoords = (vertex.zw * (1 - margin * 2) + margin + currFrame) / maxFrame;
 	gl_Position = projection * model * vec4(vertex.xy, 0.0, 1.0);
 }

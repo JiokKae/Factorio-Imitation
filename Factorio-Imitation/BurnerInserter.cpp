@@ -18,8 +18,13 @@ HRESULT BurnerInserter::Init(int x, int y, DIRECTION direction, bool temp)
 
 	handOpenImage = new GLImage();
 	handOpenImage->Init("Entity/BurnerInserter-handOpen");
-	handOpenImage->SetScale(glm::vec2(0.4f, 0.4f));
+	handOpenScale = { 0.4f, 0.4f };
+	handOpenImage->SetScale(handOpenScale);
 	handOpenImage->SetOffset({ 0, 82 });
+
+	allItemsImage = new GLImage();
+	allItemsImage->Init("Icons/AllItems", 8, 8, 0.25f, 0.25f);
+	allItemsImage->SetScale({0.25f, 0.25f});
 
 	return S_OK;
 }
@@ -31,6 +36,7 @@ void BurnerInserter::Release()
 	SAFE_RELEASE(handOpenImage);
 	SAFE_RELEASE(handBaseImage);
 	SAFE_RELEASE(platformImage);
+	SAFE_RELEASE(allItemsImage);
 }
 
 void BurnerInserter::Update()
@@ -45,7 +51,6 @@ void BurnerInserter::Update()
 	handBaseScale.y = 0.4f * scaleY;
 	handBaseImage->SetScale(handBaseScale);
 
-	
 	float destAngles[4] = { 0.0f, -60.0f, -180.0f, -300.0f };
 	destAngle = destAngles[direction];
 
@@ -57,12 +62,12 @@ void BurnerInserter::Update()
 	float handOpenDestAngles[4] = { 0.0f, -120.0f, -180.0f, -240.0f };
 	destAngle = handOpenDestAngles[direction];
 
-	float handOpenScaleY = ((cos(glm::radians(handBaseAngle + 180)) + 1.0f) / 4.0f + 0.4f);
+	handOpenScale.y = ((cos(glm::radians(handBaseAngle + 180)) + 1.0f) / 4.0f + 0.4f) * 0.4f;
 	if (destAngle == 0.0f && handOpenAngle < 0)
 		handOpenAngle += 360.0f;
 	handOpenAngle = Lerp(handOpenAngle, destAngle, 0.05f);
 
-	handOpenImage->SetScale(glm::vec2(0.4f, 0.4f * handOpenScaleY));
+	handOpenImage->SetScale(handOpenScale);
 	handOpenImage->SetAngle(glm::radians(handOpenAngle));
 }
 
@@ -78,23 +83,38 @@ void BurnerInserter::Render(Shader* lpShader)
 
 void BurnerInserter::LateRender(Shader* lpShader)
 {
-	
 	handOpenImage->Render(lpShader, 
 		position.x - sin(glm::radians(handBaseAngle)) * 120 * handBaseScale.y ,
 		position.y + cos(glm::radians(handBaseAngle)) * 120 * handBaseScale.y + 10);
 	
 	handBaseImage->Render(lpShader, position.x, position.y + 10);
+
+	if (handItem.amount != 0)
+	{
+		allItemsImage->Render(lpShader,
+			position.x - sin(glm::radians(handBaseAngle)) * 120 * handBaseScale.y - sin(glm::radians(handOpenAngle)) * 136 * handOpenScale.y,
+			position.y + cos(glm::radians(handBaseAngle)) * 120 * handBaseScale.y + cos(glm::radians(handOpenAngle)) * 136 * handOpenScale.y + 10,
+			handItem.id % 8, 7 - handItem.id / 8);
+	}
 }
 
-void BurnerInserter::Render(Shader* shader, float posX, float posY)
+void BurnerInserter::Render(Shader* lpShader, float posX, float posY)
 {
-	platformImage->Render(shader, posX, posY, OPPOSITE_DIR(direction), 0);
+	platformImage->Render(lpShader, posX, posY, OPPOSITE_DIR(direction), 0);
 
-	handOpenImage->Render(shader,
+	handOpenImage->Render(lpShader,
 		posX - sin(glm::radians(handBaseAngle)) * 120 * handBaseScale.y,
 		posY + cos(glm::radians(handBaseAngle)) * 120 * handBaseScale.y + 10);
 
-	handBaseImage->Render(shader, posX, posY + 10);
+	handBaseImage->Render(lpShader, posX, posY + 10);
+
+	if (handItem.amount != 0)
+	{
+		allItemsImage->Render(lpShader,
+			posX - sin(glm::radians(handBaseAngle)) * 120 * handBaseScale.y - sin(glm::radians(handOpenAngle)) * 136 * handOpenScale.y,
+			posY + cos(glm::radians(handBaseAngle)) * 120 * handBaseScale.y + cos(glm::radians(handOpenAngle)) * 136 * handOpenScale.y + 10,
+			handItem.id % 8, 7 - handItem.id / 8);
+	}
 }
 
 string BurnerInserter::ToString()

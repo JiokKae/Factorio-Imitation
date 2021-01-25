@@ -9,7 +9,8 @@
 HRESULT HandUI::Init()
 {
 	allItemImage = new GLImage();
-	allItemImage->Init("Icons/AllItems", 8, 8, 0.25f, 0.25f, 512, 512);
+	allItemImage->Init("Icons/AllItems", 8, 8, 0.25f, 0.25f);
+	allItemImage->SetScale(glm::vec2(0.25f));
 
 	background = new GLImage();
 	background->Init("UI/BackgroundUI");

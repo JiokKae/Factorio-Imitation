@@ -11,7 +11,8 @@ HRESULT SlotUI::Init()
 	image->Init("UI/SlotUI", 3, 1);
 
 	allItemImage = new GLImage();
-	allItemImage->Init("Icons/AllItems", 8, 8, 0.25f, 0.25f, 512, 512);
+	allItemImage->Init("Icons/AllItems", 8, 8, 0.25f, 0.25f);
+	allItemImage->SetScale(glm::vec2(0.25f));
 
 	onMouse = false;
 	isLMouseDown = false;

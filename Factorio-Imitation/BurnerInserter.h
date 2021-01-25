@@ -9,9 +9,11 @@ class BurnerInserter : public Structure
 	float handBaseAngle;
 
 	GLImage* handOpenImage;
+	glm::vec2 handOpenScale;
 	float handOpenAngle;
 
 	GLImage* allItemsImage;
+	ItemInfo handItem;
 public:
 	virtual HRESULT Init(int x, int y, DIRECTION direction, bool temp = false) override;
 	virtual void Release();

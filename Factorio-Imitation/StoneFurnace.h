@@ -9,18 +9,22 @@ class Recipe;
 class StoneFurnace : public Structure
 {
 private:
+	// render
 	GLImage* mainImage;
 	GLImage* shadowImage;
 	GLImage* fireImage;
 
 	STATUS status;				// 구조물의 상태
+
+	// spec
 	float craftingSpeed;		// 제작 속도
 	float energyConsumption;	// 에너지 소모량	kw
-
 	float currPower;
 	float maxPower;
 	float craftedTime;			// 제작한 시간
 	float productionPercent;	// 생산 퍼센트
+
+	// slot
 	ItemInfo* fuel;
 	ItemInfo* resource;
 	ItemInfo* result;
@@ -41,6 +45,7 @@ public:
 	virtual void Render(Shader* shader, float posX, float posY) override;
 
 	virtual bool InputItem(ItemInfo* inputItem, glm::vec2 pos) override;
+	virtual bool TakeOutItem(ItemInfo* outItem) override;
 	virtual void ClickEvent() override;
 	
 	Recipe* FindRecipeByIngredient(int itemEnum);

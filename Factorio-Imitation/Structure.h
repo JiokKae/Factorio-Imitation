@@ -10,6 +10,7 @@ public:
 		NO_POWER,
 		WORKING,
 		WAITING_SPACE,
+		WAITING_SOURCE_ITEMS,
 		NO_MINABLE_RESOURCES,
 		DESTORY,
 		NO_RECIPE,
@@ -41,6 +42,7 @@ public:
 	virtual void ClickEvent() {};
 	virtual bool InputItem(ItemInfo* item, glm::vec2 pos) { return false; };
 	virtual bool OutputItem() { return false; };
+	virtual bool TakeOutItem(ItemInfo* outItem) { return false; };
 	virtual string ToString();
 
 	int GetItemId()				{ return itemId; }

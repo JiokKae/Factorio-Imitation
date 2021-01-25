@@ -9,9 +9,6 @@ HRESULT FuelSlotUI::Init()
 	slotImage = new GLImage();
 	slotImage->Init("UI/SlotUI", 3, 1);
 
-	allItemImage = new GLImage();
-	allItemImage->Init("Icons/AllItems", 8, 8, 0.25f, 0.25f, 512, 512);
-
 	itemInfo = new ItemInfo(0, 0);
 
 	return S_OK;
