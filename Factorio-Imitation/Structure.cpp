@@ -17,6 +17,7 @@ const char* Structure::statusString[STATUS::END] = {
 	"No Power",
 	"Working",
 	"Waiting for space in destination",
+	"Waiting Source Items",
 	"No minable resources",
 	"Destroy",
 	"No Recipe",

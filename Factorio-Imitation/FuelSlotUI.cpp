@@ -3,11 +3,10 @@
 
 HRESULT FuelSlotUI::Init()
 {
-	image = new GLImage();
-	image->Init("UI/FuelSlotUI", 3, 1);
+	SlotUI::Init();
 	
-	slotImage = new GLImage();
-	slotImage->Init("UI/SlotUI", 3, 1);
+	fuelImage = new GLImage();
+	fuelImage->Init("UI/FuelSlotUI", 3, 1);
 
 	itemInfo = new ItemInfo(0, 0);
 
@@ -17,9 +16,8 @@ HRESULT FuelSlotUI::Init()
 void FuelSlotUI::Release()
 {
 	SAFE_DELETE(itemInfo);
-	SAFE_RELEASE(allItemImage);
-	SAFE_RELEASE(slotImage);
-	SAFE_RELEASE(image);
+	SAFE_RELEASE(fuelImage);
+	SlotUI::Release();
 }
 
 void FuelSlotUI::Render(Shader* shader)
@@ -28,14 +26,14 @@ void FuelSlotUI::Render(Shader* shader)
 	{
 		if (itemInfo && itemInfo->amount != 0)
 		{
-			slotImage->Render(shader, GetPosition().x, GetPosition().y, onMouse + (isLMouseDown || isRMouseDown), 0);
+			image->Render(shader, GetPosition().x, GetPosition().y, onMouse + (isLMouseDown || isRMouseDown), 0);
 			glm::ivec2 maxFrame = allItemImage->GetMaxFrame();
 			allItemImage->Render(shader, GetPosition().x, GetPosition().y, itemInfo->id % maxFrame.x, maxFrame.y - 1 - itemInfo->id / maxFrame.y);
 			TextRenderer::GetSingleton()->RenderText(to_string(itemInfo->amount), GetPosition().x - to_string(itemInfo->amount).length() * 6 + 17, GetPosition().y - 7.0f, 0.46f);
 		}
 		else
 		{
-			image->Render(shader, GetPosition().x, GetPosition().y, onMouse + (isLMouseDown || isRMouseDown), 0);
+			fuelImage->Render(shader, GetPosition().x, GetPosition().y, onMouse + (isLMouseDown || isRMouseDown), 0);
 		}
 	}
 }

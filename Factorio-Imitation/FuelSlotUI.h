@@ -2,7 +2,7 @@
 #include "SlotUI.h"
 class FuelSlotUI : public SlotUI
 {
-	GLImage* slotImage;
+	GLImage* fuelImage;
 
 public:
 	virtual HRESULT Init() override;

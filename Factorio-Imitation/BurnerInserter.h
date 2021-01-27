@@ -1,5 +1,7 @@
 #pragma once
 #include "Structure.h"
+
+class Tile;
 class BurnerInserter : public Structure
 {
 	GLImage* platformImage;
@@ -11,6 +13,11 @@ class BurnerInserter : public Structure
 	GLImage* handOpenImage;
 	glm::vec2 handOpenScale;
 	float handOpenAngle;
+
+	float handAngle;
+	float handAngleSpeed;
+	Tile* lpDirectionTile;
+	float DestAngles[4] = { 0.0f, -90.0f, -180.0f, -270.0f };
 
 	GLImage* allItemsImage;
 	ItemInfo handItem;
