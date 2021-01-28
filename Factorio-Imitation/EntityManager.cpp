@@ -155,3 +155,8 @@ void EntityManager::AddItemOnGround(ItemOnGround* item)
 {
     itemOnGrounds->AddItem(item);
 }
+
+void EntityManager::DeleteItemOnGround(ItemOnGround* item)
+{
+    itemOnGrounds->DeleteItem(item);
+}

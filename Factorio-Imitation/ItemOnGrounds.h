@@ -22,5 +22,6 @@ public:
 	virtual void Render();
 
 	void AddItem(ItemOnGround* item);
+	void DeleteItem(ItemOnGround* item);
 };
 

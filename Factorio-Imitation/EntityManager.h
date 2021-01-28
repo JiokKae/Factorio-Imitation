@@ -30,8 +30,11 @@ public:
 	void Collision();
 
 	void AddEntity(Entity* entity);
-	void AddItemOnGround(ItemOnGround* item);
 	void DeleteEntity(Entity* entity);
+
+	void AddItemOnGround(ItemOnGround* item);
+	void DeleteItemOnGround(ItemOnGround* item);
+
 
 	EntityManager()
 		: player(nullptr)

@@ -78,8 +78,8 @@ void ItemOnGrounds::Update(FRECT cameraFRect)
             if (CheckRectCollision(playerRect, (*it)->GetCollisionFRect()))
             {
                 pickedUp = true;
-                (*it)->Release();
                 player->GetLpInventory()->AddItem(new ItemInfo((*it)->GetItemEnum(), 1));
+                (*it)->Release();
                 delete (*it);
                 it = vecItems.erase(it);
                 if (it == vecItems.end())
@@ -133,4 +133,20 @@ void ItemOnGrounds::Render()
 void ItemOnGrounds::AddItem(ItemOnGround* item)
 {
     vecItems.push_back(item);
+}
+
+void ItemOnGrounds::DeleteItem(ItemOnGround* item)
+{
+    for (it = vecItems.begin(); it != vecItems.end();)
+    {
+        if (*it == item)
+        {
+            (*it)->Release();
+            delete (*it);
+            vecItems.erase(it);
+            break;
+        }
+        else
+            ++it;
+    }
 }

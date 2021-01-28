@@ -9,15 +9,18 @@ class BurnerInserter : public Structure
 	GLImage* handBaseImage;
 	glm::vec2 handBaseScale;
 	float handBaseAngle;
+	float handBaseRenderAngle;
 
 	GLImage* handOpenImage;
 	glm::vec2 handOpenScale;
 	float handOpenAngle;
+	float handOpenRenderAngle;
 
 	float handAngle;
 	float handAngleSpeed;
 	Tile* lpDirectionTile;
-	float DestAngles[4] = { 0.0f, -90.0f, -180.0f, -270.0f };
+	Tile* lpDestTile;
+	float destAngles[4] = { 0.0f, -90.0f, -180.0f, -270.0f };
 
 	GLImage* allItemsImage;
 	ItemInfo handItem;
