@@ -152,19 +152,21 @@ void MainGame::ImageLoad()
 	textureManager->AddTexture("Entity/WoodenChest",		"graphics/entity/wooden_chest/hr-wooden-chest.png");
 	textureManager->AddTexture("Entity/WoodenChest-shadow",	"graphics/entity/wooden_chest/hr-wooden-chest-shadow.png");
 
-	textureManager->AddTexture("UI/CharacterUI",			"graphics/ui/CharacterUI.png",				false);
-	textureManager->AddTexture("UI/SlotUI",					"graphics/ui/slotUI.png",					false);
-	textureManager->AddTexture("UI/BunerMiningDrillUI",		"graphics/ui/BunerMiningDrillUI.png",		false);
-	textureManager->AddTexture("UI/DeactiveButtonUI",		"graphics/ui/DeactiveButtonUI.png",			false);
-	textureManager->AddTexture("UI/RedProgressiveBarUI",	"graphics/ui/redProgressiveBarUI.png",		false);
-	textureManager->AddTexture("UI/GreenProgressiveBarUI",	"graphics/ui/greenProgressiveBarUI.png",	false);
-	textureManager->AddTexture("UI/FuelSlotUI",				"graphics/ui/fuelSlotUI.png",				false);
-	textureManager->AddTexture("UI/StoneFurnaceUI",			"graphics/ui/stoneFurnaceUI.png",			false);
-	textureManager->AddTexture("UI/BackgroundUI",			"graphics/ui/BacgroundUI.png",				false);
-	textureManager->AddTexture("UI/BackgroundNameUI",		"graphics/ui/BacgroundNameUI.png",			false);
-	textureManager->AddTexture("UI/DismantleBarUI",			"graphics/ui/dismantleBarUI.png",			false);
-	textureManager->AddTexture("UI/DismantleEmptyBarUI",	"graphics/ui/dismantleEmptyBarUI.png",		false);
-	
+	textureManager->AddTexture("UI/CharacterUI",				"graphics/ui/CharacterUI.png",				false);
+	textureManager->AddTexture("UI/SlotUI",						"graphics/ui/slotUI.png",					false);
+	textureManager->AddTexture("UI/BunerMiningDrillUI",			"graphics/ui/BunerMiningDrillUI.png",		false);
+	textureManager->AddTexture("UI/DeactiveButtonUI",			"graphics/ui/DeactiveButtonUI.png",			false);
+	textureManager->AddTexture("UI/RedProgressiveBarUI",		"graphics/ui/redProgressiveBarUI.png",		false);
+	textureManager->AddTexture("UI/GreenProgressiveBarUI",		"graphics/ui/greenProgressiveBarUI.png",	false);
+	textureManager->AddTexture("UI/FuelSlotUI",					"graphics/ui/fuelSlotUI.png",				false);
+	textureManager->AddTexture("UI/StoneFurnaceUI",				"graphics/ui/stoneFurnaceUI.png",			false);
+	textureManager->AddTexture("UI/BackgroundUI",				"graphics/ui/BacgroundUI.png",				false);
+	textureManager->AddTexture("UI/BackgroundNameUI",			"graphics/ui/BacgroundNameUI.png",			false);
+	textureManager->AddTexture("UI/DismantleBarUI",				"graphics/ui/dismantleBarUI.png",			false);
+	textureManager->AddTexture("UI/DismantleEmptyBarUI",		"graphics/ui/dismantleEmptyBarUI.png",		false);
+	textureManager->AddTexture("UI/SelectRecipeAssemblingUI",	"graphics/ui/selectRecipeAssemblingUI.png",	false);
+	textureManager->AddTexture("UI/RecipeButtonUI",				"graphics/ui/recipeButtonUI.png",			false);
+
 	textureManager->AddTexture("Icons/Hand",				"graphics/icons/hand.png");
 	textureManager->AddTexture("Icons/AllItems",			"graphics/icons/all-items.png");
 

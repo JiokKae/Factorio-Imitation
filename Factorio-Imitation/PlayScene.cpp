@@ -77,6 +77,11 @@ HRESULT PlayScene::Init()
     stoneFurnaceUI->SetLocalPosition(glm::vec2(width / 2, height / 2));
     UIManager::GetSingleton()->AddUI("StoneFurnaceUI", stoneFurnaceUI);
 
+    UI* selectRecipeAssemblingUI = MainGameUIFactory::CreateUI(MainGameUIFactory::SELECT_RECIPE_ASSEMBLING_UI);
+    selectRecipeAssemblingUI->Init();
+    selectRecipeAssemblingUI->SetLocalPosition(glm::vec2(width / 2, height / 2));
+    UIManager::GetSingleton()->AddUI("SelectRecipeAssemblingUI", selectRecipeAssemblingUI);
+
 	// shader configuration
 	// --------------------
     UIShader->use();

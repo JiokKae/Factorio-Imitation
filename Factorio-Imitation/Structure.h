@@ -15,6 +15,7 @@ public:
 		DESTORY,
 		NO_RECIPE,
 		ITEM_PRODUCTION_OVERLOAD,
+		ITEM_INGREDIENT_SHORTAGE,
 		END
 	};
 	static const char* statusString[STATUS::END];

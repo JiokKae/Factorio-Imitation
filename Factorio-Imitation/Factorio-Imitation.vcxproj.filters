@@ -360,6 +360,9 @@
     <ClInclude Include="WoodenChest.h">
       <Filter>MainGame\Entity\Structure\WoodenChest</Filter>
     </ClInclude>
+    <ClInclude Include="SelectRecipeAssemblingUI.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -559,6 +562,9 @@
     </ClCompile>
     <ClCompile Include="WoodenChest.cpp">
       <Filter>MainGame\Entity\Structure\WoodenChest</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectRecipeAssemblingUI.cpp">
+      <Filter>MainGame\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

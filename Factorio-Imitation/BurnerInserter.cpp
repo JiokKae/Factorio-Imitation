@@ -109,10 +109,13 @@ void BurnerInserter::Update()
 			status = WORKING;
 
 		lpDestTile = TileManager::GetSingleton()->GetLpTile(position.x, position.y)->GetAroundTile((DIRECTION)OPPOSITE_DIR(direction));
-		if (lpDestTile->GetLpSturcture() && lpDestTile->GetLpSturcture()->InputItem(new ItemInfo(handItem), glm::vec2(16, 16)))
+		if (lpDestTile->GetLpSturcture())
 		{
-			handItem.amount = 0;
-			status = WORKING;
+			if (lpDestTile->GetLpSturcture()->InputItem(new ItemInfo(handItem), glm::vec2(16, 16)))
+			{
+				handItem.amount = 0;
+				status = WORKING;
+			}
 		}
 		break;
 

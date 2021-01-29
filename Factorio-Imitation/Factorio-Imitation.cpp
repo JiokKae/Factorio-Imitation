@@ -40,6 +40,9 @@ ItemSpec	g_itemSpecs[] = {
 	{	"Wooden Chest",				true,		{ 1, 1 },	1,			FALSE,		FALSE,	NULL,		},
 	{	"Fast Transport Belt",		true,		{ 1, 1 },	4,			true,		FALSE,	NULL,		},
 	{	"Express Transport Belt",	true,		{ 1, 1 },	4,			true,		FALSE,	NULL,		},
+	{	"Iron Gear Wheel",			FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
+	{	"Copper Cable",				FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
+	{	"Electronic Circuit",		FALSE,		{ 0, 0 },	NULL,		FALSE,		FALSE,	NULL,		},
 };
 enum ItemEnum;	// 정의 피킹용
 

@@ -3,10 +3,11 @@
 
 HRESULT RecipeManager::Init()
 {
-	AddRecipe("Iron Plate",		ItemInfo(IRON_PLATE, 1),	3.2f,	{ ItemInfo(IRON_ORE, 1) });
-	AddRecipe("Copper Plate",	ItemInfo(COPPER_PLATE, 1),	3.2f,	{ ItemInfo(COPPER_ORE, 1) });
-	AddRecipe("Stone Brick",	ItemInfo(STONE_BRICK, 1),	3.2f,	{ ItemInfo(STONE, 2) });
-	AddRecipe("Steel Plate",	ItemInfo(STEEL_PLATE, 1),	16.0f,	{ ItemInfo(IRON_PLATE, 5) });
+	AddRecipe("Iron Plate",			ItemInfo(IRON_PLATE, 1),		3.2f,	{ ItemInfo(IRON_ORE, 1) });
+	AddRecipe("Copper Plate",		ItemInfo(COPPER_PLATE, 1),		3.2f,	{ ItemInfo(COPPER_ORE, 1) });
+	AddRecipe("Stone Brick",		ItemInfo(STONE_BRICK, 1),		3.2f,	{ ItemInfo(STONE, 2) });
+	AddRecipe("Steel Plate",		ItemInfo(STEEL_PLATE, 1),		16.0f,	{ ItemInfo(IRON_PLATE, 5) });
+	AddRecipe("Iron Gear Wheel",	ItemInfo(IRON_GEAR_WHEEL, 1),	0.5f,	{ ItemInfo(IRON_PLATE, 2) });
 
 	return S_OK;
 }
