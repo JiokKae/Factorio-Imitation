@@ -22,6 +22,7 @@ const char* Structure::statusString[STATUS::END] = {
 	"Destroy",
 	"No Recipe",
 	"Item production overload",
+	"Item ingredient shortage"
 };
 
 HRESULT Structure::Init(int x, int y, DIRECTION direction, bool temp)

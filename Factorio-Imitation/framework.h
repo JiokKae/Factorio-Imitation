@@ -51,6 +51,8 @@ struct ItemInfo {
 	int amount;
 	vector<int> vecAbleItems;
 
+	bool IsEmpty();
+
 	void AddAmount(int amount)
 	{
 		this->amount += amount;
@@ -67,71 +69,14 @@ struct ItemInfo {
 		vecAbleItems.push_back(itemEnum);
 	}
 
-	bool InputItem(ItemInfo* itemInfo)
-	{
-		// 무제한 슬롯일 때
-		if (vecAbleItems.size() == 0)
-		{
-			// 같은 아이템이라면
-			if (itemInfo->amount && itemInfo->id == id)
-			{
-				amount += itemInfo->amount;
-				itemInfo->amount = 0;
-			}
-			// 다른 아이템이라면
-			else
-			{
-				ItemInfo temp(id, amount);
-				id = itemInfo->id;
-				amount = itemInfo->amount;
-				itemInfo->id = temp.id;
-				itemInfo->amount = temp.amount;
-			}
-			return true;
-		}
-		// 제한있는 슬롯일 때
-		else
-		{
-			// 들어온 아이템이 있을 때
-			if (itemInfo->amount)
-			{
-				for (int i = 0; i < vecAbleItems.size(); i++)
-				{
-					// 허용된 아이템이라면
-					if (itemInfo->id == vecAbleItems[i])
-					{
-						// 같은 아이템이라면
-						if (itemInfo->amount && itemInfo->id == id)
-						{
-							amount += itemInfo->amount;
-							itemInfo->amount = 0;
-						}
-						// 다른 아이템이라면
-						else
-						{
-							ItemInfo temp(id, amount);
-							id = itemInfo->id;
-							amount = itemInfo->amount;
-							itemInfo->id = temp.id;
-							itemInfo->amount = temp.amount;
-						}
-						return true;
-					}
-				}
-			}
-			// 들어온 아이템이 없을 때
-			else
-			{
-				ItemInfo temp(id, amount);
-				amount = itemInfo->amount;
-				itemInfo->id = temp.id;
-				itemInfo->amount = temp.amount;
-				return true;
-			}
-		}
-		// 허용되지 않은 아이템 처리
-		return false;
-	}
+	// 아이템이 들어올 수 있는 종류인지 알아내는 함수
+	bool CanInput(int itemId);
+	
+	// 아이템을 목적지 아이템으로 옮기는 함수
+	bool MoveItemTo(ItemInfo* destItemInfo);
+
+	// 아이템을 목적지 아이템과 바꾸는 함수
+	void SwapItemWith(ItemInfo* destItemInfo);
 
 	ItemInfo(int id = 0, int amount = 0)
 	{

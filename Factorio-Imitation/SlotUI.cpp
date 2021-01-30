@@ -95,13 +95,23 @@ void SlotUI::OnClick(int key)
 	ItemInfo* hand = UIManager::GetSingleton()->GetLpHandUI()->GetHandItem();
 	switch (key)
 	{
-		//슬롯을 좌클릭 했을 때
+	//슬롯을 좌클릭 했을 때
 	case VK_LBUTTON:
-		//핸드가 있다면
-		this->itemInfo->InputItem(hand);
+		// 핸드가 비어있을때 : 핸드로 회수
+		if (hand->IsEmpty())
+			this->itemInfo->MoveItemTo(hand);
+
+		// 같은 아이템이라면 핸드에서 주기
+		else if (hand->id == this->itemInfo->id)
+			hand->MoveItemTo(this->itemInfo);
+
+		// 다른 아이템이라면 핸드와 스왑
+		else if (this->itemInfo->CanInput(hand->id))
+			this->itemInfo->SwapItemWith(itemInfo);
+	
 		break;
 
-		// 슬롯을 우클릭 했을 때
+	// 슬롯을 우클릭 했을 때
 	case VK_RBUTTON:
 		// 핸드가 있다면
 		if (hand->amount)

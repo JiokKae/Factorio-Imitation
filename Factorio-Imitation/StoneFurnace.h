@@ -14,8 +14,6 @@ private:
 	GLImage* shadowImage;
 	GLImage* fireImage;
 
-	STATUS status;				// 구조물의 상태
-
 	// spec
 	float craftingSpeed;		// 제작 속도
 	float energyConsumption;	// 에너지 소모량	kw
@@ -63,7 +61,6 @@ public:
 		: mainImage(nullptr)
 		, shadowImage(nullptr)
 		, fireImage(nullptr)
-		, status(NO_POWER)
 		, currPower(0.0f)
 		, craftedTime(0.0f)
 		, fuel(nullptr)

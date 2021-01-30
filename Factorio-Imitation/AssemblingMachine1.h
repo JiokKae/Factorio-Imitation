@@ -8,13 +8,18 @@ class Recipe;
 class AssemblingMachine1 : public Structure
 {
 private:
+	// render
 	GLImage* image;
 	GLImage* shadow;
 	glm::vec2 imageAniOffset;
 	glm::vec2 shadowAniOffset;
 
+	// spec
 	float craftingSpeed;
-	glm::ivec2 miningArea;
+
+	// slot
+	vector<ItemInfo> ingredients;
+	ItemInfo* result;
 
 	Recipe* selectedRecipe;
 
@@ -29,6 +34,8 @@ public:
 	virtual void Render(Shader* shader, float posX, float posY) override;
 
 	// event
+	virtual bool InputItem(ItemInfo* inputItem, glm::vec2 pos) override;
+	virtual bool TakeOutItem(ItemInfo* outItem) override;
 	virtual void ClickEvent() override;
 
 	virtual string ToString() override;
