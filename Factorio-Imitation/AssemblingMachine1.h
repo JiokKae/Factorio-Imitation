@@ -7,6 +7,22 @@ class GLImage;
 class Recipe;
 class AssemblingMachine1 : public Structure
 {
+public:
+	class Ingredients 
+	{
+		vector<ItemInfo> vecIngredients;
+
+	public:
+		HRESULT Init(Recipe* recipe);
+		void Release();
+
+		bool IsEnough(Recipe* recipe);
+		
+		bool Consume(Recipe* recipe);
+
+		ItemInfo& operator[](int index);
+	};
+
 private:
 	// render
 	GLImage* image;
@@ -16,10 +32,12 @@ private:
 
 	// spec
 	float craftingSpeed;
+	float craftedTime;
+	float productionPercent;
 
 	// slot
-	vector<ItemInfo> ingredients;
-	ItemInfo* result;
+	Ingredients ingredients;
+	ItemInfo result;
 
 	Recipe* selectedRecipe;
 

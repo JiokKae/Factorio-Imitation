@@ -20,7 +20,7 @@ HRESULT AssemblingMachine1::Init(int x, int y, DIRECTION direction, bool temp)
 	craftingSpeed = 0.5f;
 	status = NO_RECIPE;
 	selectedRecipe = RecipeManager::GetSingleton()->FindRecipe(IRON_GEAR_WHEEL);
-	ingredients.resize(selectedRecipe->size());
+	ingredients.Init(selectedRecipe); 
 
 	return S_OK;
 }
@@ -29,6 +29,7 @@ void AssemblingMachine1::Release()
 {
 	Structure::Release();
 
+	ingredients.Release();
 	SAFE_RELEASE(image);
 	SAFE_RELEASE(shadow);
 }
@@ -45,12 +46,26 @@ void AssemblingMachine1::Update()
 	case Structure::WORKING:
 		if (selectedRecipe == nullptr)
 			status = NO_RECIPE;
-		if (!selectedRecipe->IsEnoughIngredient(&ingredients))
+		else if (!ingredients.IsEnough(selectedRecipe))
 			status = ITEM_INGREDIENT_SHORTAGE;
+		else
+		{
+			craftedTime += craftingSpeed * TimerManager::GetSingleton()->GetTimeElapsed();
+
+			if (craftedTime >= selectedRecipe->GetCraftingTime())
+			{
+				result.id = selectedRecipe->GetOutput().id;
+				result.amount += selectedRecipe->GetOutput().amount;
+				craftedTime -= selectedRecipe->GetCraftingTime();
+			}
+
+			productionPercent = craftedTime / selectedRecipe->GetCraftingTime();
+			time += TimerManager::GetSingleton()->GetTimeElapsed();
+		}
 		break;
 
 	case Structure::ITEM_INGREDIENT_SHORTAGE:
-		if (selectedRecipe->IsEnoughIngredient(&ingredients))
+		if (ingredients.IsEnough(selectedRecipe))
 			status = WORKING;
 		break;
 
@@ -105,20 +120,20 @@ bool AssemblingMachine1::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 bool AssemblingMachine1::TakeOutItem(ItemInfo* outItem)
 {
 	// 내보낼 생산품이 있다면
-	if (result->amount)
+	if (result.amount)
 	{
 		// 생산품의 개수가 반출 요구치를 넘으면
-		if (result->amount >= outItem->amount)
+		if (result.amount >= outItem->amount)
 		{
-			result->amount -= outItem->amount;
-			outItem->id = result->id;
+			result.amount -= outItem->amount;
+			outItem->id = result.id;
 		}
 		// 생산품의 개수가 반출 요구치를 넘지 못하면
 		else
 		{
-			outItem->id = result->id;
-			outItem->amount = result->amount;
-			result->amount = 0;
+			outItem->id = result.id;
+			outItem->amount = result.amount;
+			result.amount = 0;
 		}
 		return true;
 	}
@@ -145,6 +160,45 @@ void AssemblingMachine1::ClickEvent()
 string AssemblingMachine1::ToString()
 {
 	char buf[128];
-	wsprintf(buf, "\n Recipe: %s", g_itemSpecs[selectedRecipe->GetOutput().id].name.c_str());
+	wsprintf(buf, "\n Recipe: %s \n Result: %s (%d)",
+		g_itemSpecs[selectedRecipe->GetOutput().id].name.c_str(), 
+		g_itemSpecs[result.id].name.c_str(), result.amount);
 	return Structure::ToString() + string(buf);
+}
+
+HRESULT AssemblingMachine1::Ingredients::Init(Recipe* recipe)
+{
+	vecIngredients.resize(recipe->size());
+	return S_OK;
+}
+
+void AssemblingMachine1::Ingredients::Release()
+{
+	vecIngredients.clear();
+}
+
+ItemInfo& AssemblingMachine1::Ingredients::operator[](int index)
+{
+	return vecIngredients[index];
+}
+
+bool AssemblingMachine1::Ingredients::IsEnough(Recipe* recipe)
+{
+	for (int i = 0; i < vecIngredients.size(); i++)
+	{
+		// 만약 레시피보다 재료가 적거나 같지 않으면
+		if (recipe->GetIngredient(i).amount > vecIngredients[i].amount || recipe->GetIngredient(i).id != vecIngredients[i].id)
+			return false;
+	}
+	return true;
+}
+
+bool AssemblingMachine1::Ingredients::Consume(Recipe* recipe)
+{
+	if (IsEnough(recipe))
+	{
+
+	}
+	else
+		return false;
 }

@@ -13,7 +13,6 @@ public:
 	void Release();
 
 	bool IsIngredient(int itemEnum);
-	bool IsEnoughIngredient(vector<ItemInfo>* ingredients);
 
 	ItemInfo GetOutput()				{ return output; }
 	float GetCraftingTime()				{ return craftingTime; }
