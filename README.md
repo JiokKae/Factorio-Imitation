@@ -30,6 +30,7 @@
 * [운송 벨트 (Transport Belt)](#운송-벨트-transport-belt)
 * [투입기 (Inserter)](#투입기-inserter)
 * [돌 용광로 (Stone Furnace)](#돌-용광로-stone-furnace)
+* [조립 기계 1 (Assembling Machine 1)](#조립-기계-1-assembling-machine-1)
 ---
     
     
@@ -76,9 +77,14 @@
 * 방향에 따라 이미지가 회전한다.
 
 ### [돌 용광로 (Stone Furnace)](#구조물-structure)
-	구조물 (Structure)/ 투입기 (Inserter)
+	구조물 (Structure)/ 돌 용광로 (Stone Furnace)
 * 굽기 제작법이 있는 아이템들을 가공한다.
 * 연료를 에너지로 사용한다.
+* 다른 구조물로부터 아이템을 받을 수 있다.
+
+### [조립 기계 1 (Stone Furnace)](#구조물-structure)
+	구조물 (Structure)/ 조립 기계 1 (Assembling Machine)
+* 제작법이 있는 아이템들을 가공한다.
 * 다른 구조물로부터 아이템을 받을 수 있다.
 
 ### [구조물 빌더 (Structure Builder)](#구조물-structure)
