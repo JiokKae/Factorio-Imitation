@@ -82,8 +82,8 @@
 * 연료를 에너지로 사용한다.
 * 다른 구조물로부터 아이템을 받을 수 있다.
 
-### [조립 기계 1 (Stone Furnace)](#구조물-structure)
-	구조물 (Structure)/ 조립 기계 1 (Assembling Machine)
+### [조립 기계 1 (Assembling Machine 1)](#구조물-structure)
+	구조물 (Structure)/ 조립 기계 1 (Assembling Machine 1)
 * 제작법이 있는 아이템들을 가공한다.
 * 다른 구조물로부터 아이템을 받을 수 있다.
 
