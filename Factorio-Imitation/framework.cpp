@@ -45,7 +45,7 @@ bool ItemInfo::CanInput(int itemId)
     return false;
 }
 
-bool ItemInfo::MoveItemTo(ItemInfo* destItemInfo)
+bool ItemInfo::MoveAllItemTo(ItemInfo* destItemInfo)
 {
     // 목적지가 비어있거나 같은 종류라면 이동 가능
     if (destItemInfo->IsEmpty())

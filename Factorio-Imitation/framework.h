@@ -73,7 +73,7 @@ struct ItemInfo {
 	bool CanInput(int itemId);
 	
 	// 아이템을 목적지 아이템으로 옮기는 함수
-	bool MoveItemTo(ItemInfo* destItemInfo);
+	bool MoveAllItemTo(ItemInfo* destItemInfo);
 
 	// 아이템을 목적지 아이템과 바꾸는 함수
 	void SwapItemWith(ItemInfo* destItemInfo);

@@ -180,6 +180,10 @@ void PlayScene::Update()
         else
             UIManager::GetSingleton()->DeactiveUI();
     }
+    if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_MENU))
+    {
+        altMode = !altMode;
+    }
 
     UIManager::GetSingleton()->Update();
 

@@ -14,11 +14,15 @@ HRESULT TileManager::Init()
     tileImages = new GLImage[int(Tile::KIND::END)]();
     tileImages[int(Tile::KIND::DIRT_1)].Init("Terrain/Dirt_1", 4096, 576, 64, 9);
     
-    mapOreImages[IRON_ORE] = new GLImage();
-    mapOreImages[IRON_ORE]->Init("Entity/IronOre", 8, 8);
     mapOreImages[COAL] = new GLImage();
     mapOreImages[COAL]->Init("Entity/Coal", 8, 8);
-    
+    mapOreImages[IRON_ORE] = new GLImage();
+    mapOreImages[IRON_ORE]->Init("Entity/IronOre", 8, 8);
+    mapOreImages[COPPER_ORE] = new GLImage();
+    mapOreImages[COPPER_ORE]->Init("Entity/CopperOre", 8, 8);
+    mapOreImages[STONE] = new GLImage();
+    mapOreImages[STONE]->Init("Entity/Stone", 8, 8);
+
     // 14 * 14 没农 积己
     for (int y = -7; y < 7; y++)
     {

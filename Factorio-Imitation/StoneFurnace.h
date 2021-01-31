@@ -29,7 +29,7 @@ private:
 	ItemInfo* usingResource;
 	ItemInfo* newResult;
 
-	vector<Recipe*> vecRecipes;
+	vector<Recipe*>* vecRecipes;
 	Recipe* currRecipe;
 
 	float time;				// ½Ã°£

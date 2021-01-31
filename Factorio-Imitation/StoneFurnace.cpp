@@ -25,19 +25,16 @@ HRESULT StoneFurnace::Init(int x, int y, DIRECTION direction, bool temp)
 	craftingSpeed = 1.0f;
 
 	// 레시피 세팅
-	vecRecipes.push_back(RecipeManager::GetSingleton()->FindRecipe(IRON_PLATE));
-	vecRecipes.push_back(RecipeManager::GetSingleton()->FindRecipe(COPPER_PLATE));
-	vecRecipes.push_back(RecipeManager::GetSingleton()->FindRecipe(STONE_BRICK));
-	vecRecipes.push_back(RecipeManager::GetSingleton()->FindRecipe(STEEL_PLATE));
+	vecRecipes = RecipeManager::GetSingleton()->FindRecipes(STONE_FURNACE);
 
 	// 아이템 슬롯 세팅
 	fuel = new ItemInfo();
 	resource = new ItemInfo();
 	result = new ItemInfo();
-	for (int i = 0; i < vecRecipes.size(); i++)
+	for (int i = 0; i < vecRecipes->size(); i++)
 	{
-		resource->AddAbleItem(vecRecipes[i]->GetIngredient(0).id);
-		result->AddAbleItem(vecRecipes[i]->GetOutput().id);
+		resource->AddAbleItem((*vecRecipes)[i]->GetIngredient(0).id);
+		result->AddAbleItem((*vecRecipes)[i]->GetOutput().id);
 	}
 	usingResource = new ItemInfo();
 	newResult = new ItemInfo();
@@ -58,8 +55,6 @@ void StoneFurnace::Release()
 	SAFE_DELETE(usingResource);
 	SAFE_DELETE(result);
 	SAFE_DELETE(newResult);
-
-	vecRecipes.clear();
 }
 
 void StoneFurnace::Update()
@@ -304,10 +299,10 @@ void StoneFurnace::ClickEvent()
 
 Recipe* StoneFurnace::FindRecipeByIngredient(int itemEnum)
 {
-	for (int i = 0; i < vecRecipes.size(); i++)
+	for (int i = 0; i < vecRecipes->size(); i++)
 	{
-		if (vecRecipes[i]->IsIngredient(itemEnum))
-			return vecRecipes[i];
+		if ((*vecRecipes)[i]->IsIngredient(itemEnum))
+			return (*vecRecipes)[i];
 	}
 	return nullptr;
 }

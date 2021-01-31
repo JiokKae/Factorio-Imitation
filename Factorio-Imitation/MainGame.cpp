@@ -148,6 +148,8 @@ void MainGame::ImageLoad()
 
 	textureManager->AddTexture("Entity/IronOre",			"graphics/entity/iron_ore/hr-iron-ore.png");
 	textureManager->AddTexture("Entity/Coal",				"graphics/entity/coal/hr-coal.png");
+	textureManager->AddTexture("Entity/CopperOre",			"graphics/entity/copper_ore/hr-copper-ore.png");
+	textureManager->AddTexture("Entity/Stone",				"graphics/entity/stone/hr-stone.png");
 
 	textureManager->AddTexture("Entity/WoodenChest",		"graphics/entity/wooden_chest/hr-wooden-chest.png");
 	textureManager->AddTexture("Entity/WoodenChest-shadow",	"graphics/entity/wooden_chest/hr-wooden-chest-shadow.png");
@@ -169,6 +171,7 @@ void MainGame::ImageLoad()
 
 	textureManager->AddTexture("Icons/Hand",				"graphics/icons/hand.png");
 	textureManager->AddTexture("Icons/AllItems",			"graphics/icons/all-items.png");
+	textureManager->AddTexture("Icons/AllItems-stroke",		"graphics/icons/all-items-stroke.png");
 
 	textureManager->AddTexture("Terrain/Dirt_1",			"graphics/terrain/hr-dirt-1.png");
 
