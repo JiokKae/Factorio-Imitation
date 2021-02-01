@@ -20,12 +20,9 @@ HRESULT Ore::Init(int x, int y)
 	amount = int(10.0f - glm::distance(glm::vec2(16, 16), glm::vec2(abs(x%32), abs(y%32)))) * (300 + rand() % 200);
 	if (amount < 0)
 		amount = 0;
-//	amount = rand() % 12000;
-	//if (amount > 2000)
-//		amount = 0;
-
 
 	randFrameX = rand() % 8;
+	frameYByAmount = AmountToImageFrameY();
 	return S_OK;
 }
 
@@ -36,6 +33,12 @@ void Ore::Release()
 void Ore::Update()
 {
 }
+
+void Ore::AddAmount(int value)
+{
+	this->amount += value;
+	this->frameYByAmount = AmountToImageFrameY();
+}	
 
 int Ore::AmountToImageFrameY()
 {

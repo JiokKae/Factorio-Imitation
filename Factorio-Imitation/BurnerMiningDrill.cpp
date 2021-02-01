@@ -34,7 +34,7 @@ HRESULT BurnerMiningDrill::Init(int x, int y, DIRECTION direction, bool temp)
 	miningSpeed = 0.25f;
 	energyConsumption = 150.0f;
 
-	// Å¸°Ù Å¸ÀÏ ¼³Á¤
+	// íƒ€ê²Ÿ íƒ€ì¼ ì„¤ì •
 	miningAreaTiles = new Tile*[4]();
 	for (int y = 0; y < miningArea.y; y++)
 	{
@@ -109,7 +109,7 @@ void BurnerMiningDrill::Update()
 			currPower -= energyConsumption * TimerManager::GetSingleton()->GetTimeElapsed();
 			productionPercent += miningSpeed * TimerManager::GetSingleton()->GetTimeElapsed();
 
-			// Ã¤±¤ ¿Ï·á
+			// ì±„ê´‘ ì™„ë£Œ
 			if (productionPercent >= 1.0f)
 			{
 				status = WAITING_SPACE;
@@ -158,13 +158,13 @@ void BurnerMiningDrill::Render(Shader* shader, float posX, float posY)
 
 bool BurnerMiningDrill::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 {
-	// ¹Ş´Â ¾ÆÀÌÅÛÀÌ ¿¬·á¶ó¸é
+	// ë°›ëŠ” ì•„ì´í…œì´ ì—°ë£Œë¼ë©´
 	if (g_itemSpecs[inputItem->id].fuel)
 	{
-		// ¿¬·á ½½·Ô¿¡ ¿¬·á°¡ ÀÖ´Ù¸é
+		// ì—°ë£Œ ìŠ¬ë¡¯ì— ì—°ë£Œê°€ ìˆë‹¤ë©´
 		if (waitingItemInfo->amount)
 		{
-			// ¿¬·á Á¾·ù°¡ °°À» ¶§¸¸
+			// ì—°ë£Œ ì¢…ë¥˜ê°€ ê°™ì„ ë•Œë§Œ
 			if (waitingItemInfo->id == inputItem->id)
 			{
 				waitingItemInfo->amount += inputItem->amount;
@@ -172,7 +172,7 @@ bool BurnerMiningDrill::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 				return true;
 			}
 		}
-		// ¿¬·á ½½·Ô¿¡ ¿¬·á°¡ ¾ø´Ù¸é
+		// ì—°ë£Œ ìŠ¬ë¡¯ì— ì—°ë£Œê°€ ì—†ë‹¤ë©´
 		else
 		{
 			waitingItemInfo->id = inputItem->id;

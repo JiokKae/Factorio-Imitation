@@ -166,7 +166,7 @@ void TileManager::Render(RECT cameraRect)
                     Ore* ore = (*vecChunkIt)->GetLpTile(x, y)->GetLpOre();
                     if (ore->GetItemEnum() == it->first && ore->GetAmount() > 0)
                     {
-                        oreCurrFrame[count] = { ore->GetRandFrameX(), ore->AmountToImageFrameY() };
+                        oreCurrFrame[count] = { ore->GetRandFrameX(), ore->GetFrameY() };
                         oreOffset[count] = { x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2 };
                         count++;
                     }

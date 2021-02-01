@@ -49,7 +49,7 @@ void StructureBuilder::Update(vec2* playerPos)
         else
             buildPos.y = int(g_cursorPosition.y) / TILE_SIZE * TILE_SIZE + TILE_SIZE / 2;
     }
-    // Â¦¼ö Ä­ÀÌ¸é
+    // Â¦¼ö Ä­ÀÌ¸é¸é
     else
     {
         if (g_cursorPosition.y < 0)

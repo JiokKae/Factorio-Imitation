@@ -2,10 +2,10 @@
 
 HRESULT Animation::Init(int totalWidth, int totalHeight, int frameWidth, int frameHeight)
 {
-	// °¡·Î ÇÁ·¹ÀÓ ¼ö
+	// ê°€ë¡œ í”„ë ˆì„ ìˆ˜
 	int frameWidthCount = totalWidth / frameWidth;
 
-	// ¼¼·Î ÇÁ·¹ÀÓ ¼ö
+	// ì„¸ë¡œ í”„ë ˆì„ ìˆ˜
 	int frameHeightCount = totalHeight / frameHeight;
 
 	frameCount = frameWidthCount * frameHeightCount;
@@ -13,7 +13,7 @@ HRESULT Animation::Init(int totalWidth, int totalHeight, int frameWidth, int fra
 	vecFrameList.clear();
 	vecFrameList.resize(frameCount);
 
-	// °¢ ÇÁ·¹ÀÓÀÇ ½ÃÀÛ ÁÂÇ¥ ¼³Á¤
+	// ê° í”„ë ˆì„ì˜ ì‹œì‘ ì¢Œí‘œ ì„¤ì •
 	for (int i = 0; i < frameHeightCount; i++)
 	{
 		for (int j = 0; j < frameWidthCount; j++)
@@ -28,21 +28,21 @@ HRESULT Animation::Init(int totalWidth, int totalHeight, int frameWidth, int fra
 
 void Animation::SetPlayFrame(bool isLoop, bool isReverse)
 {
-	// ·çÇÁ ¿©ºÎ °áÁ¤
+	// ë£¨í”„ ì—¬ë¶€ ê²°ì •
 	this->isLoop = isLoop;
 
-	// ¸®¹ö½º ¿©ºÎ °áÁ¤
+	// ë¦¬ë²„ìŠ¤ ì—¬ë¶€ ê²°ì •
 
 	vecPlayList.clear();
 	if (isReverse)
 	{
-		// Á¤¹æÇâ
+		// ì •ë°©í–¥
 		for (int i = 0; i < frameCount; i++)
 		{
 			vecPlayList.push_back(i);
 		}
 
-		// ¿ª¹æÇâ
+		// ì—­ë°©í–¥
 		for (int i = frameCount - 1; i >= 0; i--)
 		{
 			vecPlayList.push_back(i);
@@ -60,7 +60,7 @@ void Animation::SetPlayFrame(bool isLoop, bool isReverse)
 
 void Animation::SetPlayFrame(int startFrame, int endFrame, bool isLoop, bool isReverse)
 {
-	// ·çÇÁ ¿©ºÎ °áÁ¤
+	// ë£¨í”„ ì—¬ë¶€ ê²°ì •
 	this->isLoop = isLoop;
 
 	vecPlayList.clear();
@@ -69,7 +69,7 @@ void Animation::SetPlayFrame(int startFrame, int endFrame, bool isLoop, bool isR
 	{
 		if (isReverse)
 		{
-			// Á¤¹æÇâ
+			// ì •ë°©í–¥
 			for (int i = startFrame; i < frameCount; i++)
 			{
 				vecPlayList.push_back(i);
@@ -79,7 +79,7 @@ void Animation::SetPlayFrame(int startFrame, int endFrame, bool isLoop, bool isR
 				vecPlayList.push_back(i);
 			}
 
-			// ¿ª¹æÇâ
+			// ì—­ë°©í–¥
 			for (int i = endFrame; i >= 0; i--)
 			{
 				vecPlayList.push_back(i);
@@ -105,13 +105,13 @@ void Animation::SetPlayFrame(int startFrame, int endFrame, bool isLoop, bool isR
 	{
 		if (isReverse)
 		{
-			// Á¤¹æÇâ
+			// ì •ë°©í–¥
 			for (int i = startFrame; i <= endFrame; i++)
 			{
 				vecPlayList.push_back(i);
 			}
 
-			// ¿ª¹æÇâ
+			// ì—­ë°©í–¥
 			for (int i = endFrame; i >= startFrame; i--)
 			{
 				vecPlayList.push_back(i);
@@ -129,21 +129,21 @@ void Animation::SetPlayFrame(int startFrame, int endFrame, bool isLoop, bool isR
 
 void Animation::SetPlayFrame(int * arr, int arrLength, bool isLoop, bool isReverse)
 {
-	// ·çÇÁ ¿©ºÎ °áÁ¤
+	// ë£¨í”„ ì—¬ë¶€ ê²°ì •
 	this->isLoop = isLoop;
 
-	// ¸®¹ö½º ¿©ºÎ °áÁ¤
+	// ë¦¬ë²„ìŠ¤ ì—¬ë¶€ ê²°ì •
 
 	vecPlayList.clear();
 	if (isReverse)
 	{
-		// Á¤¹æÇâ
+		// ì •ë°©í–¥
 		for (int i = 0; i < arrLength; i++)
 		{
 			vecPlayList.push_back(arr[i]);
 		}
 
-		// ¿ª¹æÇâ
+		// ì—­ë°©í–¥
 		for (int i = arrLength - 1; i >= 0; i--)
 		{
 			vecPlayList.push_back(arr[i]);
@@ -170,12 +170,12 @@ void Animation::UpdateFrmae()
 			                     
 			if (nowPlayIdx >= vecPlayList.size())
 			{
-				// ·çÇÁÀÏ ¶§
+				// ë£¨í”„ì¼ ë•Œ
 				if (isLoop)
 				{
 					nowPlayIdx = 0;
 				}
-				// ¾Æ´Ò ¶§
+				// ì•„ë‹ ë•Œ
 				else
 				{
 					nowPlayIdx--;
