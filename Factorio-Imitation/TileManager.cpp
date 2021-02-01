@@ -97,8 +97,7 @@ void TileManager::Release()
     SAFE_DELETE(instancingShader);
     SAFE_RELEASE(tileImages);
 
-    map<int, GLImage*>::iterator it;
-    for (it = mapOreImages.begin(); it!=mapOreImages.end(); ++it)
+    for (auto it = mapOreImages.begin(); it != mapOreImages.end(); ++it)
     {
         SAFE_RELEASE(it->second);
     }
@@ -117,13 +116,7 @@ void TileManager::Update()
 
 void TileManager::Render(RECT cameraRect)
 {
-    glm::vec2 oreCurrFrame[1024];
-    glm::vec2* oreOffset = new glm::vec2[CHUNK_IN_TILE * CHUNK_IN_TILE];
-
-    instancingShader->use();
-    glBindVertexArray(tilesVAO->GetID());
-    instancingShader->setFloat("vertexScale", 1.0f);
-    instancingShader->setVec2("maxFrame", glm::vec2(64, 9));
+    vecChunkInScreen.clear();
     for (bigIt = mapChunks.begin(); bigIt != mapChunks.end(); bigIt++)
     {
         for (smallIt = bigIt->second.begin(); smallIt != bigIt->second.end(); smallIt++)
@@ -131,68 +124,64 @@ void TileManager::Render(RECT cameraRect)
             Chunk* currChunk = smallIt->second;
             if (currChunk == nullptr)
                 continue;
-            if (!CheckRectCollision(currChunk->GetRect(), cameraRect))
-                continue;
+            if (CheckRectCollision(currChunk->GetRect(), cameraRect))
+                vecChunkInScreen.push_back(currChunk);
+        }
+    }
 
-            instancingShader->setVec2("offset", currChunk->GetCoord() * 2048);
+    instancingShader->use();
+    glBindVertexArray(tilesVAO->GetID());
+    instancingShader->setFloat("vertexScale", 1.0f);
+    instancingShader->setVec2("maxFrame", glm::vec2(64, 9));
+    for (vecChunkIt = vecChunkInScreen.begin() ; vecChunkIt != vecChunkInScreen.end(); ++vecChunkIt)
+    {
+        instancingShader->setVec2("offset", (*vecChunkIt)->GetCoord() * 2048);
 
-            tilesVAO->SetVBOData(1, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
-            tilesVAO->SetVBOData(2, sizeof(glm::vec2) * 1024, &tileOffset[0], GL_DYNAMIC_DRAW);
-            for (int kind = 0; kind < int(Tile::KIND::END); kind++)
-            {
-                glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, tileImages[kind].GetLpSourceTexture()->GetID());
-                glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 1024);    
-            }
+        tilesVAO->SetVBOData(1, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
+        tilesVAO->SetVBOData(2, sizeof(glm::vec2) * 1024, &tileOffset[0], GL_DYNAMIC_DRAW);
+        for (int kind = 0; kind < int(Tile::KIND::END); kind++)
+        {
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, tileImages[kind].GetLpSourceTexture()->GetID());
+            glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 1024);
         }
     }
     DebugHelper::GetSingleton()->SetFloat("2.1. tileRender", TimerManager::GetSingleton()->CheckTime());
 
     instancingShader->setFloat("vertexScale", 2.0f);
     instancingShader->setVec2("maxFrame", glm::vec2(8, 8));
-    for (bigIt = mapChunks.begin(); bigIt != mapChunks.end(); bigIt++)
+    for (vecChunkIt = vecChunkInScreen.begin(); vecChunkIt != vecChunkInScreen.end(); ++vecChunkIt)
     {
-        for (smallIt = bigIt->second.begin(); smallIt != bigIt->second.end(); smallIt++)
+        instancingShader->setVec2("offset", (*vecChunkIt)->GetCoord() * 2048);
+
+        map<int, GLImage*>::iterator it;
+        for (it = mapOreImages.begin(); it != mapOreImages.end(); ++it)
         {
-            Chunk* currChunk = smallIt->second;
-            if (currChunk == nullptr)
-                continue;
-            if (!CheckRectCollision(currChunk->GetRect(), cameraRect))
-                continue;
+            int count = 0;
 
-            instancingShader->setVec2("offset", currChunk->GetCoord() * 2048);
-
-            map<int, GLImage*>::iterator it;
-            for (it = mapOreImages.begin(); it != mapOreImages.end(); ++it)
+            for (int y = 0; y < 32; y++)
             {
-                int count = 0;
-                
-                for (int y = 0; y < 32; y++)
+                for (int x = 0; x < 32; x++)
                 {
-                    for (int x = 0; x < 32; x++)
+                    Ore* ore = (*vecChunkIt)->GetLpTile(x, y)->GetLpOre();
+                    if (ore->GetItemEnum() == it->first && ore->GetAmount() > 0)
                     {
-                        Ore* ore = currChunk->GetLpTile(x, y)->GetLpOre();
-                        if (ore->GetItemEnum() == it->first && ore->GetAmount() > 0) 
-                        {
-                            oreCurrFrame[count] = { ore->GetRandFrameX(), ore->AmountToImageFrameY() };
-                            oreOffset[count] = { x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2 };
-                            count++;
-                        }
+                        oreCurrFrame[count] = { ore->GetRandFrameX(), ore->AmountToImageFrameY() };
+                        oreOffset[count] = { x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2 };
+                        count++;
                     }
                 }
-                tilesVAO->SetVBOData(1, sizeof(glm::vec2) * count, &oreCurrFrame[0], GL_DYNAMIC_DRAW);
-                tilesVAO->SetVBOData(2, sizeof(glm::vec2) * count, &oreOffset[0], GL_DYNAMIC_DRAW);
-                glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, it->second->GetLpSourceTexture()->GetID());
-                glDrawArraysInstanced(GL_TRIANGLES, 0, 6, count);
             }
+            tilesVAO->SetVBOData(1, sizeof(glm::vec2) * count, &oreCurrFrame[0], GL_DYNAMIC_DRAW);
+            tilesVAO->SetVBOData(2, sizeof(glm::vec2) * count, &oreOffset[0], GL_DYNAMIC_DRAW);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, it->second->GetLpSourceTexture()->GetID());
+            glDrawArraysInstanced(GL_TRIANGLES, 0, 6, count);
         }
     }
-    glBindVertexArray(0);
-
     DebugHelper::GetSingleton()->SetFloat("2.2. oreRender", TimerManager::GetSingleton()->CheckTime());
 
-    delete[] oreOffset;
+    glBindVertexArray(0);
 }
 
 Tile* TileManager::GetLpTile(int coordX, int coordY)

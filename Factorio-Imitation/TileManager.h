@@ -12,7 +12,15 @@ private:
 	map<int, map<int, Chunk*>> mapChunks;
 	map<int, map<int, Chunk*>>::iterator bigIt;
 	map<int, Chunk*>::iterator smallIt;
+
+	vector<Chunk*> vecChunkInScreen;
+	vector<Chunk*>::iterator vecChunkIt;
+
 	GLImage* tileImages;
+
+	glm::vec2 oreCurrFrame[1024];
+	glm::vec2 oreOffset[1024];
+
 	map<int, GLImage*> mapOreImages;
 
 	Shader* instancingShader;

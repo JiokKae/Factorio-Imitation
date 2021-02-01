@@ -167,26 +167,49 @@ void TextRenderer::RenderOutText(std::string text, float x, float y, float scale
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(this->VAO);
 
+    int startX = x;
+
     // iterate through all characters
     std::string::const_iterator c;
     for (c = text.begin(); c != text.end(); c++)
     {
+        if (*c == '\n')
+        {
+            x = startX;
+            y -= (this->Characters['H'].Size.y * 1.8f) * scale;
+            continue;
+        }
+        if (*c == '\t')
+        {
+            c++;
+            string str;
+            while (*c != '\t')
+            {
+                str += *c;
+                c++;
+            }
+            x = stoi(str) * (int)(x / stoi(str) + 1);
+
+            continue;
+        }
+
         Text::Character ch = Characters[*c];
 
         float xpos = x + ch.Bearing.x * scale;
-        float ypos = y + (this->Characters['H'].Bearing.y - ch.Bearing.y) * scale;
+        float ypos = y - (this->Characters['H'].Bearing.y - ch.Bearing.y) * scale;
+        float yoffset = ypos - y;
 
-        float w = ch.Size.x * scale + outline;
-        float h = ch.Size.y * scale + outline;
+        float w = ch.Size.x * scale;
+        float h = ch.Size.y * scale;
         // update VBO for each character
         float vertices[6][4] = {
-            { xpos,     ypos + h,   0.0f, 1.0f },
-            { xpos + w, ypos,       1.0f, 0.0f },
-            { xpos,     ypos,       0.0f, 0.0f },
+           { xpos - outline,       ypos - h - outline,   0.0f, 1.0f },
+           { xpos + w + outline,   ypos + outline,       1.0f, 0.0f },
+           { xpos - outline,       ypos + outline,       0.0f, 0.0f },
 
-            { xpos,     ypos + h,   0.0f, 1.0f },
-            { xpos + w, ypos + h,   1.0f, 1.0f },
-            { xpos + w, ypos,       1.0f, 0.0f }
+           { xpos - outline,     ypos - h + outline,   0.0f, 1.0f },
+           { xpos + w + outline, ypos - h + outline,   1.0f, 1.0f },
+           { xpos + w + outline, ypos + outline,       1.0f, 0.0f }
         };
         // render glyph texture over quad
         glBindTexture(GL_TEXTURE_2D, ch.TextureID);
@@ -201,4 +224,5 @@ void TextRenderer::RenderOutText(std::string text, float x, float y, float scale
     }
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
+
 }
