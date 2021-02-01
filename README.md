@@ -11,7 +11,8 @@
 * Design Pattern
     * 팩토리 메소드 (Factory Method)
     * 싱글톤 (Singleton)
-
+	* 상태 (State)
+	
 * OpenGL  
     * 셰이더 (GLSL)
         * Vertex Buffer Object
@@ -31,6 +32,7 @@
 * [투입기 (Inserter)](#투입기-inserter)
 * [돌 용광로 (Stone Furnace)](#돌-용광로-stone-furnace)
 * [조립 기계 1 (Assembling Machine 1)](#조립-기계-1-assembling-machine-1)
+#### [제작법 (Recipe)](#제작법-recipe-1)
 ---
     
     
@@ -84,8 +86,10 @@
 
 ### [조립 기계 1 (Assembling Machine 1)](#구조물-structure)
 	구조물 (Structure)/ 조립 기계 1 (Assembling Machine 1)
+header file: [AssemblingMachine1.h](Factorio-Imitation/AssemblingMachine1.h)
 * 제작법이 있는 아이템들을 가공한다.
 * 다른 구조물로부터 아이템을 받을 수 있다.
+* 
 
 ### [구조물 빌더 (Structure Builder)](#구조물-structure)
 * 임시 구조물
@@ -115,3 +119,6 @@
 * 인스턴싱 기법을 사용하여 아이템들을 일괄적으로 렌더한다.
 
 * 구조물 빌더
+
+### 제작법 (Recipe)
+* 아이템의 제작 재료를 정의 해놓은 자료 구조
