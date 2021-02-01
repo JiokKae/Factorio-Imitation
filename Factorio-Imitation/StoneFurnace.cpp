@@ -136,6 +136,7 @@ void StoneFurnace::Update()
 				usingResource->amount -= currRecipe->GetIngredient(0).amount;
 				newResult->id = currRecipe->GetOutput().id;
 				newResult->amount = currRecipe->GetOutput().amount;
+				productsFinished++;
 				craftedTime -= currRecipe->GetCraftingTime();
 
 				status = ITEM_PRODUCTION_OVERLOAD;

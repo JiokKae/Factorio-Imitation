@@ -146,6 +146,8 @@ void TileManager::Render(RECT cameraRect)
             }
         }
     }
+    DebugHelper::GetSingleton()->SetFloat("2.1. tileRender", TimerManager::GetSingleton()->CheckTime());
+
     instancingShader->setFloat("vertexScale", 2.0f);
     instancingShader->setVec2("maxFrame", glm::vec2(8, 8));
     for (bigIt = mapChunks.begin(); bigIt != mapChunks.end(); bigIt++)
@@ -187,6 +189,8 @@ void TileManager::Render(RECT cameraRect)
         }
     }
     glBindVertexArray(0);
+
+    DebugHelper::GetSingleton()->SetFloat("2.2. oreRender", TimerManager::GetSingleton()->CheckTime());
 
     delete[] oreOffset;
 }

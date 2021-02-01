@@ -11,6 +11,8 @@ class StructureBuilder;
 class EntityManager : public Singleton<EntityManager>
 {
 	multimap<Vec2, Entity*, greater<Vec2>> mapEntitys;
+	vector<Entity*> vecEntityInScreen;
+
 	multimap<Vec2, Entity*>::iterator it;
 
 	ItemOnGrounds* itemOnGrounds;

@@ -37,7 +37,7 @@ private:
 	float craftedTime;
 	float productionPercent;
 
-	int productsFinished;	// »ý»ê ÃÑ·®
+	size_t productsFinished;	// »ý»ê ÃÑ·®
 
 	// slot
 	Ingredients ingredients;

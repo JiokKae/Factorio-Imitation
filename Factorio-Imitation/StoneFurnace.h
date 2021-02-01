@@ -21,6 +21,7 @@ private:
 	float maxPower;
 	float craftedTime;			// 제작한 시간
 	float productionPercent;	// 생산 퍼센트
+	size_t productsFinished;	// 생산 총량
 
 	// slot
 	ItemInfo* fuel;

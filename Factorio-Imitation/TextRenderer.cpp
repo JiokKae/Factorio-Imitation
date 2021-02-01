@@ -112,6 +112,19 @@ void TextRenderer::RenderText(std::string text, float x, float y, float scale, g
             y -= (this->Characters['H'].Size.y * 1.8f) * scale;
             continue;
         }
+        if (*c == '\t')
+        {
+            c++;
+            string str;
+            while (*c != '\t')
+            {
+                str += *c;
+                c++;
+            }
+            x = stoi(str) * (int)(x / stoi(str) + 1);
+
+            continue;
+        }
 
         Text::Character ch = Characters[*c];
 

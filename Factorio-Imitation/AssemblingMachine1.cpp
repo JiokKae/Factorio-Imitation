@@ -66,6 +66,7 @@ void AssemblingMachine1::Update()
 				ingredients.Consume(currRecipe);
 				result.id = currRecipe->GetOutput().id;
 				result.amount += currRecipe->GetOutput().amount;
+				productsFinished++;
 				craftedTime -= currRecipe->GetCraftingTime();
 			}
 
@@ -111,7 +112,7 @@ void AssemblingMachine1::Render(Shader* shader, float posX, float posY)
 void AssemblingMachine1::LateRender(Shader* shader)
 {
 	if(currRecipe)
-		altModeIcon->Render(shader, position.x, position.y, currRecipe->GetOutput().id % 8, 7 - currRecipe->GetOutput().id / 8);
+		altModeIcon->Render(shader, position.x, position.y + 16, currRecipe->GetOutput().id % 8, 7 - currRecipe->GetOutput().id / 8);
 }
 
 bool AssemblingMachine1::InputItem(ItemInfo* inputItem, glm::vec2 pos)
@@ -180,16 +181,22 @@ string AssemblingMachine1::ToString()
 {
 	char buf[256];
 	char buf2[128];
-	wsprintf(buf, " \n Crafting Speed: %d \n Recipe: %s \n Products finished: %d",
-		(int)craftingSpeed,
-		g_itemSpecs[currRecipe->GetOutput().id].name.c_str(), 
-		productsFinished
-	);
+	wsprintf(buf, " \n Crafting Speed: %d \n Recipe: %s", (int)craftingSpeed, g_itemSpecs[currRecipe->GetOutput().id].name.c_str());
+
+	for (size_t i = 0; i < currRecipe->size(); i++)
+	{
+		wsprintf(buf2, "\n %d/%d x %s", ingredients[i].amount, currRecipe->GetIngredient(i).amount, g_itemSpecs[currRecipe->GetIngredient(i).id].name.c_str());
+		strcat_s(buf, buf2);
+	}
+
 	if (!result.IsEmpty())
 	{
 		wsprintf(buf2, "\n Result: %s (%d)", g_itemSpecs[result.id].name.c_str(), result.amount);
 		strcat_s(buf, buf2);
 	}
+
+	wsprintf(buf2, "\n Products finished: %d", productsFinished);
+	strcat_s(buf, buf2);
 
 	return Structure::ToString() + string(buf);
 }

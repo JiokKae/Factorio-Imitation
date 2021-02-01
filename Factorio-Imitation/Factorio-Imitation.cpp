@@ -46,14 +46,6 @@ ItemSpec	g_itemSpecs[] = {
 };
 enum ItemEnum;	// 정의 피킹용
 
-const char* g_directionToLpChar[] = {
-	"-N",
-	"-E",
-	"-S",
-	"-W",
-};
-
-
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);

@@ -37,6 +37,7 @@ HRESULT MainGame::Init()
 	SoundManager::GetSingleton()->Init();
 	TextureManager::GetSingleton()->Init();
 	RecipeManager::GetSingleton()->Init();
+	DebugHelper::GetSingleton()->Init();
 
 	// TextRenderer Init
 	TextRenderer::GetSingleton()->Init();
@@ -66,6 +67,7 @@ HRESULT MainGame::Init()
 void MainGame::Release()
 {
 	// Singleton Release
+	DebugHelper::GetSingleton()->Release();
 	TextRenderer::GetSingleton()->Release();
 	RecipeManager::GetSingleton()->Release();
 	TextureManager::GetSingleton()->Release();

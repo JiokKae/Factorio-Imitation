@@ -7,9 +7,9 @@ HRESULT Ore::Init(int x, int y)
 {
 	if (rand() % 2)
 	{
-		if ((x + y) % 6 == 0)
+		if ((x / CHUNK_IN_TILE + y / CHUNK_IN_TILE) % 6 == 1)
 			itemEnum = STONE;
-		if (x / CHUNK_IN_TILE % 2 ^ y / CHUNK_IN_TILE % 2)
+		else if (x / CHUNK_IN_TILE % 2 ^ y / CHUNK_IN_TILE % 2)
 			itemEnum = IRON_ORE;
 		else
 			itemEnum = COPPER_ORE;

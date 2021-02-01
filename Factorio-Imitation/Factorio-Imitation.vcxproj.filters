@@ -363,6 +363,9 @@
     <ClInclude Include="SelectRecipeAssemblingUI.h">
       <Filter>MainGame\UI</Filter>
     </ClInclude>
+    <ClInclude Include="DebugHelper.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -565,6 +568,9 @@
     </ClCompile>
     <ClCompile Include="SelectRecipeAssemblingUI.cpp">
       <Filter>MainGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugHelper.cpp">
+      <Filter>MainGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
