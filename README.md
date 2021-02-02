@@ -49,6 +49,8 @@
 * 기술이 사용된 객체: [타일(Tile)](#타일-tile), 광물(Ore), [땅 위의 아이템(Item On Ground)](#땅-위의-아이템-item-on-ground)
 
 ### [캐릭터 (Character)](#캐릭터-character)
+
+header file: [Character.h](Factorio-Imitation/Character.h)
 * 조작
 	> 플레이어는 게임에서 행동을 할때 캐릭터를 통하여 이루어진다.  
 	> 공장을 확장하기 위해서 [구조물 빌더](#구조물-빌더-structure-builder)로 구조물들을 건설하거나 철거할 수 있다.
@@ -62,24 +64,32 @@
 
 ### [화력 채광 드릴 (Burner Mining Drill)](#구조물-structure)
 	구조물 (Structure)/ 화력 채광 드릴 (Burner Mining Drill)
+	
+header file: [BurnerMiningDrill.h](Factorio-Imitation/BurnerMiningDrill.h)
 * 타일에 있는 광물을 채취한다.
 * 연료를 에너지로 사용한다.
 * 배출구로 광물을 배출한다.
 
 ### [운송 벨트 (Transport Belt)](#구조물-structure)
 	구조물 (Structure)/ 운송 벨트 (Transport Belt)
+	
+header file: [TransportBelt.h](Factorio-Imitation/TransportBelt.h)
 * 벨트위에 올라가있는 아이템들을 진행 방향으로 이동시킨다.
 * 벨트의 종류에 따라 속도가 다르다.
 * 사방의 운송벨트와 상호 작용하여 진행 방향이 바뀐다
 
 ### [투입기 (Inserter)](#구조물-structure)
 	구조물 (Structure)/ 투입기 (Inserter)
+
+header file: [BurnerInserter.h](Factorio-Imitation/BurnerInserter.h)
 * 구조물에 아이템을 투입한다.
 * 구조물에서 아이템을 반출한다.
 * 방향에 따라 이미지가 회전한다.
 
 ### [돌 용광로 (Stone Furnace)](#구조물-structure)
 	구조물 (Structure)/ 돌 용광로 (Stone Furnace)
+
+header file: [StoneFurnace.h](Factorio-Imitation/StoneFurnace.h)
 * 굽기 제작법이 있는 아이템들을 가공한다.
 * 연료를 에너지로 사용한다.
 * 다른 구조물로부터 아이템을 받을 수 있다.
@@ -93,6 +103,8 @@ header file: [AssemblingMachine1.h](Factorio-Imitation/AssemblingMachine1.h)
 * 다른 구조물로부터 아이템을 받을 수 있다.
 
 ### [구조물 빌더 (Structure Builder)](#구조물-structure)
+
+header file: [StructureBuilder.h](Factorio-Imitation/StructureBuilder.h)
 * 임시 구조물
 	* 마우스 좌표에 임시로 구조물을 배치하여 표시한다.
 * 활성화
@@ -100,15 +112,19 @@ header file: [AssemblingMachine1.h](Factorio-Imitation/AssemblingMachine1.h)
 	
 ### 타일 매니저 (Tile Manager)
 #### 청크 (Chunk)
+
+header file: [Chunk.h](Factorio-Imitation/Chunk.h)
 * 타일 32 * 32개를 구성하는 단위
 * 인스턴싱 기법으로 청크단위로 화면에 그려진다.
 * 음수 좌표를 사용하기 위해 map을 사용해 저장한다.
 
 #### 타일 (Tile)
+header file: [Tile.h](Factorio-Imitation/Tile.h)
 * 그리드의 기본 단위
 * 광물을 가지고 있다.
 * 타일 위에 지어진 구조물의 링크를 저장한다.
 #### 광물 (Ore)
+header file: [Ore.h](Factorio-Imitation/Ore.h)
 * 광물의 종류와 양을 저장한다.
 
 ### 엔티티 매니저 (Entity Manager)
