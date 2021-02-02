@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "GameNode.h"
 
 enum BUTTON_STATE
@@ -20,7 +20,7 @@ private:
 	POINT ptDownFrame;
 	POINT ptUpFrame;
 
-	// ¹öÆ° ±â´É (ÇÔ¼ö Æ÷ÀÎÅÍ)
+	// ë²„íŠ¼ ê¸°ëŠ¥ (í•¨ìˆ˜ í¬ì¸í„°)
 	void (*buttonFunc)(void*);
 	Argument_Kind kind;
 	void* arg;

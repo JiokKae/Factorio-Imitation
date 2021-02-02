@@ -1,18 +1,18 @@
-#pragma once
+ï»¿#pragma once
 #include "framework.h"
 class Timer
 {
 private:
 	bool isSC_MOVE;
-	bool isHardware;	// °í¼º´É Å¸ÀÌ¸Ó¸¦ ¾µ ¼ö ÀÖ´ÂÁö ¿©ºÎ
-	float timeScale;	// °æ°ú Áøµ¿¼ö¸¦ ÃÊ´ç Áøµ¿¼ö·Î ³ª´²¼­ Áøµ¿¼ö¸¦ ½Ã°£´ÜÀ§·Î º¯È¯
-	float timeElapsed;	// ¸¶Áö¸· ½Ã°£°ú ÇöÀç ½Ã°£ÀÇ °æ°ú·®
-	__int64 currTime;	// ÇöÀç ½Ã°£ (°í¼º´É Å¸ÀÌ¸Ó °ª)
-	__int64 lastTime;	// ÀÌÀü ½Ã°£ (°í¼º´É Å¸ÀÌ¸Ó °ª)
-	__int64 periodFrequency;	// °í¼º´É Å¸ÀÌ¸ÓÀÇ ÁÖÆÄ¼ö (ÃÊ´ç Áøµ¿¼ö), Áö¿øÇÏÁö ¾ÊÀ¸¸é 0 ¹İÈ¯
+	bool isHardware;	// ê³ ì„±ëŠ¥ íƒ€ì´ë¨¸ë¥¼ ì“¸ ìˆ˜ ìˆëŠ”ì§€ ì—¬ë¶€
+	float timeScale;	// ê²½ê³¼ ì§„ë™ìˆ˜ë¥¼ ì´ˆë‹¹ ì§„ë™ìˆ˜ë¡œ ë‚˜ëˆ ì„œ ì§„ë™ìˆ˜ë¥¼ ì‹œê°„ë‹¨ìœ„ë¡œ ë³€í™˜
+	float timeElapsed;	// ë§ˆì§€ë§‰ ì‹œê°„ê³¼ í˜„ì¬ ì‹œê°„ì˜ ê²½ê³¼ëŸ‰
+	__int64 currTime;	// í˜„ì¬ ì‹œê°„ (ê³ ì„±ëŠ¥ íƒ€ì´ë¨¸ ê°’)
+	__int64 lastTime;	// ì´ì „ ì‹œê°„ (ê³ ì„±ëŠ¥ íƒ€ì´ë¨¸ ê°’)
+	__int64 periodFrequency;	// ê³ ì„±ëŠ¥ íƒ€ì´ë¨¸ì˜ ì£¼íŒŒìˆ˜ (ì´ˆë‹¹ ì§„ë™ìˆ˜), ì§€ì›í•˜ì§€ ì•Šìœ¼ë©´ 0 ë°˜í™˜
 
-	float fpsTimeElapsed;	// ÇÁ·¹ÀÓ °æ°ú ½Ã°£ (1ÃÊ È®ÀÎ)
-	ULONG fpsFrameCount;	// ÃÊ´ç ÇÁ·¹ÀÓ ¼ö
+	float fpsTimeElapsed;	// í”„ë ˆì„ ê²½ê³¼ ì‹œê°„ (1ì´ˆ í™•ì¸)
+	ULONG fpsFrameCount;	// ì´ˆë‹¹ í”„ë ˆì„ ìˆ˜
 	ULONG fps;
 	ULONG targetFps;
 public:

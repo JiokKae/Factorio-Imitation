@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "framework.h"
 #include <string>
 #include <fstream>
@@ -11,11 +11,11 @@ public:
     // program ID
     unsigned int ID;
 
-    // »ı¼ºÀÚ´Â shader¸¦ ÀĞ°í »ı¼ºÇÕ´Ï´Ù.
+    // ìƒì„±ìëŠ” shaderë¥¼ ì½ê³  ìƒì„±í•©ë‹ˆë‹¤.
     Shader(const GLchar* vertexPath, const GLchar* fragmentPath);
-    // shader¸¦ È°¼ºÈ­ÇÏ°í »ç¿ëÇÕ´Ï´Ù.
+    // shaderë¥¼ í™œì„±í™”í•˜ê³  ì‚¬ìš©í•©ë‹ˆë‹¤.
     void use();
-    // Uniform À¯Æ¿¸®Æ¼ ÇÔ¼öµé
+    // Uniform ìœ í‹¸ë¦¬í‹° í•¨ìˆ˜ë“¤
     void setBool(const std::string& name, bool value) const;
     void setInt(const std::string& name, int value) const;
     void setFloat(const std::string& name, float value) const;

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "GameNode.h"
 #include "framework.h"
 
@@ -10,10 +10,10 @@ private:
 
 	bool isInit;
 public:
-	HRESULT Init();				// ¸â¹ö º¯¼ö ÃÊ±âÈ­, ¸Ş¸ğ¸® ÇÒ´ç
-	void Release();				// ¸Ş¸ğ¸® ÇØÁ¦
-	void Update();				// ÇÁ·¹ÀÓ ´ÜÀ§ °ÔÀÓ ·ÎÁ÷ ½ÇÇà (µ¥ÀÌÅÍ º¯°æ)
-	void Render();				// ÇÁ·¹ÀÓ ´ÜÀ§ Ãâ·Â (ÀÌ¹ÌÁö, ÅØ½ºÆ® µî)
+	HRESULT Init();				// ë©¤ë²„ ë³€ìˆ˜ ì´ˆê¸°í™”, ë©”ëª¨ë¦¬ í• ë‹¹
+	void Release();				// ë©”ëª¨ë¦¬ í•´ì œ
+	void Update();				// í”„ë ˆì„ ë‹¨ìœ„ ê²Œì„ ë¡œì§ ì‹¤í–‰ (ë°ì´í„° ë³€ê²½)
+	void Render();				// í”„ë ˆì„ ë‹¨ìœ„ ì¶œë ¥ (ì´ë¯¸ì§€, í…ìŠ¤íŠ¸ ë“±)
 
 	void ImageLoad();
 	void SoundLoad();

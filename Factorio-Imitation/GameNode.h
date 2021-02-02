@@ -1,16 +1,16 @@
-#pragma once
+ï»¿#pragma once
 #include "framework.h"
 
 /*
-	°ÔÀÓÀÇ °¡Àå ±âº»ÀûÀÎ ±¸Á¶°¡ µÇ´Â Å¬·¡½º
+	ê²Œì„ì˜ ê°€ì¥ ê¸°ë³¸ì ì¸ êµ¬ì¡°ê°€ ë˜ëŠ” í´ë˜ìŠ¤
 */
 class GameNode
 {
 public:
-	virtual HRESULT Init();				// ¸â¹ö º¯¼ö ÃÊ±âÈ­, ¸Ş¸ğ¸® ÇÒ´ç
-	virtual void Release();				// ¸Ş¸ğ¸® ÇØÁ¦
-	virtual void Update();				// ÇÁ·¹ÀÓ ´ÜÀ§ °ÔÀÓ ·ÎÁ÷ ½ÇÇà (µ¥ÀÌÅÍ º¯°æ)
-	virtual void Render(HDC hdc);		// ÇÁ·¹ÀÓ ´ÜÀ§ Ãâ·Â (ÀÌ¹ÌÁö, ÅØ½ºÆ® µî)
+	virtual HRESULT Init();				// ë©¤ë²„ ë³€ìˆ˜ ì´ˆê¸°í™”, ë©”ëª¨ë¦¬ í• ë‹¹
+	virtual void Release();				// ë©”ëª¨ë¦¬ í•´ì œ
+	virtual void Update();				// í”„ë ˆì„ ë‹¨ìœ„ ê²Œì„ ë¡œì§ ì‹¤í–‰ (ë°ì´í„° ë³€ê²½)
+	virtual void Render(HDC hdc);		// í”„ë ˆì„ ë‹¨ìœ„ ì¶œë ¥ (ì´ë¯¸ì§€, í…ìŠ¤íŠ¸ ë“±)
 
 	GameNode();
 	virtual ~GameNode();

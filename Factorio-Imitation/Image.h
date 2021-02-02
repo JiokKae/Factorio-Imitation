@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "framework.h"
 
 class Animation;
@@ -15,28 +15,28 @@ public:
 
 	typedef struct tagImageInfo
 	{
-		DWORD	resID;		// ¸®¼Ò½ºÀÇ °íÀ¯ÇÑ ¾ÆÀÌµğ
-		HDC		hMemDC;		// ±×¸®±â¸¦ ÁÖ°üÇÏ´Â ÇÚµé (¸Ş¸ğ¸® °ü¸®)
-		HBITMAP	hBitmap;	// ÀÌ¹ÌÁö Á¤º¸
-		HBITMAP hOldBit;	// ±âÁ¸ ÀÌ¹ÌÁö Á¤º¸
-		int		width;		// ÀÌ¹ÌÁö °¡·Î Å©±â
-		int		height;		// ÀÌ¹ÌÁö ¼¼·Î Å©±â
-		BYTE	loadType;	// ·Îµå Å¸ÀÔ
+		DWORD	resID;		// ë¦¬ì†ŒìŠ¤ì˜ ê³ ìœ í•œ ì•„ì´ë””
+		HDC		hMemDC;		// ê·¸ë¦¬ê¸°ë¥¼ ì£¼ê´€í•˜ëŠ” í•¸ë“¤ (ë©”ëª¨ë¦¬ ê´€ë¦¬)
+		HBITMAP	hBitmap;	// ì´ë¯¸ì§€ ì •ë³´
+		HBITMAP hOldBit;	// ê¸°ì¡´ ì´ë¯¸ì§€ ì •ë³´
+		int		width;		// ì´ë¯¸ì§€ ê°€ë¡œ í¬ê¸°
+		int		height;		// ì´ë¯¸ì§€ ì„¸ë¡œ í¬ê¸°
+		BYTE	loadType;	// ë¡œë“œ íƒ€ì…
 
 		// Blend
 		HDC hBlendDC;
 		HBITMAP hBlendBitmap;
 		HBITMAP hOldBlendBit;
 
-		// Animation¿¡ ÇÊ¿äÇÑ Á¤º¸
-		int maxFrameX;		// ÃÖ´ë ÇÁ·¹ÀÓ ÀÎµ¦½º
+		// Animationì— í•„ìš”í•œ ì •ë³´
+		int maxFrameX;		// ìµœëŒ€ í”„ë ˆì„ ì¸ë±ìŠ¤
 		int maxFrameY;		
-		int currFrameX;		// ÇöÀç ÇÁ·¹ÀÓ ÀÎµ¦½º
+		int currFrameX;		// í˜„ì¬ í”„ë ˆì„ ì¸ë±ìŠ¤
 		int currFrameY;
-		int frameWidth;		// ÇÁ·¹ÀÓº° Å©±â
+		int frameWidth;		// í”„ë ˆì„ë³„ í¬ê¸°
 		int frameHeight;
 
-		// Animation Àû¿ë½Ã À§Ä¡
+		// Animation ì ìš©ì‹œ ìœ„ì¹˜
 		float x;
 		float y;
 
@@ -61,33 +61,33 @@ public:
 	} IMAGE_INFO, *LPIMAGE_INFO;
 
 private:
-	IMAGE_INFO*	imageInfo;		// ÀÌ¹ÌÁö Á¤º¸ ±¸Á¶Ã¼ Æ÷ÀÎÅÍ
+	IMAGE_INFO*	imageInfo;		// ì´ë¯¸ì§€ ì •ë³´ êµ¬ì¡°ì²´ í¬ì¸í„°
 	//LPIMAGE_INFO imageInfo;
 
-	char* fileName;				// ÆÄÀÏ °æ·Î + ÀÌ¸§
-	bool isTrans;				// Åõ¸íÈ­ ¿©ºÎ
-	COLORREF transColor;		// Åõ¸íÈ­ÇÒ »ö
+	char* fileName;				// íŒŒì¼ ê²½ë¡œ + ì´ë¦„
+	bool isTrans;				// íˆ¬ëª…í™” ì—¬ë¶€
+	COLORREF transColor;		// íˆ¬ëª…í™”í•  ìƒ‰
 
 	BLENDFUNCTION blendFunc;
 
 public:	
-	//ºó ºñÆ®¸Ê ÀÌ¹ÌÁö¸¦ ¸¸µç´Ù.
+	//ë¹ˆ ë¹„íŠ¸ë§µ ì´ë¯¸ì§€ë¥¼ ë§Œë“ ë‹¤.
 	HRESULT Init(int width, int height);
 
-	// ¸®¼Ò½º·ÎºÎÅÍ µ¥ÀÌÅÍ¸¦ ÀĞ¾î¼­ ºñÆ®¸ÊÀ» ¸¸µç´Ù.
+	// ë¦¬ì†ŒìŠ¤ë¡œë¶€í„° ë°ì´í„°ë¥¼ ì½ì–´ì„œ ë¹„íŠ¸ë§µì„ ë§Œë“ ë‹¤.
 	HRESULT Init(const DWORD resID, int width, int height,
 		bool isTrans = FALSE, COLORREF transColor = FALSE);
 
-	// ÆÄÀÏ·ÎºÎÅÍ µ¥ÀÌÅÍ¸¦ ÀĞ¾î¼­ ºñÆ®¸ÊÀ» ¸¸µç´Ù.
+	// íŒŒì¼ë¡œë¶€í„° ë°ì´í„°ë¥¼ ì½ì–´ì„œ ë¹„íŠ¸ë§µì„ ë§Œë“ ë‹¤.
 	HRESULT Init(const char* fileName, int width, int height,
 		bool isTrans = FALSE, COLORREF transColor = FALSE);
 
-	// ÆÄÀÏ·ÎºÎÅÍ µ¥ÀÌÅÍ¸¦ ÀĞ¾î¼­ ºñÆ®¸ÊÀ» ¸¸µç´Ù. (¾Ö´Ï¸ŞÀÌ¼Ç)
+	// íŒŒì¼ë¡œë¶€í„° ë°ì´í„°ë¥¼ ì½ì–´ì„œ ë¹„íŠ¸ë§µì„ ë§Œë“ ë‹¤. (ì• ë‹ˆë©”ì´ì…˜)
 	HRESULT Init(const char* fileName, int width, int height,
 		int maxFrameX, int maxFrameY,
 		bool isTrans = FALSE, COLORREF transColor = FALSE);
 
-	// ¸Ş¸ğ¸® ÇØÁ¦
+	// ë©”ëª¨ë¦¬ í•´ì œ
 	void Release();
 
 	void Render(HDC hdc, int destX, int destY, int sizeX, int sizeY);

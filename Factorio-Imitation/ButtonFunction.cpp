@@ -1,4 +1,4 @@
-#include "ButtonFunction.h"
+ï»¿#include "ButtonFunction.h"
 #include "TileMapToolScene.h"
 
 void ButtonFunction::ChangeScene(void* arg)
@@ -10,7 +10,7 @@ void ButtonFunction::ChangeScene(void* arg)
 
 void ButtonFunction::QuitProgram(void* arg)
 {
-	if (MessageBox(g_hWnd, "°ÔÀÓÀ» Á¾·áÇÏ½Ã°Ú½À´Ï±î?", "Á¾·á È®ÀÎ", MB_OKCANCEL) == IDOK)
+	if (MessageBox(g_hWnd, "ê²Œì„ì„ ì¢…ë£Œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?", "ì¢…ë£Œ í™•ì¸", MB_OKCANCEL) == IDOK)
 	{
 		PostQuitMessage(0);
 	}

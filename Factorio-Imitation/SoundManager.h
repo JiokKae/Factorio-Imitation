@@ -1,8 +1,8 @@
-#pragma once
+ï»¿#pragma once
 #include "framework.h"
 #include "Singleton.h"
 
-// FMOD °ü·Ã
+// FMOD ê´€ë ¨
 //#pragma comment(lib, "lib/fmodex_vc.lib")
 #pragma comment(lib, "lib/fmodex64_vc.lib")
 #pragma comment(lib, "lib/fmodex64_vc.lib")
@@ -17,9 +17,9 @@ using namespace FMOD;
 class SoundManager : public Singleton<SoundManager>
 {
 private:
-	System* system;		// FMOD ¶óÀÌºê·¯¸® Á¦¾î
-	Sound** sounds;		// À½¿ø
-	Channel** channels;	// Ãâ·Â »ç¿îµå °ü¸®
+	System* system;		// FMOD ë¼ì´ë¸ŒëŸ¬ë¦¬ ì œì–´
+	Sound** sounds;		// ìŒì›
+	Channel** channels;	// ì¶œë ¥ ì‚¬ìš´ë“œ ê´€ë¦¬
 
 	map<string, Sound**> mapSoundData;
 

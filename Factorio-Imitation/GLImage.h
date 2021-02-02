@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "framework.h"
 
 class Shader;
@@ -13,18 +13,18 @@ class GLImage
 	float frameWidth;
 	float frameHeight;
 	VertexArrayObject* imageVAO;
-	glm::vec2 offset;				// ÀÌ¹ÌÁöÀÇ ¿ÀÇÁ¼Â
-	float alpha;					// ÀÌ¹ÌÁöÀÇ Åõ¸íµµ
-	glm::vec2 scale;				// ÀÌ¹ÌÁöÀÇ ½ºÄÉÀÏ
-	float angle;					// ÀÌ¹ÌÁöÀÇ È¸Àü °¢µµ
-	glm::vec2 margin;				// ÀÌ¹ÌÁöÀÇ ¸¶Áø
+	glm::vec2 offset;				// ì´ë¯¸ì§€ì˜ ì˜¤í”„ì…‹
+	float alpha;					// ì´ë¯¸ì§€ì˜ íˆ¬ëª…ë„
+	glm::vec2 scale;				// ì´ë¯¸ì§€ì˜ ìŠ¤ì¼€ì¼
+	float angle;					// ì´ë¯¸ì§€ì˜ íšŒì „ ê°ë„
+	glm::vec2 margin;				// ì´ë¯¸ì§€ì˜ ë§ˆì§„
 	bool isInit;
 
 public:
-	// ÀÌ¹ÌÁö ÃÊ±âÈ­
+	// ì´ë¯¸ì§€ ì´ˆê¸°í™”
 	HRESULT Init(char const* sourceTexture, int maxFrameX = 1, int maxFrameY = 1, float marginX = 0, float marginY = 0, int width = -1, int height = -1);
 
-	// ¸Ş¸ğ¸® ÇØÁ¦
+	// ë©”ëª¨ë¦¬ í•´ì œ
 	void Release();
 
 	void Render(Shader* shader, float destX, float destY, int currFrameX = 0, int currFrameY = 0);
@@ -47,7 +47,11 @@ public:
 
 	GLImage()
 		: sourceTexture(nullptr)
+		, imageVAO(nullptr)
+		, angle(0.0f)
 		, alpha(1.0f)
+		, frameWidth(0.0f)
+		, frameHeight(0.0f)
 		, isInit(false)
 	{};
 };

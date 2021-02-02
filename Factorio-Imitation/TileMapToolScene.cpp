@@ -1,4 +1,4 @@
-#include "TileMapToolScene.h"
+ï»¿#include "TileMapToolScene.h"
 #include "Image.h"
 #include "Button.h"
 #include "ButtonFunction.h"
@@ -8,11 +8,11 @@ HRESULT TileMapToolScene::Init()
 	SetWindowSize(50, 50, WINSIZE_TILE_MAP_X, WINSIZE_TILE_MAP_Y);
 	this->SetUseBackBuffer(true);
 
-	// ÀÌ¹ÌÁö µî·Ï
+	// ì´ë¯¸ì§€ ë“±ë¡
 	sampleTile = ImageManager::GetSingleton()->FindImage("SampleTile");
 	selectTileEdge = ImageManager::GetSingleton()->FindImage("SelectTileEdge");
 
-	// ¼¼ÀÌºê, ·Îµå ¹öÆ°
+	// ì„¸ì´ë¸Œ, ë¡œë“œ ë²„íŠ¼
 	saveButton = new Button();
 	saveButton->Init("SaveLoadButton", WINSIZE_TILE_MAP_X - sampleTile->GetWidth(), sampleTile->GetHeight() + 400, {0, 0}, {0, 1});
 	saveButton->SetButtonFunc(ButtonFunction::TileInfoSave, Argument_Kind::TileInfoArgument, new TileInfoArgument(tileInfo));
@@ -21,13 +21,13 @@ HRESULT TileMapToolScene::Init()
 	loadButton->Init("SaveLoadButton", WINSIZE_TILE_MAP_X - sampleTile->GetWidth() + 200, sampleTile->GetHeight() + 400, { 1, 0 }, { 1, 1 });
 	loadButton->SetButtonFunc(ButtonFunction::TileInfoLoad, Argument_Kind::TileInfoArgument, new TileInfoArgument(tileInfo));
 
-	// ¼¿·ºÆ® ¿µ¿ª ÃÊ±âÈ­
+	// ì…€ë ‰íŠ¸ ì˜ì—­ ì´ˆê¸°í™”
 	selectTileInfo.frame.left = 0;
 	selectTileInfo.frame.right = 0;
 	selectTileInfo.frame.top = 0;
 	selectTileInfo.frame.bottom = 0;
 
-	// ¿À¸¥ÂÊ »ó´Ü¿¡ »ùÇÃ Å¸ÀÏÀÇ Á¤º¸¸¦ ¼¼ÆÃ
+	// ì˜¤ë¥¸ìª½ ìƒë‹¨ì— ìƒ˜í”Œ íƒ€ì¼ì˜ ì •ë³´ë¥¼ ì„¸íŒ…
 	
 	rcSample.left = WINSIZE_TILE_MAP_X - sampleTile->GetWidth() - 50;
 	rcSample.right = WINSIZE_TILE_MAP_X - 50;
@@ -48,7 +48,7 @@ HRESULT TileMapToolScene::Init()
 		}
 	}
 
-	// ¿ŞÂÊ »ó´Ü¿¡ ¸ŞÀÎ Å¸ÀÏÀÇ Á¤º¸¸¦ ¼¼ÆÃ
+	// ì™¼ìª½ ìƒë‹¨ì— ë©”ì¸ íƒ€ì¼ì˜ ì •ë³´ë¥¼ ì„¸íŒ…
 	rcMain.left = 0;
 	rcMain.top = 0;
 	rcMain.right = rcMain.left + TILE_X * TILE_SIZE;
@@ -86,8 +86,8 @@ void TileMapToolScene::Update()
 		return;
 	}
 
-	#pragma region ¼±ÅÃ ¿µ¿ª
-	// »ùÇÃ Å¸ÀÏ ¿µ¿ª ¾È ÀÎÁö È®ÀÎ
+	#pragma region ì„ íƒ ì˜ì—­
+	// ìƒ˜í”Œ íƒ€ì¼ ì˜ì—­ ì•ˆ ì¸ì§€ í™•ì¸
 	if (sampleSelectStart)
 	{
 		g_ptMouse.x = Clamp(g_ptMouse.x, rcSample.left, rcSample.right);
@@ -151,7 +151,7 @@ void TileMapToolScene::Update()
 	}
 	#pragma endregion
 
-	#pragma region ¸ŞÀÎ ¿µ¿ª
+	#pragma region ë©”ì¸ ì˜ì—­
 	if (PtInRect(&rcMain, g_ptMouse))
 	{
 		if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LBUTTON))
@@ -165,7 +165,7 @@ void TileMapToolScene::Update()
 			{
 				for (int j = 0; j <= selectTileInfo.frame.right - selectTileInfo.frame.left; j++)
 				{
-					//¸ŞÀÎ ¿µ¿ª ¾È¿¡ ÀÖ¾î¾ß º¹»ç
+					//ë©”ì¸ ì˜ì—­ ì•ˆì— ìˆì–´ì•¼ ë³µì‚¬
 					if (idX + j > TILE_X - 1)
 						continue;
 
@@ -191,16 +191,16 @@ void TileMapToolScene::Render(HDC hdc)
 
 	if (sampleTile)
 	{
-		// »ùÇÃ Å¸ÀÏ	
+		// ìƒ˜í”Œ íƒ€ì¼	
 		sampleTile->Render(hdc, rcSample.left, rcSample.top, 640, 288);
 
-		// ¸ŞÀÎ Å¸ÀÏ
+		// ë©”ì¸ íƒ€ì¼
 		for (int i = 0; i < TILE_X * TILE_Y; i++)
 		{
 			sampleTile->FrameRender(hdc, tileInfo[i].rc.left + (TILE_SIZE / 2), tileInfo[i].rc.top + (TILE_SIZE / 2), tileInfo[i].frameX, tileInfo[i].frameY);
 		}
 
-		// ¼±ÅÃµÈ Å¸ÀÏµé
+		// ì„ íƒëœ íƒ€ì¼ë“¤
 		for (int i = 0; i <= selectTileInfo.frame.bottom - selectTileInfo.frame.top; i++)
 		{
 			for (int j = 0; j <= selectTileInfo.frame.right - selectTileInfo.frame.left; j++)

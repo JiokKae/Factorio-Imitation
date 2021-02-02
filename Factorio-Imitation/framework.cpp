@@ -1,4 +1,4 @@
-#include "framework.h"
+ï»¿#include "framework.h"
 
 bool Vec2::operator<(const Vec2& vec) const
 {
@@ -27,16 +27,16 @@ bool ItemInfo::IsEmpty()
 
 bool ItemInfo::CanInput(int itemId)
 {
-    // ¹«Á¦ÇÑ ½½·ÔÀÏ ¶§
+    // ë¬´ì œí•œ ìŠ¬ë¡¯ì¼ ë•Œ
     if (vecAbleItems.size() == 0)
         return true;
 
-    // Á¦ÇÑÀÖ´Â ½½·ÔÀÏ ¶§
+    // ì œí•œìžˆëŠ” ìŠ¬ë¡¯ì¼ ë•Œ
     else
     {
         for (int i = 0; i < vecAbleItems.size(); i++)
         {
-            // Çã¿ëµÈ ¾ÆÀÌÅÛÀÌ¶ó¸é
+            // í—ˆìš©ëœ ì•„ì´í…œì´ë¼ë©´
             if (itemId == vecAbleItems[i])
                 return true;
         }
@@ -47,7 +47,7 @@ bool ItemInfo::CanInput(int itemId)
 
 bool ItemInfo::MoveAllItemTo(ItemInfo* destItemInfo)
 {
-    // ¸ñÀûÁö°¡ ºñ¾îÀÖ°Å³ª °°Àº Á¾·ù¶ó¸é ÀÌµ¿ °¡´É
+    // ëª©ì ì§€ê°€ ë¹„ì–´ìžˆê±°ë‚˜ ê°™ì€ ì¢…ë¥˜ë¼ë©´ ì´ë™ ê°€ëŠ¥
     if (destItemInfo->IsEmpty())
     {
         destItemInfo->id = id;

@@ -1,4 +1,4 @@
-#include "TransportBelt.h"
+ï»¿#include "TransportBelt.h"
 #include "Tile.h"
 #include "ItemOnGround.h"
 #include "ItemOnGrounds.h"
@@ -59,24 +59,24 @@ void TransportBelt::Update()
 {
 	Structure::Update();
 
-	// µÚ¿¡ º§Æ®°¡ ÀÖ´Ù¸é
+	// ë’¤ì— ë²¨íŠ¸ê°€ ìžˆë‹¤ë©´
 	if (aroundBelts[OPPOSITE_DIR(direction)] && aroundBelts[OPPOSITE_DIR(direction)]->GetDirection() == direction)
 		renderState = UP;
 
-	// µÚ¿¡ º§Æ®°¡ ¾ø´Ù¸é
+	// ë’¤ì— ë²¨íŠ¸ê°€ ì—†ë‹¤ë©´
 	else
 	{
-		// ¾çÂÊ °Ë»ç
+		// ì–‘ìª½ ê²€ì‚¬
 		bool left = aroundBelts[LEFT_DIR(direction)] && aroundBelts[LEFT_DIR(direction)]->GetDirection() == RIGHT_DIR(direction);
 		bool right = aroundBelts[RIGHT_DIR(direction)] && aroundBelts[RIGHT_DIR(direction)]->GetDirection() == LEFT_DIR(direction);
-		if (left ^ right)	// µÑÁß ÇÏ³ª¸¸ ¿­·Á ÀÖ´Ù¸é
+		if (left ^ right)	// ë‘˜ì¤‘ í•˜ë‚˜ë§Œ ì—´ë ¤ ìžˆë‹¤ë©´
 		{
 			if (left)
 				renderState = LEFT_UP;
 			else
 				renderState = RIGHT_UP;
 		}
-		else	// µÑ´Ù ¾ø°Å³ª µÑ´Ù ÀÖ°Å³ª
+		else	// ë‘˜ë‹¤ ì—†ê±°ë‚˜ ë‘˜ë‹¤ ìžˆê±°ë‚˜
 			renderState = UP;
 	}
 

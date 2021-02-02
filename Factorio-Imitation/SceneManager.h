@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "framework.h"
 #include "Singleton.h"
 
@@ -14,9 +14,9 @@ private:
 	Image* backBuffer;
 	
 public:
-	static Scene* currScene;	// ÇöÀç Ãâ·Â ÁßÀÎ ¾À
-	static Scene* loadingScene;	// ´ÙÀ½ ¾À ÁØºñ Áß¿¡ Ãâ·ÂµÉ ¾À
-	static Scene* readyScene;	// ÁØºñ ÁßÀÎ ¾À
+	static Scene* currScene;	// í˜„ì¬ ì¶œë ¥ ì¤‘ì¸ ì”¬
+	static Scene* loadingScene;	// ë‹¤ìŒ ì”¬ ì¤€ë¹„ ì¤‘ì— ì¶œë ¥ë  ì”¬
+	static Scene* readyScene;	// ì¤€ë¹„ ì¤‘ì¸ ì”¬
 
 public:
 	HRESULT Init();
@@ -24,11 +24,11 @@ public:
 	void Update();
 	void Render(HDC hdc);
 
-	// ¾À Ãß°¡
+	// ì”¬ ì¶”ê°€
 	Scene* AddScene(string key, Scene* scene);
 	Scene* AddLoadingScene(string key, Scene* scene);
 
-	// ¾À º¯°æ
+	// ì”¬ ë³€ê²½
 	HRESULT ChangeScene(string sceneName);
 	HRESULT ChangeScene(string sceneName, string loadingSceneName);
 
