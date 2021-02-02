@@ -30,11 +30,3 @@ HRESULT FastTransportBelt::Init(int x, int y, DIRECTION direction, bool temp)
 
 	return S_OK;
 }
-
-void FastTransportBelt::Release()
-{
-	Structure::Release();
-
-	SAFE_ARR_DELETE(aroundBelts);
-	SAFE_DELETE(image);
-}

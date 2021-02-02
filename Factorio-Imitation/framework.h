@@ -44,6 +44,12 @@ typedef struct tagFRECT
 	float top;
 	float right;
 	float bottom;
+
+	tagFRECT(float left = 0, float top = 0, float right = 0, float bottom = 0);
+	const tagFRECT operator+(const tagFRECT& rect) const;
+	template<typename T>
+	const tagFRECT operator*(const T& scalar);
+
 } FRECT, * LPFRECT;
 
 struct ItemInfo {
@@ -73,7 +79,7 @@ struct ItemInfo {
 	bool CanInput(int itemId);
 	
 	// 아이템을 목적지 아이템으로 옮기는 함수
-	bool MoveItemTo(ItemInfo* destItemInfo);
+	bool MoveAllItemTo(ItemInfo* destItemInfo);
 
 	// 아이템을 목적지 아이템과 바꾸는 함수
 	void SwapItemWith(ItemInfo* destItemInfo);
@@ -98,6 +104,7 @@ struct ItemInfo {
 #include "TileManager.h"
 #include "EntityManager.h"
 #include "RecipeManager.h"
+#include "DebugHelper.h"
 
 // Useful
 #include "GLImage.h"
@@ -162,7 +169,6 @@ extern glm::vec2	g_cursorPosition;	// 마우스 커서의 포지션
 extern glm::ivec2	g_cursorCoord;		// 마우스 커서의 좌표
 extern glm::vec2	g_currScreenSize;	// 현재 씬 윈도우의 크기
 extern ItemSpec		g_itemSpecs[];
-extern const char*	g_directionToLpChar[];
 enum class Argument_Kind {
 	None,
 	ChangeSceneArgument,
@@ -324,4 +330,16 @@ inline bool PtInFRect(FRECT rc, glm::vec2 pt)
 	}
 
 	return true;
+}
+
+template<typename T>
+inline const tagFRECT tagFRECT::operator*(const T& scalar)
+{
+	tagFRECT ret;
+	ret.left = left * scalar;
+	ret.top = top * scalar;
+	ret.right = right * scalar;
+	ret.bottom = bottom * scalar;
+
+	return ret;
 }

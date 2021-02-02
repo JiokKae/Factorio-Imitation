@@ -45,7 +45,7 @@ bool ItemInfo::CanInput(int itemId)
     return false;
 }
 
-bool ItemInfo::MoveItemTo(ItemInfo* destItemInfo)
+bool ItemInfo::MoveAllItemTo(ItemInfo* destItemInfo)
 {
     // 목적지가 비어있거나 같은 종류라면 이동 가능
     if (destItemInfo->IsEmpty())
@@ -72,4 +72,23 @@ void ItemInfo::SwapItemWith(ItemInfo* destItemInfo)
     amount = destItemInfo->amount;
     destItemInfo->id = temp.id;
     destItemInfo->amount = temp.amount;
+}
+
+tagFRECT::tagFRECT(float left, float top, float right, float bottom)
+{
+    this->left = left;
+    this->top = top;
+    this->right = right;
+    this->bottom = bottom;
+}
+
+const tagFRECT tagFRECT::operator+(const tagFRECT& rect) const
+{
+    tagFRECT ret;
+    ret.left = left + rect.left;
+    ret.top = top + rect.top;
+    ret.right = right + rect.right;
+    ret.bottom = bottom + rect.bottom;
+
+    return ret;
 }

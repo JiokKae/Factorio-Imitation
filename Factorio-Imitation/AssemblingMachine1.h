@@ -11,6 +11,7 @@ public:
 	class Ingredients 
 	{
 		vector<ItemInfo> vecIngredients;
+		vector<ItemInfo> vecUsingIngredients;
 
 	public:
 		HRESULT Init(Recipe* recipe);
@@ -29,17 +30,22 @@ private:
 	GLImage* shadow;
 	glm::vec2 imageAniOffset;
 	glm::vec2 shadowAniOffset;
+	GLImage* altModeIcon;
 
 	// spec
 	float craftingSpeed;
 	float craftedTime;
 	float productionPercent;
 
+	size_t productsFinished;	// 생산 총량
+
 	// slot
 	Ingredients ingredients;
 	ItemInfo result;
 
-	Recipe* selectedRecipe;
+	vector<Recipe*>* vecRecipes;
+	Recipe* currRecipe;
+	size_t currRecipeIndex;
 
 	float time;
 
@@ -50,6 +56,7 @@ public:
 	virtual void FirstRender(Shader* shader) override;
 	virtual void Render(Shader* shader) override;
 	virtual void Render(Shader* shader, float posX, float posY) override;
+	virtual void LateRender(Shader* shader) override;
 
 	// event
 	virtual bool InputItem(ItemInfo* inputItem, glm::vec2 pos) override;

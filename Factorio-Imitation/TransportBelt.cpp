@@ -44,7 +44,6 @@ HRESULT TransportBelt::Init(int x, int y, DIRECTION direction, bool temp)
 		}
 	}
 
-
 	return S_OK;
 }
 

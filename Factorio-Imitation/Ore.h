@@ -7,6 +7,7 @@ private:
 	int itemEnum;
 	int amount;
 	int randFrameX;
+	int frameYByAmount;
 
 public:
 	virtual HRESULT Init(int x, int y);
@@ -16,8 +17,8 @@ public:
 	int GetItemEnum()		{ return itemEnum; }
 	int GetAmount()			{ return amount; }
 	int GetRandFrameX()		{ return randFrameX; }
-
-	void AddAmount(int value) { this->amount += value; }
+	int GetFrameY()			{ return frameYByAmount; }
+	void AddAmount(int value); 
 
 	int AmountToImageFrameY();
 

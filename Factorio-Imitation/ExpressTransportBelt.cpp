@@ -30,11 +30,3 @@ HRESULT ExpressTransportBelt::Init(int x, int y, DIRECTION direction, bool temp)
 
 	return S_OK;
 }
-
-void ExpressTransportBelt::Release()
-{
-	Structure::Release();
-
-	SAFE_ARR_DELETE(aroundBelts);
-	SAFE_DELETE(image);
-}

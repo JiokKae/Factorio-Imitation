@@ -123,6 +123,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -153,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AssemblingMachine1.h" />
+    <ClInclude Include="DebugHelper.h" />
     <ClInclude Include="SelectRecipeAssemblingUI.h" />
     <ClInclude Include="BurnerInserter.h" />
     <ClInclude Include="BurnerMiningDrill.h" />
@@ -223,6 +225,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AssemblingMachine1.cpp" />
+    <ClCompile Include="DebugHelper.cpp" />
     <ClCompile Include="SelectRecipeAssemblingUI.cpp" />
     <ClCompile Include="BurnerInserter.cpp" />
     <ClCompile Include="BurnerMiningDrill.cpp" />

@@ -84,7 +84,7 @@ void Character::Update()
 		break;
 	}
 
-	glm::vec2 coord = POS_TO_COORD(position);
+	glm::ivec2 coord = POS_TO_COORD(position);
 	Structure* structure = TileManager::GetSingleton()->GetLpTile(coord.x, coord.y)->GetLpSturcture();
 	if (structure && TransportBelt::IsTransportBelt(structure->GetItemId()))
 	{

@@ -40,9 +40,13 @@ void EntityManager::Release()
 
 void EntityManager::Update(FRECT cameraFrect)
 {
-	for (it = mapEntitys.begin(); it != mapEntitys.end(); it++)
+    vecEntityInScreen.clear();
+    FRECT wideCamRect = cameraFrect + FRECT(-TILE_SIZE, TILE_SIZE, TILE_SIZE, -TILE_SIZE) * 2;
+	for (it = mapEntitys.begin(); it != mapEntitys.end(); ++it)
 	{
         it->second->Update();
+        if (PtInFRect(wideCamRect, it->second->GetPosition()))
+            vecEntityInScreen.push_back(it->second);
 	}
     itemOnGrounds->Update(cameraFrect);
     player->Update();
@@ -65,30 +69,31 @@ void EntityManager::Update(FRECT cameraFrect)
 
 void EntityManager::Render(Shader* shader)
 {
-    for (it = mapEntitys.begin(); it != mapEntitys.end(); it++)
+    vector<Entity*>::iterator it;
+    for (it = vecEntityInScreen.begin(); it != vecEntityInScreen.end(); it++)
     {
         //±×¸²ÀÚ ·»´õ
-        it->second->FirstRender(shader);
+        (*it)->FirstRender(shader);
     }
-    for (it = mapEntitys.begin(); it != mapEntitys.end(); it++)
+    for (it = vecEntityInScreen.begin(); it != vecEntityInScreen.end(); it++)
     {
-        if (it->second->IsPassable())
-            it->second->Render(shader);
+        if ((*it)->IsPassable())
+            (*it)->Render(shader);
     }
     itemOnGrounds->Render();
-	for (it = mapEntitys.begin(); it != mapEntitys.end(); it++)
+	for (it = vecEntityInScreen.begin(); it != vecEntityInScreen.end(); it++)
 	{
-		if (it->second->GetPosition().y > player->GetPosition().y && !it->second->IsPassable())
-            it->second->Render(shader);
+		if ((*it)->GetPosition().y > player->GetPosition().y && !(*it)->IsPassable())
+            (*it)->Render(shader);
 	}
 
     player->Render(shader);
 
-    for (it = mapEntitys.begin(); it != mapEntitys.end(); it++)
+    for (it = vecEntityInScreen.begin(); it != vecEntityInScreen.end(); it++)
     {
-        if (it->second->GetPosition().y <= player->GetPosition().y && !it->second->IsPassable())
-            it->second->Render(shader);
-        it->second->LateRender(shader);
+        if ((*it)->GetPosition().y <= player->GetPosition().y && !(*it)->IsPassable())
+            (*it)->Render(shader);
+        (*it)->LateRender(shader);
     }
 
     structureBuilder->Render(shader);
@@ -100,9 +105,9 @@ void EntityManager::Collision()
     FRECT entityRect;
     FRECT playerRect = player->GetCollisionFRect();
 
-    for (it = mapEntitys.begin(); it != mapEntitys.end(); it++)
+    for (auto it = vecEntityInScreen.begin(); it != vecEntityInScreen.end(); it++)
     {
-        Entity* entity = it->second;
+        Entity* entity = *it;
         if (entity->IsPassable())
             continue;
 

@@ -21,6 +21,7 @@ private:
 	float maxPower;
 	float craftedTime;			// 제작한 시간
 	float productionPercent;	// 생산 퍼센트
+	size_t productsFinished;	// 생산 총량
 
 	// slot
 	ItemInfo* fuel;
@@ -29,7 +30,7 @@ private:
 	ItemInfo* usingResource;
 	ItemInfo* newResult;
 
-	vector<Recipe*> vecRecipes;
+	vector<Recipe*>* vecRecipes;
 	Recipe* currRecipe;
 
 	float time;				// 시간

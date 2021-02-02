@@ -97,18 +97,24 @@ void SlotUI::OnClick(int key)
 	{
 	//슬롯을 좌클릭 했을 때
 	case VK_LBUTTON:
-		// 핸드가 비어있을때 : 핸드로 회수
+		// 핸드가 비어 있을 때 : 핸드로 회수
 		if (hand->IsEmpty())
-			this->itemInfo->MoveItemTo(hand);
+			this->itemInfo->MoveAllItemTo(hand);
 
-		// 같은 아이템이라면 핸드에서 주기
-		else if (hand->id == this->itemInfo->id)
-			hand->MoveItemTo(this->itemInfo);
-
-		// 다른 아이템이라면 핸드와 스왑
 		else if (this->itemInfo->CanInput(hand->id))
-			this->itemInfo->SwapItemWith(itemInfo);
-	
+		{
+			// 슬롯이 비어 있을 때 : 핸드에서 슬롯으로
+			if (this->itemInfo->IsEmpty())
+				hand->MoveAllItemTo(this->itemInfo);
+
+			// 핸드와 슬롯이 같은 종류일 때 : 핸드에서 슬롯으로
+			else if (hand->id == this->itemInfo->id)
+				hand->MoveAllItemTo(this->itemInfo);
+
+			// 핸드와 슬롯이 다른 종류일 때 : 핸드와 슬롯을 스왑
+			else
+				this->itemInfo->SwapItemWith(itemInfo);
+		}
 		break;
 
 	// 슬롯을 우클릭 했을 때

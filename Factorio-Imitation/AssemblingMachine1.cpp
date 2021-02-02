@@ -17,10 +17,17 @@ HRESULT AssemblingMachine1::Init(int x, int y, DIRECTION direction, bool temp)
 	shadow->SetAlpha(0.5f);
 	shadowAniOffset = { 16, -6 };
 
+	altModeIcon = new GLImage();
+	altModeIcon->Init("Icons/AllItems-stroke", 8, 8, 0.1f, 0.1f);
+	altModeIcon->SetScale({ 0.9f, 0.9f });
+
 	craftingSpeed = 0.5f;
 	status = NO_RECIPE;
-	selectedRecipe = RecipeManager::GetSingleton()->FindRecipe(IRON_GEAR_WHEEL);
-	ingredients.Init(selectedRecipe); 
+
+	vecRecipes = RecipeManager::GetSingleton()->FindRecipes(ASSEMBLING_MACHINE_1);
+	currRecipeIndex = 0;
+	currRecipe = vecRecipes->at(currRecipeIndex);
+	ingredients.Init(currRecipe); 
 
 	return S_OK;
 }
@@ -30,6 +37,8 @@ void AssemblingMachine1::Release()
 	Structure::Release();
 
 	ingredients.Release();
+
+	SAFE_RELEASE(altModeIcon);
 	SAFE_RELEASE(image);
 	SAFE_RELEASE(shadow);
 }
@@ -44,33 +53,35 @@ void AssemblingMachine1::Update()
 		break;
 
 	case Structure::WORKING:
-		if (selectedRecipe == nullptr)
+		if (currRecipe == nullptr)
 			status = NO_RECIPE;
-		else if (!ingredients.IsEnough(selectedRecipe))
+		else if (!ingredients.IsEnough(currRecipe))
 			status = ITEM_INGREDIENT_SHORTAGE;
 		else
 		{
 			craftedTime += craftingSpeed * TimerManager::GetSingleton()->GetTimeElapsed();
 
-			if (craftedTime >= selectedRecipe->GetCraftingTime())
+			if (craftedTime >= currRecipe->GetCraftingTime())
 			{
-				result.id = selectedRecipe->GetOutput().id;
-				result.amount += selectedRecipe->GetOutput().amount;
-				craftedTime -= selectedRecipe->GetCraftingTime();
+				ingredients.Consume(currRecipe);
+				result.id = currRecipe->GetOutput().id;
+				result.amount += currRecipe->GetOutput().amount;
+				productsFinished++;
+				craftedTime -= currRecipe->GetCraftingTime();
 			}
 
-			productionPercent = craftedTime / selectedRecipe->GetCraftingTime();
+			productionPercent = craftedTime / currRecipe->GetCraftingTime();
 			time += TimerManager::GetSingleton()->GetTimeElapsed();
 		}
 		break;
 
 	case Structure::ITEM_INGREDIENT_SHORTAGE:
-		if (ingredients.IsEnough(selectedRecipe))
+		if (ingredients.IsEnough(currRecipe))
 			status = WORKING;
 		break;
 
 	case Structure::NO_RECIPE:
-		if (selectedRecipe)
+		if (currRecipe)
 			status = WORKING;
 		break;
 
@@ -79,7 +90,7 @@ void AssemblingMachine1::Update()
 
 void AssemblingMachine1::FirstRender(Shader* shader)
 {
-	int frame = g_time * 30;
+	int frame = (int)(time * 30);
 	glm::ivec2 maxFrame = image->GetMaxFrame();
 	shadow->Render(shader, position.x + shadowAniOffset.x, position.y + shadowAniOffset.y,
 		frame % maxFrame.x, maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y);
@@ -92,21 +103,27 @@ void AssemblingMachine1::Render(Shader* shader)
 
 void AssemblingMachine1::Render(Shader* shader, float posX, float posY)
 {
-	int frame = time * 30;
+	int frame = (int)(time * 30);
 	glm::ivec2 maxFrame = image->GetMaxFrame();
 	image->Render(shader, posX, posY,
 		frame % maxFrame.x, maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y);
 }
 
+void AssemblingMachine1::LateRender(Shader* shader)
+{
+	if(currRecipe)
+		altModeIcon->Render(shader, position.x, position.y + 16, currRecipe->GetOutput().id % 8, 7 - currRecipe->GetOutput().id / 8);
+}
+
 bool AssemblingMachine1::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 {
-	if (selectedRecipe->IsIngredient(inputItem->id))
+	if (currRecipe->IsIngredient(inputItem->id))
 	{
-		for (int i = 0; i < selectedRecipe->size(); i++)
+		for (int i = 0; i < currRecipe->size(); i++)
 		{
-			if (selectedRecipe->GetIngredient(i).id == inputItem->id)
+			if (currRecipe->GetIngredient(i).id == inputItem->id)
 			{
-				inputItem->MoveItemTo(&ingredients[i]);
+				inputItem->MoveAllItemTo(&ingredients[i]);
 				SAFE_DELETE(inputItem);
 				return true;
 			}
@@ -120,7 +137,7 @@ bool AssemblingMachine1::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 bool AssemblingMachine1::TakeOutItem(ItemInfo* outItem)
 {
 	// 내보낼 생산품이 있다면
-	if (result.amount)
+	if (!result.IsEmpty())
 	{
 		// 생산품의 개수가 반출 요구치를 넘으면
 		if (result.amount >= outItem->amount)
@@ -130,11 +147,8 @@ bool AssemblingMachine1::TakeOutItem(ItemInfo* outItem)
 		}
 		// 생산품의 개수가 반출 요구치를 넘지 못하면
 		else
-		{
-			outItem->id = result.id;
-			outItem->amount = result.amount;
-			result.amount = 0;
-		}
+			result.MoveAllItemTo(outItem);
+
 		return true;
 	}
 	// 내보낼 생산품이 없다면
@@ -144,9 +158,15 @@ bool AssemblingMachine1::TakeOutItem(ItemInfo* outItem)
 
 void AssemblingMachine1::ClickEvent()
 {
-	if (selectedRecipe)
+	if (currRecipe)
 	{
-		
+		if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LSHIFT))
+		{
+			currRecipeIndex = (currRecipeIndex + 1) % vecRecipes->size();
+			currRecipe = vecRecipes->at(currRecipeIndex);
+			ingredients.Init(currRecipe);
+			craftedTime = 0;
+		}
 	}
 	else
 	{
@@ -159,16 +179,34 @@ void AssemblingMachine1::ClickEvent()
 
 string AssemblingMachine1::ToString()
 {
-	char buf[128];
-	wsprintf(buf, "\n Recipe: %s \n Result: %s (%d)",
-		g_itemSpecs[selectedRecipe->GetOutput().id].name.c_str(), 
-		g_itemSpecs[result.id].name.c_str(), result.amount);
+	char buf[256];
+	char buf2[128];
+	wsprintf(buf, " \n Crafting Speed: %d \n Recipe: %s", (int)craftingSpeed, g_itemSpecs[currRecipe->GetOutput().id].name.c_str());
+
+	for (size_t i = 0; i < currRecipe->size(); i++)
+	{
+		wsprintf(buf2, "\n %d/%d x %s", ingredients[i].amount, currRecipe->GetIngredient(i).amount, g_itemSpecs[currRecipe->GetIngredient(i).id].name.c_str());
+		strcat_s(buf, buf2);
+	}
+
+	if (!result.IsEmpty())
+	{
+		wsprintf(buf2, "\n Result: %s (%d)", g_itemSpecs[result.id].name.c_str(), result.amount);
+		strcat_s(buf, buf2);
+	}
+
+	wsprintf(buf2, "\n Products finished: %d", productsFinished);
+	strcat_s(buf, buf2);
+
 	return Structure::ToString() + string(buf);
 }
 
 HRESULT AssemblingMachine1::Ingredients::Init(Recipe* recipe)
 {
+	vecIngredients.clear();
 	vecIngredients.resize(recipe->size());
+	vecUsingIngredients.clear();
+	vecUsingIngredients.resize(recipe->size());
 	return S_OK;
 }
 
@@ -197,7 +235,10 @@ bool AssemblingMachine1::Ingredients::Consume(Recipe* recipe)
 {
 	if (IsEnough(recipe))
 	{
-
+		for (size_t i = 0; i < recipe->size(); i++)
+		{
+			vecIngredients[i].amount -= recipe->GetIngredient(i).amount;
+		}
 	}
 	else
 		return false;

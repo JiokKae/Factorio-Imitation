@@ -6,6 +6,7 @@ class PointLight;
 class TileManager;
 class TextRenderer;
 class DirectionalLight;
+class DebugHelper;
 class PlayScene : public Scene
 {
 	Camera* camera;
@@ -24,12 +25,16 @@ class PlayScene : public Scene
 	int numOfPointLight;
 
 	EntityManager* entityManager;
+	DebugHelper* debugHelper;
 
+	bool altMode;
 public:
 	virtual HRESULT Init();
 	virtual void Release();
 	virtual void Update();
 	virtual void Render(HDC hdc);
+
+	bool IsAltMode() { return altMode; }
 
 	PlayScene(int width, int height)
 		: Scene(width, height)
