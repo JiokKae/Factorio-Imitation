@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Scene.h"
 
 #define	TILE_SIZE		32
@@ -37,20 +37,20 @@ class TileMapToolScene : public Scene
 private:
 	Image* sampleTile;
 	Image* selectTileEdge;
-	// ¸ŞÀÎ Å¸ÀÏÀÇ Á¤º¸
+	// ë©”ì¸ íƒ€ì¼ì˜ ì •ë³´
 	RECT rcMain;
 	TILE_INFO tileInfo[TILE_X * TILE_Y];
 
-	// »ùÇÃ Å¸ÀÏÀÇ Á¤º¸
+	// ìƒ˜í”Œ íƒ€ì¼ì˜ ì •ë³´
 	RECT rcSample;
 	SAMPLE_TILE_INFO sampleTileInfo[SAMPLE_TILE_X * SAMPLE_TILE_Y];
 
-	// ¼±ÅÃµÈ Å¸ÀÏÀÇ Á¤º¸
+	// ì„ íƒëœ íƒ€ì¼ì˜ ì •ë³´
 	SELECT_TILE_INFO selectTileInfo;
 	POINT selectStartFrame;
 	bool sampleSelectStart;
 
-	// ¼¼ÀÌºê ·Îµå ¹öÆ°
+	// ì„¸ì´ë¸Œ ë¡œë“œ ë²„íŠ¼
 	Button* saveButton;
 	Button* loadButton;
 public:

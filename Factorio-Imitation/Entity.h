@@ -22,6 +22,8 @@ public:
 
 	virtual void SetPosition(Vec2 position) { this->position = position; }
 
-	Entity() {};
+	Entity()
+		: passable(false)
+	{};
 	~Entity() {};
 };

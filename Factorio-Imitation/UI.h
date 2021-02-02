@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "GameNode.h"
 #include "framework.h"
 
@@ -7,10 +7,10 @@ class GLImage;
 class UI : public GameNode
 {
 protected:
-	UI* parent;					// ºÎ¸ğ
-    GLImage* image;				// ¸ŞÀÎ ÀÌ¹ÌÁö
-	glm::vec2 localPosition;	// UIÀÇ Áö¿ª À§Ä¡
-	bool active;				// È°¼ºÈ­ ¿©ºÎ
+	UI* parent;					// ë¶€ëª¨
+    GLImage* image;				// ë©”ì¸ ì´ë¯¸ì§€
+	glm::vec2 localPosition;	// UIì˜ ì§€ì—­ ìœ„ì¹˜
+	bool active;				// í™œì„±í™” ì—¬ë¶€
 
 public:
 	virtual HRESULT Init();
@@ -32,7 +32,7 @@ public:
 
 	virtual void OnMouse() {};
 
-	// Å¬¸¯ ÀÌº¥Æ®
+	// í´ë¦­ ì´ë²¤íŠ¸
 	virtual void OnClick(int key) {};
 
 	UI()

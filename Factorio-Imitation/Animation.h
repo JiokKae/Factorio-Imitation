@@ -1,22 +1,22 @@
-#pragma once
+ï»¿#pragma once
 #include "framework.h"
 
 class Animation
 {
 private:
-	vector<POINT> vecFrameList;		// key Frame À§Ä¡ ¸®½ºÆ®
-	vector<int> vecPlayList;		// ÇÃ·¹ÀÌ ¸®½ºÆ®
+	vector<POINT> vecFrameList;		// key Frame ìœ„ì¹˜ ë¦¬ìŠ¤íŠ¸
+	vector<int> vecPlayList;		// í”Œë ˆì´ ë¦¬ìŠ¤íŠ¸
 
-	int frameCount;		// ÀüÃ¼ ÇÁ·¹ÀÓ ¼ö
-	int frameWitdh;		// ÇÁ·¹ÀÓ °¡·Î Å©±â
-	int frameHeight;	// ÇÁ·¹ÀÓ ¼¼·Î Å©±â
+	int frameCount;		// ì „ì²´ í”„ë ˆì„ ìˆ˜
+	int frameWitdh;		// í”„ë ˆì„ ê°€ë¡œ í¬ê¸°
+	int frameHeight;	// í”„ë ˆì„ ì„¸ë¡œ í¬ê¸°
 	
-	bool isLoop;		// ¹İº¹ µÇ´ÂÁö ¿©ºÎ
-	int nowPlayIdx;		// ÇöÀç ÇÃ·¹ÀÌ ÁßÀÎ ÇÁ·¹ÀÓ ÀÎµ¦½º
-	bool isPlaying;		// ÇöÀç ÇÃ·¹ÀÌ ÁßÀÎÁö ¿©ºÎ
+	bool isLoop;		// ë°˜ë³µ ë˜ëŠ”ì§€ ì—¬ë¶€
+	int nowPlayIdx;		// í˜„ì¬ í”Œë ˆì´ ì¤‘ì¸ í”„ë ˆì„ ì¸ë±ìŠ¤
+	bool isPlaying;		// í˜„ì¬ í”Œë ˆì´ ì¤‘ì¸ì§€ ì—¬ë¶€
 
-	float keyFrameUpdateTime;	// ¾÷µ¥ÀÌÆ® ±âÁØ ½Ã°£
-	float accumulateTime;		// ´©Àû ½Ã°£
+	float keyFrameUpdateTime;	// ì—…ë°ì´íŠ¸ ê¸°ì¤€ ì‹œê°„
+	float accumulateTime;		// ëˆ„ì  ì‹œê°„
 
 public:
 	HRESULT Init(int totalWidth, int totalHeight, int frameWidth, int frameHeight);

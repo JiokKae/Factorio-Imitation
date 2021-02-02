@@ -1,4 +1,4 @@
-#include "Button.h"
+ï»¿#include "Button.h"
 #include "Image.h"
 
 HRESULT Button::Init(const char* imageName, int posX, int posY, POINT downFramePoint, POINT upFramePoint)
@@ -34,7 +34,7 @@ void Button::Release()
 			arg = nullptr;
 			break;
 		default:
-			MessageBox(g_hWnd, "¹öÆ° ¸±¸®Áî Ã³¸®°¡ µÇÁö ¾Ê¾Ò½À´Ï´Ù", "½ÇÆĞ", MB_OK);
+			MessageBox(g_hWnd, "ë²„íŠ¼ ë¦´ë¦¬ì¦ˆ ì²˜ë¦¬ê°€ ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤", "ì‹¤íŒ¨", MB_OK);
 			break;
 		}
 	}
@@ -52,7 +52,7 @@ void Button::Update()
 		{
 			state = BUTTON_STATE::UP;
 			SoundManager::GetSingleton()->Play("GUI-ButtonMini", 0.8f);
-			// ¹öÆ° ±â´É ¼öÇà
+			// ë²„íŠ¼ ê¸°ëŠ¥ ìˆ˜í–‰
 			ButtonFunc();
 		}
 	}

@@ -1,4 +1,4 @@
-// Singleton.h
+ï»¿// Singleton.h
 
 #pragma once
 
@@ -16,8 +16,8 @@ public:
 	void ReleaseSingleton();
 };
 
-// ½Ì±ÛÅæ ÃÊ±âÈ­
-// static º¯¼ö ¹®¹ı»ó {} ¿µ¿ª ¹Û¿¡¼­ ÃÊ±âÈ­ÇÑ´Ù.
+// ì‹±ê¸€í†¤ ì´ˆê¸°í™”
+// static ë³€ìˆ˜ ë¬¸ë²•ìƒ {} ì˜ì—­ ë°–ì—ì„œ ì´ˆê¸°í™”í•œë‹¤.
 template <typename T>
 T* Singleton<T>::instance = nullptr;
 

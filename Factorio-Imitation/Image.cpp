@@ -1,4 +1,4 @@
-#include "Image.h"
+ï»¿#include "Image.h"
 #include "Animation.h"
 
 HRESULT Image::Init(int width, int height)
@@ -96,7 +96,7 @@ HRESULT Image::Init(const char * fileName, int width, int height, int maxFrameX,
 	imageInfo->hBlendBitmap = CreateCompatibleBitmap(hdc, width, height);
 	imageInfo->hOldBlendBit = (HBITMAP)SelectObject(imageInfo->hBlendDC, imageInfo->hBlendBitmap);
 
-	// ¾Ö´Ï¸ÞÀÌ¼Ç °ü·Ã
+	// ì• ë‹ˆë©”ì´ì…˜ ê´€ë ¨
 	imageInfo->currFrameX = 0;
 	imageInfo->currFrameY = 0;
 	imageInfo->maxFrameX = maxFrameX;
@@ -155,14 +155,14 @@ void Image::Render(HDC hdc, int destX, int destY, int sizeX, int sizeY)
 	else
 	{
 		BitBlt(
-			hdc,						// º¹»ç ¸ñÀûÁö DC
-			destX, destY,				// º¹»ç ½ÃÀÛ À§Ä¡
-			imageInfo->width,			// ¿øº»¿¡¼­ º¹»çµÉ °¡·Î Å©±â
-			imageInfo->height,			// ¿øº»¿¡¼­ º¹»çµÉ ¼¼·Î Å©±â
+			hdc,						// ë³µì‚¬ ëª©ì ì§€ DC
+			destX, destY,				// ë³µì‚¬ ì‹œìž‘ ìœ„ì¹˜
+			imageInfo->width,			// ì›ë³¸ì—ì„œ ë³µì‚¬ë  ê°€ë¡œ í¬ê¸°
+			imageInfo->height,			// ì›ë³¸ì—ì„œ ë³µì‚¬ë  ì„¸ë¡œ í¬ê¸°
 
-			imageInfo->hMemDC,			// ¿øº» DC
+			imageInfo->hMemDC,			// ì›ë³¸ DC
 			0, 0,
-			SRCCOPY						// º¹»ç ¿É¼Ç
+			SRCCOPY						// ë³µì‚¬ ì˜µì…˜
 		);
 	}
 
@@ -178,9 +178,9 @@ void Image::Render(HDC hdc, int destX, int destY, int srcX, int srcY, int srcWid
 		GdiTransparentBlt(
 			hdc,
 			destX - (srcWidth / 2),
-			destY - (srcHeight / 2),	// º¹»ç ½ÃÀÛ À§Ä¡
-			srcWidth,					// ¿øº»¿¡¼­ º¹»çµÉ °¡·Î Å©±â
-			srcHeight,					// ¿øº»¿¡¼­ º¹»çµÉ ¼¼·Î Å©±â
+			destY - (srcHeight / 2),	// ë³µì‚¬ ì‹œìž‘ ìœ„ì¹˜
+			srcWidth,					// ì›ë³¸ì—ì„œ ë³µì‚¬ë  ê°€ë¡œ í¬ê¸°
+			srcHeight,					// ì›ë³¸ì—ì„œ ë³µì‚¬ë  ì„¸ë¡œ í¬ê¸°
 
 			imageInfo->hMemDC,
 			srcX, srcY,
@@ -190,14 +190,14 @@ void Image::Render(HDC hdc, int destX, int destY, int srcX, int srcY, int srcWid
 	else
 	{
 		BitBlt(
-			hdc,						// º¹»ç ¸ñÀûÁö DC
+			hdc,						// ë³µì‚¬ ëª©ì ì§€ DC
 			destX - (srcWidth / 2), 
-			destY - (srcHeight / 2) ,	// º¹»ç ½ÃÀÛ À§Ä¡
-			srcWidth,					// ¿øº»¿¡¼­ º¹»çµÉ °¡·Î Å©±â
-			srcHeight,					// ¿øº»¿¡¼­ º¹»çµÉ ¼¼·Î Å©±â
-			imageInfo->hMemDC,			// ¿øº» DC
+			destY - (srcHeight / 2) ,	// ë³µì‚¬ ì‹œìž‘ ìœ„ì¹˜
+			srcWidth,					// ì›ë³¸ì—ì„œ ë³µì‚¬ë  ê°€ë¡œ í¬ê¸°
+			srcHeight,					// ì›ë³¸ì—ì„œ ë³µì‚¬ë  ì„¸ë¡œ í¬ê¸°
+			imageInfo->hMemDC,			// ì›ë³¸ DC
 			srcX, srcY,
-			SRCCOPY						// º¹»ç ¿É¼Ç
+			SRCCOPY						// ë³µì‚¬ ì˜µì…˜
 		);
 	}
 
@@ -227,15 +227,15 @@ void Image::FrameRender(HDC hdc, int destX, int destY, int currFrameX, int currF
 	else
 	{
 		BitBlt(
-			hdc,						// º¹»ç ¸ñÀûÁö DC
-			imageInfo->x, imageInfo->y,	// º¹»ç ½ÃÀÛ À§Ä¡
-			imageInfo->frameWidth,		// ¿øº»¿¡¼­ º¹»çµÉ °¡·Î Å©±â
-			imageInfo->frameHeight,		// ¿øº»¿¡¼­ º¹»çµÉ ¼¼·Î Å©±â
+			hdc,						// ë³µì‚¬ ëª©ì ì§€ DC
+			imageInfo->x, imageInfo->y,	// ë³µì‚¬ ì‹œìž‘ ìœ„ì¹˜
+			imageInfo->frameWidth,		// ì›ë³¸ì—ì„œ ë³µì‚¬ë  ê°€ë¡œ í¬ê¸°
+			imageInfo->frameHeight,		// ì›ë³¸ì—ì„œ ë³µì‚¬ë  ì„¸ë¡œ í¬ê¸°
 
-			imageInfo->hMemDC,			// ¿øº» DC
+			imageInfo->hMemDC,			// ì›ë³¸ DC
 			imageInfo->currFrameX * imageInfo->frameWidth,
 			imageInfo->currFrameY * imageInfo->frameHeight,
-			SRCCOPY						// º¹»ç ¿É¼Ç
+			SRCCOPY						// ë³µì‚¬ ì˜µì…˜
 		);
 	}
 

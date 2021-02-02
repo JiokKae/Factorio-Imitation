@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "framework.h"
 #include "Singleton.h"
 #include <bitset>
@@ -18,9 +18,9 @@ public:
 	HRESULT Init();
 	void Release();
 
-	bool IsOnceKeyDown(int key);		// Å°°¡ ÇÑ¹ø ´­·È´ÂÁö ÆÇ´Ü
-	bool IsOnceKeyUp(int key);			// Å°°¡ ´­·È´Ù°¡ ¶¼Á³´ÂÁö ÆÇ´Ü
-	bool IsStayKeyDown(int key);		// Å°°¡ ´­·ÁÁ® ÀÖ´ÂÁö ÆÇ´Ü
+	bool IsOnceKeyDown(int key);		// í‚¤ê°€ í•œë²ˆ ëˆŒë ¸ëŠ”ì§€ íŒë‹¨
+	bool IsOnceKeyUp(int key);			// í‚¤ê°€ ëˆŒë ¸ë‹¤ê°€ ë–¼ì¡ŒëŠ”ì§€ íŒë‹¨
+	bool IsStayKeyDown(int key);		// í‚¤ê°€ ëˆŒë ¤ì ¸ ìˆëŠ”ì§€ íŒë‹¨
 
 	bitset<KEY_MAX_COUNT> GetKeyUp() { return keyUp; }
 	bitset<KEY_MAX_COUNT> GetKeyDown() { return keyDown; }

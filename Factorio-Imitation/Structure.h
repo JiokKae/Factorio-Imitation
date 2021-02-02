@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Entity.h"
 #include "ItemEnum.h"
 
@@ -25,10 +25,10 @@ protected:
 	glm::ivec2 coordSize;
 	DIRECTION direction;
 	int itemId;
-	STATUS status;			// °Ç¹°ÀÇ »óÅÂ
+	STATUS status;			// ê±´ë¬¼ì˜ ìƒíƒœ
 
-	bool temp;				// ÀÓ½Ã °Ç¹°ÀÎÁö
-	bool usingClickEvent;	// Å¬¸¯ ÀÌº¥Æ®¸¦ »ç¿ëÇÏ´ÂÁö
+	bool temp;				// ì„ì‹œ ê±´ë¬¼ì¸ì§€
+	bool usingClickEvent;	// í´ë¦­ ì´ë²¤íŠ¸ë¥¼ ì‚¬ìš©í•˜ëŠ”ì§€
 
 public:
 	virtual HRESULT Init(int x, int y, DIRECTION direction, bool temp = false);

@@ -1,9 +1,9 @@
-#include "VertexArrayObject.h"
+ï»¿#include "VertexArrayObject.h"
 #include "VertexBufferObject.h"
 
 void VertexArrayObject::AddVBO(GLuint index, VertexBufferObject* vbo, GLuint size)
 {
-	// ¸¸¾à ÀÎµ¦½º°¡ ÀÖ´Ù¸é Å»Ãâ
+	// ë§Œì•½ ì¸ë±ìŠ¤ê°€ ìˆë‹¤ë©´ íƒˆì¶œ
 	if (mapVBOs.find(index) != mapVBOs.end())
 		return;
 
