@@ -8,35 +8,41 @@
 * [stb_image (Image Loader)](https://github.com/nothings/stb#stb)
 
 ## 사용한 기술
-* Design Pattern
-	* 팩토리 메소드 (Factory Method)
-	* 싱글톤 (Singleton)
-	* 상태 (State)
+#### Design Pattern
+* 팩토리 메소드 패턴 (Factory Method Pattern)
+* 싱글톤 패턴 (Singleton Pattern)
+* [상태 패턴 (State Pattern)](#상태-state-pattern)
 	
-* OpenGL  
-	* 셰이더 (GLSL)
-		* Vertex Buffer Object
-		* Uniform Buffer Object
-	* [인스턴싱 (Instancing)](#인스턴싱-Instancing)
+#### OpenGL  
+* 셰이더 (GLSL)
+	* Vertex Buffer Object
+	* Uniform Buffer Object
+* [인스턴싱 (Instancing)](#인스턴싱-Instancing)
     
-* STL
-   * vector
-   * map
-   * multimap
+#### STL
+* vector
+* map
+* multimap
    
 ## 구현 목록
 #### [캐릭터 (Character)](#캐릭터-character-1)
+
 #### 구조물 (Structure)
 * [화력 채광 드릴 (Burner Mining Drill)](#화력-채광-드릴-burner-mining-drill)
 * [운송 벨트 (Transport Belt)](#운송-벨트-transport-belt)
 * [투입기 (Inserter)](#투입기-inserter)
 * [돌 용광로 (Stone Furnace)](#돌-용광로-stone-furnace)
 * [조립 기계 1 (Assembling Machine 1)](#조립-기계-1-assembling-machine-1)
+
 #### [제작법 (Recipe)](#제작법-recipe-1)
 ---
     
     
 ## 정의부
+
+### 상태 패턴 (State Pattern)
+* 객체의 실행 코드를 상태에 따라 다르게 처리해야 할때 사용한다.
+* 패턴이 사용된 객체: [캐릭터 (Character)](#캐릭터-character-1), [구조물 (Structure)](#구조물-structure)
 
 ### OpenGL(Open Graphics Library)
 * 하드웨어 가속으로 컴퓨터 그래픽을 처리할 수 있게 돕는 라이브러리다. 
