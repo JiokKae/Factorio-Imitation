@@ -9,15 +9,15 @@
 
 ## 사용한 기술
 * Design Pattern
-    * 팩토리 메소드 (Factory Method)
-    * 싱글톤 (Singleton)
+	* 팩토리 메소드 (Factory Method)
+	* 싱글톤 (Singleton)
 	* 상태 (State)
 	
 * OpenGL  
-    * 셰이더 (GLSL)
-        * Vertex Buffer Object
-        * Uniform Buffer Object
-    * [인스턴싱 (Instancing)](#인스턴싱-Instancing)
+	* 셰이더 (GLSL)
+		* Vertex Buffer Object
+		* Uniform Buffer Object
+	* [인스턴싱 (Instancing)](#인스턴싱-Instancing)
     
 * STL
    * vector
@@ -86,10 +86,11 @@
 
 ### [조립 기계 1 (Assembling Machine 1)](#구조물-structure)
 	구조물 (Structure)/ 조립 기계 1 (Assembling Machine 1)
+![조립 기계](Image/AssemblingMachine1.png)
+
 header file: [AssemblingMachine1.h](Factorio-Imitation/AssemblingMachine1.h)
 * 제작법이 있는 아이템들을 가공한다.
 * 다른 구조물로부터 아이템을 받을 수 있다.
-* 
 
 ### [구조물 빌더 (Structure Builder)](#구조물-structure)
 * 임시 구조물
