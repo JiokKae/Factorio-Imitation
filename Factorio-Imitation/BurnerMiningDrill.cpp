@@ -19,16 +19,16 @@ HRESULT BurnerMiningDrill::Init(int x, int y, DIRECTION direction, bool temp)
 	shadow = new GLImage[DIRECTION_END]();
 	shadow[NORTH].Init("Entity/BurnerMiningDrill-N-shadow", 4, 8);
 	shadow[NORTH].SetAlpha(0.6f);
-	shadowAniOffset[NORTH] = { 40, 0 };
+	shadowOffset[NORTH] = { 40, 0 };
 	shadow[EAST].Init("Entity/BurnerMiningDrill-E-shadow", 4, 8);
 	shadow[EAST].SetAlpha(0.6f);
-	shadowAniOffset[EAST] = { 20, 0 };
+	shadowOffset[EAST] = { 20, 0 };
 	shadow[SOUTH].Init("Entity/BurnerMiningDrill-S-shadow", 4, 8);
 	shadow[SOUTH].SetAlpha(0.6f);
-	shadowAniOffset[SOUTH] = { 20, 0 };
+	shadowOffset[SOUTH] = { 20, 0 };
 	shadow[WEST].Init("Entity/BurnerMiningDrill-W-shadow", 4, 8);
 	shadow[WEST].SetAlpha(0.6f);
-	shadowAniOffset[WEST] = { 20, 0 };
+	shadowOffset[WEST] = { 20, 0 };
 
 	miningArea = glm::ivec2(2, 2);
 	miningSpeed = 0.25f;
@@ -136,7 +136,7 @@ void BurnerMiningDrill::FirstRender(Shader* lpShader)
 	int frameX = frame % maxFrame.x;
 	int frameY = maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y;
 
-	shadow[direction].Render(lpShader, position.x + shadowAniOffset[direction].x, position.y + shadowAniOffset[direction].y,
+	shadow[direction].Render(lpShader, position.x + shadowOffset[direction].x, position.y + shadowOffset[direction].y,
 		frameX, frameY);
 }
 
