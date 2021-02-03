@@ -25,9 +25,9 @@ protected:
 	glm::ivec2 coordSize;
 	DIRECTION direction;
 	int itemId;
-	STATUS status;			// 건물의 상태
+	STATUS status;		// 건물의 상태
 
-	bool temp;				// 임시 건물인지
+	bool temp;		// 임시 건물인지
 	bool usingClickEvent;	// 클릭 이벤트를 사용하는지
 
 public:
