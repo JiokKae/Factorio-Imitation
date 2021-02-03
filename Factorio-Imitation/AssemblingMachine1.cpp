@@ -15,7 +15,7 @@ HRESULT AssemblingMachine1::Init(int x, int y, DIRECTION direction, bool temp)
 	shadow = new GLImage();
 	shadow->Init("Entity/AssemblingMachine1-shadow", 8, 4);
 	shadow->SetAlpha(0.5f);
-	shadowAniOffset = { 16, -6 };
+	shadowOffset = { 16, -6 };
 
 	altModeIcon = new GLImage();
 	altModeIcon->Init("Icons/AllItems-stroke", 8, 8, 0.1f, 0.1f);
@@ -92,7 +92,7 @@ void AssemblingMachine1::FirstRender(Shader* shader)
 {
 	int frame = (int)(time * 30);
 	glm::ivec2 maxFrame = image->GetMaxFrame();
-	shadow->Render(shader, position.x + shadowAniOffset.x, position.y + shadowAniOffset.y,
+	shadow->Render(shader, position.x + shadowOffset.x, position.y + shadowOffset.y,
 		frame % maxFrame.x, maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y);
 }
 
