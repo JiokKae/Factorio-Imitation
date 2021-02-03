@@ -63,7 +63,7 @@ header file: [Character.h](Factorio-Imitation/Character.h)
 	> 플레이어는 게임에서 행동을 할때 캐릭터를 통하여 이루어진다.  
 	> 공장을 확장하기 위해서 [구조물 빌더](#구조물-빌더-structure-builder)로 구조물들을 건설하거나 철거할 수 있다.
     
-* 애니메이션
+* 상태
 	* 유휴 (Idle)
 	* 달리기 (Running)
    
@@ -125,7 +125,7 @@ header file: [Chunk.h](Factorio-Imitation/Chunk.h)
 * 음수 좌표를 사용하기 위해 map을 사용해 저장한다.
 
 #### 타일 (Tile)
-header file: [Tile.h](Factorio-Imitation/Tile.h  
+header file: [Tile.h](Factorio-Imitation/Tile.h)  
 
 * 그리드의 기본 단위
 * 광물을 가지고 있다.
