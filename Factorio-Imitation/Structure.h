@@ -6,6 +6,7 @@ class Shader;
 class Structure : public Entity
 {
 public:
+	// 구조물의 상태
 	enum STATUS {
 		NO_POWER,
 		WORKING,
@@ -48,8 +49,8 @@ public:
 
 	int GetItemId()				{ return itemId; }
 	FRECT GetFRect();
-	DIRECTION GetDirection()	{ return direction; }
-	glm::ivec2 GetCoordSize()	{ return coordSize; }
+	DIRECTION GetDirection()		{ return direction; }
+	glm::ivec2 GetCoordSize()		{ return coordSize; }
 	virtual FRECT GetCollisionFRect() override;
 
 	Structure() {};
