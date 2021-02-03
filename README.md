@@ -57,6 +57,7 @@
 ### [캐릭터 (Character)](#캐릭터-character)
 	엔티티 (Entity)/ 캐릭터 (Character)
 ![캐릭터](Image/Character.png)
+
 header file: [Character.h](Factorio-Imitation/Character.h)
 * 조작
 	> 플레이어는 게임에서 행동을 할때 캐릭터를 통하여 이루어진다.  
@@ -80,7 +81,8 @@ header file: [BurnerMiningDrill.h](Factorio-Imitation/BurnerMiningDrill.h)
 
 ### [운송 벨트 (Transport Belt)](#구조물-structure)
 	구조물 (Structure)/ 운송 벨트 (Transport Belt)
-	
+![운송 벨트](Image/TransportBelt.png)
+
 header file: [TransportBelt.h](Factorio-Imitation/TransportBelt.h)
 * 벨트위에 올라가있는 아이템들을 진행 방향으로 이동시킨다.
 * 벨트의 종류에 따라 속도가 다르다.
@@ -88,6 +90,7 @@ header file: [TransportBelt.h](Factorio-Imitation/TransportBelt.h)
 
 ### [투입기 (Inserter)](#구조물-structure)
 	구조물 (Structure)/ 투입기 (Inserter)
+![투입기](Image/Inserter.png)
 
 header file: [BurnerInserter.h](Factorio-Imitation/BurnerInserter.h)
 * 구조물에 아이템을 투입한다.
@@ -96,6 +99,7 @@ header file: [BurnerInserter.h](Factorio-Imitation/BurnerInserter.h)
 
 ### [돌 용광로 (Stone Furnace)](#구조물-structure)
 	구조물 (Structure)/ 돌 용광로 (Stone Furnace)
+![돌 용광로](Image/StoneFurnace.png)
 
 header file: [StoneFurnace.h](Factorio-Imitation/StoneFurnace.h)
 * 굽기 제작법이 있는 아이템들을 가공한다.
@@ -112,14 +116,6 @@ header file: [AssemblingMachine1.h](Factorio-Imitation/AssemblingMachine1.h)
 * 다른 구조물로부터 아이템을 받을 수 있다.
 * 다른 구조물이 완성품을 가져갈 수 있다.
 
-### [구조물 빌더 (Structure Builder)](#구조물-structure)
-
-header file: [StructureBuilder.h](Factorio-Imitation/StructureBuilder.h)
-* 임시 구조물
-	* 마우스 좌표에 임시로 구조물을 배치하여 표시한다.
-* 활성화
-	* 설치 가능한 아이템을 핸드에 들었을 때 활성화한다.
-	
 ### 타일 매니저 (Tile Manager)
 #### 청크 (Chunk)
 
@@ -146,7 +142,16 @@ header file: [Ore.h](Factorio-Imitation/Ore.h)
 #### 땅 위의 아이템 (Item On Ground)
 * 인스턴싱 기법을 사용하여 땅 위의 아이템들을 일괄적으로 화면에 출력한다.
 * 화면 안에 있는 아이템만을 추려 출력해 최적화했다.
-#### 구조물 빌더
+
+#### [구조물 빌더 (Structure Builder)](#구조물-structure)
+![구조물 빌더](Image/StructureBuilder.png)
+
+header file: [StructureBuilder.h](Factorio-Imitation/StructureBuilder.h)
+* 임시 구조물
+	* 마우스 좌표에 임시로 구조물을 배치하여 표시한다.
+* 활성화
+	* 설치 가능한 아이템을 핸드에 들었을 때 활성화한다.
+	
 
 ### 제작법 (Recipe)
 * 아이템의 제작 재료를 정의 해놓은 자료 구조
