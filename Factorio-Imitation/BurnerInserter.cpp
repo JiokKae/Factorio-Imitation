@@ -216,4 +216,23 @@ string BurnerInserter::ToString()
 	char buf[128]; 
 	sprintf_s(buf, " Coord: (%d, %d)\n Status: %s\n HandAngle: %.1f", coord.x, coord.y, statusString[status], handAngle);
 	return string(buf);
-};
+}
+
+BurnerInserter::BurnerInserter()
+{
+	allItemsImage = nullptr;
+	platformImage = nullptr;
+	handOpenImage = nullptr;
+	handBaseImage = nullptr;
+	
+	lpDestTile = nullptr;
+	lpDirectionTile = nullptr;
+
+	handAngle = 0.0f;
+	handAngleSpeed = 0.0f;
+	handOpenAngle = 0.0f;
+	handOpenRenderAngle = 0.0f;
+	handBaseAngle = 0.0f;
+	handBaseRenderAngle = 0.0f;
+}
+

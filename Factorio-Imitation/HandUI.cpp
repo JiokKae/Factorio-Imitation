@@ -43,44 +43,77 @@ void HandUI::Release()
 
 void HandUI::Update()
 {
-	// 손 비우기 기능
 	if (KeyManager::GetSingleton()->IsOnceKeyDown('Q'))
 	{
-		if (handItem->amount != 0)
+		// 건축물 빠른 들기 기능
+		if (handItem->IsEmpty())
+		{
+			Tile* tile = TileManager::GetSingleton()->GetLPTileUnderMouse();
+			if (tile)
+			{
+				Structure* structure = tile->GetLpSturcture();
+				if (structure)
+				{
+
+				}
+			}
+		}
+		// 손 비우기 기능
+		else
 		{
 			EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->AddItem(new ItemInfo(*handItem));
 			handItem->amount = 0;
 		}
 	}
-
-	if (KeyManager::GetSingleton()->IsOnceKeyDown('Z'))
+	
+	// UI 위에 마우스가 있을 때 적용
+	if (UIManager::GetSingleton()->IsMouseOnUI())
 	{
-		if (handItem->amount)
+		
+	}
+	// UI 위에 마우스가 없을 때 적용
+	else 
+	{
+		// 아이템 버리기 기능
+		if (KeyManager::GetSingleton()->IsOnceKeyDown('Z'))
 		{
-			handItem->AddAmount(-1);
+			if (!handItem->IsEmpty())
+			{
+				handItem->AddAmount(-1);
 
-			ItemOnGround* item = new ItemOnGround();
-			item->Init((ItemEnum)handItem->id, g_cursorPosition);
-			EntityManager::GetSingleton()->AddItemOnGround(item);
+				ItemOnGround* item = new ItemOnGround();
+				item->Init((ItemEnum)handItem->id, g_cursorPosition);
+				EntityManager::GetSingleton()->AddItemOnGround(item);
+			}
 		}
+
+		dismantleBar->SetScale(glm::vec2(dismantlePercent / 0.6f, 1.0f));
 	}
 
-	dismantleBar->SetScale(glm::vec2(dismantlePercent / 0.6f, 1.0f));
 }
 
 void HandUI::Render(Shader* shader)
 {
-	if (handItem->amount)
+	bool isMouseOnUI = UIManager::GetSingleton()->IsMouseOnUI();
+
+	if (!handItem->IsEmpty())
 	{
-		if (!g_itemSpecs[handItem->id].buildable || UIManager::GetSingleton()->IsMouseOnUI())
+		if (!g_itemSpecs[handItem->id].buildable || isMouseOnUI)
 		{
 			glm::ivec2 maxFrame = allItemImage->GetMaxFrame();
 			allItemImage->Render(shader, g_ptMouse.x + 16, g_ptMouse.y - 16, handItem->id % maxFrame.x, maxFrame.y - 1 - handItem->id / maxFrame.y);
 		}
-
+		// 핸드의 아이템 개수 출력
 		TextRenderer::GetSingleton()->RenderText(to_string(handItem->amount), g_ptMouse.x + 16 - to_string(handItem->amount).length() * 6 + 17, g_ptMouse.y - 16 - 7.0f, 0.46f);
 	}
-	if (!UIManager::GetSingleton()->IsMouseOnUI())
+
+	// UI 위에 마우스가 있을 때 적용
+	if (isMouseOnUI)
+	{
+
+	}
+	// UI 위에 마우스가 없을 때 적용
+	else
 	{
 		Tile* tile = TileManager::GetSingleton()->GetLPTileUnderMouse();
 		if (tile)
@@ -108,13 +141,13 @@ void HandUI::Render(Shader* shader)
 							EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->AddItem(new ItemInfo(dismantleStructure->GetItemId(), 1));
 							EntityManager::GetSingleton()->DeleteEntity(dismantleStructure);
 							glm::vec2 coordSize = dismantleStructure->GetCoordSize();
-								// rotate sound
-								if (coordSize.x + coordSize.y > 4)
-									SoundManager::GetSingleton()->Play("Deconstruct-large", 0.6f);
-								else if (coordSize.x + coordSize.y > 2)
-									SoundManager::GetSingleton()->Play("Deconstruct-medium", 0.6f);
-								else
-									SoundManager::GetSingleton()->Play("Deconstruct-small", 0.6f);
+							// rotate sound
+							if (coordSize.x + coordSize.y > 4)
+								SoundManager::GetSingleton()->Play("Deconstruct-large", 0.6f);
+							else if (coordSize.x + coordSize.y > 2)
+								SoundManager::GetSingleton()->Play("Deconstruct-medium", 0.6f);
+							else
+								SoundManager::GetSingleton()->Play("Deconstruct-small", 0.6f);
 
 							dismantlePercent = 0.0f;
 						}
@@ -127,7 +160,6 @@ void HandUI::Render(Shader* shader)
 			}
 		}
 	}
-	
 
 }
 

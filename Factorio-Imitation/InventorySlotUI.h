@@ -3,7 +3,7 @@
 
 class InventorySlotUI : public SlotUI
 {
-	GLImage* hand;
+	GLImage* handImage;
 
 public:
 	virtual HRESULT Init(int x, int y);

@@ -53,8 +53,8 @@ public:
 	virtual string ToString() override;
 
 	// 접근자
-	float GetMaxPower()				{ return maxPower; }
-	float GetCurrPower()			{ return currPower; }
+	float GetMaxPower()		{ return maxPower; }
+	float GetCurrPower()		{ return currPower; }
 	float GetProductionPercent()	{ return productionPercent; }	
 	ItemInfo* GetWaitingItemInfo()	{ return waitingItemInfo; }
 	bool IsMiningAreaEmpty();

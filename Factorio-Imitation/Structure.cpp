@@ -87,7 +87,7 @@ void Structure::Update()
 			Rotate();
 		}
 
-		if (usingClickEvent)
+		if (usingClickEvent && !UIManager::GetSingleton()->IsMouseOnUI())
 		{
 			if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
 			{

@@ -8,8 +8,8 @@ HRESULT InventorySlotUI::Init(int x, int y)
 {
 	SlotUI::Init();
 
-	hand = new GLImage();
-	hand->Init("Icons/Hand", 1, 1, 32, 32);
+	handImage = new GLImage();
+	handImage->Init("Icons/Hand", 1, 1, 32, 32);
 
 	localPosition.x = x * (GetWidth() + 2);
 	localPosition.y = -y * (GetHeight() + 2);
@@ -21,7 +21,7 @@ void InventorySlotUI::Release()
 {
 	SlotUI::Release();
 
-	SAFE_RELEASE(hand);
+	SAFE_RELEASE(handImage);
 }
 
 void InventorySlotUI::OnClick(int key)
@@ -31,32 +31,28 @@ void InventorySlotUI::OnClick(int key)
 	{
 	//슬롯을 좌클릭 했을 때
 	case VK_LBUTTON:	
-		//핸드가 있다면
-		if (hand->amount)	
+		// 핸드가 없다면
+		if (hand->IsEmpty())	
+		{
+			// 슬롯에 아이템이 있다면 
+			if (this->itemInfo)
+			{
+				// 아이템 전부 핸드로
+				itemInfo->MoveAllItemTo(hand);
+			}
+		}
+		// 핸드가 있다면
+		else
 		{
 			// 핸드를 전부 주고
 			EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->AddItem(new ItemInfo(hand->id, hand->amount));
-			hand->amount = 0;	
-			
+			hand->amount = 0;
+
 			// 슬롯에 아이템이 있다면 
-			if (itemInfo)
+			if (this->itemInfo)
 			{
 				// 아이템 전부 핸드로
-				hand->id = itemInfo->id;
-				hand->amount = itemInfo->amount;
-				itemInfo->amount = 0;
-			}
-		}
-		// 핸드가 없다면
-		else
-		{
-			// 슬롯에 아이템이 있다면 
-			if (itemInfo)
-			{
-				// 아이템 전부 핸드로
-				hand->id = itemInfo->id;
-				hand->amount = itemInfo->amount;
-				itemInfo->amount = 0;
+				itemInfo->MoveAllItemTo(hand);
 			}
 		}
 		break;

@@ -195,7 +195,7 @@ string AssemblingMachine1::ToString()
 		strcat_s(buf, buf2);
 	}
 
-	wsprintf(buf2, "\n Products finished: %zu", productsFinished);
+	wsprintf(buf2, "\n Products finished: %d", (int)productsFinished);
 	strcat_s(buf, buf2);
 
 	return Structure::ToString() + string(buf);

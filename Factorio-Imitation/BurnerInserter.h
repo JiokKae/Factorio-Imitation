@@ -34,5 +34,7 @@ public:
 	virtual void Render(Shader* shader, float posX, float posY) override;
 
 	virtual string ToString() override;
+
+	BurnerInserter();
 };
 
