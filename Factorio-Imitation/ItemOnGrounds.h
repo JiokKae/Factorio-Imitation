@@ -23,5 +23,7 @@ public:
 
 	void AddItem(ItemOnGround* item);
 	void DeleteItem(ItemOnGround* item);
+
+	ItemOnGrounds();
 };
 

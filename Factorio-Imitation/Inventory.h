@@ -12,5 +12,7 @@ public:
 
 	void AddItem(ItemInfo* itemInfo);
 	vector<ItemInfo*> GetItemInfoArray();
+	bool GetItem(int itemId, ItemInfo* destItemInfo);
+	ItemInfo* FindItem(int itemId);
 };
 

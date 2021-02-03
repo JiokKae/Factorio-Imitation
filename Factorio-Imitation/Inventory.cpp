@@ -7,7 +7,7 @@ HRESULT Inventory::Init()
 
 void Inventory::Release()
 {
-	map<ItemEnum, ItemInfo*>::iterator it = mapInventory.begin();
+	auto it = mapInventory.begin();
 	while (it != mapInventory.end())
 	{
 		SAFE_DELETE(it->second);
@@ -16,28 +16,52 @@ void Inventory::Release()
 	mapInventory.clear();
 }
 
-void Inventory::AddItem(ItemInfo* itemInfo)
+void Inventory::AddItem(ItemInfo* disposableItemInfo)
 {
-	map<ItemEnum, ItemInfo*>::iterator it = mapInventory.find((ItemEnum)itemInfo->id);
+	auto it = mapInventory.find((ItemEnum)disposableItemInfo->id);
 	if (it != mapInventory.end())
 	{
-		it->second->amount += itemInfo->amount;
-		delete itemInfo;
+		it->second->amount += disposableItemInfo->amount;
+		delete disposableItemInfo;
 	}
 	else
 	{
-		mapInventory.insert(make_pair((ItemEnum)itemInfo->id, itemInfo));
+		mapInventory.insert(make_pair((ItemEnum)disposableItemInfo->id, disposableItemInfo));
 	}
 }
 
 vector<ItemInfo*> Inventory::GetItemInfoArray()
 {
-	map<ItemEnum, ItemInfo*>::iterator it;
 	vector<ItemInfo*> vecItemInfo;
-	for (it = mapInventory.begin(); it != mapInventory.end(); it++)
+	for (auto it = mapInventory.begin(); it != mapInventory.end(); it++)
 	{
-		if(it->second->amount != 0)
+		if(!it->second->IsEmpty())
 			vecItemInfo.push_back(it->second);
 	}
 	return vecItemInfo;
+}
+
+bool Inventory::GetItem(int itemId, ItemInfo* destItemInfo)
+{
+	if (destItemInfo->IsEmpty())
+	{
+		auto it = mapInventory.find((ItemEnum)itemId);
+		if (it != mapInventory.end())
+		{
+			it->second->MoveAllItemTo(destItemInfo);
+		}
+	}
+
+	return false;
+}
+
+ItemInfo* Inventory::FindItem(int itemId)
+{
+	auto it = mapInventory.find((ItemEnum)itemId);
+	if (it != mapInventory.end())
+	{
+		return it->second;
+	}
+	else
+		return nullptr;
 }

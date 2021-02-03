@@ -54,7 +54,7 @@ void HandUI::Update()
 				Structure* structure = tile->GetLpSturcture();
 				if (structure)
 				{
-
+					EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->FindItem(structure->GetItemId())->MoveAllItemTo(handItem);
 				}
 			}
 		}
