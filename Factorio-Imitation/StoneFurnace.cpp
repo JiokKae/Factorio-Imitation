@@ -1,4 +1,4 @@
-#include "StoneFurnace.h"
+ï»¿#include "StoneFurnace.h"
 #include "Tile.h"
 #include "Ore.h"
 #include "ItemOnGround.h"
@@ -11,7 +11,7 @@ HRESULT StoneFurnace::Init(int x, int y, DIRECTION direction, bool temp)
 	itemId = ItemEnum::STONE_FURNACE;
 	Structure::Init(x, y, direction, temp);
 
-	// ÀÌ¹ÌÁö ÃÊ±âÈ­
+	// ì´ë¯¸ì§€ ì´ˆê¸°í™”
 	mainImage = new GLImage();
 	mainImage->Init("Entity/StoneFurnace");
 	shadowImage = new GLImage();
@@ -20,14 +20,14 @@ HRESULT StoneFurnace::Init(int x, int y, DIRECTION direction, bool temp)
 	fireImage = new GLImage();
 	fireImage->Init("Entity/StoneFurnace-fire", 8, 6);
 
-	// ÃÊ±â°ª ¼¼ÆÃ
+	// ì´ˆê¸°ê°’ ì„¸íŒ…
 	energyConsumption = 90.0f;
 	craftingSpeed = 1.0f;
 
-	// ·¹½ÃÇÇ ¼¼ÆÃ
+	// ë ˆì‹œí”¼ ì„¸íŒ…
 	vecRecipes = RecipeManager::GetSingleton()->FindRecipes(STONE_FURNACE);
 
-	// ¾ÆÀÌÅÛ ½½·Ô ¼¼ÆÃ
+	// ì•„ì´í…œ ìŠ¬ë¡¯ ì„¸íŒ…
 	fuel = new ItemInfo();
 	resource = new ItemInfo();
 	result = new ItemInfo();
@@ -88,29 +88,29 @@ void StoneFurnace::Update()
 		break;
 
 	case StoneFurnace::WORKING:
-		// ¿¡³ÊÁö°¡ ¾ø°í ¿¬·á°¡ ¾ø´Ù¸é
+		// ì—ë„ˆì§€ê°€ ì—†ê³  ì—°ë£Œê°€ ì—†ë‹¤ë©´
 		if (currPower <= 0 && fuel->amount <= 0)
 		{
 			status = NO_POWER;
 			break;
 		}
-		// Àç·á°¡ ¾ø°í »ç¿ëÁßÀÎ Àç·á°¡ ¾ø´Ù¸é
+		// ì¬ë£Œê°€ ì—†ê³  ì‚¬ìš©ì¤‘ì¸ ì¬ë£Œê°€ ì—†ë‹¤ë©´
 		else if (resource->amount < FindRecipeByIngredient(resource->id)->GetIngredient(0).amount && usingResource->amount <= 0)
 		{
 			status = NO_RECIPE;
 			break;
 		}
-		// »ı»ê
+		// ìƒì‚°
 		else
 		{
-			// Á¦ÀÛ ¿Ï·áÇÑ ¿Ï¼ºÇ°ÀÌ ³²¾ÆÀÖ´Ù¸é
+			// ì œì‘ ì™„ë£Œí•œ ì™„ì„±í’ˆì´ ë‚¨ì•„ìˆë‹¤ë©´
 			if (newResult->amount)
 			{
 				status = ITEM_PRODUCTION_OVERLOAD;
 				break;
 			}
 
-			// ¿¡³ÊÁö°¡ ¾ø´Ù¸é ¿¬·á¸¦ »ç¿ë
+			// ì—ë„ˆì§€ê°€ ì—†ë‹¤ë©´ ì—°ë£Œë¥¼ ì‚¬ìš©
 			if (currPower <= 0)
 			{
 				fuel->amount--;
@@ -118,7 +118,7 @@ void StoneFurnace::Update()
 				maxPower = g_itemSpecs[fuel->id].fuelValue;
 			}
 
-			// »ç¿ëÁßÀÎ Àç·á ¾øÀ» ¶§ Àç·á ÅõÀÔ
+			// ì‚¬ìš©ì¤‘ì¸ ì¬ë£Œ ì—†ì„ ë•Œ ì¬ë£Œ íˆ¬ì…
 			if (usingResource->amount <= 0)
 			{
 				currRecipe = FindRecipeByIngredient(resource->id);
@@ -126,11 +126,11 @@ void StoneFurnace::Update()
 				usingResource->amount += currRecipe->GetIngredient(0).amount;
 			}
 
-			// ¿¡³ÊÁö ¼Ò¸ğ
+			// ì—ë„ˆì§€ ì†Œëª¨
 			currPower -= energyConsumption * TimerManager::GetSingleton()->GetTimeElapsed();
 			craftedTime += craftingSpeed * TimerManager::GetSingleton()->GetTimeElapsed();
 
-			// Á¦ÀÛ ¿Ï·á
+			// ì œì‘ ì™„ë£Œ
 			if (craftedTime >= currRecipe->GetCraftingTime())
 			{
 				usingResource->amount -= currRecipe->GetIngredient(0).amount;
@@ -148,10 +148,10 @@ void StoneFurnace::Update()
 		break;
 
 	case StoneFurnace::ITEM_PRODUCTION_OVERLOAD:
-		// ±âÁ¸ÀÇ ¿Ï¼ºÇ°ÀÌ ÀÖ´Ù¸é
+		// ê¸°ì¡´ì˜ ì™„ì„±í’ˆì´ ìˆë‹¤ë©´
 		if (result->amount)
 		{
-			// »õ·Î ¸¸µé¾îÁø ¿Ï¼ºÇ°°ú ±âÁ¸¿¡ ÀÖ´ø ¿Ï¼ºÇ°ÀÌ °°´Ù¸é
+			// ìƒˆë¡œ ë§Œë“¤ì–´ì§„ ì™„ì„±í’ˆê³¼ ê¸°ì¡´ì— ìˆë˜ ì™„ì„±í’ˆì´ ê°™ë‹¤ë©´
 			if (newResult->id == result->id)
 			{
 				result->amount += newResult->amount;
@@ -159,7 +159,7 @@ void StoneFurnace::Update()
 				status = WORKING;
 			}
 		}
-		// ±âÁ¸ÀÇ ¿Ï¼ºÇ°ÀÌ ¾ø´Ù¸é
+		// ê¸°ì¡´ì˜ ì™„ì„±í’ˆì´ ì—†ë‹¤ë©´
 		else
 		{
 			result->id = newResult->id;
@@ -186,7 +186,7 @@ void StoneFurnace::Render(Shader* lpShader)
 	mainImage->Render(lpShader, position.x, position.y);
 
 	glm::ivec2 maxFrame = fireImage->GetMaxFrame();
-	int frame = time * 30;
+	int frame = (int)(time * 30);
 
 	int frameX = frame % maxFrame.x;
 	int frameY = maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y;
@@ -200,7 +200,7 @@ void StoneFurnace::Render(Shader* shader, float posX, float posY)
 	mainImage->Render(shader, posX, posY);
 
 	glm::ivec2 maxFrame = fireImage->GetMaxFrame();
-	int frame = time * 30;
+	int frame = (int)(time * 30);
 
 	int frameX = frame % maxFrame.x;
 	int frameY = maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y;
@@ -211,13 +211,13 @@ void StoneFurnace::Render(Shader* shader, float posX, float posY)
 
 bool StoneFurnace::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 {
-	// ¹Ş´Â ¾ÆÀÌÅÛÀÌ ¿¬·á¶ó¸é
+	// ë°›ëŠ” ì•„ì´í…œì´ ì—°ë£Œë¼ë©´
 	if (g_itemSpecs[inputItem->id].fuel)
 	{
-		// ¿¬·á ½½·Ô¿¡ ¿¬·á°¡ ÀÖ´Ù¸é
+		// ì—°ë£Œ ìŠ¬ë¡¯ì— ì—°ë£Œê°€ ìˆë‹¤ë©´
 		if (fuel->amount)
 		{
-			// ¿¬·á Á¾·ù°¡ °°À» ¶§¸¸
+			// ì—°ë£Œ ì¢…ë¥˜ê°€ ê°™ì„ ë•Œë§Œ
 			if (fuel->id == inputItem->id)
 			{
 				fuel->amount += inputItem->amount;
@@ -226,7 +226,7 @@ bool StoneFurnace::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 				return true;
 			}
 		}
-		// ¿¬·á ½½·Ô¿¡ ¿¬·á°¡ ¾ø´Ù¸é
+		// ì—°ë£Œ ìŠ¬ë¡¯ì— ì—°ë£Œê°€ ì—†ë‹¤ë©´
 		else
 		{
 			fuel->id = inputItem->id;
@@ -238,10 +238,10 @@ bool StoneFurnace::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 	}
 	else if (FindRecipeByIngredient(inputItem->id))
 	{
-		// Àç·á ½½·Ô¿¡ Àç·á°¡ ÀÖ´Ù¸é
+		// ì¬ë£Œ ìŠ¬ë¡¯ì— ì¬ë£Œê°€ ìˆë‹¤ë©´
 		if (resource->amount)
 		{
-			// Àç·á Á¾·ù°¡ °°À» ¶§¸¸
+			// ì¬ë£Œ ì¢…ë¥˜ê°€ ê°™ì„ ë•Œë§Œ
 			if (resource->id == inputItem->id)
 			{
 				resource->amount += inputItem->amount;
@@ -250,7 +250,7 @@ bool StoneFurnace::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 				return true;
 			}
 		}
-		// Àç·á ½½·ÔÀÌ ºñ¾î ÀÖ´Ù¸é
+		// ì¬ë£Œ ìŠ¬ë¡¯ì´ ë¹„ì–´ ìˆë‹¤ë©´
 		else
 		{
 			resource->id = inputItem->id;
@@ -268,16 +268,16 @@ bool StoneFurnace::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 
 bool StoneFurnace::TakeOutItem(ItemInfo* outItem)
 {
-	// ³»º¸³¾ »ı»êÇ°ÀÌ ÀÖ´Ù¸é
+	// ë‚´ë³´ë‚¼ ìƒì‚°í’ˆì´ ìˆë‹¤ë©´
 	if (result->amount)
 	{
-		// »ı»êÇ°ÀÇ °³¼ö°¡ ¹İÃâ ¿ä±¸Ä¡¸¦ ³ÑÀ¸¸é
+		// ìƒì‚°í’ˆì˜ ê°œìˆ˜ê°€ ë°˜ì¶œ ìš”êµ¬ì¹˜ë¥¼ ë„˜ìœ¼ë©´
 		if (result->amount >= outItem->amount)
 		{
 			result->amount -= outItem->amount;
 			outItem->id = result->id;
 		}
-		// »ı»êÇ°ÀÇ °³¼ö°¡ ¹İÃâ ¿ä±¸Ä¡¸¦ ³ÑÁö ¸øÇÏ¸é
+		// ìƒì‚°í’ˆì˜ ê°œìˆ˜ê°€ ë°˜ì¶œ ìš”êµ¬ì¹˜ë¥¼ ë„˜ì§€ ëª»í•˜ë©´
 		else
 		{
 			outItem->id = result->id;
@@ -286,7 +286,7 @@ bool StoneFurnace::TakeOutItem(ItemInfo* outItem)
 		}
 		return true;
 	}
-	// ³»º¸³¾ »ı»êÇ°ÀÌ ¾ø´Ù¸é
+	// ë‚´ë³´ë‚¼ ìƒì‚°í’ˆì´ ì—†ë‹¤ë©´
 	else
 		return false;
 }

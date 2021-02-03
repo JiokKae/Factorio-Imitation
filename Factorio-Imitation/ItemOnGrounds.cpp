@@ -1,4 +1,4 @@
-#include "ItemOnGrounds.h"
+ï»¿#include "ItemOnGrounds.h"
 #include "ItemOnGround.h"
 #include "VertexArrayObject.h"
 #include "VertexBufferObject.h"
@@ -25,11 +25,11 @@ HRESULT ItemOnGrounds::Init()
     instancingShader->setVec3("material.diffuseColor", glm::vec3(1.0f, 1.0f, 1.0f));
     instancingShader->setFloat("alpha", 1.0f);
 
-    // ¾Æ·¡ÀÇ VBOµéÀ» ´ã´Â Vertex Array Object¸¦ »ý¼ºÇÑ´Ù.
+    // ì•„ëž˜ì˜ VBOë“¤ì„ ë‹´ëŠ” Vertex Array Objectë¥¼ ìƒì„±í•œë‹¤.
     itemsVAO = new VAO();
 
-    // tileQuadVBO Init (»ç°¢Çü ¹öÅØ½ºµéÀ» ÀúÀåÇÏ´Â VBO)
-    VBO* tileQuadVBO = new VBO();   // »ç°¢Çü ¹öÅØ½ºµéÀ» ÀúÀåÇÏ´Â VBO
+    // tileQuadVBO Init (ì‚¬ê°í˜• ë²„í…ìŠ¤ë“¤ì„ ì €ìž¥í•˜ëŠ” VBO)
+    VBO* tileQuadVBO = new VBO();   // ì‚¬ê°í˜• ë²„í…ìŠ¤ë“¤ì„ ì €ìž¥í•˜ëŠ” VBO
     float vertices[] = {
         // positions       // texture coords
         -32 / 2, -32 / 2,  0.0f, 0.0f,
@@ -42,13 +42,13 @@ HRESULT ItemOnGrounds::Init()
     tileQuadVBO->SetData(sizeof(float) * 4 * 6, vertices, GL_STATIC_DRAW); // vec4(vec2 pos, vec2 texCoord) * 6
     itemsVAO->AddVBO(0, tileQuadVBO, 4);
 
-    // currFrameVBO Init (°¢ ÀÎ½ºÅÏ½ºÀÇ ÇöÀç ÇÁ·¹ÀÓÀ» ÀúÀåÇÏ´Â VBO)
+    // currFrameVBO Init (ê° ì¸ìŠ¤í„´ìŠ¤ì˜ í˜„ìž¬ í”„ë ˆìž„ì„ ì €ìž¥í•˜ëŠ” VBO)
     VBO* currFrameVBO = new VBO();
     currFrameVBO->SetData(sizeof(glm::vec2), NULL, GL_DYNAMIC_DRAW); // vec2(currFrame.x, currFrame.y) * 1024
     itemsVAO->AddVBO(1, currFrameVBO, 2);
     itemsVAO->SetDivisor(1, 1);
 
-    // offsetVBO Init (°¢ ÀÎ½ºÅÏ½ºÀÇ À§Ä¡ ¿ÀÇÁ¼ÂÀ» ÀúÀåÇÏ´Â VBO)
+    // offsetVBO Init (ê° ì¸ìŠ¤í„´ìŠ¤ì˜ ìœ„ì¹˜ ì˜¤í”„ì…‹ì„ ì €ìž¥í•˜ëŠ” VBO)
 
     VBO* offsetVBO = new VBO();
     offsetVBO->SetData(sizeof(glm::vec2), NULL, GL_DYNAMIC_DRAW); // vec2(currFrame.x, currFrame.y) * 1024
@@ -67,7 +67,7 @@ void ItemOnGrounds::Release()
 
 void ItemOnGrounds::Update(FRECT cameraFRect)
 {
-    // ¾ÆÀÌÅÛ ÁÝ±â Ã³¸®
+    // ì•„ì´í…œ ì¤ê¸° ì²˜ë¦¬
     if (KeyManager::GetSingleton()->IsStayKeyDown('F'))
     {
         Character* player = EntityManager::GetSingleton()->GetLpPlayer();

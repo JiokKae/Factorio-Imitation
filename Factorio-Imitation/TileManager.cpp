@@ -1,4 +1,4 @@
-#include "TileManager.h"
+ï»¿#include "TileManager.h"
 #include "Tile.h"
 #include "GLImage.h"
 #include "Shader.h"
@@ -23,7 +23,7 @@ HRESULT TileManager::Init()
     mapOreImages[STONE] = new GLImage();
     mapOreImages[STONE]->Init("Entity/Stone", 8, 8);
 
-    // 14 * 14 Ã»Å© »ı¼º
+    // 14 * 14 ì²­í¬ ìƒì„±
     for (int y = -7; y < 7; y++)
     {
         for (int x = -7; x < 7; x++)
@@ -33,7 +33,7 @@ HRESULT TileManager::Init()
         }
     }
 
-    // ÀÎ½ºÅÏ½Ì ½¦ÀÌ´õ »ı¼º ¹× ÃÊ±âÈ­
+    // ì¸ìŠ¤í„´ì‹± ì‰ì´ë” ìƒì„± ë° ì´ˆê¸°í™”
     instancingShader = new Shader("InstancingVertexShader.glsl", "StandardFragmentShader.glsl");
     instancingShader->use();
     instancingShader->setInt("material.diffuse", 0);
@@ -42,11 +42,11 @@ HRESULT TileManager::Init()
     instancingShader->setFloat("vertexScale", 1.0f);
     instancingShader->setMat4("model", glm::mat4());
     
-    // ¾Æ·¡ÀÇ VBOµéÀ» ´ã´Â Vertex Array Object¸¦ »ı¼ºÇÑ´Ù.
+    // ì•„ë˜ì˜ VBOë“¤ì„ ë‹´ëŠ” Vertex Array Objectë¥¼ ìƒì„±í•œë‹¤.
     tilesVAO = new VAO();
 
-    // tileQuadVBO Init (»ç°¢Çü ¹öÅØ½ºµéÀ» ÀúÀåÇÏ´Â VBO)
-    VBO* tileQuadVBO = new VBO();   // »ç°¢Çü ¹öÅØ½ºµéÀ» ÀúÀåÇÏ´Â VBO
+    // tileQuadVBO Init (ì‚¬ê°í˜• ë²„í…ìŠ¤ë“¤ì„ ì €ì¥í•˜ëŠ” VBO)
+    VBO* tileQuadVBO = new VBO();   // ì‚¬ê°í˜• ë²„í…ìŠ¤ë“¤ì„ ì €ì¥í•˜ëŠ” VBO
     float vertices[] = {
         // positions       // texture coords
         -64 / 2, -64 / 2,  0.0f, 0.0f,
@@ -59,13 +59,13 @@ HRESULT TileManager::Init()
     tileQuadVBO->SetData(sizeof(float) * 4 * 6, vertices, GL_STATIC_DRAW); // vec4(vec2 pos, vec2 texCoord) * 6
     tilesVAO->AddVBO(0, tileQuadVBO, 4);
 
-    // currFrameVBO Init (°¢ ÀÎ½ºÅÏ½ºÀÇ ÇöÀç ÇÁ·¹ÀÓÀ» ÀúÀåÇÏ´Â VBO)
+    // currFrameVBO Init (ê° ì¸ìŠ¤í„´ìŠ¤ì˜ í˜„ì¬ í”„ë ˆì„ì„ ì €ì¥í•˜ëŠ” VBO)
     VBO* currFrameVBO = new VBO();
     currFrameVBO->SetData(sizeof(glm::vec2) * 1024, NULL, GL_DYNAMIC_DRAW); // vec2(currFrame.x, currFrame.y) * 1024
     tilesVAO->AddVBO(1, currFrameVBO, 2);
     tilesVAO->SetDivisor(1, 1);
     
-    // offsetVBO Init (°¢ ÀÎ½ºÅÏ½ºÀÇ À§Ä¡ ¿ÀÇÁ¼ÂÀ» ÀúÀåÇÏ´Â VBO)
+    // offsetVBO Init (ê° ì¸ìŠ¤í„´ìŠ¤ì˜ ìœ„ì¹˜ ì˜¤í”„ì…‹ì„ ì €ì¥í•˜ëŠ” VBO)
     VBO* offsetVBO = new VBO();
     offsetVBO->SetData(sizeof(glm::vec2) * 1024, NULL, GL_DYNAMIC_DRAW); // vec2(currFrame.x, currFrame.y) * 1024
     tilesVAO->AddVBO(2, offsetVBO, 2);

@@ -1,4 +1,4 @@
-#include "AssemblingMachine1.h"
+ï»¿#include "AssemblingMachine1.h"
 #include "selectRecipeAssemblingUI.h"
 #include "Recipe.h"
 
@@ -136,22 +136,22 @@ bool AssemblingMachine1::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 
 bool AssemblingMachine1::TakeOutItem(ItemInfo* outItem)
 {
-	// ³»º¸³¾ »ı»êÇ°ÀÌ ÀÖ´Ù¸é
+	// ë‚´ë³´ë‚¼ ìƒì‚°í’ˆì´ ìˆë‹¤ë©´
 	if (!result.IsEmpty())
 	{
-		// »ı»êÇ°ÀÇ °³¼ö°¡ ¹İÃâ ¿ä±¸Ä¡¸¦ ³ÑÀ¸¸é
+		// ìƒì‚°í’ˆì˜ ê°œìˆ˜ê°€ ë°˜ì¶œ ìš”êµ¬ì¹˜ë¥¼ ë„˜ìœ¼ë©´
 		if (result.amount >= outItem->amount)
 		{
 			result.amount -= outItem->amount;
 			outItem->id = result.id;
 		}
-		// »ı»êÇ°ÀÇ °³¼ö°¡ ¹İÃâ ¿ä±¸Ä¡¸¦ ³ÑÁö ¸øÇÏ¸é
+		// ìƒì‚°í’ˆì˜ ê°œìˆ˜ê°€ ë°˜ì¶œ ìš”êµ¬ì¹˜ë¥¼ ë„˜ì§€ ëª»í•˜ë©´
 		else
 			result.MoveAllItemTo(outItem);
 
 		return true;
 	}
-	// ³»º¸³¾ »ı»êÇ°ÀÌ ¾ø´Ù¸é
+	// ë‚´ë³´ë‚¼ ìƒì‚°í’ˆì´ ì—†ë‹¤ë©´
 	else
 		return false;
 }
@@ -195,7 +195,7 @@ string AssemblingMachine1::ToString()
 		strcat_s(buf, buf2);
 	}
 
-	wsprintf(buf2, "\n Products finished: %d", productsFinished);
+	wsprintf(buf2, "\n Products finished: %zu", productsFinished);
 	strcat_s(buf, buf2);
 
 	return Structure::ToString() + string(buf);
@@ -215,7 +215,7 @@ void AssemblingMachine1::Ingredients::Release()
 	vecIngredients.clear();
 }
 
-ItemInfo& AssemblingMachine1::Ingredients::operator[](int index)
+ItemInfo& AssemblingMachine1::Ingredients::operator[](size_t index)
 {
 	return vecIngredients[index];
 }
@@ -224,7 +224,7 @@ bool AssemblingMachine1::Ingredients::IsEnough(Recipe* recipe)
 {
 	for (int i = 0; i < vecIngredients.size(); i++)
 	{
-		// ¸¸¾à ·¹½ÃÇÇº¸´Ù Àç·á°¡ Àû°Å³ª °°Áö ¾ÊÀ¸¸é
+		// ë§Œì•½ ë ˆì‹œí”¼ë³´ë‹¤ ì¬ë£Œê°€ ì ê±°ë‚˜ ê°™ì§€ ì•Šìœ¼ë©´
 		if (recipe->GetIngredient(i).amount > vecIngredients[i].amount || recipe->GetIngredient(i).id != vecIngredients[i].id)
 			return false;
 	}
@@ -239,6 +239,7 @@ bool AssemblingMachine1::Ingredients::Consume(Recipe* recipe)
 		{
 			vecIngredients[i].amount -= recipe->GetIngredient(i).amount;
 		}
+		return true;
 	}
 	else
 		return false;

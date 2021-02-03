@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "GameNode.h"
 #include "framework.h"
 
@@ -9,14 +9,14 @@ class Structure;
 class EntityManager;
 class StructureBuilder : public GameNode
 {
-	bool buildable;				// ±¸Á¶¹°À» ÁöÀ»¼ö ÀÖ´ÂÁö?
-	float canBuildDistance;		// ±¸Á¶¹°ÀÇ °Ç¼³ °Å¸® Á¦ÇÑ
-	ivec2 buildPos;				// °Ç¼³ÇÒ Æ÷Áö¼Ç
-	bool active;				// SBÀÇ È°¼ºÈ­ ¿©ºÎ
+	bool buildable;				// êµ¬ì¡°ë¬¼ì„ ì§€ì„ìˆ˜ ìˆëŠ”ì§€?
+	float canBuildDistance;		// êµ¬ì¡°ë¬¼ì˜ ê±´ì„¤ ê±°ë¦¬ ì œí•œ
+	ivec2 buildPos;				// ê±´ì„¤í•  í¬ì§€ì…˜
+	bool active;				// SBì˜ í™œì„±í™” ì—¬ë¶€
 	int itemId;
-	Structure* tempStructure;	// ÀÓ½Ã ±¸Á¶¹° °´Ã¼
+	Structure* tempStructure;	// ì„ì‹œ êµ¬ì¡°ë¬¼ ê°ì²´
 
-	// ÂüÁ¶¿ë
+	// ì°¸ì¡°ìš©
 	EntityManager* entityManager;
 public:
 	virtual HRESULT Init();

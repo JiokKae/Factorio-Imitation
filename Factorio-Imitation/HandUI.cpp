@@ -1,4 +1,4 @@
-#include "HandUI.h"
+ï»¿#include "HandUI.h"
 #include "InventorySlotUI.h"
 #include "ItemOnGround.h"
 #include "Character.h"
@@ -43,7 +43,7 @@ void HandUI::Release()
 
 void HandUI::Update()
 {
-	// ¼Õ ºñ¿ì±â ±â´É
+	// ì† ë¹„ìš°ê¸° ê¸°ëŠ¥
 	if (KeyManager::GetSingleton()->IsOnceKeyDown('Q'))
 	{
 		if (handItem->amount != 0)

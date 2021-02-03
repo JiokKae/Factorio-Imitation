@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Entity.h"
 
 class Shader;
@@ -8,17 +8,14 @@ class Inventory;
 class Character : public Entity
 {
 public:
+	// 캐릭터의 방향
 	enum Direction {
-		leftup,
-		left,
-		leftdown,
-		down,
-		rightdown,
-		right,
-		rightup,
-		up,
+		leftup,	left, leftdown,
+		down, rightdown, right,
+		rightup, up,
 	};
 
+	// 캐릭터의 상태
 	enum State {
 		IDLE,
 		RUNNING,
@@ -55,12 +52,11 @@ public:
 	void Mining();
 
 	glm::vec2* GetLpPosition() { return &position; }
-	glm::vec3 GetVec3Direction();
 	virtual FRECT GetCollisionFRect() override;
 	FRECT GetPickUpFRect();
 	Inventory* GetLpInventory();
 
-	Character() {};
+	Character();
 	virtual ~Character() {};
 };
 

@@ -237,36 +237,6 @@ void Character::Mining()
 	}
 }
 
-glm::vec3 Character::GetVec3Direction()
-{
-	switch (direction)
-	{
-	case Character::leftup:
-		break;
-	case Character::left:
-		return glm::vec3(-1.0f, 0.0f, 0.0f);
-		break;
-	case Character::leftdown:
-		break;
-	case Character::down:
-		return glm::vec3(0.0f, -1.0f, 0.0f);
-		break;
-	case Character::rightdown:
-		break;
-	case Character::right:
-		return glm::vec3(+1.0f, 0.0f, 0.0f);
-		break;
-	case Character::rightup:
-		break;
-	case Character::up:
-		return glm::vec3(0.0f, +1.0f, 0.0f);
-		break;
-	default:
-		break;
-	}
-	return glm::vec3(0.0f, +1.0f, 0.0f);
-}
-
 FRECT Character::GetCollisionFRect()
 {
 	FRECT rect;
@@ -290,4 +260,11 @@ FRECT Character::GetPickUpFRect()
 Inventory* Character::GetLpInventory()
 {
 	return inventory;
+}
+
+Character::Character()
+{
+	accumulateTime = 0.0f;
+	memset(animationCurrFrame, 0, sizeof(animationCurrFrame));
+
 }

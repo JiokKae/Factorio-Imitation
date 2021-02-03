@@ -1,4 +1,4 @@
-#include "FuelSlotUI.h"
+ï»¿#include "FuelSlotUI.h"
 #include "HandUI.h"
 
 HRESULT FuelSlotUI::Init()
@@ -43,28 +43,28 @@ void FuelSlotUI::OnClick(int key)
 	ItemInfo* hand = UIManager::GetSingleton()->GetLpHandUI()->GetHandItem();
 	switch (key)
 	{
-	//½½·ÔÀ» ÁÂÅ¬¸¯ ÇßÀ» ¶§
+	//ìŠ¬ë¡¯ì„ ì¢Œí´ë¦­ í–ˆì„ ë•Œ
 	case VK_LBUTTON:
-		//ÇÚµå°¡ ÀÖ´Ù¸é
+		//í•¸ë“œê°€ ìžˆë‹¤ë©´
 		if (hand->amount)
 		{
-			// ÇÚµå°¡ ¿¬·á¶ó¸é
+			// í•¸ë“œê°€ ì—°ë£Œë¼ë©´
 			if (g_itemSpecs[hand->id].fuel)
 			{
-				// ½½·Ô¿¡ ¾ÆÀÌÅÛÀÌ ÀÖ´Ù¸é
+				// ìŠ¬ë¡¯ì— ì•„ì´í…œì´ ìžˆë‹¤ë©´
 				if (itemInfo->amount)
 				{
-					// ½½·Ô°ú °°Àº ¿¬·á¶ó¸é
+					// ìŠ¬ë¡¯ê³¼ ê°™ì€ ì—°ë£Œë¼ë©´
 					if (hand->id == itemInfo->id)
 					{
-						// ÇÚµå¸¦ ÀüºÎ ½½·ÔÀ¸·Î
+						// í•¸ë“œë¥¼ ì „ë¶€ ìŠ¬ë¡¯ìœ¼ë¡œ
 						itemInfo->amount += hand->amount;
 						hand->amount = 0;
 					}
-					// ½½·Ô°ú ´Ù¸¥ ¿¬·á¶ó¸é
+					// ìŠ¬ë¡¯ê³¼ ë‹¤ë¥¸ ì—°ë£Œë¼ë©´
 					else
 					{
-						// ÇÚµå¿Í ½½·ÔÀ» ½º¿Ò
+						// í•¸ë“œì™€ ìŠ¬ë¡¯ì„ ìŠ¤ì™‘
 						ItemInfo tempInfo(itemInfo->id, itemInfo->amount);
 						itemInfo->id = hand->id;
 						itemInfo->amount = hand->amount;
@@ -72,59 +72,59 @@ void FuelSlotUI::OnClick(int key)
 						hand->amount = tempInfo.amount;
 					}
 				}
-				// ½½·Ô¿¡ ¾ÆÀÌÅÛÀÌ ¾ø´Ù¸é
+				// ìŠ¬ë¡¯ì— ì•„ì´í…œì´ ì—†ë‹¤ë©´
 				else
 				{
-					// ÇÚµå¸¦ ÀüºÎ ½½·ÔÀ¸·Î
+					// í•¸ë“œë¥¼ ì „ë¶€ ìŠ¬ë¡¯ìœ¼ë¡œ
 					itemInfo->id = hand->id;
 					itemInfo->amount += hand->amount;
 					hand->amount = 0;
 				}
 			}
 		}
-		// ÇÚµå°¡ ¾ø´Ù¸é
+		// í•¸ë“œê°€ ì—†ë‹¤ë©´
 		else
 		{
-			// ¾ÆÀÌÅÛ ÀüºÎ ÇÚµå·Î
+			// ì•„ì´í…œ ì „ë¶€ í•¸ë“œë¡œ
 			hand->id = itemInfo->id;
 			hand->amount = itemInfo->amount;
 			itemInfo->amount = 0;
 		}
 		break;
 
-	// ½½·ÔÀ» ¿ìÅ¬¸¯ ÇßÀ» ¶§
+	// ìŠ¬ë¡¯ì„ ìš°í´ë¦­ í–ˆì„ ë•Œ
 	case VK_RBUTTON:
-		// ÇÚµå°¡ ÀÖ°í
+		// í•¸ë“œê°€ ìžˆê³ 
 		if (hand->amount)
 		{
-			// ÇÚµå°¡ ¿¬·á¶ó¸é
+			// í•¸ë“œê°€ ì—°ë£Œë¼ë©´
 			if (g_itemSpecs[hand->id].fuel)
 			{
-				// ½½·Ô¿¡ ¿¬·á°¡ ÀÖ´Ù¸é
+				// ìŠ¬ë¡¯ì— ì—°ë£Œê°€ ìžˆë‹¤ë©´
 				if (itemInfo->amount)
 				{
-					// ½½·Ô°ú °°Àº ¿¬·á¶ó¸é
+					// ìŠ¬ë¡¯ê³¼ ê°™ì€ ì—°ë£Œë¼ë©´
 					if (hand->id == itemInfo->id)
 					{
-						// ÇÚµå¿¡¼­ ÇÏ³ª¸¸ ½½·ÔÀ¸·Î
+						// í•¸ë“œì—ì„œ í•˜ë‚˜ë§Œ ìŠ¬ë¡¯ìœ¼ë¡œ
 						itemInfo->amount += 1;
 						hand->amount -= 1;
 					}
 				}
-				// ½½·Ô¿¡ ¿¬·á°¡ ¾ø´Ù¸é
+				// ìŠ¬ë¡¯ì— ì—°ë£Œê°€ ì—†ë‹¤ë©´
 				else
 				{
-					// ÇÚµå¿¡¼­ ÇÏ³ª¸¸ ½½·ÔÀ¸·Î
+					// í•¸ë“œì—ì„œ í•˜ë‚˜ë§Œ ìŠ¬ë¡¯ìœ¼ë¡œ
 					itemInfo->id = hand->id;
 					itemInfo->amount += 1;
 					hand->amount -= 1;
 				}
 			}
 		}
-		// ÇÚµå°¡ ¾ø´Ù¸é
+		// í•¸ë“œê°€ ì—†ë‹¤ë©´
 		else
 		{
-			// ½½·ÔÀÇ ¹Ý¸¸ ÇÚµå·Î
+			// ìŠ¬ë¡¯ì˜ ë°˜ë§Œ í•¸ë“œë¡œ
 			hand->id = itemInfo->id;
 			hand->amount = itemInfo->amount / 2;
 			itemInfo->amount -= itemInfo->amount / 2;

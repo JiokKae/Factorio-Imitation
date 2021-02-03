@@ -1,4 +1,4 @@
-#include "EntityManager.h"
+ï»¿#include "EntityManager.h"
 #include "Entity.h"
 #include "Character.h"
 #include "ItemOnGrounds.h"
@@ -72,7 +72,7 @@ void EntityManager::Render(Shader* shader)
     vector<Entity*>::iterator it;
     for (it = vecEntityInScreen.begin(); it != vecEntityInScreen.end(); it++)
     {
-        //±×¸²ÀÚ ·»´õ
+        //ê·¸ë¦¼ìž ë Œë”
         (*it)->FirstRender(shader);
     }
     for (it = vecEntityInScreen.begin(); it != vecEntityInScreen.end(); it++)
@@ -116,7 +116,7 @@ void EntityManager::Collision()
         {
             if (abs(colRect.right - colRect.left) < abs(colRect.top - colRect.bottom))
             {
-                // ¿ìÃø Ãæµ¹ÀÏ¶§
+                // ìš°ì¸¡ ì¶©ëŒì¼ë•Œ
                 if (colRect.right == entityRect.right)
                     player->GetLpPosition()->x += abs(colRect.right - colRect.left);
                 else
@@ -124,7 +124,7 @@ void EntityManager::Collision()
             }
             else
             {
-                // ¾Æ·¡Ãø Ãæµ¹ÀÏ ¶§
+                // ì•„ëž˜ì¸¡ ì¶©ëŒì¼ ë•Œ
                 if (colRect.bottom == entityRect.bottom)
                     player->GetLpPosition()->y -= abs(colRect.top - colRect.bottom);
                 else

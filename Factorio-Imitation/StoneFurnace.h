@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Structure.h"
 
 class UI;
@@ -15,13 +15,13 @@ private:
 	GLImage* fireImage;
 
 	// spec
-	float craftingSpeed;		// Á¦ÀÛ ¼Óµµ
-	float energyConsumption;	// ¿¡³ÊÁö ¼Ò¸ğ·®	kw
+	float craftingSpeed;		// ì œì‘ ì†ë„
+	float energyConsumption;	// ì—ë„ˆì§€ ì†Œëª¨ëŸ‰	kw
 	float currPower;
 	float maxPower;
-	float craftedTime;			// Á¦ÀÛÇÑ ½Ã°£
-	float productionPercent;	// »ı»ê ÆÛ¼¾Æ®
-	size_t productsFinished;	// »ı»ê ÃÑ·®
+	float craftedTime;			// ì œì‘í•œ ì‹œê°„
+	float productionPercent;	// ìƒì‚° í¼ì„¼íŠ¸
+	size_t productsFinished;	// ìƒì‚° ì´ëŸ‰
 
 	// slot
 	ItemInfo* fuel;
@@ -33,7 +33,7 @@ private:
 	vector<Recipe*>* vecRecipes;
 	Recipe* currRecipe;
 
-	float time;				// ½Ã°£
+	float time;				// ì‹œê°„
 
 public:
 	virtual HRESULT Init(int x, int y, DIRECTION direction, bool temp = false) override;

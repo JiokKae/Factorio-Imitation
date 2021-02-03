@@ -24,7 +24,7 @@ public:
 		// 재료를 소모하는 함수
 		bool Consume(Recipe* recipe);
 
-		ItemInfo& operator[](int index);
+		ItemInfo& operator[](size_t index);
 	};
 
 private:

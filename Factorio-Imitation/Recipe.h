@@ -14,9 +14,9 @@ public:
 
 	bool IsIngredient(int itemEnum);
 
-	ItemInfo GetOutput()				{ return output; }
-	float GetCraftingTime()				{ return craftingTime; }
-	ItemInfo GetIngredient(int index)	{ return vecIngredients[index]; }
+	ItemInfo GetOutput()					{ return output; }
+	float GetCraftingTime()					{ return craftingTime; }
+	ItemInfo GetIngredient(size_t index)	{ return vecIngredients[index]; }
 	
 	size_t size() const { return vecIngredients.size(); }
 };

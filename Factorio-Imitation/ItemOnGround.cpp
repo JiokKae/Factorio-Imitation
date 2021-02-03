@@ -1,4 +1,4 @@
-#include "ItemOnGround.h"
+ï»¿#include "ItemOnGround.h"
 #include "Tile.h"
 #include "Structure.h"
 #include "TransportBelt.h"
@@ -31,10 +31,10 @@ void ItemOnGround::Update()
 		belt->FlowItem(this, true);
 	}
 
-	// ¸¸¾à Æ÷Áö¼ÇÀÌ º¯°æµÇ¾ú´Ù¸é
+	// ë§Œì•½ í¬ì§€ì…˜ì´ ë³€ê²½ë˜ì—ˆë‹¤ë©´
 	if (positionChange)
 	{
-		// ºÎ¸ð Å¸ÀÏ ¹Ù²î¾ú´ÂÁö °Ë»ç
+		// ë¶€ëª¨ íƒ€ì¼ ë°”ë€Œì—ˆëŠ”ì§€ ê²€ì‚¬
 		Tile* currTile = TileManager::GetSingleton()->GetLpTile(position.x, position.y);
 		if (parentTile != currTile)
 		{

@@ -1,4 +1,4 @@
-#include "StructureBuilder.h"
+ï»¿#include "StructureBuilder.h"
 #include "Shader.h"
 #include "ItemEnum.h"
 #include "GLImage.h"
@@ -24,7 +24,7 @@ void StructureBuilder::Update(vec2* playerPos)
         return;
 
     ItemSpec spec = g_itemSpecs[itemId];
-    // °¡·Î°¡ È¦¼ö Ä­ÀÌ¸é
+    // ê°€ë¡œê°€ í™€ìˆ˜ ì¹¸ì´ë©´
     if (spec.coordSize.x & 1)
     {
         if (g_cursorPosition.x < 0)
@@ -32,7 +32,7 @@ void StructureBuilder::Update(vec2* playerPos)
         else
             buildPos.x = int(g_cursorPosition.x) / TILE_SIZE * TILE_SIZE + TILE_SIZE / 2;
     }
-    // Â¦¼ö Ä­ÀÌ¸é
+    // ì§ìˆ˜ ì¹¸ì´ë©´
     else
     {
         if (g_cursorPosition.x < 0)
@@ -41,7 +41,7 @@ void StructureBuilder::Update(vec2* playerPos)
             buildPos.x = int(g_cursorPosition.x + TILE_SIZE / 2) / TILE_SIZE * TILE_SIZE;
     }
 
-    // ¼¼·Î°¡ È¦¼ö Ä­ÀÌ¸é
+    // ì„¸ë¡œê°€ í™€ìˆ˜ ì¹¸ì´ë©´
     if (spec.coordSize.y & 1)
     {
         if (g_cursorPosition.y < 0)
@@ -49,7 +49,7 @@ void StructureBuilder::Update(vec2* playerPos)
         else
             buildPos.y = int(g_cursorPosition.y) / TILE_SIZE * TILE_SIZE + TILE_SIZE / 2;
     }
-    // Â¦¼ö Ä­ÀÌ¸é¸é
+    // ì§ìˆ˜ ì¹¸ì´ë©´ë©´
     else
     {
         if (g_cursorPosition.y < 0)

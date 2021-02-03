@@ -1,4 +1,4 @@
-#include "InventorySlotUI.h"
+ï»¿#include "InventorySlotUI.h"
 #include "GLImage.h"
 #include "TextRenderer.h"
 #include "HandUI.h"
@@ -29,31 +29,31 @@ void InventorySlotUI::OnClick(int key)
 	ItemInfo* hand = UIManager::GetSingleton()->GetLpHandUI()->GetHandItem();
 	switch (key)
 	{
-	//½½·ÔÀ» ÁÂÅ¬¸¯ ÇßÀ» ¶§
+	//ìŠ¬ë¡¯ì„ ì¢Œí´ë¦­ í–ˆì„ ë•Œ
 	case VK_LBUTTON:	
-		//ÇÚµå°¡ ÀÖ´Ù¸é
+		//í•¸ë“œê°€ ìˆë‹¤ë©´
 		if (hand->amount)	
 		{
-			// ÇÚµå¸¦ ÀüºÎ ÁÖ°í
+			// í•¸ë“œë¥¼ ì „ë¶€ ì£¼ê³ 
 			EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->AddItem(new ItemInfo(hand->id, hand->amount));
 			hand->amount = 0;	
 			
-			// ½½·Ô¿¡ ¾ÆÀÌÅÛÀÌ ÀÖ´Ù¸é 
+			// ìŠ¬ë¡¯ì— ì•„ì´í…œì´ ìˆë‹¤ë©´ 
 			if (itemInfo)
 			{
-				// ¾ÆÀÌÅÛ ÀüºÎ ÇÚµå·Î
+				// ì•„ì´í…œ ì „ë¶€ í•¸ë“œë¡œ
 				hand->id = itemInfo->id;
 				hand->amount = itemInfo->amount;
 				itemInfo->amount = 0;
 			}
 		}
-		// ÇÚµå°¡ ¾ø´Ù¸é
+		// í•¸ë“œê°€ ì—†ë‹¤ë©´
 		else
 		{
-			// ½½·Ô¿¡ ¾ÆÀÌÅÛÀÌ ÀÖ´Ù¸é 
+			// ìŠ¬ë¡¯ì— ì•„ì´í…œì´ ìˆë‹¤ë©´ 
 			if (itemInfo)
 			{
-				// ¾ÆÀÌÅÛ ÀüºÎ ÇÚµå·Î
+				// ì•„ì´í…œ ì „ë¶€ í•¸ë“œë¡œ
 				hand->id = itemInfo->id;
 				hand->amount = itemInfo->amount;
 				itemInfo->amount = 0;
@@ -61,22 +61,22 @@ void InventorySlotUI::OnClick(int key)
 		}
 		break;
 
-	// ½½·ÔÀ» ¿ìÅ¬¸¯ ÇßÀ» ¶§
+	// ìŠ¬ë¡¯ì„ ìš°í´ë¦­ í–ˆì„ ë•Œ
 	case VK_RBUTTON:
-		// ÇÚµå°¡ ÀÖ´Ù¸é
+		// í•¸ë“œê°€ ìˆë‹¤ë©´
 		if (hand->amount)
 		{
-			// ÇÚµå¿¡¼­ ÇÏ³ª¸¸ ½½·ÔÀ¸·Î
+			// í•¸ë“œì—ì„œ í•˜ë‚˜ë§Œ ìŠ¬ë¡¯ìœ¼ë¡œ
 			EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->AddItem(new ItemInfo(hand->id, 1));
 			hand->amount -= 1;
 		}
-		// ÇÚµå°¡ ¾ø´Ù¸é
+		// í•¸ë“œê°€ ì—†ë‹¤ë©´
 		else
 		{
-			// ½½·Ô¿¡ ¾ÆÀÌÅÛÀÌ ÀÖ´Ù¸é 
+			// ìŠ¬ë¡¯ì— ì•„ì´í…œì´ ìˆë‹¤ë©´ 
 			if (itemInfo)
 			{
-				// ½½·ÔÀÇ ¹İ¸¸ ÇÚµå·Î
+				// ìŠ¬ë¡¯ì˜ ë°˜ë§Œ í•¸ë“œë¡œ
 				hand->id = itemInfo->id;
 				hand->amount = itemInfo->amount / 2;
 				itemInfo->amount -= itemInfo->amount / 2;
@@ -85,4 +85,4 @@ void InventorySlotUI::OnClick(int key)
 		break;
 	}
 }
-// ÀÌ ÁÖ¼®À» Áö¿öÁÖ¼¼¿ä
+// ì´ ì£¼ì„ì„ ì§€ì›Œì£¼ì„¸ìš”

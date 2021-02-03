@@ -1,4 +1,4 @@
-#include "SlotUI.h"
+ï»¿#include "SlotUI.h"
 #include "GLImage.h"
 #include "TextRenderer.h"
 #include "HandUI.h"
@@ -95,47 +95,47 @@ void SlotUI::OnClick(int key)
 	ItemInfo* hand = UIManager::GetSingleton()->GetLpHandUI()->GetHandItem();
 	switch (key)
 	{
-	//½½·ÔÀ» ÁÂÅ¬¸¯ ÇßÀ» ¶§
+	//ìŠ¬ë¡¯ì„ ì¢Œí´ë¦­ í–ˆì„ ë•Œ
 	case VK_LBUTTON:
-		// ÇÚµå°¡ ºñ¾î ÀÖÀ» ¶§ : ÇÚµå·Î È¸¼ö
+		// í•¸ë“œê°€ ë¹„ì–´ ìˆì„ ë•Œ : í•¸ë“œë¡œ íšŒìˆ˜
 		if (hand->IsEmpty())
 			this->itemInfo->MoveAllItemTo(hand);
 
 		else if (this->itemInfo->CanInput(hand->id))
 		{
-			// ½½·ÔÀÌ ºñ¾î ÀÖÀ» ¶§ : ÇÚµå¿¡¼­ ½½·ÔÀ¸·Î
+			// ìŠ¬ë¡¯ì´ ë¹„ì–´ ìˆì„ ë•Œ : í•¸ë“œì—ì„œ ìŠ¬ë¡¯ìœ¼ë¡œ
 			if (this->itemInfo->IsEmpty())
 				hand->MoveAllItemTo(this->itemInfo);
 
-			// ÇÚµå¿Í ½½·ÔÀÌ °°Àº Á¾·ùÀÏ ¶§ : ÇÚµå¿¡¼­ ½½·ÔÀ¸·Î
+			// í•¸ë“œì™€ ìŠ¬ë¡¯ì´ ê°™ì€ ì¢…ë¥˜ì¼ ë•Œ : í•¸ë“œì—ì„œ ìŠ¬ë¡¯ìœ¼ë¡œ
 			else if (hand->id == this->itemInfo->id)
 				hand->MoveAllItemTo(this->itemInfo);
 
-			// ÇÚµå¿Í ½½·ÔÀÌ ´Ù¸¥ Á¾·ùÀÏ ¶§ : ÇÚµå¿Í ½½·ÔÀ» ½º¿Ò
+			// í•¸ë“œì™€ ìŠ¬ë¡¯ì´ ë‹¤ë¥¸ ì¢…ë¥˜ì¼ ë•Œ : í•¸ë“œì™€ ìŠ¬ë¡¯ì„ ìŠ¤ì™‘
 			else
 				this->itemInfo->SwapItemWith(itemInfo);
 		}
 		break;
 
-	// ½½·ÔÀ» ¿ìÅ¬¸¯ ÇßÀ» ¶§
+	// ìŠ¬ë¡¯ì„ ìš°í´ë¦­ í–ˆì„ ë•Œ
 	case VK_RBUTTON:
-		// ÇÚµå°¡ ÀÖ´Ù¸é
+		// í•¸ë“œê°€ ìˆë‹¤ë©´
 		if (hand->amount)
 		{
-			// ½½·Ô¿¡ ¾ÆÀÌÅÛÀÌ ÀÖ°í ½½·Ô°ú ÇÚµå°¡ °°Àº ¾ÆÀÌÅÛ ÀÏ¶§¸¸
+			// ìŠ¬ë¡¯ì— ì•„ì´í…œì´ ìˆê³  ìŠ¬ë¡¯ê³¼ í•¸ë“œê°€ ê°™ì€ ì•„ì´í…œ ì¼ë•Œë§Œ
 			if (this->itemInfo->amount && this->itemInfo->id == hand->id)
 			{
 				this->itemInfo->amount += 1;
 				hand->amount -= 1;
 			}
 		}
-		// ÇÚµå°¡ ¾ø´Ù¸é
+		// í•¸ë“œê°€ ì—†ë‹¤ë©´
 		else
 		{
-			// ½½·Ô¿¡ ¾ÆÀÌÅÛÀÌ ÀÖ´Ù¸é 
+			// ìŠ¬ë¡¯ì— ì•„ì´í…œì´ ìˆë‹¤ë©´ 
 			if (itemInfo->amount)
 			{
-				// ½½·ÔÀÇ ¹İ¸¸ ÇÚµå·Î
+				// ìŠ¬ë¡¯ì˜ ë°˜ë§Œ í•¸ë“œë¡œ
 				hand->id = itemInfo->id;
 				hand->amount = itemInfo->amount / 2;
 				itemInfo->amount -= itemInfo->amount / 2;
@@ -144,4 +144,4 @@ void SlotUI::OnClick(int key)
 		break;
 	}
 }
-// ÀÌ ÁÖ¼®À» Áö¿öÁÖ¼¼¿ä
+// ì´ ì£¼ì„ì„ ì§€ì›Œì£¼ì„¸ìš”

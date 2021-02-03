@@ -1,4 +1,4 @@
-#include "FreeCamera.h"
+ï»¿#include "FreeCamera.h"
 
 HRESULT FreeCamera::Init()
 {
@@ -46,7 +46,7 @@ void FreeCamera::Update()
 	RECT winRect = GetWindowRect();
 
 	float xoffset = g_ptMouse.x - WINSIZE_X / 2;
-	float yoffset = g_ptMouse.y - WINSIZE_Y / 2; // y ÁÂÇ¥ÀÇ ¹üÀ§´Â ¹Ø¿¡¼­ºÎÅÍ À§·Î°¡±â ¶§¹®¿¡ ¹İ´ë·Î ¹Ù²ß´Ï´Ù.
+	float yoffset = g_ptMouse.y - WINSIZE_Y / 2; // y ì¢Œí‘œì˜ ë²”ìœ„ëŠ” ë°‘ì—ì„œë¶€í„° ìœ„ë¡œê°€ê¸° ë•Œë¬¸ì— ë°˜ëŒ€ë¡œ ë°”ê¿‰ë‹ˆë‹¤.
 	SetCursorPos(winRect.left+ WINSIZE_X / 2, winRect.top + WINSIZE_Y / 2);
 	xoffset *= mouseSensitivity;
 	yoffset *= mouseSensitivity;
