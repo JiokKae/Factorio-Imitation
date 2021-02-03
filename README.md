@@ -42,7 +42,7 @@
 
 ### [상태 패턴 (State Pattern)](#design-pattern)
 * 객체의 실행 코드를 상태에 따라 다르게 처리해야 할때 사용한다.
-* 패턴이 사용된 객체: [캐릭터 (Character)](#캐릭터-character-1), [구조물 (Structure)](#구조물-structure)
+* 패턴이 사용된 객체: [캐릭터 (Character)](#캐릭터-character-1), [구조물 (Structure)](#구조물-structure-1)
 
 ### OpenGL(Open Graphics Library)
 * 하드웨어 가속으로 컴퓨터 그래픽을 처리할 수 있게 돕는 라이브러리다. 
