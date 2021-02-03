@@ -1,4 +1,4 @@
-#include "SceneManager.h"
+ï»¿#include "SceneManager.h"
 #include "Scene.h"
 #include "Image.h"
 
@@ -59,7 +59,7 @@ void SceneManager::Render(HDC hdc)
 		{
 			currScene->Render(backDC);
 			TimerManager::GetSingleton()->Render(backDC);
-			// ¹é¹öÆÛ º¹»ç(Ãâ·Â)
+			// ë°±ë²„í¼ ë³µì‚¬(ì¶œë ¥)
 			backBuffer->Render(hdc, 0, 0, WINSIZE_X, WINSIZE_Y);
 		}
 		else

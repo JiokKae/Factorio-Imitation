@@ -42,10 +42,9 @@ glm::mat4 Camera::GetViewMatrix()
 RECT Camera::GetRect(int winWidth, int winHeight)
 {
 	RECT rect;
-
-	rect.left =		position.x - ( winWidth / 2) / GetZoom();
+	rect.left =	position.x - ( winWidth / 2) / GetZoom();
 	rect.right =	position.x + ( winWidth / 2) / GetZoom();
-	rect.top =		position.y + (winHeight / 2) / GetZoom();
+	rect.top =	position.y + (winHeight / 2) / GetZoom();
 	rect.bottom =	position.y - (winHeight / 2) / GetZoom();
 
 	return rect;
@@ -57,7 +56,7 @@ FRECT Camera::GetFRect(int winWidth, int winHeight)
 
 	frect.left =	position.x - ( winWidth / 2) / GetZoom();
 	frect.right =	position.x + ( winWidth / 2) / GetZoom();
-	frect.top =		position.y + (winHeight / 2) / GetZoom();
+	frect.top =	position.y + (winHeight / 2) / GetZoom();
 	frect.bottom =	position.y - (winHeight / 2) / GetZoom();
 
 	return frect;

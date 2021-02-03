@@ -3,20 +3,20 @@
 
 HRESULT RecipeManager::Init()
 {
-	AddRecipe("Iron Plate",				ItemInfo(IRON_PLATE, 1),				3.2f,	{ ItemInfo(IRON_ORE, 1) });
-	AddRecipe("Copper Plate",			ItemInfo(COPPER_PLATE, 1),				3.2f,	{ ItemInfo(COPPER_ORE, 1) });
-	AddRecipe("Stone Brick",			ItemInfo(STONE_BRICK, 1),				3.2f,	{ ItemInfo(STONE, 2) });
-	AddRecipe("Steel Plate",			ItemInfo(STEEL_PLATE, 1),				16.0f,	{ ItemInfo(IRON_PLATE, 5) });
+	AddRecipe("Iron Plate",			ItemInfo(IRON_PLATE, 1),			3.2f,	{ ItemInfo(IRON_ORE, 1) });
+	AddRecipe("Copper Plate",		ItemInfo(COPPER_PLATE, 1),			3.2f,	{ ItemInfo(COPPER_ORE, 1) });
+	AddRecipe("Stone Brick",		ItemInfo(STONE_BRICK, 1),			3.2f,	{ ItemInfo(STONE, 2) });
+	AddRecipe("Steel Plate",		ItemInfo(STEEL_PLATE, 1),			16.0f,	{ ItemInfo(IRON_PLATE, 5) });
 
 	AddRecipe("Iron Gear Wheel",		ItemInfo(IRON_GEAR_WHEEL, 1),			0.5f,	{ ItemInfo(IRON_PLATE, 2) });
-	AddRecipe("Copper Cable",			ItemInfo(COPPER_CABLE, 2),				0.5f,	{ ItemInfo(COPPER_PLATE, 1) });
+	AddRecipe("Copper Cable",		ItemInfo(COPPER_CABLE, 2),				0.5f,	{ ItemInfo(COPPER_PLATE, 1) });
 	AddRecipe("Electronic Circuit",		ItemInfo(ELECTRONIC_CIRCUIT, 1),		0.5f,	{ ItemInfo(COPPER_CABLE,	3),		ItemInfo(IRON_PLATE, 1) });
-	AddRecipe("Transport Belt",			ItemInfo(TRANSPORT_BELT, 2),			0.5f,	{ ItemInfo(IRON_GEAR_WHEEL, 1),		ItemInfo(IRON_PLATE, 1) });
+	AddRecipe("Transport Belt",		ItemInfo(TRANSPORT_BELT, 2),			0.5f,	{ ItemInfo(IRON_GEAR_WHEEL, 1),		ItemInfo(IRON_PLATE, 1) });
 	AddRecipe("Fast Transport Belt",	ItemInfo(FAST_TRANSPORT_BELT, 1),		0.5f,	{ ItemInfo(IRON_GEAR_WHEEL, 5),		ItemInfo(TRANSPORT_BELT, 1) });
-	AddRecipe("Express Transport Belt", ItemInfo(EXPRESS_TRANSPORT_BELT, 1),	0.5f,	{ ItemInfo(FAST_TRANSPORT_BELT, 1), ItemInfo(IRON_GEAR_WHEEL, 10) });
+	AddRecipe("Express Transport Belt",	ItemInfo(EXPRESS_TRANSPORT_BELT, 1),	0.5f,	{ ItemInfo(FAST_TRANSPORT_BELT, 1), ItemInfo(IRON_GEAR_WHEEL, 10) });
 	AddRecipe("Burner Inserter",		ItemInfo(BURNER_INSERTER, 1),			0.5f,	{ ItemInfo(IRON_GEAR_WHEEL, 1),		ItemInfo(IRON_PLATE, 1) });
 	AddRecipe("Assembling Machine 1",	ItemInfo(ASSEMBLING_MACHINE_1, 1),		0.5f,	{ ItemInfo(ELECTRONIC_CIRCUIT, 3),	ItemInfo(IRON_GEAR_WHEEL, 5), ItemInfo(IRON_PLATE, 9) });
-	AddRecipe("Stone Furnace",			ItemInfo(STONE_FURNACE, 1),				0.5f,	{ ItemInfo(STONE, 5) });
+	AddRecipe("Stone Furnace",		ItemInfo(STONE_FURNACE, 1),				0.5f,	{ ItemInfo(STONE, 5) });
 
 	presetRecipes[STONE_FURNACE].push_back(FindRecipe(IRON_PLATE));
 	presetRecipes[STONE_FURNACE].push_back(FindRecipe(COPPER_PLATE));

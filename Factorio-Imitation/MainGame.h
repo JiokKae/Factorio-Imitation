@@ -17,7 +17,11 @@ public:
 
 	void ImageLoad();
 	void SoundLoad();
-	MainGame() {};
+	MainGame() 
+		: hdc(NULL)
+		, hrc(NULL)
+		, isInit(false)
+	{};
 
 	LRESULT MainProc(HWND hWnd, UINT iMessage,
 		WPARAM wParam, LPARAM lParam);

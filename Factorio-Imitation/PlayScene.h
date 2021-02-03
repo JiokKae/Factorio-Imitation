@@ -16,15 +16,17 @@ class PlayScene : public Scene
 	GLuint uboUIMatrices;
 
 	Shader* UIShader;
-	TileManager* tileRenderer;
+	TileManager* tileManager;
 
 	TextRenderer* textRenderer;
 
+	// light
 	DirectionalLight* dirLight;
 	PointLight* pointLights;
 	int numOfPointLight;
 
 	EntityManager* entityManager;
+
 	DebugHelper* debugHelper;
 
 	bool altMode;
@@ -39,10 +41,12 @@ public:
 	PlayScene(int width, int height)
 		: Scene(width, height)
 		, lightingShader(nullptr)
-		, tileRenderer(nullptr)
+		, tileManager(nullptr)
 		, camera(nullptr)
 		, textRenderer(nullptr)
 		, entityManager(nullptr)
+		, altMode(false)
+
 	{};
 	virtual ~PlayScene();
 };

@@ -2,7 +2,6 @@
 #include "Entity.h"
 #include "ItemEnum.h"
 
-class Shader;
 class Structure : public Entity
 {
 public:
@@ -25,7 +24,7 @@ protected:
 	glm::ivec2 coord;
 	glm::ivec2 coordSize;
 	DIRECTION direction;
-	int itemId;
+	ItemEnum itemId;
 	STATUS status;		// 건물의 상태
 
 	bool temp;		// 임시 건물인지
@@ -47,8 +46,8 @@ public:
 	virtual bool TakeOutItem(ItemInfo* outItem) { return false; };
 	virtual string ToString();
 
-	int GetItemId()				{ return itemId; }
 	FRECT GetFRect();
+	ItemEnum GetItemId()			{ return itemId; }
 	DIRECTION GetDirection()		{ return direction; }
 	glm::ivec2 GetCoordSize()		{ return coordSize; }
 	virtual FRECT GetCollisionFRect() override;

@@ -29,6 +29,9 @@ public:
 		, lightCubeShader(nullptr)
 		, diffuseMap(nullptr)
 		, specularMap(nullptr)
+		, VBO(0)
+		, cubeVAO(0)
+		, lightCubeVAO(0)
 	{};
 	virtual ~LightingScene();
 };

@@ -1,4 +1,4 @@
-#include "BurnerInserter.h"
+ï»¿#include "BurnerInserter.h"
 #include "Tile.h"
 #include "ItemOnGround.h"
 
@@ -84,7 +84,7 @@ void BurnerInserter::Update()
 		else
 			handAngle += handAngleSpeed * TimerManager::GetSingleton()->GetTimeElapsed();
 
-		// handbase ¾÷µ¥ÀÌÆ®
+		// handbase ì—…ë°ì´íŠ¸
 		handBaseRenderAngle = handAngle - sin(glm::radians(handAngle)) * handBaseAngle;
 		handBaseImage->SetAngle(glm::radians(handBaseRenderAngle));
 		
@@ -92,7 +92,7 @@ void BurnerInserter::Update()
 		handBaseScale.y = 0.4f * scaleY;
 		handBaseImage->SetScale(handBaseScale);
 
-		// handOpen ¾÷µ¥ÀÌÆ®
+		// handOpen ì—…ë°ì´íŠ¸
 		handOpenRenderAngle = handAngle - sin(glm::radians(handAngle)) * handOpenAngle;
 		handOpenImage->SetAngle(glm::radians(handOpenRenderAngle));
 		if(handOpenAngle > 0)

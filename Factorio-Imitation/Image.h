@@ -16,11 +16,11 @@ public:
 	typedef struct tagImageInfo
 	{
 		DWORD	resID;		// 리소스의 고유한 아이디
-		HDC		hMemDC;		// 그리기를 주관하는 핸들 (메모리 관리)
+		HDC	hMemDC;		// 그리기를 주관하는 핸들 (메모리 관리)
 		HBITMAP	hBitmap;	// 이미지 정보
 		HBITMAP hOldBit;	// 기존 이미지 정보
-		int		width;		// 이미지 가로 크기
-		int		height;		// 이미지 세로 크기
+		int	width;		// 이미지 가로 크기
+		int	height;		// 이미지 세로 크기
 		BYTE	loadType;	// 로드 타입
 
 		// Blend
@@ -56,6 +56,9 @@ public:
 			frameWidth = 0;
 			frameHeight = 0;
 			x = y = 0;
+			hBlendDC = NULL;
+			hBlendBitmap = NULL;
+			hOldBlendBit = NULL;
 		};
 
 	} IMAGE_INFO, *LPIMAGE_INFO;

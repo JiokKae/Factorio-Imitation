@@ -1,4 +1,4 @@
-#include "PlayScene.h"
+ï»¿#include "PlayScene.h"
 #include "Character.h"
 #include "Camera.h"
 #include "Tile.h"
@@ -26,8 +26,8 @@ HRESULT PlayScene::Init()
     entityManager = EntityManager::GetSingleton();
     entityManager->Init();
 
-    tileRenderer = TileManager::GetSingleton();
-    tileRenderer->Init();
+    tileManager = TileManager::GetSingleton();
+    tileManager->Init();
 
     // camera
     camera = new Camera();
@@ -37,7 +37,7 @@ HRESULT PlayScene::Init()
 
     numOfPointLight = 4;
 
-    //  Uniform Buffer Object ÃÊ±âÈ­
+    //  Uniform Buffer Object ì´ˆê¸°í™”
     glGenBuffers(1, &uboMatrices);
     glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
     glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), NULL, GL_DYNAMIC_DRAW);
@@ -153,10 +153,10 @@ void PlayScene::Release()
         entityManager->Release();
         entityManager = nullptr;
     }
-    if (tileRenderer) 
+    if (tileManager) 
     {
-        tileRenderer->Release();
-        tileRenderer = nullptr;
+        tileManager->Release();
+        tileManager = nullptr;
     }
 
     SAFE_DELETE(UIShader);
@@ -193,7 +193,7 @@ void PlayScene::Update()
 
     UIManager::GetSingleton()->HandUpdate();
 
-    tileRenderer->Update();
+    tileManager->Update();
 
     g_cursorPosition = { (g_ptMouse.x - width / 2) / camera->GetZoom() + camera->GetPosition().x,
                     (g_ptMouse.y - height / 2) / camera->GetZoom() + camera->GetPosition().y };
@@ -224,21 +224,21 @@ void PlayScene::Render(HDC hdc)
 
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
     
-    // ºä/ÇÁ·ÎÁ§¼Ç ¸ÅÆ®¸¯½º ¿¬»ê
+    // ë·°/í”„ë¡œì ì…˜ ë§¤íŠ¸ë¦­ìŠ¤ ì—°ì‚°
     glm::mat4 projection = glm::ortho(0.0f, float(width) / camera->GetZoom(), 0.0f, float(height) / camera->GetZoom());
     glm::mat4 view = camera->GetViewMatrix();
     view = glm::translate(view, glm::vec3(float(width) / camera->GetZoom() / 2, float(height) / camera->GetZoom() / 2, 0.0f));
 
-    // uniform buffer object 0¹ø ¹ÙÀÎµù ÀÎµ¦½º¿¡ ÇÁ·ÎÁ§¼Ç°ú ºä ¸ÅÆ®¸¯½º ¼³Á¤
+    // uniform buffer object 0ë²ˆ ë°”ì¸ë”© ì¸ë±ìŠ¤ì— í”„ë¡œì ì…˜ê³¼ ë·° ë§¤íŠ¸ë¦­ìŠ¤ ì„¤ì •
     glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
     glBufferSubData(GL_UNIFORM_BUFFER,                  0, sizeof(glm::mat4), glm::value_ptr(projection));
     glBufferSubData(GL_UNIFORM_BUFFER,  sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-    // UIÇÁ·ÎÁ§¼Ç ¸ÅÆ®¸¯½º ¿¬»ê
+    // UIí”„ë¡œì ì…˜ ë§¤íŠ¸ë¦­ìŠ¤ ì—°ì‚°
     glm::mat4 UIprojection = glm::ortho(0.0f, float(width), 0.0f, float(height));
 
-    // uniform buffer object 2¹ø ¹ÙÀÎµù ÀÎµ¦½º¿¡ UIÇÁ·ÎÁ§¼Ç ¼³Á¤
+    // uniform buffer object 2ë²ˆ ë°”ì¸ë”© ì¸ë±ìŠ¤ì— UIí”„ë¡œì ì…˜ ì„¤ì •
     glBindBuffer(GL_UNIFORM_BUFFER, uboUIMatrices);
     glBufferSubData(GL_UNIFORM_BUFFER,                  0, sizeof(glm::mat4), glm::value_ptr(UIprojection));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
@@ -246,7 +246,7 @@ void PlayScene::Render(HDC hdc)
     TimerManager* timerManager = TimerManager::GetSingleton();
     debugHelper->SetFloat("2. Render UpdateTime", timerManager->updateTime);
 
-    tileRenderer->Render(camera->GetRect(width, height));
+    tileManager->Render(camera->GetRect(width, height));
     debugHelper->SetFloat("3. tileRenderer_time", timerManager->CheckTime());
 
     entityManager->Render(lightingShader);
@@ -256,24 +256,24 @@ void PlayScene::Render(HDC hdc)
     debugHelper->SetFloat("5. UIManager_time", timerManager->CheckTime());
    
     char str[128];
-    textRenderer->RenderText("FPS: " + to_string(timerManager->GetFPS()),                           10, height - 10);
+    textRenderer->RenderText("FPS: " + to_string(timerManager->GetFPS()),                           (float)10, (float)height - 10);
 
     if (g_debuggingMode)
     {
-         textRenderer->RenderText("g_ptMouse : " + to_string(g_ptMouse.x) + ", " + to_string(g_ptMouse.y),          10, height - 40);
+         textRenderer->RenderText("g_ptMouse : " + to_string(g_ptMouse.x) + ", " + to_string(g_ptMouse.y),	10, height - 40);
          sprintf_s(str, "cameraPos: (%.1f, %.1f)", camera->GetPosition().x, camera->GetPosition().y);
-         textRenderer->RenderText(string(str),                                                                      10, height - 70);
+         textRenderer->RenderText(string(str),									10, height - 70);
          sprintf_s(str, "g_cursorPosition: (%.1f, %.1f)", g_cursorPosition.x, g_cursorPosition.y );
-         textRenderer->RenderText(string(str),                                                                      10, height - 100);
+         textRenderer->RenderText(string(str),									10, height - 100);
          sprintf_s(str, "Cursor: (%d, %d)", g_cursorCoord.x, g_cursorCoord.y);
-         textRenderer->RenderText(string(str),                                                                      10, height - 130);
+         textRenderer->RenderText(string(str),									10, height - 130);
          Tile* tile = TileManager::GetSingleton()->GetLPTileUnderMouse();
          if (tile)
          {
              sprintf_s(str, "Ore Amount: %d", tile->GetLpOre()->GetAmount() );
-             textRenderer->RenderText(string(str),                                                                  10, height - 160);
-             sprintf_s(str, "Item Amount: %d", tile->GetItems().size() );
-             textRenderer->RenderText(string(str),                                                                  10, height - 190);
+             textRenderer->RenderText(string(str),								10, height - 160);
+             sprintf_s(str, "Item Amount: %d", (int)tile->GetItems().size() );
+             textRenderer->RenderText(string(str),								10, height - 190);
          }
     }
     

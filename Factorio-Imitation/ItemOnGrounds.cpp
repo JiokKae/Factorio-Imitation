@@ -150,3 +150,7 @@ void ItemOnGrounds::DeleteItem(ItemOnGround* item)
             ++it;
     }
 }
+
+ItemOnGrounds::ItemOnGrounds()
+{
+}

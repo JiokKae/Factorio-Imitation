@@ -113,65 +113,65 @@ void MainGame::ImageLoad()
 
 	TextureManager* textureManager = TextureManager::GetSingleton();
 
-	textureManager->AddTexture("Entity/Character-level1_idle",					"graphics/entity/character/hr-level1_idle.png");
-	textureManager->AddTexture("Entity/Character-level1_idle_shadow",			"graphics/entity/character/hr-level1_idle_shadow.png");
-	textureManager->AddTexture("Entity/Character-level1_running",				"graphics/entity/character/hr-level1_running.png");
+	textureManager->AddTexture("Entity/Character-level1_idle",			"graphics/entity/character/hr-level1_idle.png");
+	textureManager->AddTexture("Entity/Character-level1_idle_shadow",		"graphics/entity/character/hr-level1_idle_shadow.png");
+	textureManager->AddTexture("Entity/Character-level1_running",			"graphics/entity/character/hr-level1_running.png");
 	textureManager->AddTexture("Entity/Character-level1_running_shadow",		"graphics/entity/character/hr-level1_running_shadow.png");
-	textureManager->AddTexture("Entity/Character-level1_mining_tool",			"graphics/entity/character/hr-level1_mining_tool.png");
+	textureManager->AddTexture("Entity/Character-level1_mining_tool",		"graphics/entity/character/hr-level1_mining_tool.png");
 	textureManager->AddTexture("Entity/Character-level1_mining_tool_shadow",	"graphics/entity/character/hr-level1_mining_tool_shadow.png");
 
-	textureManager->AddTexture("Entity/BurnerMiningDrill-N",		"graphics/entity/burner_mining_drill/hr-burner-mining-drill-N.png");
-	textureManager->AddTexture("Entity/BurnerMiningDrill-E",		"graphics/entity/burner_mining_drill/hr-burner-mining-drill-E.png");
-	textureManager->AddTexture("Entity/BurnerMiningDrill-S",		"graphics/entity/burner_mining_drill/hr-burner-mining-drill-S.png");
-	textureManager->AddTexture("Entity/BurnerMiningDrill-W",		"graphics/entity/burner_mining_drill/hr-burner-mining-drill-W.png");
+	textureManager->AddTexture("Entity/BurnerMiningDrill-N",	"graphics/entity/burner_mining_drill/hr-burner-mining-drill-N.png");
+	textureManager->AddTexture("Entity/BurnerMiningDrill-E",	"graphics/entity/burner_mining_drill/hr-burner-mining-drill-E.png");
+	textureManager->AddTexture("Entity/BurnerMiningDrill-S",	"graphics/entity/burner_mining_drill/hr-burner-mining-drill-S.png");
+	textureManager->AddTexture("Entity/BurnerMiningDrill-W",	"graphics/entity/burner_mining_drill/hr-burner-mining-drill-W.png");
 	textureManager->AddTexture("Entity/BurnerMiningDrill-N-shadow",	"graphics/entity/burner_mining_drill/hr-burner-mining-drill-N-shadow.png");
 	textureManager->AddTexture("Entity/BurnerMiningDrill-E-shadow",	"graphics/entity/burner_mining_drill/hr-burner-mining-drill-E-shadow.png");
 	textureManager->AddTexture("Entity/BurnerMiningDrill-S-shadow",	"graphics/entity/burner_mining_drill/hr-burner-mining-drill-S-shadow.png");
 	textureManager->AddTexture("Entity/BurnerMiningDrill-W-shadow",	"graphics/entity/burner_mining_drill/hr-burner-mining-drill-W-shadow.png");
 
-	textureManager->AddTexture("Entity/AssemblingMachine1",			"graphics/entity/assembling_machine_1/hr-assembling-machine-1.png");
+	textureManager->AddTexture("Entity/AssemblingMachine1",		"graphics/entity/assembling_machine_1/hr-assembling-machine-1.png");
 	textureManager->AddTexture("Entity/AssemblingMachine1-shadow",	"graphics/entity/assembling_machine_1/hr-assembling-machine-1-shadow.png");
 
-	textureManager->AddTexture("Entity/TransportBelt",				"graphics/entity/transport_belt/hr-transport-belt.png",					true, true, GL_NEAREST);
-	textureManager->AddTexture("Entity/FastTransportBelt",			"graphics/entity/fast_transport_belt/hr-fast-transport-belt.png",		true, true, GL_NEAREST);
-	textureManager->AddTexture("Entity/ExpressTransportBelt",		"graphics/entity/express_transport_belt/hr-express-transport-belt.png", true, true, GL_NEAREST);
+	textureManager->AddTexture("Entity/TransportBelt",		"graphics/entity/transport_belt/hr-transport-belt.png",			true, true, GL_NEAREST);
+	textureManager->AddTexture("Entity/FastTransportBelt",		"graphics/entity/fast_transport_belt/hr-fast-transport-belt.png",	true, true, GL_NEAREST);
+	textureManager->AddTexture("Entity/ExpressTransportBelt",	"graphics/entity/express_transport_belt/hr-express-transport-belt.png", true, true, GL_NEAREST);
 
-	textureManager->AddTexture("Entity/BurnerInserter-platform",			"graphics/entity/burner_inserter/hr-burner-inserter-platform.png");
-	textureManager->AddTexture("Entity/BurnerInserter-handBase",			"graphics/entity/burner_inserter/hr-burner-inserter-hand-base.png");
-	textureManager->AddTexture("Entity/BurnerInserter-handBase-shadow",		"graphics/entity/burner_inserter/hr-burner-inserter-hand-base-shadow.png");
-	textureManager->AddTexture("Entity/BurnerInserter-handClosed",			"graphics/entity/burner_inserter/hr-burner-inserter-hand-closed.png");
+	textureManager->AddTexture("Entity/BurnerInserter-platform",		"graphics/entity/burner_inserter/hr-burner-inserter-platform.png");
+	textureManager->AddTexture("Entity/BurnerInserter-handBase",		"graphics/entity/burner_inserter/hr-burner-inserter-hand-base.png");
+	textureManager->AddTexture("Entity/BurnerInserter-handBase-shadow",	"graphics/entity/burner_inserter/hr-burner-inserter-hand-base-shadow.png");
+	textureManager->AddTexture("Entity/BurnerInserter-handClosed",		"graphics/entity/burner_inserter/hr-burner-inserter-hand-closed.png");
 	textureManager->AddTexture("Entity/BurnerInserter-handClosed-shadow",	"graphics/entity/burner_inserter/hr-burner-inserter-hand-closed-shadow.png");
-	textureManager->AddTexture("Entity/BurnerInserter-handOpen",			"graphics/entity/burner_inserter/hr-burner-inserter-hand-open.png");
-	textureManager->AddTexture("Entity/BurnerInserter-handOpen-shadow",		"graphics/entity/burner_inserter/hr-burner-inserter-hand-open-shadow.png");
+	textureManager->AddTexture("Entity/BurnerInserter-handOpen",		"graphics/entity/burner_inserter/hr-burner-inserter-hand-open.png");
+	textureManager->AddTexture("Entity/BurnerInserter-handOpen-shadow",	"graphics/entity/burner_inserter/hr-burner-inserter-hand-open-shadow.png");
 
-	textureManager->AddTexture("Entity/StoneFurnace",			"graphics/entity/stone_furnace/hr-stone-furnace.png");
+	textureManager->AddTexture("Entity/StoneFurnace",		"graphics/entity/stone_furnace/hr-stone-furnace.png");
 	textureManager->AddTexture("Entity/StoneFurnace-shadow",	"graphics/entity/stone_furnace/hr-stone-furnace-shadow.png");
 	textureManager->AddTexture("Entity/StoneFurnace-fire",		"graphics/entity/stone_furnace/hr-stone-furnace-fire.png");
 
 	textureManager->AddTexture("Entity/IronOre",			"graphics/entity/iron_ore/hr-iron-ore.png");
-	textureManager->AddTexture("Entity/Coal",				"graphics/entity/coal/hr-coal.png");
+	textureManager->AddTexture("Entity/Coal",			"graphics/entity/coal/hr-coal.png");
 	textureManager->AddTexture("Entity/CopperOre",			"graphics/entity/copper_ore/hr-copper-ore.png");
-	textureManager->AddTexture("Entity/Stone",				"graphics/entity/stone/hr-stone.png");
+	textureManager->AddTexture("Entity/Stone",			"graphics/entity/stone/hr-stone.png");
 
-	textureManager->AddTexture("Entity/WoodenChest",		"graphics/entity/wooden_chest/hr-wooden-chest.png");
+	textureManager->AddTexture("Entity/WoodenChest",	"graphics/entity/wooden_chest/hr-wooden-chest.png");
 	textureManager->AddTexture("Entity/WoodenChest-shadow",	"graphics/entity/wooden_chest/hr-wooden-chest-shadow.png");
 
-	textureManager->AddTexture("UI/CharacterUI",				"graphics/ui/CharacterUI.png",				false);
-	textureManager->AddTexture("UI/SlotUI",						"graphics/ui/slotUI.png",					false);
-	textureManager->AddTexture("UI/BunerMiningDrillUI",			"graphics/ui/BunerMiningDrillUI.png",		false);
-	textureManager->AddTexture("UI/DeactiveButtonUI",			"graphics/ui/DeactiveButtonUI.png",			false);
+	textureManager->AddTexture("UI/CharacterUI",			"graphics/ui/CharacterUI.png",			false);
+	textureManager->AddTexture("UI/SlotUI",				"graphics/ui/slotUI.png",			false);
+	textureManager->AddTexture("UI/BunerMiningDrillUI",		"graphics/ui/BunerMiningDrillUI.png",		false);
+	textureManager->AddTexture("UI/DeactiveButtonUI",		"graphics/ui/DeactiveButtonUI.png",		false);
 	textureManager->AddTexture("UI/RedProgressiveBarUI",		"graphics/ui/redProgressiveBarUI.png",		false);
 	textureManager->AddTexture("UI/GreenProgressiveBarUI",		"graphics/ui/greenProgressiveBarUI.png",	false);
-	textureManager->AddTexture("UI/FuelSlotUI",					"graphics/ui/fuelSlotUI.png",				false);
-	textureManager->AddTexture("UI/StoneFurnaceUI",				"graphics/ui/stoneFurnaceUI.png",			false);
-	textureManager->AddTexture("UI/BackgroundUI",				"graphics/ui/BacgroundUI.png",				false);
-	textureManager->AddTexture("UI/BackgroundNameUI",			"graphics/ui/BacgroundNameUI.png",			false);
-	textureManager->AddTexture("UI/DismantleBarUI",				"graphics/ui/dismantleBarUI.png",			false);
+	textureManager->AddTexture("UI/FuelSlotUI",			"graphics/ui/fuelSlotUI.png",			false);
+	textureManager->AddTexture("UI/StoneFurnaceUI",			"graphics/ui/stoneFurnaceUI.png",		false);
+	textureManager->AddTexture("UI/BackgroundUI",			"graphics/ui/BacgroundUI.png",			false);
+	textureManager->AddTexture("UI/BackgroundNameUI",		"graphics/ui/BacgroundNameUI.png",		false);
+	textureManager->AddTexture("UI/DismantleBarUI",			"graphics/ui/dismantleBarUI.png",		false);
 	textureManager->AddTexture("UI/DismantleEmptyBarUI",		"graphics/ui/dismantleEmptyBarUI.png",		false);
 	textureManager->AddTexture("UI/SelectRecipeAssemblingUI",	"graphics/ui/selectRecipeAssemblingUI.png",	false);
-	textureManager->AddTexture("UI/RecipeButtonUI",				"graphics/ui/recipeButtonUI.png",			false);
+	textureManager->AddTexture("UI/RecipeButtonUI",			"graphics/ui/recipeButtonUI.png",		false);
 
-	textureManager->AddTexture("Icons/Hand",				"graphics/icons/hand.png");
+	textureManager->AddTexture("Icons/Hand",			"graphics/icons/hand.png");
 	textureManager->AddTexture("Icons/AllItems",			"graphics/icons/all-items.png");
 	textureManager->AddTexture("Icons/AllItems-stroke",		"graphics/icons/all-items-stroke.png");
 
