@@ -8,25 +8,25 @@ class Tile;
 class BurnerMiningDrill : public Structure
 {
 private:
-	// Ãâ·Â
+	// ì¶œë ¥
 	GLImage* image;
 	glm::vec2 imageOffset[DIRECTION_END];
 	GLImage* shadow;
 	glm::vec2 shadowOffset[DIRECTION_END];
 	float time;				
 	
-	// ±¸Á¶¹°ÀÇ Á¤º¸
-	float miningSpeed;			// Ã¤±¤ ½ºÇÇµå
-	float energyConsumption;	// Ã¤±¤ ¼Ò¸ğÆÄ¿ö	kw
-	glm::ivec2 miningArea;		// Ã¤±¤ ¿µ¿ª
-	float currPower;			// ÇöÀç ÆÄ¿ö
-	float maxPower;				// »ç¿ëÇÏ´Â ¿¬·áÀÇ ÃÖ´ë ÆÄ¿ö
-	float productionPercent;	// »ı»ê·ü
+	// êµ¬ì¡°ë¬¼ì˜ ì •ë³´
+	float miningSpeed;		// ì±„ê´‘ ìŠ¤í”¼ë“œ
+	float energyConsumption;	// ì±„ê´‘ ì†Œëª¨íŒŒì›Œ	kw
+	glm::ivec2 miningArea;		// ì±„ê´‘ ì˜ì—­
+	float currPower;		// í˜„ì¬ íŒŒì›Œ
+	float maxPower;			// ì‚¬ìš©í•˜ëŠ” ì—°ë£Œì˜ ìµœëŒ€ íŒŒì›Œ
+	float productionPercent;	// ìƒì‚°ë¥ 
 
-	// ¾ÆÀÌÅÛ
+	// ì•„ì´í…œ
 	ItemInfo* waitingItemInfo;
 
-	// Å¸ÀÏ Á¤º¸
+	// íƒ€ì¼ ì •ë³´
 	Tile** miningAreaTiles;
 	Tile* targetTile;
 
@@ -38,21 +38,21 @@ public:
 	virtual void Render(Shader* shader) override;
 	virtual void Render(Shader* shader, float posX, float posY) override;
 
-	// ¾ÆÀÌÅÛÀ» ¹Ş´Â ÇÔ¼ö
-	// ·¹½ÃÇÇ¿¡ Á¸ÀçÇÏ´Â Àç·á¸¦ ¹Ş¾Æ¿Â´Ù.
+	// ì•„ì´í…œì„ ë°›ëŠ” í•¨ìˆ˜
+	// ë ˆì‹œí”¼ì— ì¡´ì¬í•˜ëŠ” ì¬ë£Œë¥¼ ë°›ì•„ì˜¨ë‹¤.
 	virtual bool InputItem(ItemInfo* inputItem, glm::vec2 pos) override;
 
-	// ¾ÆÀÌÅÛÀ» ¹İÃâÇÏ´Â ÇÔ¼ö 
-	// »ı»êÇ°À» ¹İÃâÇÑ´Ù.
+	// ì•„ì´í…œì„ ë°˜ì¶œí•˜ëŠ” í•¨ìˆ˜ 
+	// ìƒì‚°í’ˆì„ ë°˜ì¶œí•œë‹¤.
 	virtual bool OutputItem() override;
 
-	// ±¸Á¶¹°À» Å¬¸¯ÇßÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
-	// È­·Â Ã¤±¤ µå¸±ÀÇ UI¸¦ ¿­ ¼ö ÀÖ´Ù.
+	// êµ¬ì¡°ë¬¼ì„ í´ë¦­í–ˆì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	// í™”ë ¥ ì±„ê´‘ ë“œë¦´ì˜ UIë¥¼ ì—´ ìˆ˜ ìˆë‹¤.
 	virtual void ClickEvent() override;
 
 	virtual string ToString() override;
 
-	// Á¢±ÙÀÚ
+	// ì ‘ê·¼ì
 	float GetMaxPower()				{ return maxPower; }
 	float GetCurrPower()			{ return currPower; }
 	float GetProductionPercent()	{ return productionPercent; }	
