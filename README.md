@@ -11,7 +11,7 @@
 #### Design Pattern
 * 팩토리 메소드 패턴 (Factory Method Pattern)
 * 싱글톤 패턴 (Singleton Pattern)
-* [상태 패턴 (State Pattern)](#상태-state-pattern)
+* [상태 패턴 (State Pattern)](#상태-패턴-state-pattern)
 	
 #### OpenGL  
 * 셰이더 (GLSL)
