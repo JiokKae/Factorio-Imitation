@@ -55,7 +55,8 @@
 * 기술이 사용된 객체: [타일(Tile)](#타일-tile), 광물(Ore), [땅 위의 아이템(Item On Ground)](#땅-위의-아이템-item-on-ground)
 
 ### [캐릭터 (Character)](#캐릭터-character)
-
+	엔티티 (Entity)/ 캐릭터 (Character)
+![캐릭터](Image/Character.png)
 header file: [Character.h](Factorio-Imitation/Character.h)
 * 조작
 	> 플레이어는 게임에서 행동을 할때 캐릭터를 통하여 이루어진다.  
@@ -70,6 +71,7 @@ header file: [Character.h](Factorio-Imitation/Character.h)
 
 ### [화력 채광 드릴 (Burner Mining Drill)](#구조물-structure)
 	구조물 (Structure)/ 화력 채광 드릴 (Burner Mining Drill)
+![화력 채광 드릴](Image/BurnerMiningDrill.png)
 	
 header file: [BurnerMiningDrill.h](Factorio-Imitation/BurnerMiningDrill.h)
 * 타일에 있는 광물을 채취한다.
