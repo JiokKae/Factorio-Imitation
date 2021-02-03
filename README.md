@@ -56,9 +56,9 @@
 
 ### [캐릭터 (Character)](#캐릭터-character)
 	엔티티 (Entity)/ 캐릭터 (Character)
+header file: [Character.h](Factorio-Imitation/Character.h)  
 ![캐릭터](Image/Character.png)
 
-header file: [Character.h](Factorio-Imitation/Character.h)
 * 조작
 	> 플레이어는 게임에서 행동을 할때 캐릭터를 통하여 이루어진다.  
 	> 공장을 확장하기 위해서 [구조물 빌더](#구조물-빌더-structure-builder)로 구조물들을 건설하거나 철거할 수 있다.
@@ -72,36 +72,36 @@ header file: [Character.h](Factorio-Imitation/Character.h)
 
 ### [화력 채광 드릴 (Burner Mining Drill)](#구조물-structure)
 	구조물 (Structure)/ 화력 채광 드릴 (Burner Mining Drill)
+header file: [BurnerMiningDrill.h](Factorio-Imitation/BurnerMiningDrill.h)  
 ![화력 채광 드릴](Image/BurnerMiningDrill.png)
-	
-header file: [BurnerMiningDrill.h](Factorio-Imitation/BurnerMiningDrill.h)
+
 * 타일에 있는 광물을 채취한다.
 * 연료를 에너지로 사용한다.
 * 배출구로 광물을 배출한다.
 
 ### [운송 벨트 (Transport Belt)](#구조물-structure)
 	구조물 (Structure)/ 운송 벨트 (Transport Belt)
+header file: [TransportBelt.h](Factorio-Imitation/TransportBelt.h)  
 ![운송 벨트](Image/TransportBelt.png)
 
-header file: [TransportBelt.h](Factorio-Imitation/TransportBelt.h)
 * 벨트위에 올라가있는 아이템들을 진행 방향으로 이동시킨다.
 * 벨트의 종류에 따라 속도가 다르다.
 * 사방의 운송벨트와 상호 작용하여 진행 방향이 바뀐다
 
 ### [투입기 (Inserter)](#구조물-structure)
 	구조물 (Structure)/ 투입기 (Inserter)
+header file: [BurnerInserter.h](Factorio-Imitation/BurnerInserter.h)  
 ![투입기](Image/Inserter.png)
 
-header file: [BurnerInserter.h](Factorio-Imitation/BurnerInserter.h)
 * 구조물에 아이템을 투입한다.
 * 구조물에서 아이템을 반출한다.
 * 방향에 따라 집게팔 이미지가 회전한다.
 
 ### [돌 용광로 (Stone Furnace)](#구조물-structure)
 	구조물 (Structure)/ 돌 용광로 (Stone Furnace)
+header file: [StoneFurnace.h](Factorio-Imitation/StoneFurnace.h)  
 ![돌 용광로](Image/StoneFurnace.png)
 
-header file: [StoneFurnace.h](Factorio-Imitation/StoneFurnace.h)
 * 굽기 제작법이 있는 아이템들을 가공한다.
 * 연료를 에너지로 사용한다.
 * 다른 구조물로부터 아이템을 받을 수 있다.
@@ -109,29 +109,32 @@ header file: [StoneFurnace.h](Factorio-Imitation/StoneFurnace.h)
 
 ### [조립 기계 1 (Assembling Machine 1)](#구조물-structure)
 	구조물 (Structure)/ 조립 기계 1 (Assembling Machine 1)
+header file: [AssemblingMachine1.h](Factorio-Imitation/AssemblingMachine1.h)  
 ![조립 기계 1](Image/AssemblingMachine1.png)
 
-header file: [AssemblingMachine1.h](Factorio-Imitation/AssemblingMachine1.h)
 * 제작법을 선택하고 재료를 받으면 완성품을 생산한다.
 * 다른 구조물로부터 아이템을 받을 수 있다.
 * 다른 구조물이 완성품을 가져갈 수 있다.
 
 ### 타일 매니저 (Tile Manager)
 #### 청크 (Chunk)
+header file: [Chunk.h](Factorio-Imitation/Chunk.h)  
 
-header file: [Chunk.h](Factorio-Imitation/Chunk.h)
 * 타일 32 * 32개를 구성하는 단위
 * 인스턴싱 기법으로 청크단위로 화면에 그려진다.
 * 음수 좌표를 사용하기 위해 map을 사용해 저장한다.
 
 #### 타일 (Tile)
-header file: [Tile.h](Factorio-Imitation/Tile.h)
+header file: [Tile.h](Factorio-Imitation/Tile.h  
+
 * 그리드의 기본 단위
 * 광물을 가지고 있다.
 * 타일 위에 지어진 구조물의 링크를 저장한다.
 #### 광물 (Ore)
-header file: [Ore.h](Factorio-Imitation/Ore.h)
-* 광물의 종류와 양을 저장한다.
+header file: [Ore.h](Factorio-Imitation/Ore.h)  
+
+* 타일에 있는 광물의 종류와 양을 저장한다.
+* 광물은 철 광석, 구리 광석, 돌, 석탄이 있다.
 
 ### 엔티티 매니저 (Entity Manager)
 * 엔티티 매니저는 구조물들과 땅 위의 아이템을 관리하고 캐릭터와 구조물 빌더를 가지고 있다.
@@ -141,12 +144,12 @@ header file: [Ore.h](Factorio-Imitation/Ore.h)
 	
 #### 땅 위의 아이템 (Item On Ground)
 * 인스턴싱 기법을 사용하여 땅 위의 아이템들을 일괄적으로 화면에 출력한다.
-* 화면 안에 있는 아이템만을 추려 출력해 최적화했다.
+* 화면 안에 있는 아이템만을 추리고 출력해 성능을 최적화했다.
 
 #### [구조물 빌더 (Structure Builder)](#구조물-structure)
+header file: [StructureBuilder.h](Factorio-Imitation/StructureBuilder.h)  
 ![구조물 빌더](Image/StructureBuilder.png)
 
-header file: [StructureBuilder.h](Factorio-Imitation/StructureBuilder.h)
 * 임시 구조물
 	* 마우스 좌표에 임시로 구조물을 배치하여 표시한다.
 * 활성화
@@ -154,4 +157,5 @@ header file: [StructureBuilder.h](Factorio-Imitation/StructureBuilder.h)
 	
 
 ### 제작법 (Recipe)
+header file: [Recipe.h](Factorio-Imitation/Recipe.h)  
 * 아이템의 제작 재료를 정의 해놓은 자료 구조
