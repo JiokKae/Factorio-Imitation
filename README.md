@@ -132,6 +132,7 @@ header file: [Tile.h](Factorio-Imitation/Tile.h)
 * 타일 위에 지어진 구조물의 링크를 저장한다.
 #### 광물 (Ore)
 header file: [Ore.h](Factorio-Imitation/Ore.h)  
+![광물](Image/Ore.png)
 
 * 타일에 있는 광물의 종류와 양을 저장한다.
 * 광물은 철 광석, 구리 광석, 돌, 석탄이 있다.
@@ -143,6 +144,7 @@ header file: [Ore.h](Factorio-Imitation/Ore.h)
 	> 그래서 좌표값을 키값으로 multimap에 넣어 정렬과 함께 저장하였다.
 	
 #### 땅 위의 아이템 (Item On Ground)
+![땅 위의 아이템](Image/ItemOnGround.png)
 * 인스턴싱 기법을 사용하여 땅 위의 아이템들을 일괄적으로 화면에 출력한다.
 * 화면 안에 있는 아이템만을 추리고 출력해 성능을 최적화했다.
 
