@@ -40,7 +40,7 @@
     
 ## 정의부
 
-### 상태 패턴 (State Pattern)
+### [상태 패턴 (State Pattern)](#design-pattern)
 * 객체의 실행 코드를 상태에 따라 다르게 처리해야 할때 사용한다.
 * 패턴이 사용된 객체: [캐릭터 (Character)](#캐릭터-character-1), [구조물 (Structure)](#구조물-structure)
 
@@ -90,7 +90,7 @@ header file: [TransportBelt.h](Factorio-Imitation/TransportBelt.h)
 header file: [BurnerInserter.h](Factorio-Imitation/BurnerInserter.h)
 * 구조물에 아이템을 투입한다.
 * 구조물에서 아이템을 반출한다.
-* 방향에 따라 이미지가 회전한다.
+* 방향에 따라 집게팔 이미지가 회전한다.
 
 ### [돌 용광로 (Stone Furnace)](#구조물-structure)
 	구조물 (Structure)/ 돌 용광로 (Stone Furnace)
@@ -99,14 +99,16 @@ header file: [StoneFurnace.h](Factorio-Imitation/StoneFurnace.h)
 * 굽기 제작법이 있는 아이템들을 가공한다.
 * 연료를 에너지로 사용한다.
 * 다른 구조물로부터 아이템을 받을 수 있다.
+* 다른 구조물이 완성품을 가져갈 수 있다.
 
 ### [조립 기계 1 (Assembling Machine 1)](#구조물-structure)
 	구조물 (Structure)/ 조립 기계 1 (Assembling Machine 1)
-![조립 기계](Image/AssemblingMachine1.png)
+![조립 기계 1](Image/AssemblingMachine1.png)
 
 header file: [AssemblingMachine1.h](Factorio-Imitation/AssemblingMachine1.h)
-* 제작법이 있는 아이템들을 가공한다.
+* 제작법을 선택하고 재료를 받으면 완성품을 생산한다.
 * 다른 구조물로부터 아이템을 받을 수 있다.
+* 다른 구조물이 완성품을 가져갈 수 있다.
 
 ### [구조물 빌더 (Structure Builder)](#구조물-structure)
 
@@ -137,7 +139,7 @@ header file: [Ore.h](Factorio-Imitation/Ore.h)
 * 엔티티 매니저는 구조물들과 땅 위의 아이템을 관리하고 캐릭터와 구조물 빌더를 가지고 있다.
 * 엔티티 저장
 	> 엔티티들을 자연스럽게 보이기 위하여 왼쪽 위부터 출력해야 한다.  
-	> 그래서 Vector2값을 키값으로 사용하여 multimap을 통해 정렬을 하여 저장하였다.
+	> 그래서 좌표값을 키값으로 multimap에 넣어 정렬과 함께 저장하였다.
 	
 #### 땅 위의 아이템 (Item On Ground)
 * 인스턴싱 기법을 사용하여 땅 위의 아이템들을 일괄적으로 화면에 출력한다.
