@@ -39,17 +39,17 @@ private:
 	// 구조물의 정보
 	float craftingSpeed;		// 제작 속도
 	size_t productsFinished;	// 생산 총량
-	float craftedTime;			// 제작한 시간
+	float craftedTime;		// 제작한 시간
 	float productionPercent;	// 제작률
 
 	// 아이템
 	Ingredients ingredients;	// 재료들
-	ItemInfo result;			// 생산품
+	ItemInfo result;		// 생산품
 
 	// 레시피
 	vector<Recipe*>* vecRecipes;	// 레시피 목록
-	Recipe* currRecipe;				// 현재 레시피
-	size_t currRecipeIndex;			// 현재 레시피 번호
+	Recipe* currRecipe;		// 현재 레시피
+	size_t currRecipeIndex;		// 현재 레시피 번호
 
 public:
 	virtual HRESULT Init(int x, int y, DIRECTION direction, bool temp = false) override;
