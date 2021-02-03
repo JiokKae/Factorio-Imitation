@@ -26,8 +26,8 @@ public:
 	void Release();
 	void Update();
 
-	float GetZoom() { return powf(2, zoom); }
-	glm::vec3 GerFront() { return front; }
+	float GetZoom()		{ return powf(2, zoom); }
+	glm::vec3 GerFront()	{ return front; }
 	glm::vec3 GetPosition() { return position; }
 	glm::mat4 GetViewMatrix();
 	RECT GetRect(int winWidth, int winHeight);
