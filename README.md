@@ -69,6 +69,13 @@ header file: [Character.h](Factorio-Imitation/Character.h)
    
 * 인벤토리
 	* 보유중인 아이템을 획득하면 기존의 아이템과 합쳐진다.
+	
+### [구조물 (Structure)](#구조물-structure)
+	엔티티 (Entity)/ 구조물 (Structure)
+header file: [Structure.h](Factorio-Imitation/Structure.h)  
+
+* 건설될 수 있는 객체다.
+* [상태 패턴](#상태-패턴-state-pattern)을 사용하여 구조물의 상태에 따라 다르게 동작한다.
 
 ### [화력 채광 드릴 (Burner Mining Drill)](#구조물-structure)
 	구조물 (Structure)/ 화력 채광 드릴 (Burner Mining Drill)
