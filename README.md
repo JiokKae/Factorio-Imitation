@@ -107,23 +107,7 @@ header file: [BurnerInserter.h](Factorio-Imitation/BurnerInserter.h)
 ### [돌 용광로 (Stone Furnace)](#구조물-structure)
 	구조물 (Structure)/ 돌 용광로 (Stone Furnace)
 header file: [StoneFurnace.h](Factorio-Imitation/StoneFurnace.h)  
-![돌 용광로](Image/StoneFurnace.png)
-
-<video autoplay loop>
-<source src="video/StoneFurnace.mp4" type="video/mp4"> 
-</video>
-
-![dd](video/StoneFurnace.mp4)
-
-[![Stone Furnace](Image/StoneFurnace.png)](video/StoneFurnace.mp4)
-
-<!-- blank line -->
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true" poster="path/to/poster_image.png">
-    <source src="video/StoneFurnace.mp4" type="video/mp4">
-  </video>
-</figure>
-<!-- blank line -->
+![돌 용광로](Image/StoneFurnace.gif)
 
 * 굽기 제작법이 있는 아이템들을 가공한다.
 * 연료를 에너지로 사용한다.
