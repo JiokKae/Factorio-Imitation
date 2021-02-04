@@ -109,6 +109,10 @@ header file: [BurnerInserter.h](Factorio-Imitation/BurnerInserter.h)
 header file: [StoneFurnace.h](Factorio-Imitation/StoneFurnace.h)  
 ![돌 용광로](Image/StoneFurnace.png)
 
+<video autoplay loop>
+<source src="video/StoneFurnace.mp4" type="video/mp4"> 
+</video>
+
 * 굽기 제작법이 있는 아이템들을 가공한다.
 * 연료를 에너지로 사용한다.
 * 다른 구조물로부터 아이템을 받을 수 있다.
