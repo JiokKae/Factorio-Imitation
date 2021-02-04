@@ -115,6 +115,16 @@ header file: [StoneFurnace.h](Factorio-Imitation/StoneFurnace.h)
 
 ![dd](video/StoneFurnace.mp4)
 
+[![Stone Furnace](Image/StoneFurnace.png)](video/StoneFurnace.mp4)
+
+<!-- blank line -->
+<figure class="video_container">
+  <video controls="true" allowfullscreen="true" poster="path/to/poster_image.png">
+    <source src="video/StoneFurnace.mp4" type="video/mp4">
+  </video>
+</figure>
+<!-- blank line -->
+
 * 굽기 제작법이 있는 아이템들을 가공한다.
 * 연료를 에너지로 사용한다.
 * 다른 구조물로부터 아이템을 받을 수 있다.
