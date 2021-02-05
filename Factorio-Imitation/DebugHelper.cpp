@@ -16,6 +16,9 @@ void DebugHelper::Update()
 
 void DebugHelper::Render(float x, float y)
 {
+	if (!g_debuggingMode)
+		return;
+
 	string buffer;
 	auto it = Values.begin();
 
@@ -29,6 +32,9 @@ void DebugHelper::Render(float x, float y)
 
 void DebugHelper::SetFloat(string key, float value)
 {
+	if (!g_debuggingMode)
+		return;
+
 	auto it = Values.find(key);
 
 	if (it == Values.end())
@@ -39,6 +45,9 @@ void DebugHelper::SetFloat(string key, float value)
 
 void DebugHelper::SetInt(string key, int value)
 {
+	if (!g_debuggingMode)
+		return;
+
 	auto it = Values.find(key);
 
 	if (it == Values.end())
@@ -49,6 +58,9 @@ void DebugHelper::SetInt(string key, int value)
 
 float DebugHelper::GetFloat(string key)
 {
+	if (!g_debuggingMode)
+		return 0.0f;
+
 	auto it = Values.find(key);
 
 	if (it == Values.end())
@@ -59,6 +71,9 @@ float DebugHelper::GetFloat(string key)
 
 int DebugHelper::GetInt(string key)
 {
+	if (!g_debuggingMode)
+		return 0;
+
 	auto it = Values.find(key);
 
 	if (it == Values.end())

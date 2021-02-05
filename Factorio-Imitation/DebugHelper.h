@@ -6,7 +6,8 @@ class DebugHelper : public Singleton<DebugHelper>
 	class Property
 	{
 	protected:
-		enum Type {
+		enum Type 
+		{
 			INT,
 			FLOAT,
 			DOUBLE,
@@ -31,7 +32,6 @@ class DebugHelper : public Singleton<DebugHelper>
 		string ToString();
 	};
 
-
 	map<string, Property> Values;
 
 public:
@@ -44,7 +44,7 @@ public:
 	void	SetInt(string key, int value);
 
 	float	GetFloat(string key);
-	int		GetInt(string key);
+	int	GetInt(string key);
 };
 
 
