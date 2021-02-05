@@ -41,15 +41,15 @@
 ## 정의부
 
 ### [상태 패턴 (State Pattern)](#design-pattern)
-* 객체의 실행 코드를 상태에 따라 다르게 처리해야 할때 사용한다.
+* 객체의 동작 방법을 상태에 따라 다르게 처리해야 할때 사용한다.
 * 패턴이 사용된 객체: [캐릭터 (Character)](#캐릭터-character-1), [구조물 (Structure)](#구조물-structure-1)
 
 ### OpenGL(Open Graphics Library)
 * 하드웨어 가속으로 컴퓨터 그래픽을 처리할 수 있게 돕는 라이브러리다. 
-* 2D, 3D 그래픽 라이브러리
+* 2D, 3D 그래픽에 모두 활용할 수 있다.
 
 ### 인스턴싱 (Instancing)
-* 서로 비슷한 요소들을 한번에 GPU로 넘겨주어 한번에 렌더한다.  
+* 서로 비슷한 요소의 정보들을 한번에 GPU로 넘겨주어 한번에 렌더하는 기법이다.
 * CPU와 GPU간의 통신이 반복되지 않아 딜레이가 적어 속도가 빠르다.  
 
 * 기술이 사용된 객체: [타일(Tile)](#타일-tile), [광물(Ore)](#광물-ore), [땅 위의 아이템(Item On Ground)](#땅-위의-아이템-item-on-ground)
@@ -75,6 +75,7 @@ header file: [Character.h](Factorio-Imitation/Character.h)
 header file: [Structure.h](Factorio-Imitation/Structure.h)  
 
 * 건설될 수 있는 객체다.
+* 아이템을 주고 받을 수 있는 기능이 있다.
 * [상태 패턴](#상태-패턴-state-pattern)을 사용하여 구조물의 상태에 따라 다르게 동작한다.
 
 ### [화력 채광 드릴 (Burner Mining Drill)](#구조물-structure)
@@ -82,7 +83,7 @@ header file: [Structure.h](Factorio-Imitation/Structure.h)
 header file: [BurnerMiningDrill.h](Factorio-Imitation/BurnerMiningDrill.h)  
 ![화력 채광 드릴](Image/BurnerMiningDrill.png)
 
-* 타일에 있는 광물을 채취한다.
+* 채광 영역내에 있는 타일의 광물을 채취한다.
 * 연료를 에너지로 사용한다.
 * 배출구로 광물을 배출한다.
 
@@ -91,7 +92,7 @@ header file: [BurnerMiningDrill.h](Factorio-Imitation/BurnerMiningDrill.h)
 header file: [TransportBelt.h](Factorio-Imitation/TransportBelt.h)  
 ![운송 벨트](Image/TransportBelt.png)
 
-* 벨트위에 올라가있는 아이템들을 진행 방향으로 이동시킨다.
+* 벨트 위에 올라가있는 아이템들을 벨트의 진행 방향으로 이동시킨다.
 * 벨트의 종류에 따라 속도가 다르다.
 * 사방의 운송벨트와 상호 작용하여 진행 방향이 바뀐다
 
@@ -100,9 +101,9 @@ header file: [TransportBelt.h](Factorio-Imitation/TransportBelt.h)
 header file: [BurnerInserter.h](Factorio-Imitation/BurnerInserter.h)  
 ![투입기](Image/Inserter.png)
 
-* 구조물에 아이템을 투입한다.
-* 구조물에서 아이템을 반출한다.
-* 방향에 따라 집게팔 이미지가 회전한다.
+* 구조물에 아이템을 투입할 수 있다.
+* 구조물에서 아이템을 반출할 수 있다.
+* 방향에 따라 집게팔의 이미지가 회전한다.
 
 ### [돌 용광로 (Stone Furnace)](#구조물-structure)
 	구조물 (Structure)/ 돌 용광로 (Stone Furnace)
@@ -117,10 +118,12 @@ header file: [StoneFurnace.h](Factorio-Imitation/StoneFurnace.h)
 ### [조립 기계 1 (Assembling Machine 1)](#구조물-structure)
 	구조물 (Structure)/ 조립 기계 1 (Assembling Machine 1)
 header file: [AssemblingMachine1.h](Factorio-Imitation/AssemblingMachine1.h)  
-![조립 기계 1](Image/AssemblingMachine1.png)
+![조립 기계 1](Image/AssemblingMachine1.gif)
 
+* 조립 기계는 자동화 과정에서 가장 중요한 객체다.  
 * 제작법을 선택하고 재료를 받으면 완성품을 생산한다.
-* 다른 구조물로부터 아이템을 받을 수 있다.
+* 아이템을 줄수 있는 구조물에게 재료를 받을 수 있다.
+* LShift + LeftClick으로 제작법을 변경할 수 있다.
 * 다른 구조물이 완성품을 가져갈 수 있다.
 
 ### 타일 매니저 (Tile Manager)
@@ -148,7 +151,7 @@ header file: [Ore.h](Factorio-Imitation/Ore.h)
 * 엔티티 매니저는 구조물들과 땅 위의 아이템을 관리하고 캐릭터와 구조물 빌더를 가지고 있다.
 * 엔티티 저장
 	> 엔티티들을 자연스럽게 보이기 위하여 왼쪽 위부터 출력해야 한다.  
-	> 그래서 좌표값을 키값으로 multimap에 넣어 정렬과 함께 저장하였다.
+	> 그래서 좌표값을 키값으로 multimap에 넣어 정렬과 함께 저장하였다.  
 	
 #### 땅 위의 아이템 (Item On Ground)
 ![땅 위의 아이템](Image/ItemOnGround.png)
@@ -159,12 +162,11 @@ header file: [Ore.h](Factorio-Imitation/Ore.h)
 header file: [StructureBuilder.h](Factorio-Imitation/StructureBuilder.h)  
 ![구조물 빌더](Image/StructureBuilder.png)
 
-* 임시 구조물
-	* 마우스 좌표에 임시로 구조물을 배치하여 표시한다.
-* 활성화
-	* 설치 가능한 아이템을 핸드에 들었을 때 활성화한다.
-	
+* 구조물 빌더는 건설하기 위해 가상의 구조물을 이용한다.
+* 가상의 구조물을 설치할 위치에 임시로 배치한 후, 건설이 가능한지 여부를 색상으로 표시한다.
+* 핸드에 설치 가능한 아이템을 들었을 때 활성화된다.
 
 ### 제작법 (Recipe)
 header file: [Recipe.h](Factorio-Imitation/Recipe.h)  
-* 아이템의 제작 재료를 정의 해놓은 자료 구조
+* 아이템의 제작 방법을 정의 해놓은 자료 구조.
+* 제작에 들어가는 재료와 시간, 완성품의 정보를 가지고 있다.
