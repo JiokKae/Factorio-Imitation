@@ -90,7 +90,7 @@ header file: [BurnerMiningDrill.h](Factorio-Imitation/BurnerMiningDrill.h)
 ### [운송 벨트 (Transport Belt)](#구조물-structure)
 	구조물 (Structure)/ 운송 벨트 (Transport Belt)
 header file: [TransportBelt.h](Factorio-Imitation/TransportBelt.h)  
-![운송 벨트](Image/TransportBelt.png)
+![운송 벨트](Image/TransportBelt.gif)
 
 * 벨트 위에 올라가있는 아이템들을 벨트의 진행 방향으로 이동시킨다.
 * 벨트의 종류에 따라 속도가 다르다.
@@ -99,7 +99,7 @@ header file: [TransportBelt.h](Factorio-Imitation/TransportBelt.h)
 ### [투입기 (Inserter)](#구조물-structure)
 	구조물 (Structure)/ 투입기 (Inserter)
 header file: [BurnerInserter.h](Factorio-Imitation/BurnerInserter.h)  
-![투입기](Image/Inserter.png)
+![투입기](Image/Inserter.gif)
 
 * 구조물에 아이템을 투입할 수 있다.
 * 구조물에서 아이템을 반출할 수 있다.
