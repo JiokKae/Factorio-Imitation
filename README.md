@@ -57,7 +57,7 @@
 ### [캐릭터 (Character)](#캐릭터-character)
 	엔티티 (Entity)/ 캐릭터 (Character)
 header file: [Character.h](Factorio-Imitation/Character.h)  
-![캐릭터](Image/Character.png)
+![캐릭터](Image/Character.gif)
 
 * 조작
 	> 플레이어는 게임에서 행동을 할때 캐릭터를 통하여 이루어진다.  
@@ -81,7 +81,7 @@ header file: [Structure.h](Factorio-Imitation/Structure.h)
 ### [화력 채광 드릴 (Burner Mining Drill)](#구조물-structure)
 	구조물 (Structure)/ 화력 채광 드릴 (Burner Mining Drill)
 header file: [BurnerMiningDrill.h](Factorio-Imitation/BurnerMiningDrill.h)  
-![화력 채광 드릴](Image/BurnerMiningDrill.png)
+![화력 채광 드릴](Image/BurnerMiningDrill.gif)
 
 * 채광 영역내에 있는 타일의 광물을 채취한다.
 * 연료를 에너지로 사용한다.
