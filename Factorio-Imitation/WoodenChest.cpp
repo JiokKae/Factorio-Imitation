@@ -3,7 +3,7 @@
 HRESULT WoodenChest::Init(int x, int y, DIRECTION direction, bool temp)
 {
 	itemId = ItemEnum::WOODEN_CHEST;
-	Structure::Init(x, y, direction, temp);
+	Container::Init(x, y, direction, temp);
 	status = WORKING;
 
 	mainImage = new GLImage();
@@ -18,7 +18,7 @@ HRESULT WoodenChest::Init(int x, int y, DIRECTION direction, bool temp)
 
 void WoodenChest::Release()
 {
-	Structure::Release();
+	Container::Release();
 
 	SAFE_RELEASE(mainImage);
 	SAFE_RELEASE(shadowImage);
@@ -26,7 +26,7 @@ void WoodenChest::Release()
 
 void WoodenChest::Update()
 {
-	Structure::Update();
+	Container::Update();
 }
 
 void WoodenChest::FirstRender(Shader* shader)

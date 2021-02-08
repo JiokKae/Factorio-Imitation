@@ -34,8 +34,8 @@ public:
 	virtual HRESULT Init(int x, int y, DIRECTION direction, bool temp = false);
 	virtual void Release() override;
 	virtual void Update();
-	virtual void Render(Shader* lpShader);
-	virtual void Render(Shader* shader, float x, float y);
+	virtual void Render(Shader* lpShader) = 0;
+	virtual void Render(Shader* shader, float x, float y) = 0;
 
 	static Structure* CreateStructure(ItemEnum itemId);
 

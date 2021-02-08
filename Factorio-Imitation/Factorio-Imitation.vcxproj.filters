@@ -154,7 +154,7 @@
     <Filter Include="MainGame\UI\StoneFurnaceUI">
       <UniqueIdentifier>{c7ada55c-2d8f-4ca4-b9f5-71c113f9fb97}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Entity\Structure\WoodenChest">
+    <Filter Include="MainGame\Entity\Structure\Container">
       <UniqueIdentifier>{9b2bdabc-9e82-4db7-b8e8-5b6a37adb896}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -358,13 +358,16 @@
       <Filter>MainGame\Entity\Structure\TransportBelt</Filter>
     </ClInclude>
     <ClInclude Include="WoodenChest.h">
-      <Filter>MainGame\Entity\Structure\WoodenChest</Filter>
+      <Filter>MainGame\Entity\Structure\Container</Filter>
     </ClInclude>
     <ClInclude Include="SelectRecipeAssemblingUI.h">
       <Filter>MainGame\UI</Filter>
     </ClInclude>
     <ClInclude Include="DebugHelper.h">
       <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Container.h">
+      <Filter>MainGame\Entity\Structure\Container</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -564,13 +567,16 @@
       <Filter>MainGame\Entity\Structure\TransportBelt</Filter>
     </ClCompile>
     <ClCompile Include="WoodenChest.cpp">
-      <Filter>MainGame\Entity\Structure\WoodenChest</Filter>
+      <Filter>MainGame\Entity\Structure\Container</Filter>
     </ClCompile>
     <ClCompile Include="SelectRecipeAssemblingUI.cpp">
       <Filter>MainGame\UI</Filter>
     </ClCompile>
     <ClCompile Include="DebugHelper.cpp">
       <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Container.cpp">
+      <Filter>MainGame\Entity\Structure\Container</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

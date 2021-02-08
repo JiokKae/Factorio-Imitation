@@ -99,14 +99,6 @@ void Structure::Update()
 
 }
 
-void Structure::Render(Shader* lpShader)
-{
-}
-
-void Structure::Render(Shader* shader, float x, float y)
-{
-}
-
 Structure* Structure::CreateStructure(ItemEnum itemId)
 {
 	switch (itemId)

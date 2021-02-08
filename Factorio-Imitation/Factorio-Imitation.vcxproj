@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AssemblingMachine1.h" />
+    <ClInclude Include="Container.h" />
     <ClInclude Include="DebugHelper.h" />
     <ClInclude Include="SelectRecipeAssemblingUI.h" />
     <ClInclude Include="BurnerInserter.h" />
@@ -225,6 +226,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AssemblingMachine1.cpp" />
+    <ClCompile Include="Container.cpp" />
     <ClCompile Include="DebugHelper.cpp" />
     <ClCompile Include="SelectRecipeAssemblingUI.cpp" />
     <ClCompile Include="BurnerInserter.cpp" />
