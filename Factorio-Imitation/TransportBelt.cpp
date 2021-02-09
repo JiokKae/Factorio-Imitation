@@ -3,11 +3,11 @@
 #include "ItemOnGround.h"
 #include "ItemOnGrounds.h"
 int TransportBelt::imageFrameYByDirection[DIRECTION_END][TransportBelt::ImageIndex::END] = {
-//			TOP			BOTTOM		UP			LEFT_UP		RIGHT_UP
-			2,			7,			17,			13,			15,			// NORTH
-			0,			5,			19,			14,			11,			// EAST
-			6,			3,			16,			10,			8,			// SOUTH
-			4,			1,			18,			9,			12,			// WEST
+//	TOP	BOTTOM		UP	LEFT_UP		RIGHT_UP
+	2,	7,		17,	13,		15,		// NORTH
+	0,	5,		19,	14,		11,		// EAST
+	6,	3,		16,	10,		8,		// SOUTH
+	4,	1,		18,	9,		12,		// WEST
 };
 
 glm::ivec2 TransportBelt::imageTopPosOffset[DIRECTION_END] = {
@@ -21,28 +21,13 @@ HRESULT TransportBelt::Init(int x, int y, DIRECTION direction, bool temp)
 {
 	itemId = ItemEnum::TRANSPORT_BELT;
 	speed = 45.0f;
-	Structure::Init(x, y, direction, temp);
-	status = WORKING;
-
 	image = new GLImage();
 	image->Init("Entity/TransportBelt", 16, 20);
 
-	aroundBelts = new TransportBelt*[DIRECTION_END]();
-	Tile* tile = TileManager::GetSingleton()->GetLpTile(coord.x, coord.y);
-	for (int i = 0; i < DIRECTION_END; i++)
-	{
-		Tile* aroundTile = tile->GetAroundTile((DIRECTION)i);
-		if (aroundTile)
-		{
-			Structure* structure = aroundTile->GetLpSturcture();
-			if (structure && IsTransportBelt(structure->GetItemId()))
-			{
-				aroundBelts[(DIRECTION)i] = (TransportBelt*)structure;
-				if(!temp)
-					((TransportBelt*)structure)->SetAroundBelts(DIRECTION((i + 2) % DIRECTION_END), this);
-			}
-		}
-	}
+	Structure::Init(x, y, direction, temp);
+	status = WORKING;
+
+	LinkAroundBelts();
 
 	return S_OK;
 }
@@ -50,8 +35,7 @@ HRESULT TransportBelt::Init(int x, int y, DIRECTION direction, bool temp)
 void TransportBelt::Release()
 {
 	Structure::Release();
-
-	SAFE_ARR_DELETE(aroundBelts);
+	UnlinkAroundBelts();
 	SAFE_DELETE(image);
 }
 
@@ -84,7 +68,7 @@ void TransportBelt::Update()
 
 void TransportBelt::FirstRender(Shader* lpShader)
 {
-	int frame = g_time * speed;
+	int frame = int(g_time * speed);
 	glm::ivec2 maxFrame = image->GetMaxFrame();
 
 	image->Render(lpShader, position.x, position.y, frame % maxFrame.x, imageFrameYByDirection[direction][renderState]);
@@ -92,16 +76,16 @@ void TransportBelt::FirstRender(Shader* lpShader)
 
 void TransportBelt::Render(Shader* lpShader)
 {
-	int frame = g_time * speed;
+	int frame = int(g_time * speed);
 	glm::ivec2 maxFrame = image->GetMaxFrame();
 
-	TransportBelt* upBelt = aroundBelts[direction];
-	if (upBelt)
+	TransportBelt* forwardBelt = aroundBelts[direction];
+	if (forwardBelt)
 	{
-		if (!(upBelt->GetDirection() == OPPOSITE_DIR(direction)
-			|| upBelt->GetDirection() == direction && upBelt->GetRenderState() == UP
-			|| upBelt->GetDirection() == LEFT_DIR(direction) && upBelt->GetRenderState() == LEFT_UP
-			|| upBelt->GetDirection() == RIGHT_DIR(direction) && upBelt->GetRenderState() == RIGHT_UP))
+		if (!(forwardBelt->GetDirection() == OPPOSITE_DIR(direction)
+			|| forwardBelt->GetDirection() == direction && forwardBelt->GetRenderState() == UP
+			|| forwardBelt->GetDirection() == LEFT_DIR(direction) && forwardBelt->GetRenderState() == LEFT_UP
+			|| forwardBelt->GetDirection() == RIGHT_DIR(direction) && forwardBelt->GetRenderState() == RIGHT_UP))
 			image->Render(lpShader, position.x + imageTopPosOffset[direction].x, position.y + imageTopPosOffset[direction].y, frame % maxFrame.x, imageFrameYByDirection[direction][ImageIndex::TOP]);
 	}
 	else
@@ -128,9 +112,9 @@ void TransportBelt::LateRender(Shader* lpShader)
 {
 }
 
-void TransportBelt::Render(Shader* shader, float posX, float posY)
+void TransportBelt::RenderInScreen(Shader* shader, float posX, float posY)
 {
-	int frame = g_time * speed;
+	int frame = int(g_time * speed);
 	glm::ivec2 maxFrame = image->GetMaxFrame();
 
 	image->Render(shader, posX, posY, frame % maxFrame.x, imageFrameYByDirection[direction][renderState]);
@@ -162,6 +146,42 @@ void TransportBelt::Render(Shader* shader, float posX, float posY)
 			image->Render(shader, posX - imageTopPosOffset[direction].x, posY - imageTopPosOffset[direction].y, frame % maxFrame.x, imageFrameYByDirection[direction][ImageIndex::BOTTOM]);
 	}
 
+}
+
+void TransportBelt::LinkAroundBelts()
+{	
+	SAFE_ARR_DELETE(aroundBelts);
+	aroundBelts = new TransportBelt * [DIRECTION_END]();
+	Tile* tile = TileManager::GetSingleton()->GetLpTile(coord.x, coord.y);
+	for (int dir = 0; dir < DIRECTION_END; dir++)
+	{
+		Tile* aroundTile = tile->GetAroundTile((DIRECTION)dir);
+		if (aroundTile)
+		{
+			Structure* structure = aroundTile->GetLpSturcture();
+			if (structure && IsTransportBelt(structure->GetItemId()))
+			{
+				aroundBelts[dir] = (TransportBelt*)structure;
+				if (!temp)
+					aroundBelts[dir]->SetAroundBelts((DIRECTION)OPPOSITE_DIR(dir), this);
+			}
+		}
+	}
+}
+
+void TransportBelt::UnlinkAroundBelts()
+{
+	if (temp)
+		return;
+	if (!aroundBelts)
+		return;
+
+	for (size_t dir = 0; dir < DIRECTION_END; dir++)
+	{
+		if (aroundBelts[dir])
+			aroundBelts[dir]->SetAroundBelts((DIRECTION)OPPOSITE_DIR(dir), nullptr);
+	}
+	SAFE_ARR_DELETE(aroundBelts);
 }
 
 void TransportBelt::FlowItem(Entity* item, bool isItem)
