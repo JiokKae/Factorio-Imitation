@@ -1,4 +1,4 @@
-#include "TenCubeSpaceScene.h"
+ï»¿#include "TenCubeSpaceScene.h"
 #include "Shader.h"
 #include "FreeCamera.h"
 #include "Texture.h"
@@ -58,34 +58,34 @@ HRESULT TenCubeSpaceScene::Init()
 	};
 
 	glGenVertexArrays(1, &VAO);
-	// 1. Vertex Array Object ¹ÙÀÎµù
+	// 1. Vertex Array Object ë°”ì¸ë”©
 	glBindVertexArray(VAO);
 
 	glGenBuffers(1, &VBO);
-	// 2. OpenGLÀÌ »ç¿ëÇÏ±â À§ÇØ vertex ¸®½ºÆ®¸¦ vertex ¹öÆÛ¿¡ º¹»ç
+	// 2. OpenGLì´ ì‚¬ìš©í•˜ê¸° ìœ„í•´ vertex ë¦¬ìŠ¤íŠ¸ë¥¼ vertex ë²„í¼ì— ë³µì‚¬
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	// À§Ä¡ attribute
+	// ìœ„ì¹˜ attribute
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	// ÅØ½ºÃÄ attribute
+	// í…ìŠ¤ì³ attribute
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
-	// 5. ¿ÀºêÁ§Æ®¸¦ ±×¸®°í ½ÍÀ» ¶§ ¿ì¸®°¡ »ý¼ºÇÑ shader programÀ» »ç¿ë
+	// 5. ì˜¤ë¸Œì íŠ¸ë¥¼ ê·¸ë¦¬ê³  ì‹¶ì„ ë•Œ ìš°ë¦¬ê°€ ìƒì„±í•œ shader programì„ ì‚¬ìš©
 	ourShader = new Shader("SimpleVertexShader.glsl", "SimpleFragmentShader.glsl");
 
 	// uncomment this call to draw in wireframe polygons.
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	// ÅØ½ºÃ³ ·Îµå ¹× »ý¼º
+	// í…ìŠ¤ì²˜ ë¡œë“œ ë° ìƒì„±
 	texture1 = new Texture();
 	texture1->Init("base/graphics/entity/assembling-machine-1/assembling-machine-1.png");
 	texture2 = new Texture();
 	texture2->Init("base/graphics/entity/artillery-turret/hr-artillery-turret-base.png");
 
-	ourShader->use(); // uniformÀ» ¼³Á¤ÇÏ±â Àü¿¡ shader¸¦ È°¼ºÈ­ÇØ¾ß ÇÑ´Ù´Â °ÍÀ» ÀØÁö¸¶¼¼¿ä!  
+	ourShader->use(); // uniformì„ ì„¤ì •í•˜ê¸° ì „ì— shaderë¥¼ í™œì„±í™”í•´ì•¼ í•œë‹¤ëŠ” ê²ƒì„ ìžŠì§€ë§ˆì„¸ìš”!  
 	ourShader->setInt("texture1", texture1->GetID());
 	ourShader->setInt("texture2", texture2->GetID());
 	ourShader->setFloat("radio", radio);
@@ -180,9 +180,9 @@ void TenCubeSpaceScene::Update()
 
 void TenCubeSpaceScene::Render(HDC hdc)
 {
-	// ..:: µå·ÎÀ× ÄÚµå (·»´õ¸µ ·çÇÁ ³»ºÎ) :: ..
+	// ..:: ë“œë¡œìž‰ ì½”ë“œ (ë Œë”ë§ ë£¨í”„ ë‚´ë¶€) :: ..
 
-	// colorbuffer ºñ¿ì±â
+	// colorbuffer ë¹„ìš°ê¸°
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -192,7 +192,7 @@ void TenCubeSpaceScene::Render(HDC hdc)
 	glActiveTexture(GL_TEXTURE0 + texture2->GetID());
 	glBindTexture(GL_TEXTURE_2D, texture2->GetID());
 
-	// shader¸¦ È°¼ºÈ­
+	// shaderë¥¼ í™œì„±í™”
 	ourShader->use();
 
 	glm::vec3 cubePositions[] =
