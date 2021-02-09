@@ -144,6 +144,7 @@ struct ItemSpec {
 	bool passable;
 	bool fuel;
 	float fuelValue;
+	int stackSize;
 };
 
 enum DIRECTION {
