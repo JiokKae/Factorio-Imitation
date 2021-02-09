@@ -160,6 +160,12 @@
     <Filter Include="MainGame\Entity\Structure\Container\WoodenChest">
       <UniqueIdentifier>{dee3eee5-b0db-41d7-b2a3-3fbff6e3ac02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Entity\Structure\Container\IronChest">
+      <UniqueIdentifier>{ef44e711-df87-4d59-aaf1-7a8550fea625}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Entity\Structure\Container\SteelChest">
+      <UniqueIdentifier>{b7a0f907-0258-4afb-802b-a29db330cbf2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -372,6 +378,12 @@
     <ClInclude Include="WoodenChest.h">
       <Filter>MainGame\Entity\Structure\Container\WoodenChest</Filter>
     </ClInclude>
+    <ClInclude Include="IronChest.h">
+      <Filter>MainGame\Entity\Structure\Container\IronChest</Filter>
+    </ClInclude>
+    <ClInclude Include="SteelChest.h">
+      <Filter>MainGame\Entity\Structure\Container\SteelChest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -580,6 +592,12 @@
     </ClCompile>
     <ClCompile Include="WoodenChest.cpp">
       <Filter>MainGame\Entity\Structure\Container\WoodenChest</Filter>
+    </ClCompile>
+    <ClCompile Include="IronChest.cpp">
+      <Filter>MainGame\Entity\Structure\Container\IronChest</Filter>
+    </ClCompile>
+    <ClCompile Include="SteelChest.cpp">
+      <Filter>MainGame\Entity\Structure\Container\SteelChest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

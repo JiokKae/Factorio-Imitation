@@ -12,6 +12,8 @@
 #include "ExpressTransportBelt.h"
 #include "Character.h"
 #include "Inventory.h"
+#include "IronChest.h"
+#include "SteelChest.h"
 
 const char* Structure::statusString[STATUS::END] = {
 	"No Power",
@@ -111,6 +113,8 @@ Structure* Structure::CreateStructure(ItemEnum itemId)
 	case WOODEN_CHEST:			return new WoodenChest();
 	case FAST_TRANSPORT_BELT:		return new FastTransportBelt();
 	case EXPRESS_TRANSPORT_BELT:		return new ExpressTransportBelt();
+	case IRON_CHEST:			return new IronChest();
+	case STEEL_CHEST:			return new SteelChest();
 	}
 	return nullptr;
 }

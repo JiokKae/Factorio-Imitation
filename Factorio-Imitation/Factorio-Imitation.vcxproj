@@ -157,6 +157,7 @@
     <ClInclude Include="AssemblingMachine1.h" />
     <ClInclude Include="Container.h" />
     <ClInclude Include="DebugHelper.h" />
+    <ClInclude Include="IronChest.h" />
     <ClInclude Include="SelectRecipeAssemblingUI.h" />
     <ClInclude Include="BurnerInserter.h" />
     <ClInclude Include="BurnerMiningDrill.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="Recipe.h" />
     <ClInclude Include="RecipeManager.h" />
     <ClInclude Include="SlotUI.h" />
+    <ClInclude Include="SteelChest.h" />
     <ClInclude Include="StoneFurnace.h" />
     <ClInclude Include="StoneFurnaceUI.h" />
     <ClInclude Include="Structure.h" />
@@ -229,6 +231,7 @@
     <ClCompile Include="AssemblingMachine1.cpp" />
     <ClCompile Include="Container.cpp" />
     <ClCompile Include="DebugHelper.cpp" />
+    <ClCompile Include="IronChest.cpp" />
     <ClCompile Include="SelectRecipeAssemblingUI.cpp" />
     <ClCompile Include="BurnerInserter.cpp" />
     <ClCompile Include="BurnerMiningDrill.cpp" />
@@ -264,6 +267,7 @@
     <ClCompile Include="Recipe.cpp" />
     <ClCompile Include="RecipeManager.cpp" />
     <ClCompile Include="SlotUI.cpp" />
+    <ClCompile Include="SteelChest.cpp" />
     <ClCompile Include="StoneFurnace.cpp" />
     <ClCompile Include="StoneFurnaceUI.cpp" />
     <ClCompile Include="Structure.cpp" />

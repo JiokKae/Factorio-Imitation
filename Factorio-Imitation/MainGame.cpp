@@ -155,6 +155,10 @@ void MainGame::ImageLoad()
 
 	textureManager->AddTexture("Entity/WoodenChest",	"graphics/entity/wooden_chest/hr-wooden-chest.png");
 	textureManager->AddTexture("Entity/WoodenChest-shadow",	"graphics/entity/wooden_chest/hr-wooden-chest-shadow.png");
+	textureManager->AddTexture("Entity/IronChest",		"graphics/entity/iron_chest/hr-iron-chest.png");
+	textureManager->AddTexture("Entity/IronChest-shadow",	"graphics/entity/iron_chest/hr-iron-chest-shadow.png");
+	textureManager->AddTexture("Entity/SteelChest",		"graphics/entity/steel_chest/hr-steel-chest.png");
+	textureManager->AddTexture("Entity/SteelChest-shadow",	"graphics/entity/steel_chest/hr-steel-chest-shadow.png");
 
 	textureManager->AddTexture("UI/CharacterUI",			"graphics/ui/CharacterUI.png",			false);
 	textureManager->AddTexture("UI/SlotUI",				"graphics/ui/slotUI.png",			false);
