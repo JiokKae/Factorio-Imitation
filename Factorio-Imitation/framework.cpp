@@ -25,6 +25,16 @@ bool ItemInfo::IsEmpty()
     return amount == 0;
 }
 
+void ItemInfo::SetAbleItems(vector<int> vecAbleItems)
+{
+	this->vecAbleItems = vecAbleItems;
+}
+
+void ItemInfo::AddAbleItem(int itemEnum)
+{
+	vecAbleItems.push_back(itemEnum);
+}
+
 bool ItemInfo::CanInput(int itemId)
 {
     // 무제한 슬롯일 때
@@ -72,6 +82,22 @@ void ItemInfo::SwapItemWith(ItemInfo* destItemInfo)
     amount = destItemInfo->amount;
     destItemInfo->id = temp.id;
     destItemInfo->amount = temp.amount;
+}
+
+bool ItemInfo::operator>(const ItemInfo& info) const
+{
+	if (id != info.id)
+		return id > info.id;
+	else
+		return amount > info.amount;
+}
+
+bool ItemInfo::operator<(const ItemInfo& info) const
+{
+	if (id != info.id)
+		return id < info.id;
+	else
+		return amount < info.amount;
 }
 
 tagFRECT::tagFRECT(float left, float top, float right, float bottom)

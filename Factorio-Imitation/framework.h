@@ -65,15 +65,10 @@ struct ItemInfo {
 		if (this->amount < 0)
 			this->amount = 0;
 	}
-	void SetAbleItems(vector<int> vecAbleItems)
-	{
-		this->vecAbleItems = vecAbleItems;
-	}
 
-	void AddAbleItem(int itemEnum)
-	{
-		vecAbleItems.push_back(itemEnum);
-	}
+	void SetAbleItems(vector<int> vecAbleItems);
+
+	void AddAbleItem(int itemEnum);
 
 	// 아이템이 들어올 수 있는 종류인지 알아내는 함수
 	bool CanInput(int itemId);
@@ -90,6 +85,8 @@ struct ItemInfo {
 		this->amount = amount;
 	}
 
+	bool operator>(const ItemInfo& info) const;
+	bool operator<(const ItemInfo& info) const;
 };
 
 // Singletons
