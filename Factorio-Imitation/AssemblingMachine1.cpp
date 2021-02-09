@@ -8,14 +8,14 @@ HRESULT AssemblingMachine1::Init(int x, int y, DIRECTION direction, bool temp)
 	usingClickEvent = true;
 	Structure::Init(x, y, direction, temp);
 
-	image = new GLImage();
-	image->Init("Entity/AssemblingMachine1", 8, 4);
-	image->SetAlpha(1.0f);
+	mainImage = new GLImage();
+	mainImage->Init("Entity/AssemblingMachine1", 8, 4);
+	mainImage->SetAlpha(1.0f);
 
-	shadow = new GLImage();
-	shadow->Init("Entity/AssemblingMachine1-shadow", 8, 4);
-	shadow->SetAlpha(0.5f);
-	shadowOffset = { 16, -6 };
+	shadowImage = new GLImage();
+	shadowImage->Init("Entity/AssemblingMachine1-shadow", 8, 4);
+	shadowImage->SetAlpha(0.5f);
+	shadowImageOffset = { 16, -6 };
 
 	altModeIcon = new GLImage();
 	altModeIcon->Init("Icons/AllItems-stroke", 8, 8, 0.1f, 0.1f);
@@ -39,8 +39,8 @@ void AssemblingMachine1::Release()
 	ingredients.Release();
 
 	SAFE_RELEASE(altModeIcon);
-	SAFE_RELEASE(image);
-	SAFE_RELEASE(shadow);
+	SAFE_RELEASE(mainImage);
+	SAFE_RELEASE(shadowImage);
 }
 
 void AssemblingMachine1::Update()
@@ -91,21 +91,27 @@ void AssemblingMachine1::Update()
 void AssemblingMachine1::FirstRender(Shader* shader)
 {
 	int frame = (int)(time * 30);
-	glm::ivec2 maxFrame = image->GetMaxFrame();
-	shadow->Render(shader, position.x + shadowOffset.x, position.y + shadowOffset.y,
+	glm::ivec2 maxFrame = mainImage->GetMaxFrame();
+
+	shadowImage->Render(shader, position.x + shadowImageOffset.x, position.y + shadowImageOffset.y,
 		frame % maxFrame.x, maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y);
 }
 
 void AssemblingMachine1::Render(Shader* shader)
 {
-	Render(shader, position.x, position.y);
+	int frame = (int)(time * 30);
+	glm::ivec2 maxFrame = mainImage->GetMaxFrame();
+
+	mainImage->Render(shader, position.x, position.y,
+		frame % maxFrame.x, maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y);
 }
 
-void AssemblingMachine1::Render(Shader* shader, float posX, float posY)
+void AssemblingMachine1::RenderInScreen(Shader* shader, float posX, float posY)
 {
 	int frame = (int)(time * 30);
-	glm::ivec2 maxFrame = image->GetMaxFrame();
-	image->Render(shader, posX, posY,
+	glm::ivec2 maxFrame = mainImage->GetMaxFrame();
+
+	mainImage->Render(shader, posX, posY,
 		frame % maxFrame.x, maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y);
 }
 
@@ -124,13 +130,10 @@ bool AssemblingMachine1::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 			if (currRecipe->GetIngredient(i).id == inputItem->id)
 			{
 				inputItem->MoveAllItemTo(&ingredients[i]);
-				SAFE_DELETE(inputItem);
 				return true;
 			}
 		}
 	}
-
-	SAFE_DELETE(inputItem);
 	return false;
 }
 

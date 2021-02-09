@@ -27,10 +27,10 @@ public:
 
 private:
 	// 출력
-	GLImage* image;
-	glm::vec2 imageOffset;
-	GLImage* shadow;
-	glm::vec2 shadowOffset;
+	GLImage* mainImage;
+	GLImage* shadowImage;
+	glm::vec2 shadowImageOffset;
+
 	GLImage* altModeIcon;
 	float time;
 
@@ -55,7 +55,7 @@ public:
 	virtual void Update() override;
 	virtual void FirstRender(Shader* shader) override;
 	virtual void Render(Shader* shader) override;
-	virtual void Render(Shader* shader, float posX, float posY) override;
+	virtual void RenderInScreen(Shader* shader, float posX, float posY) override;
 	virtual void LateRender(Shader* shader) override;
 
 	// 아이템을 받는 함수

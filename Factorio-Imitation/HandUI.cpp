@@ -123,7 +123,7 @@ void HandUI::Render(Shader* shader)
 			{
 				background->Render(shader, g_currScreenSize.x - 128, g_currScreenSize.y / 2);
 				backgroundName->Render(shader, g_currScreenSize.x - 128, g_currScreenSize.y / 2 - 7);
-				structure->Render(shader, g_currScreenSize.x - 128, g_currScreenSize.y / 2 + 128);
+				structure->RenderInScreen(shader, g_currScreenSize.x - 128, g_currScreenSize.y / 2 + 128);
 				TextRenderer::GetSingleton()->RenderText(" " + g_itemSpecs[structure->GetItemId()].name, g_currScreenSize.x - 250, g_currScreenSize.y / 2, 0.8f, glm::vec3(0.0f));
 				TextRenderer::GetSingleton()->RenderText(structure->ToString(), g_currScreenSize.x - 250, g_currScreenSize.y / 2 - 40, 0.6f);
 

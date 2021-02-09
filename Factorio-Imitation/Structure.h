@@ -31,17 +31,21 @@ protected:
 	bool usingClickEvent;	// 클릭 이벤트를 사용하는지
 
 public:
+	// Need to set ItemId
 	virtual HRESULT Init(int x, int y, DIRECTION direction, bool temp = false);
 	virtual void Release() override;
 	virtual void Update();
 	virtual void Render(Shader* lpShader) = 0;
-	virtual void Render(Shader* shader, float x, float y) = 0;
+	virtual void RenderInScreen(Shader* shader, float x, float y) = 0;
 
 	static Structure* CreateStructure(ItemEnum itemId);
 
 	void Rotate();
 	virtual void ClickEvent() {};
-	virtual bool InputItem(ItemInfo* item, glm::vec2 pos) { return false; };
+
+	// 모든 아이템이 투입되었을 때 True 반환
+	virtual bool InputItem(ItemInfo* inputtedItem, glm::vec2 pos) { return false; };
+
 	virtual bool OutputItem() { return false; };
 	virtual bool TakeOutItem(ItemInfo* outItem) { return false; };
 	virtual string ToString();

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Structure.h"
 #include <deque>
 class TransportBelt : public Structure
@@ -30,7 +30,14 @@ public:
 	virtual void FirstRender(Shader* lpShader) override;
 	virtual void Render(Shader* lpShader) override;
 	virtual void LateRender(Shader* lpShader) override;
-	virtual void Render(Shader* shader, float posX, float posY) override;
+	virtual void RenderInScreen(Shader* shader, float posX, float posY) override;
+
+	// 주변의 벨트들과 연결하는 함수
+	void LinkAroundBelts();
+
+	// 주변의 벨트들과 연결을 끊는 함수
+	void UnlinkAroundBelts();
+
 	void FlowItem(Entity* item, bool isItem);
 	virtual bool InputItem(ItemInfo* item, glm::vec2 pos);
 

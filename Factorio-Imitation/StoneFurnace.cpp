@@ -176,37 +176,39 @@ void StoneFurnace::Update()
 
 }
 
-void StoneFurnace::FirstRender(Shader* lpShader)
+void StoneFurnace::FirstRender(Shader* shader)
 {
-	shadowImage->Render(lpShader, position.x + 27, position.y - 14);
+	shadowImage->Render(shader, position.x + 27, position.y - 14);
 }
 
-void StoneFurnace::Render(Shader* lpShader)
+void StoneFurnace::Render(Shader* shader)
 {
-	mainImage->Render(lpShader, position.x, position.y);
+	mainImage->Render(shader, position.x, position.y);
 
-	glm::ivec2 maxFrame = fireImage->GetMaxFrame();
-	int frame = (int)(time * 30);
+	if (status == WORKING)
+	{
+		glm::ivec2 maxFrame = fireImage->GetMaxFrame();
+		int frame = (int)(time * 30);
 
-	int frameX = frame % maxFrame.x;
-	int frameY = maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y;
-
-	if(status == WORKING)
-		fireImage->Render(lpShader, position.x, position.y, frameX, frameY);
+		int frameX = frame % maxFrame.x;
+		int frameY = maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y;
+		fireImage->Render(shader, position.x, position.y, frameX, frameY);
+	}
 }
 
-void StoneFurnace::Render(Shader* shader, float posX, float posY)
+void StoneFurnace::RenderInScreen(Shader* shader, float posX, float posY)
 {
 	mainImage->Render(shader, posX, posY);
 
-	glm::ivec2 maxFrame = fireImage->GetMaxFrame();
-	int frame = (int)(time * 30);
-
-	int frameX = frame % maxFrame.x;
-	int frameY = maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y;
-
 	if (status == WORKING)
+	{
+		glm::ivec2 maxFrame = fireImage->GetMaxFrame();
+		int frame = (int)(time * 30);
+
+		int frameX = frame % maxFrame.x;
+		int frameY = maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y;
 		fireImage->Render(shader, posX, posY, frameX, frameY);
+	}
 }
 
 bool StoneFurnace::InputItem(ItemInfo* inputItem, glm::vec2 pos)

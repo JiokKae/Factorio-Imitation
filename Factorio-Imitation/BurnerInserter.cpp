@@ -111,9 +111,8 @@ void BurnerInserter::Update()
 		lpDestTile = TileManager::GetSingleton()->GetLpTile(position.x, position.y)->GetAroundTile((DIRECTION)OPPOSITE_DIR(direction));
 		if (lpDestTile->GetLpSturcture())
 		{
-			if (lpDestTile->GetLpSturcture()->InputItem(new ItemInfo(handItem), glm::vec2(16, 16)))
+			if (lpDestTile->GetLpSturcture()->InputItem(&handItem, glm::vec2(16, 16)))
 			{
-				handItem.amount = 0;
 				status = WORKING;
 			}
 		}
@@ -192,7 +191,7 @@ void BurnerInserter::LateRender(Shader* lpShader)
 	}
 }
 
-void BurnerInserter::Render(Shader* lpShader, float posX, float posY)
+void BurnerInserter::RenderInScreen(Shader* lpShader, float posX, float posY)
 {
 	platformImage->Render(lpShader, posX, posY, OPPOSITE_DIR(direction), 0);
 
