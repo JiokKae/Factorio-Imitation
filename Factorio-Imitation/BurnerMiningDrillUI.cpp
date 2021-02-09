@@ -64,8 +64,8 @@ void BurnerMiningDrillUI::Render(Shader* lpShader)
 		image->Render(lpShader, GetPosition().x, GetPosition().y);
 		inventoryUI->Render(lpShader);
 		deactiveButtonUI->Render(lpShader);
-		redProgressiveBar->Render(lpShader, GetPosition().x + 77 - redProgressiveBar->GetFrameWidth() / 2, GetPosition().y + 198.5);
-		greenProgressiveBar->Render(lpShader, GetPosition().x + 37 - greenProgressiveBar->GetFrameWidth() / 2, GetPosition().y + 238);
+		redProgressiveBar->Render(lpShader, GetPosition().x + 77 - redProgressiveBar->GetFrameWidth() / 2, GetPosition().y + 198.5f);
+		greenProgressiveBar->Render(lpShader, GetPosition().x + 37 - greenProgressiveBar->GetFrameWidth() / 2, GetPosition().y + 238.0f);
 		fuelSlotUI->Render(lpShader);
 	}
 }

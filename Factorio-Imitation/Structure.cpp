@@ -107,10 +107,10 @@ Structure* Structure::CreateStructure(ItemEnum itemId)
 	case BURNER_MINING_DRILL:		return new BurnerMiningDrill();
 	case TRANSPORT_BELT:			return new TransportBelt();
 	case BURNER_INSERTER:			return new BurnerInserter();
-	case STONE_FURNACE:				return new StoneFurnace();
-	case WOODEN_CHEST:				return new WoodenChest();
+	case STONE_FURNACE:			return new StoneFurnace();
+	case WOODEN_CHEST:			return new WoodenChest();
 	case FAST_TRANSPORT_BELT:		return new FastTransportBelt();
-	case EXPRESS_TRANSPORT_BELT:	return new ExpressTransportBelt();
+	case EXPRESS_TRANSPORT_BELT:		return new ExpressTransportBelt();
 	}
 	return nullptr;
 }

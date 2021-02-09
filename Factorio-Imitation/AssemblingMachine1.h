@@ -1,9 +1,7 @@
-#pragma once
+﻿#pragma once
 #include "Structure.h"
 
 class UI;
-class Shader;
-class GLImage;
 class Recipe;
 class AssemblingMachine1 : public Structure
 {

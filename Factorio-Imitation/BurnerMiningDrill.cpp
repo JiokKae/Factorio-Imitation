@@ -1,4 +1,4 @@
-#include "BurnerMiningDrill.h"
+﻿#include "BurnerMiningDrill.h"
 #include "Tile.h"
 #include "Ore.h"
 #include "ItemOnGround.h"
