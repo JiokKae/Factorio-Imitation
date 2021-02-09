@@ -384,6 +384,9 @@
     <ClInclude Include="SteelChest.h">
       <Filter>MainGame\Entity\Structure\Container\SteelChest</Filter>
     </ClInclude>
+    <ClInclude Include="TextUI.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameNode.cpp">
@@ -598,6 +601,9 @@
     </ClCompile>
     <ClCompile Include="SteelChest.cpp">
       <Filter>MainGame\Entity\Structure\Container\SteelChest</Filter>
+    </ClCompile>
+    <ClCompile Include="TextUI.cpp">
+      <Filter>MainGame\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

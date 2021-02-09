@@ -1,16 +1,24 @@
 #include "UIManager.h"
 #include "UI.h"
 #include "HandUI.h"
+#include "TextUI.h"
+
 HRESULT UIManager::Init()
 {
 	handUI = new HandUI();
 	handUI->Init();
+
+	textUI = new TextUI();
+	textUI->Init();
+	textUI->SetText("TextUI Test");
+	textUI->SetLocalPosition(glm::vec2(500.f, 500.f));
 
 	return S_OK;
 }
 
 void UIManager::Release()
 {
+	SAFE_RELEASE(textUI);
 	SAFE_RELEASE(handUI);
 
 	map<string, UI*>::iterator it;
@@ -49,6 +57,8 @@ void UIManager::Render(Shader* lpShader)
 		currUI->Render(lpShader);
 
 	handUI->Render(lpShader);
+
+	textUI->Render(lpShader);
 }
 
 UI* UIManager::AddUI(string strKey, UI* lpUi)

@@ -198,6 +198,7 @@
     <ClInclude Include="StoneFurnaceUI.h" />
     <ClInclude Include="Structure.h" />
     <ClInclude Include="TextRenderer.h" />
+    <ClInclude Include="TextUI.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
@@ -272,6 +273,7 @@
     <ClCompile Include="StoneFurnaceUI.cpp" />
     <ClCompile Include="Structure.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
+    <ClCompile Include="TextUI.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />

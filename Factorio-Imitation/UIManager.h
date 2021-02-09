@@ -5,6 +5,7 @@
 class UI;
 class Shader;
 class HandUI;
+class TextUI;
 class UIManager : public Singleton<UIManager>
 {
 private:
@@ -13,6 +14,7 @@ private:
 
 	HandUI* handUI;
 	
+	TextUI* textUI;
 public:
 	HRESULT Init();
 	void Release();

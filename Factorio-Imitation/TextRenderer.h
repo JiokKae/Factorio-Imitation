@@ -11,7 +11,6 @@ namespace Text {
 	};
 }
 
-
 class Shader;
 class TextRenderer : public Singleton<TextRenderer>
 {
