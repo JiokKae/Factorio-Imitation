@@ -157,6 +157,9 @@
     <Filter Include="MainGame\Entity\Structure\Container">
       <UniqueIdentifier>{9b2bdabc-9e82-4db7-b8e8-5b6a37adb896}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Entity\Structure\Container\WoodenChest">
+      <UniqueIdentifier>{dee3eee5-b0db-41d7-b2a3-3fbff6e3ac02}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -357,9 +360,6 @@
     <ClInclude Include="ExpressTransportBelt.h">
       <Filter>MainGame\Entity\Structure\TransportBelt</Filter>
     </ClInclude>
-    <ClInclude Include="WoodenChest.h">
-      <Filter>MainGame\Entity\Structure\Container</Filter>
-    </ClInclude>
     <ClInclude Include="SelectRecipeAssemblingUI.h">
       <Filter>MainGame\UI</Filter>
     </ClInclude>
@@ -368,6 +368,9 @@
     </ClInclude>
     <ClInclude Include="Container.h">
       <Filter>MainGame\Entity\Structure\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="WoodenChest.h">
+      <Filter>MainGame\Entity\Structure\Container\WoodenChest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -566,9 +569,6 @@
     <ClCompile Include="ExpressTransportBelt.cpp">
       <Filter>MainGame\Entity\Structure\TransportBelt</Filter>
     </ClCompile>
-    <ClCompile Include="WoodenChest.cpp">
-      <Filter>MainGame\Entity\Structure\Container</Filter>
-    </ClCompile>
     <ClCompile Include="SelectRecipeAssemblingUI.cpp">
       <Filter>MainGame\UI</Filter>
     </ClCompile>
@@ -577,6 +577,9 @@
     </ClCompile>
     <ClCompile Include="Container.cpp">
       <Filter>MainGame\Entity\Structure\Container</Filter>
+    </ClCompile>
+    <ClCompile Include="WoodenChest.cpp">
+      <Filter>MainGame\Entity\Structure\Container\WoodenChest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
