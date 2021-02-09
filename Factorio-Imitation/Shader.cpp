@@ -1,28 +1,28 @@
-#include "Shader.h"
+ï»¿#include "Shader.h"
 
 Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 {
-    // 1. ÆÄÀÏ °æ·Î¸¦ ÅëÇØ vertex/fragment shader ¼Ò½º ÄÚµå¸¦ °Ë»öÇÕ´Ï´Ù.
+    // 1. íŒŒì¼ ê²½ë¡œë¥¼ í†µí•´ vertex/fragment shader ì†ŒìŠ¤ ì½”ë“œë¥¼ ê²€ìƒ‰í•©ë‹ˆë‹¤.
     std::string vertexCode;
     std::string fragmentCode;
     std::ifstream vShaderFile;
     std::ifstream fShaderFile;
-    // ifstream °´Ã¼µéÀÌ ¿¹¿Ü¸¦ ´øÁú ¼ö ÀÖµµ·Ï ÇÕ´Ï´Ù.
+    // ifstream ê°ì²´ë“¤ì´ ì˜ˆì™¸ë¥¼ ë˜ì§ˆ ìˆ˜ ìˆë„ë¡ í•©ë‹ˆë‹¤.
     vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     try
     {
-        // ÆÄÀÏ ¿­±â
+        // íŒŒì¼ ì—´ê¸°
         vShaderFile.open(("shader/" + string(vertexPath)).c_str());
         fShaderFile.open(("shader/" + string(fragmentPath)).c_str());
         std::stringstream vShaderStream, fShaderStream;
-        // stream¿¡ ÆÄÀÏÀÇ ¹öÆÛ ³»¿ëÀ» ÀĞ±â
+        // streamì— íŒŒì¼ì˜ ë²„í¼ ë‚´ìš©ì„ ì½ê¸°
         vShaderStream << vShaderFile.rdbuf();
         fShaderStream << fShaderFile.rdbuf();
-        // ÆÄÀÏ ÇÚµé·¯ ´İ±â
+        // íŒŒì¼ í•¸ë“¤ëŸ¬ ë‹«ê¸°
         vShaderFile.close();
         fShaderFile.close();
-        // streamÀ» stringÀ¸·Î º¯È¯
+        // streamì„ stringìœ¼ë¡œ ë³€í™˜
         vertexCode = vShaderStream.str();
         fragmentCode = fShaderStream.str();
     }
@@ -33,7 +33,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
     const char* vShaderCode = vertexCode.c_str();
     const char* fShaderCode = fragmentCode.c_str();
 
-    // 2. shader ÄÄÆÄÀÏ
+    // 2. shader ì»´íŒŒì¼
     unsigned int vertex, fragment;
     int success;
     char infoLog[512];
@@ -42,7 +42,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
     vertex = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex, 1, &vShaderCode, NULL);
     glCompileShader(vertex);
-    // ¿À·ù°¡ ¹ß»ıÇÑ´Ù¸é ÄÄÆÄÀÏ ¿À·ù¸¦ Ãâ·Â
+    // ì˜¤ë¥˜ê°€ ë°œìƒí•œë‹¤ë©´ ì»´íŒŒì¼ ì˜¤ë¥˜ë¥¼ ì¶œë ¥
     glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
     if (!success)
     {
@@ -50,11 +50,11 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
         std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
     };
 
-    // Fragment shaderµµ ¸¶Âù°¡Áö
+    // Fragment shaderë„ ë§ˆì°¬ê°€ì§€
     fragment = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragment, 1, &fShaderCode, NULL);
     glCompileShader(fragment);
-    // ¿À·ù°¡ ¹ß»ıÇÑ´Ù¸é ÄÄÆÄÀÏ ¿À·ù¸¦ Ãâ·Â
+    // ì˜¤ë¥˜ê°€ ë°œìƒí•œë‹¤ë©´ ì»´íŒŒì¼ ì˜¤ë¥˜ë¥¼ ì¶œë ¥
     glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
     if (!success)
     {
@@ -67,7 +67,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
     glAttachShader(ID, vertex);
     glAttachShader(ID, fragment);
     glLinkProgram(ID);
-    // ¿À·ù°¡ ¹ß»ıÇÑ´Ù¸é ¸µÅ· ¿À·ù¸¦ Ãâ·Â
+    // ì˜¤ë¥˜ê°€ ë°œìƒí•œë‹¤ë©´ ë§í‚¹ ì˜¤ë¥˜ë¥¼ ì¶œë ¥
     glGetProgramiv(ID, GL_LINK_STATUS, &success);
     if (!success)
     {
@@ -78,7 +78,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
     glDetachShader(ID, vertex);
     glDetachShader(ID, fragment);
 
-    // program ³»ºÎ¿¡¼­ shaderµéÀÌ ¸µÅ© ¿Ï·áµÇ¾ú´Ù¸é ÀÌÁ¦ ÇÊ¿ä ¾øÀ¸¹Ç·Î shaderµéÀ» »èÁ¦
+    // program ë‚´ë¶€ì—ì„œ shaderë“¤ì´ ë§í¬ ì™„ë£Œë˜ì—ˆë‹¤ë©´ ì´ì œ í•„ìš” ì—†ìœ¼ë¯€ë¡œ shaderë“¤ì„ ì‚­ì œ
     glDeleteShader(vertex);
     glDeleteShader(fragment);
 }
@@ -121,16 +121,16 @@ void Shader::setMat4(const std::string& name, glm::mat4 value, bool transpose) c
 
 
 
-// ÇÔ¼öÇü ½¦ÀÌ´õ ·Îµå
+// í•¨ìˆ˜í˜• ì‰ì´ë” ë¡œë“œ
 /*
 
 GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path) {
 
-	// ½¦ÀÌ´õµé »ı¼º
+	// ì‰ì´ë”ë“¤ ìƒì„±
 	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
-	// ¹öÅØ½º ½¦ÀÌ´õ ÄÚµå¸¦ ÆÄÀÏ¿¡¼­ ÀĞ±â
+	// ë²„í…ìŠ¤ ì‰ì´ë” ì½”ë“œë¥¼ íŒŒì¼ì—ì„œ ì½ê¸°
 	std::string VertexShaderCode;
 	std::ifstream VertexShaderStream(vertex_file_path, std::ios::in);
 	if (VertexShaderStream.is_open()) {
@@ -140,12 +140,12 @@ GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path)
 		VertexShaderStream.close();
 	}
 	else {
-		printf("ÆÄÀÏ %s ¸¦ ÀĞÀ» ¼ö ¾øÀ½. Á¤È®ÇÑ µğ·ºÅä¸®¸¦ »ç¿ë ÁßÀÔ´Ï±î ? FAQ ¸¦ ¿ì¼± ÀĞ¾îº¸´Â °É ÀØÁö ¸¶¼¼¿ä!\n", vertex_file_path);
+		printf("íŒŒì¼ %s ë¥¼ ì½ì„ ìˆ˜ ì—†ìŒ. ì •í™•í•œ ë””ë ‰í† ë¦¬ë¥¼ ì‚¬ìš© ì¤‘ì…ë‹ˆê¹Œ ? FAQ ë¥¼ ìš°ì„  ì½ì–´ë³´ëŠ” ê±¸ ìŠì§€ ë§ˆì„¸ìš”!\n", vertex_file_path);
 		getchar();
 		return 0;
 	}
 
-	// ÇÁ·¡±×¸ÕÆ® ½¦ÀÌ´õ ÄÚµå¸¦ ÆÄÀÏ¿¡¼­ ÀĞ±â
+	// í”„ë˜ê·¸ë¨¼íŠ¸ ì‰ì´ë” ì½”ë“œë¥¼ íŒŒì¼ì—ì„œ ì½ê¸°
 	std::string FragmentShaderCode;
 	std::ifstream FragmentShaderStream(fragment_file_path, std::ios::in);
 	if (FragmentShaderStream.is_open()) {
@@ -159,13 +159,13 @@ GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path)
 	int InfoLogLength;
 
 
-	// ¹öÅØ½º ½¦ÀÌ´õ¸¦ ÄÄÆÄÀÏ
+	// ë²„í…ìŠ¤ ì‰ì´ë”ë¥¼ ì»´íŒŒì¼
 	printf("Compiling shader : %s\n", vertex_file_path);
 	char const* VertexSourcePointer = VertexShaderCode.c_str();
 	glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
 	glCompileShader(VertexShaderID);
 
-	// ¹öÅØ½º ½¦ÀÌ´õ¸¦ °Ë»ç
+	// ë²„í…ìŠ¤ ì‰ì´ë”ë¥¼ ê²€ì‚¬
 	glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
 	glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	if (InfoLogLength > 0) {
@@ -176,13 +176,13 @@ GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path)
 
 
 
-	// ÇÁ·¡±×¸ÕÆ® ½¦ÀÌ´õ¸¦ ÄÄÆÄÀÏ
+	// í”„ë˜ê·¸ë¨¼íŠ¸ ì‰ì´ë”ë¥¼ ì»´íŒŒì¼
 	printf("Compiling shader : %s\n", fragment_file_path);
 	char const* FragmentSourcePointer = FragmentShaderCode.c_str();
 	glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
 	glCompileShader(FragmentShaderID);
 
-	// ÇÁ·¡±×¸ÕÆ® ½¦ÀÌ´õ¸¦ °Ë»ç
+	// í”„ë˜ê·¸ë¨¼íŠ¸ ì‰ì´ë”ë¥¼ ê²€ì‚¬
 	glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
 	glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	if (InfoLogLength > 0) {
@@ -193,14 +193,14 @@ GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path)
 
 
 
-	// ÇÁ·Î±×·¥¿¡ ¸µÅ©
+	// í”„ë¡œê·¸ë¨ì— ë§í¬
 	printf("Linking program\n");
 	GLuint ProgramID = glCreateProgram();
 	glAttachShader(ProgramID, VertexShaderID);
 	glAttachShader(ProgramID, FragmentShaderID);
 	glLinkProgram(ProgramID);
 
-	// ÇÁ·Î±×·¥ °Ë»ç
+	// í”„ë¡œê·¸ë¨ ê²€ì‚¬
 	glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
 	glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	if (InfoLogLength > 0) {
@@ -237,7 +237,7 @@ GLubyte* LoadBmp(const char* Path, int* Width, int* Height)
 	CloseHandle(hFile);
 	int len = FileSize - fh->bfOffBits;
 	pRaster = (GLubyte*)malloc(len);
-	memcpy(pRaster, (BYTE*)fh + fh->bfOffBits, len); // RGB·Î ¼ø¼­¸¦ ¹Ù²Û´Ù.
+	memcpy(pRaster, (BYTE*)fh + fh->bfOffBits, len); // RGBë¡œ ìˆœì„œë¥¼ ë°”ê¾¼ë‹¤.
 	for (BYTE * p = pRaster; p < pRaster + len - 3; p += 3)
 	{
 		BYTE b = * p; *p = * (p + 2); *(p + 2) = b;
@@ -251,4 +251,4 @@ GLubyte* LoadBmp(const char* Path, int* Width, int* Height)
 }
 
 */
-//ÃâÃ³: https://202psj.tistory.com/1456?category=273755 [¾Ë·¹ÆùµåÀÇ IT ÀÌ¸ğÀú¸ğ]
+//ì¶œì²˜: https://202psj.tistory.com/1456?category=273755 [ì•Œë ˆí°ë“œì˜ IT ì´ëª¨ì €ëª¨]

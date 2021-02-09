@@ -1,14 +1,14 @@
-#include "SoundManager.h"
+О╩©#include "SoundManager.h"
 
 HRESULT SoundManager::Init()
 {
-	// ╩Г©Н╣Е ╫ц╫╨еш ╩Щ╪╨
+	// Л┌╛Л ╢К⌠° Л▀°Л┼╓М┘° Л┐²Л└╠
 	System_Create(&system);
 
-	// ц╓Ён ╪Ёа╓
+	// Л╠└К└░ Л└╓Л═∙
 	system->init(SOUNDBUFFER, FMOD_INIT_NORMAL, NULL);
 
-	// ╩Г©Н╣Е, ц╓Ён ╣©юШгр╢Г
+	// Л┌╛Л ╢К⌠°, Л╠└К└░ К▐≥Л═│М∙═К▀╧
 	sounds = new Sound*[SOUNDBUFFER];
 	channels = new Channel*[SOUNDBUFFER];
 
