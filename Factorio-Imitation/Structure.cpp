@@ -125,20 +125,22 @@ string Structure::ToString()
 FRECT Structure::GetFRect()
 {
 	FRECT rect;
-	rect.left =		position.x - (coordSize.x * TILE_SIZE / 2.0f);
+	rect.left =	position.x - (coordSize.x * TILE_SIZE / 2.0f);
 	rect.right =	position.x + (coordSize.x * TILE_SIZE / 2.0f);
-	rect.top =		position.y + (coordSize.y * TILE_SIZE / 2.0f);
+	rect.top =	position.y + (coordSize.y * TILE_SIZE / 2.0f);
 	rect.bottom =	position.y - (coordSize.y * TILE_SIZE / 2.0f);
+
 	return rect;
 }
 
 FRECT Structure::GetCollisionFRect()
 {
 	FRECT rect;
-	rect.left =		position.x - (coordSize.x * TILE_SIZE / 2.0f - TILE_SIZE * 0.3f);
+	rect.left =	position.x - (coordSize.x * TILE_SIZE / 2.0f - TILE_SIZE * 0.3f);
 	rect.right =	position.x + (coordSize.x * TILE_SIZE / 2.0f - TILE_SIZE * 0.3f);
-	rect.top =		position.y + (coordSize.y * TILE_SIZE / 2.0f - TILE_SIZE * 0.3f);
+	rect.top =	position.y + (coordSize.y * TILE_SIZE / 2.0f - TILE_SIZE * 0.3f);
 	rect.bottom =	position.y - (coordSize.y * TILE_SIZE / 2.0f - TILE_SIZE * 0.3f);
+
 	return rect;
 }
 

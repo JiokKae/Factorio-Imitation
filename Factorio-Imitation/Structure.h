@@ -21,11 +21,11 @@ public:
 	static const char* statusString[STATUS::END];
 
 protected:
-	glm::ivec2 coord;
-	glm::ivec2 coordSize;
-	DIRECTION direction;
-	ItemEnum itemId;
-	STATUS status;		// 건물의 상태
+	glm::ivec2 coord;	// 건축물의 기준 좌표
+	glm::ivec2 coordSize;	// 건축물의 좌표상 크기
+	DIRECTION direction;	// 건축물의 방향
+	ItemEnum itemId;	// 건축물의 아이템 번호
+	STATUS status;		// 건축물의 상태
 
 	bool temp;		// 임시 건물인지
 	bool usingClickEvent;	// 클릭 이벤트를 사용하는지
