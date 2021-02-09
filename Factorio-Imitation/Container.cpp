@@ -52,6 +52,28 @@ bool Container::InputItem(ItemInfo* inputtedItem, glm::vec2 pos)
 	return false;
 }
 
+bool Container::TakeOutItem(ItemInfo* outItem)
+{
+	for (int i = 0; i < inventorySize; i++)
+	{
+		if (vecInventory[i].amount != 0)
+		{
+			// 저장품의 개수가 반출 요구치를 넘으면
+			if (vecInventory[i].amount >= outItem->amount)
+			{
+				vecInventory[i].amount -= outItem->amount;
+				outItem->id = vecInventory[i].id;
+			}
+			// 저장품의 개수가 반출 요구치를 넘지 못하면
+			else
+				vecInventory[i].MoveAllItemTo(outItem);
+
+			return true;
+		}
+	}
+	return false;
+}
+
 string Container::ToString()
 {
 	string strBuf;

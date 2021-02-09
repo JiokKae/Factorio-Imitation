@@ -14,7 +14,7 @@ public:
 	// 아이템을 컨테이너에 넣는 함수
 	virtual bool InputItem(ItemInfo* item, glm::vec2 pos) override;
 
-	//virtual bool TakeOutItem(ItemInfo* outItem) override { return false; };
+	virtual bool TakeOutItem(ItemInfo* outItem) override;
 
 	virtual string ToString() override;
 };
