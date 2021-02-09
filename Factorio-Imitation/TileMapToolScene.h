@@ -1,12 +1,11 @@
 ﻿#pragma once
 #include "Scene.h"
 
-#define	TILE_SIZE		32
 #define	SAMPLE_TILE_X	20
 #define	SAMPLE_TILE_Y	9
 
-#define	TILE_X			20
-#define	TILE_Y			20
+#define	TILE_X		20
+#define	TILE_Y		20
 
 enum TERRAIN { WALL, GRASS, EARTH, WATER, CEMENT, END };
 

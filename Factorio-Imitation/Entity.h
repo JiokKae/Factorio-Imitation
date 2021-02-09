@@ -12,7 +12,7 @@ public:
 	virtual void Release();
 	virtual void Update();
 	virtual void FirstRender(Shader* lpShader) {};
-	virtual void Render(Shader* lpShader);
+	virtual void Render(Shader* lpShader) = 0;
 	virtual void LateRender(Shader* lpShader) {};
 
 	bool IsPassable()			{ return passable; }
