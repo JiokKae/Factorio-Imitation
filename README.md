@@ -48,7 +48,7 @@
 * 하드웨어 가속으로 컴퓨터 그래픽을 처리할 수 있게 돕는 라이브러리다. 
 * 2D, 3D 그래픽에 모두 활용할 수 있다.
 
-### 인스턴싱 (Instancing)
+### [인스턴싱 (Instancing)](#OpenGL)
 * 서로 비슷한 요소의 정보들을 한번에 GPU로 넘겨주어 한번에 렌더하는 기법이다.
 * CPU와 GPU간의 통신이 반복되지 않아 딜레이가 적어 속도가 빠르다.  
 
@@ -75,7 +75,7 @@ header file: [Character.h](Factorio-Imitation/Character.h)
 header file: [Structure.h](Factorio-Imitation/Structure.h)  
 
 * 건설될 수 있는 객체다.
-* 아이템을 주고 받을 수 있는 기능이 있다.
+* 가상 함수를 사용하여 구조물을 상속받는 클래스들이 아이템을 주고 받을 수 있다.
 * [상태 패턴](#상태-패턴-state-pattern)을 사용하여 구조물의 상태에 따라 다르게 동작한다.
 
 ### [화력 채광 드릴 (Burner Mining Drill)](#구조물-structure)
