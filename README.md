@@ -127,6 +127,8 @@ header file: [AssemblingMachine1.h](Factorio-Imitation/AssemblingMachine1.h)
 * 다른 구조물이 완성품을 가져갈 수 있다.
 
 ### 타일 매니저 (Tile Manager)
+header file: [TileManager.h](Factorio-Imitation/TileManager.h)  
+
 #### 청크 (Chunk)
 header file: [Chunk.h](Factorio-Imitation/Chunk.h)  
 
