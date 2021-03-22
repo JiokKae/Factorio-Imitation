@@ -27,7 +27,7 @@ public:
 	virtual void Update(FRECT cameraFrect);
 	virtual void Render(Shader* shader);
 
-	Character* GetLpPlayer()					{ return player; }
+	Character* GetLpPlayer()			{ return player; }
 	StructureBuilder* GetLpStructureBuilder()	{ return structureBuilder; }
 	void Collision();
 

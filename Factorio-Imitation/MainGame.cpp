@@ -100,16 +100,16 @@ void MainGame::ImageLoad()
 {
 	ImageManager* imgManager = ImageManager::GetSingleton();
 
-	imgManager->AddImage("TitleSceneImage",			"graphics/background-image.bmp", WINSIZE_TITLE_X, WINSIZE_TITLE_Y);
-	imgManager->AddImage("Loading Scene graphics",	"graphics/loading.bmp", WINSIZE_TITLE_X, WINSIZE_TITLE_Y);
+	imgManager->AddImage("TitleSceneImage",		"graphics/background-image.bmp",	WINSIZE_TITLE_X, WINSIZE_TITLE_Y);
+	imgManager->AddImage("Loading Scene graphics",	"graphics/loading.bmp",			WINSIZE_TITLE_X, WINSIZE_TITLE_Y);
 
-	imgManager->AddImage("SelectTileEdge",	"graphics/selectTileEdge.bmp", 64, 64, 2, 2, true, RGB(255, 0, 255));
-	imgManager->AddImage("SampleTile",		"graphics/maptiles.bmp", 640, 288, SAMPLE_TILE_X, SAMPLE_TILE_Y);
-	imgManager->AddImage("SaveLoadButton",	"graphics/button2.bmp", 300, 140, 2, 2);
+	imgManager->AddImage("SelectTileEdge",	"graphics/selectTileEdge.bmp",	64, 64, 2, 2, true, RGB(255, 0, 255));
+	imgManager->AddImage("SampleTile",	"graphics/maptiles.bmp",	640, 288, SAMPLE_TILE_X, SAMPLE_TILE_Y);
+	imgManager->AddImage("SaveLoadButton",	"graphics/button2.bmp",		300, 140, 2, 2);
 
-	imgManager->AddImage("MainMenu",		"graphics/ui/MainMenu.bmp",			352, 154, 1, 1);
+	imgManager->AddImage("MainMenu",	"graphics/ui/MainMenu.bmp",		352, 154, 1, 1);
 	imgManager->AddImage("NewGameButton",	"graphics/ui/NewGameButton.bmp",	329, 174, 1, 3);
-	imgManager->AddImage("ExitButton",		"graphics/ui/ExitButton.bmp",		122, 129, 1, 3);
+	imgManager->AddImage("ExitButton",	"graphics/ui/ExitButton.bmp",		122, 129, 1, 3);
 
 	TextureManager* textureManager = TextureManager::GetSingleton();
 
@@ -187,23 +187,23 @@ void MainGame::SoundLoad()
 {
 	SoundManager* soundManager = SoundManager::GetSingleton();
 
-	soundManager->AddSound("Rotate-small",	"sound/rotate-small.ogg", false, false);
-	soundManager->AddSound("Rotate-medium", "sound/rotate-medium.ogg", false, false);
-	soundManager->AddSound("Rotate-big",	"sound/rotate-big.ogg", false, false);
+	soundManager->AddSound("Rotate-small",	"sound/rotate-small.ogg",	false, false);
+	soundManager->AddSound("Rotate-medium", "sound/rotate-medium.ogg",	false, false);
+	soundManager->AddSound("Rotate-big",	"sound/rotate-big.ogg",		false, false);
 
-	soundManager->AddSound("Build-small",	"sound/build-small.ogg", false, false);
-	soundManager->AddSound("Build-medium",	"sound/build-medium.ogg", false, false);
-	soundManager->AddSound("Build-large",	"sound/build-large.ogg", false, false);
+	soundManager->AddSound("Build-small",	"sound/build-small.ogg",	false, false);
+	soundManager->AddSound("Build-medium",	"sound/build-medium.ogg",	false, false);
+	soundManager->AddSound("Build-large",	"sound/build-large.ogg",	false, false);
 
-	soundManager->AddSound("Deconstruct-small",		"sound/deconstruct-small.ogg",		false, false);
-	soundManager->AddSound("Deconstruct-medium",	"sound/deconstruct-medium.ogg",		false, false);
-	soundManager->AddSound("Deconstruct-large",		"sound/deconstruct-large.ogg",		false, false);
+	soundManager->AddSound("Deconstruct-small",	"sound/deconstruct-small.ogg",	false, false);
+	soundManager->AddSound("Deconstruct-medium",	"sound/deconstruct-medium.ogg",	false, false);
+	soundManager->AddSound("Deconstruct-large",	"sound/deconstruct-large.ogg",	false, false);
 
 	soundManager->AddSound("GUI-ToolButton", "sound/gui-tool-button.ogg", false, false);
 	soundManager->AddSound("GUI-ButtonMini", "sound/gui-button-mini.ogg", false, false);
 
-	soundManager->AddSound("Machine-open",	"sound/machine-open.ogg", false, false);
-	soundManager->AddSound("Machine-close", "sound/machine-close.ogg", false, false);
+	soundManager->AddSound("Machine-open",	"sound/machine-open.ogg",	false, false);
+	soundManager->AddSound("Machine-close", "sound/machine-close.ogg",	false, false);
 
 	soundManager->AddSound("PickedUpItem",	"sound/picked-up-item.ogg", false, false);
 

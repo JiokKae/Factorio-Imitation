@@ -19,20 +19,24 @@ HRESULT Tile::Init(int x, int y)
 void Tile::Release()
 {
 	if (ore)
+	{
 		ore->Release();
+	}
 }
 
 void Tile::Update()
 {
 	if (ore)
+	{
 		ore->Update();
+	}
 }
 
 Tile* Tile::GetAroundTile(DIRECTION direction)
 {
 	switch (direction)
 	{
-	case NORTH: return TileManager::GetSingleton()->GetLpTile(coord.x, coord.y + 1);
+	case NORTH:	return TileManager::GetSingleton()->GetLpTile(coord.x, coord.y + 1);
 	case EAST:	return TileManager::GetSingleton()->GetLpTile(coord.x + 1, coord.y);
 	case SOUTH:	return TileManager::GetSingleton()->GetLpTile(coord.x, coord.y - 1);
 	case WEST:	return TileManager::GetSingleton()->GetLpTile(coord.x - 1, coord.y);
