@@ -15,10 +15,10 @@ private:
 	Button* quitButton;
 	Button* lightingButton;
 public:
-	virtual HRESULT Init()		 override;
-	virtual void Release()		 override;
-	virtual void Update()		 override;
-	virtual void Render(HDC hdc) override;
+	virtual HRESULT Init()		override;
+	virtual void Release()		override;
+	virtual void Update()		override;
+	virtual void Render(HDC hdc)	override;
 
 	TitleScene(int width, int height)
 		: Scene(width, height)
