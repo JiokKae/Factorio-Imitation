@@ -1,6 +1,4 @@
 #include "Tile.h"
-#include "GLImage.h"
-#include "Shader.h"
 #include "Ore.h"
 
 HRESULT Tile::Init(int x, int y)
@@ -18,10 +16,7 @@ HRESULT Tile::Init(int x, int y)
 
 void Tile::Release()
 {
-	if (ore)
-	{
-		ore->Release();
-	}
+	SAFE_RELEASE(ore);
 }
 
 void Tile::Update()
@@ -51,7 +46,7 @@ void Tile::LinkItemOnGround(ItemOnGround* item)
 
 void Tile::UnlinkItemOnGround(ItemOnGround* item)
 {
-	for (auto it = items.begin(); it != items.end(); ++it)
+	for (auto it = items.cbegin(); it != items.cend(); ++it)
 	{
 		if (*it == item) 
 		{
