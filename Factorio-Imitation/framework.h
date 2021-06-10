@@ -107,8 +107,8 @@ struct ItemInfo {
 #include "GLImage.h"
 #include "Shader.h"
 
-#define WINSIZE_X	900
-#define WINSIZE_Y	900
+#define WINSIZE_X		900
+#define WINSIZE_Y		900
 #define WINSIZE_TITLE_X		1600
 #define WINSIZE_TITLE_Y		900
 #define WINSIZE_TILE_MAP_X	1600
@@ -119,7 +119,7 @@ struct ItemInfo {
 #define SAFE_ARR_RELEASE(p, size)	{ if (p) { for (int i = 0; i < size; i++) { p[i].Release(); } delete[] p, p = nullptr; } }
 
 #define TILE_SIZE		64
-#define CHUNK_IN_TILE	32
+#define CHUNK_IN_TILE		32
 
 #define POSX_TO_COORDX(x)				( (x < 0)? int(x) / TILE_SIZE - 1 : int(x) / TILE_SIZE )
 #define POS_TO_COORD(pos)				{ POSX_TO_COORDX(pos.x), POSX_TO_COORDX(pos.y) }
@@ -153,11 +153,11 @@ enum DIRECTION {
 };
 
 #define OPPOSITE_DIR(x) ((x + 2) % DIRECTION_END)
-#define LEFT_DIR(x)		((x + 3) % DIRECTION_END)
+#define LEFT_DIR(x)	((x + 3) % DIRECTION_END)
 #define RIGHT_DIR(x)	((x + 1) % DIRECTION_END)
 
-extern HWND			g_hWnd;
-extern bool			g_hWndFocus;	// 현재 윈도우가 포커스 되어있는지 여부
+extern HWND		g_hWnd;
+extern bool		g_hWndFocus;	// 현재 윈도우가 포커스 되어있는지 여부
 extern float		g_time;
 extern HINSTANCE	g_hInstance;
 extern POINT		g_ptMouse;

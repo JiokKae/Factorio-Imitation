@@ -111,7 +111,7 @@ void MainGame::ImageLoad()
 	imgManager->AddImage("NewGameButton",	"graphics/ui/NewGameButton.bmp",	329, 174, 1, 3);
 	imgManager->AddImage("ExitButton",	"graphics/ui/ExitButton.bmp",		122, 129, 1, 3);
 
-	TextureManager* textureManager = TextureManager::GetSingleton();
+	TextureManager* textureManager( TextureManager::GetSingleton() );
 
 	textureManager->AddTexture("Entity/Character-level1_idle",			"graphics/entity/character/hr-level1_idle.png");
 	textureManager->AddTexture("Entity/Character-level1_idle_shadow",		"graphics/entity/character/hr-level1_idle_shadow.png");
@@ -185,7 +185,7 @@ void MainGame::ImageLoad()
 
 void MainGame::SoundLoad()
 {
-	SoundManager* soundManager = SoundManager::GetSingleton();
+	SoundManager* soundManager( SoundManager::GetSingleton() );
 
 	soundManager->AddSound("Rotate-small",	"sound/rotate-small.ogg",	false, false);
 	soundManager->AddSound("Rotate-medium", "sound/rotate-medium.ogg",	false, false);
@@ -219,7 +219,8 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 			Render();
 		break;
 	case WM_SYSCOMMAND:
-		switch (wParam & 0xfff0) {
+		switch (wParam & 0xfff0) 
+		{
 		case SC_MOVE:
 		case SC_SIZE:
 			TimerManager::GetSingleton()->SetIsSC_MOVE(true);
@@ -246,7 +247,7 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		{
-			Scene* scene = (Scene*)SceneManager::GetSingleton()->currScene;
+			Scene* scene( SceneManager::GetSingleton()->currScene );
 			if(scene)
 				scene->SetWidthHeight(LOWORD(lParam), HIWORD(lParam));
 		}
