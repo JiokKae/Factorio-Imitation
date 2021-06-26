@@ -25,14 +25,14 @@ public:
 	void Render(HDC hdc);
 
 	// 씬 추가
-	Scene* AddScene(string key, Scene* scene);
-	Scene* AddLoadingScene(string key, Scene* scene);
+	Scene* AddScene(const string& key, Scene* scene);
+	Scene* AddLoadingScene(const string& key, Scene* scene);
 
 	// 씬 변경
-	HRESULT ChangeScene(string sceneName);
-	HRESULT ChangeScene(string sceneName, string loadingSceneName);
 
 	virtual ~SceneManager() {};
+	HRESULT ChangeScene(const string& sceneName);
+	HRESULT ChangeScene(const string& sceneName, const string& loadingSceneName);
 };
 
 

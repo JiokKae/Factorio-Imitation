@@ -70,7 +70,7 @@ void SceneManager::Render(HDC hdc)
 		
 }
 
-Scene* SceneManager::AddScene(string key, Scene* scene)
+Scene* SceneManager::AddScene(const string& key, Scene* scene)
 {
 	if (scene == nullptr)
 		return nullptr;
@@ -80,7 +80,7 @@ Scene* SceneManager::AddScene(string key, Scene* scene)
 	return scene;
 }
 
-Scene* SceneManager::AddLoadingScene(string key, Scene* scene)
+Scene* SceneManager::AddLoadingScene(const string& key, Scene* scene)
 {
 	if (scene == nullptr)
 		return nullptr;
@@ -90,7 +90,7 @@ Scene* SceneManager::AddLoadingScene(string key, Scene* scene)
 	return scene;
 }
 
-HRESULT SceneManager::ChangeScene(string sceneName)
+HRESULT SceneManager::ChangeScene(const string& sceneName)
 {
 	map<string, Scene*>::iterator it = mapSceneData.find(sceneName);
 	if (it == mapSceneData.end())
@@ -111,7 +111,7 @@ HRESULT SceneManager::ChangeScene(string sceneName)
 	return E_FAIL;
 }
 
-HRESULT SceneManager::ChangeScene(string sceneName, string loadingSceneName)
+HRESULT SceneManager::ChangeScene(const string& sceneName, const string& loadingSceneName)
 {
 	map<string, Scene*>::iterator it = mapSceneData.find(sceneName);
 	if (it == mapSceneData.end())
