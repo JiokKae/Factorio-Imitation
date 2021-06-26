@@ -7,6 +7,9 @@ DWORD CALLBACK LoadingThread(LPVOID pvParam);
 Scene* SceneManager::currScene = nullptr;
 Scene* SceneManager::loadingScene = nullptr;
 Scene* SceneManager::readyScene = nullptr;
+SceneManager::~SceneManager()
+{
+}
 
 HRESULT SceneManager::Init()
 {
@@ -19,9 +22,9 @@ HRESULT SceneManager::Init()
 
 void SceneManager::Release()
 {
-	map<string, Scene*>::iterator it;
-	it = mapSceneData.begin();
-	while (it != mapSceneData.end())
+	auto it( mapSceneData.begin() );
+
+	while (it != mapSceneData.cend())
 	{
 		SAFE_RELEASE(it->second);
 		it = mapSceneData.erase(it);

@@ -19,6 +19,8 @@ public:
 	static Scene* readyScene;	// 준비 중인 씬
 
 public:
+	virtual ~SceneManager();
+
 	HRESULT Init();
 	void Release();
 	void Update();
@@ -29,8 +31,6 @@ public:
 	Scene* AddLoadingScene(const string& key, Scene* scene);
 
 	// 씬 변경
-
-	virtual ~SceneManager() {};
 	HRESULT ChangeScene(const string& sceneName);
 	HRESULT ChangeScene(const string& sceneName, const string& loadingSceneName);
 };
