@@ -31,7 +31,7 @@ void TextRenderer::Release()
     ReleaseSingleton();
 }
 
-void TextRenderer::Load(std::string font, unsigned int fontSize)
+void TextRenderer::Load(const std::string& font, unsigned int fontSize)
 {
     // first clear the previously loaded Characters
     this->Characters.clear();
@@ -92,7 +92,7 @@ void TextRenderer::Load(std::string font, unsigned int fontSize)
     FT_Done_FreeType(ft);
 }
 
-void TextRenderer::RenderText(std::string text, float x, float y, float scale, glm::vec3 color)
+void TextRenderer::RenderText(const std::string& text, float x, float y, float scale, const glm::vec3& color)
 {
     // activate corresponding render state	
     this->TextShader->use();
@@ -159,7 +159,7 @@ void TextRenderer::RenderText(std::string text, float x, float y, float scale, g
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void TextRenderer::RenderOutText(std::string text, float x, float y, float scale, float outline, glm::vec3 color)
+void TextRenderer::RenderOutText(const std::string& text, float x, float y, float scale, float outline, const glm::vec3& color)
 {
     // activate corresponding render state	
     this->TextShader->use();
