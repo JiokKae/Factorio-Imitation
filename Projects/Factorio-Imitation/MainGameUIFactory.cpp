@@ -1,7 +1,7 @@
 #include "MainGameUIFactory.h"
 #include "CharacterUI.h"
 #include "BurnerMiningDrillUI.h"
-#include "StoneFurnaceUI.h""
+#include "StoneFurnaceUI.h"
 #include "SelectRecipeAssemblingUI.h"
 UI* MainGameUIFactory::CreateUI(UIEnum uiId)
 {

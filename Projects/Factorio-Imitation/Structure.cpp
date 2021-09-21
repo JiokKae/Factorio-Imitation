@@ -27,9 +27,9 @@ const char* Structure::statusString[STATUS::END] = {
 	"Item ingredient shortage"
 };
 
-HRESULT Structure::Init(int x, int y, DIRECTION _direction, bool _temp)
+HRESULT Structure::Init(int _x, int _y, DIRECTION _direction, bool _temp)
 {
-	this->position = { x, y };
+	this->position = { _x, _y };
 	this->direction = _direction;
 	this->temp = _temp;
 	this->coord = ivec2(POS_TO_COORD(position));

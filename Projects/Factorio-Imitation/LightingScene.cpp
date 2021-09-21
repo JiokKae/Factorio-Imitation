@@ -235,8 +235,7 @@ void LightingScene::Render(HDC /*hdc*/)
     lightingShader->setMat4("view", view);
 
     // world transformation
-    glm::mat4 model = glm::mat4(1.0f);
-    lightingShader->setMat4("model", model);
+    lightingShader->setMat4("model", glm::mat4(1.0f));
 
     // bind diffuse map
     glActiveTexture(GL_TEXTURE0 + diffuseMap->GetID());

@@ -174,7 +174,7 @@ void AssemblingMachine1::ClickEvent()
 	else
 	{
 		UIManager::GetSingleton()->ActiveUI("SelectRecipeAssemblingUI");
-		SelectRecipeAssemblingUI* sraUI = (SelectRecipeAssemblingUI*)UIManager::GetSingleton()->GetLpCurrUI();
+		//SelectRecipeAssemblingUI* sraUI = (SelectRecipeAssemblingUI*)UIManager::GetSingleton()->GetLpCurrUI();
 		//sraUI->SetCurrBurnerMiningDrill(this);
 	}
 	

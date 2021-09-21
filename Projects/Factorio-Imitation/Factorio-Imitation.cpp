@@ -46,7 +46,7 @@ const ItemSpec	g_itemSpecs[] = {
 	{	"Iron Chest",			true,		{ 1, 1 },	1,		FALSE,		FALSE,	NULL,		50,	},
 	{	"Steel Chest",			true,		{ 1, 1 },	1,		FALSE,		FALSE,	NULL,		50,	},
 };
-enum ItemEnum;	// 정의 피킹용
+// enum ItemEnum;	// 정의 피킹용
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);

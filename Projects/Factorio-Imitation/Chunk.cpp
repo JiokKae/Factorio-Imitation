@@ -1,9 +1,9 @@
 #include "Chunk.h"
 #include "Tile.h"
 #include "Ore.h"
-HRESULT Chunk::Init(int x, int y)
+HRESULT Chunk::Init(int _x, int _y)
 {
-    coord = { x, y };
+    coord = { _x, _y };
     tiles = new Tile[CHUNK_IN_TILE * CHUNK_IN_TILE]();
     for (int y = 0; y < CHUNK_IN_TILE; y++)
     {
