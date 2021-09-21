@@ -15,26 +15,8 @@
     <Filter Include="2DFrameWork">
       <UniqueIdentifier>{3d7f4ce1-77d5-4392-a75d-50151a4ce2aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2DFrameWork\Manager">
-      <UniqueIdentifier>{cb0c7b8d-3b59-4e2d-9527-850c74b3d5ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2DFrameWork\Timer">
-      <UniqueIdentifier>{4f8f9213-86ff-48ae-ac8a-cc78c8032ed8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2DFrameWork\Image">
-      <UniqueIdentifier>{549c524a-7f0a-4531-8b06-427e9d2ba18c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2DFrameWork\Animation">
-      <UniqueIdentifier>{5b983df8-1857-4adc-a0db-81c28cbbb7a1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainGame\Scene">
       <UniqueIdentifier>{da98538c-e337-4357-b2c4-b1f8aec531ee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2DFrameWork\Button">
-      <UniqueIdentifier>{ace42f44-cca2-4ce8-953c-8f1f3050c554}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2DFrameWork\Scene">
-      <UniqueIdentifier>{d35c4b11-88bd-4258-86dd-22b1bd68cda4}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainGame\Shader">
       <UniqueIdentifier>{f328a868-77ea-4aa0-97ae-30a1463613d3}</UniqueIdentifier>
@@ -137,47 +119,8 @@
     <ClInclude Include="framework.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="GameNode.h">
-      <Filter>2DFrameWork</Filter>
-    </ClInclude>
     <ClInclude Include="MainGame.h">
       <Filter>MainGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>2DFrameWork\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>2DFrameWork\Timer</Filter>
-    </ClInclude>
-    <ClInclude Include="Image.h">
-      <Filter>2DFrameWork\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>2DFrameWork\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>2DFrameWork\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="ButtonFunction.h">
-      <Filter>2DFrameWork\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyManager.h">
-      <Filter>2DFrameWork\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundManager.h">
-      <Filter>2DFrameWork\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>2DFrameWork\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageManager.h">
-      <Filter>2DFrameWork\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>2DFrameWork\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="TimerManager.h">
-      <Filter>2DFrameWork\Timer</Filter>
     </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>MainGame\Character</Filter>
@@ -319,44 +262,8 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameNode.cpp">
-      <Filter>2DFrameWork</Filter>
-    </ClCompile>
     <ClCompile Include="MainGame.cpp">
       <Filter>MainGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>2DFrameWork\Timer</Filter>
-    </ClCompile>
-    <ClCompile Include="Image.cpp">
-      <Filter>2DFrameWork\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation.cpp">
-      <Filter>2DFrameWork\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>2DFrameWork\Button</Filter>
-    </ClCompile>
-    <ClCompile Include="ButtonFunction.cpp">
-      <Filter>2DFrameWork\Button</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyManager.cpp">
-      <Filter>2DFrameWork\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundManager.cpp">
-      <Filter>2DFrameWork\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>2DFrameWork\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageManager.cpp">
-      <Filter>2DFrameWork\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>2DFrameWork\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="TimerManager.cpp">
-      <Filter>2DFrameWork\Timer</Filter>
     </ClCompile>
     <ClCompile Include="Factorio-Imitation.cpp">
       <Filter>소스 파일</Filter>

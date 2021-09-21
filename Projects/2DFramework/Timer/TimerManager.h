@@ -1,6 +1,6 @@
 #pragma once
-#include "framework.h"
-#include "Singleton.h"
+#include "../framework.h"
+#include "../Manager/Singleton.h"
 
 class Timer;
 class TimerManager : public Singleton<TimerManager>

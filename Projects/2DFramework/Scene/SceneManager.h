@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "framework.h"
+#include "../framework.h"
 #include "Singleton.h"
 
 class Image;

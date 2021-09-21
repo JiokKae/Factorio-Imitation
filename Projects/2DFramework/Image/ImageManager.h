@@ -1,6 +1,6 @@
 #pragma once
-#include "framework.h"
-#include "Singleton.h"
+#include "../framework.h"
+#include "../Manager/Singleton.h"
 #include <map>
 using namespace std;
 

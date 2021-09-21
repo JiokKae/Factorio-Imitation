@@ -1,5 +1,5 @@
 ﻿#include "Button.h"
-#include "Image.h"
+#include "../Image/Image.h"
 
 HRESULT Button::Init(const char* imageName, int posX, int posY, POINT downFramePoint, POINT upFramePoint)
 {

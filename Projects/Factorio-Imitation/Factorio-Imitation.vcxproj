@@ -161,7 +161,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Animation.h" />
     <ClInclude Include="AssemblingMachine1.h" />
     <ClInclude Include="Container.h" />
     <ClInclude Include="DebugHelper.h" />
@@ -170,8 +169,6 @@
     <ClInclude Include="BurnerInserter.h" />
     <ClInclude Include="BurnerMiningDrill.h" />
     <ClInclude Include="BurnerMiningDrillUI.h" />
-    <ClInclude Include="Button.h" />
-    <ClInclude Include="ButtonFunction.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterUI.h" />
     <ClInclude Include="Chunk.h" />
@@ -182,7 +179,6 @@
     <ClInclude Include="FastTransportBelt.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="FuelSlotUI.h" />
-    <ClInclude Include="GameNode.h" />
     <ClInclude Include="HandUI.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="InventorySlotUI.h" />
@@ -201,22 +197,13 @@
     <ClInclude Include="StoneFurnaceUI.h" />
     <ClInclude Include="Structure.h" />
     <ClInclude Include="TextUI.h" />
-    <ClInclude Include="Image.h" />
-    <ClInclude Include="ImageManager.h" />
-    <ClInclude Include="KeyManager.h" />
     <ClInclude Include="LightingScene.h" />
     <ClInclude Include="LoadingScene1.h" />
     <ClInclude Include="MainGame.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="Singleton.h" />
-    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="TenCubeSpaceScene.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMapToolScene.h" />
     <ClInclude Include="TileManager.h" />
-    <ClInclude Include="Timer.h" />
-    <ClInclude Include="TimerManager.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="TransportBelt.h" />
     <ClInclude Include="UIManager.h" />
@@ -224,7 +211,6 @@
     <ClInclude Include="WoodenChest.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AssemblingMachine1.cpp" />
     <ClCompile Include="Container.cpp" />
     <ClCompile Include="DebugHelper.cpp" />
@@ -233,8 +219,6 @@
     <ClCompile Include="BurnerInserter.cpp" />
     <ClCompile Include="BurnerMiningDrill.cpp" />
     <ClCompile Include="BurnerMiningDrillUI.cpp" />
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="ButtonFunction.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterUI.cpp" />
     <ClCompile Include="Chunk.cpp" />
@@ -246,7 +230,6 @@
     <ClCompile Include="framework.cpp" />
     <ClCompile Include="Factorio-Imitation.cpp" />
     <ClCompile Include="FuelSlotUI.cpp" />
-    <ClCompile Include="GameNode.cpp" />
     <ClCompile Include="HandUI.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="InventorySlotUI.cpp" />
@@ -264,21 +247,13 @@
     <ClCompile Include="StoneFurnaceUI.cpp" />
     <ClCompile Include="Structure.cpp" />
     <ClCompile Include="TextUI.cpp" />
-    <ClCompile Include="Image.cpp" />
-    <ClCompile Include="ImageManager.cpp" />
-    <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="LightingScene.cpp" />
     <ClCompile Include="LoadingScene1.cpp" />
     <ClCompile Include="MainGame.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="TenCubeSpaceScene.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileMapToolScene.cpp" />
     <ClCompile Include="TileManager.cpp" />
-    <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="TimerManager.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="TransportBelt.cpp" />
     <ClCompile Include="UIManager.cpp" />

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "GameNode.h"
+#include "../GameNode.h"
 
 enum BUTTON_STATE
 {

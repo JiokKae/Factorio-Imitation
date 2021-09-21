@@ -1,11 +1,11 @@
 ﻿#pragma once
-#include "framework.h"
+#include "../framework.h"
 
 class Animation
 {
 private:
-	vector<POINT> vecFrameList;		// key Frame 위치 리스트
-	vector<int> vecPlayList;		// 플레이 리스트
+	std::vector<POINT> vecFrameList;		// key Frame 위치 리스트
+	std::vector<int> vecPlayList;		// 플레이 리스트
 
 	int frameCount;		// 전체 프레임 수
 	int frameWidth;		// 프레임 가로 크기

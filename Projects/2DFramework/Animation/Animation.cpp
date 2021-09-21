@@ -1,4 +1,4 @@
-#include "Animation.h"
+﻿#include "Animation.h"
 
 HRESULT Animation::Init(int totalWidth, int totalHeight, int _frameWidth, int _frameHeight)
 {

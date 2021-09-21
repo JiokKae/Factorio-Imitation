@@ -1,9 +1,9 @@
 ﻿#include "Image.h"
-#include "Animation.h"
+#include "../Animation/Animation.h"
 
-HRESULT Image::Init(int width, int height)
+HRESULT Image::Init(HWND hWnd, int width, int height)
 {
-	HDC hdc = GetDC(g_hWnd);
+	HDC hdc = GetDC(hWnd);
 
 	imageInfo = new IMAGE_INFO;
 	imageInfo->resID = 0;
@@ -19,7 +19,7 @@ HRESULT Image::Init(int width, int height)
 	imageInfo->hBlendBitmap = CreateCompatibleBitmap(hdc, width, height);
 	imageInfo->hOldBlendBit = (HBITMAP)SelectObject(imageInfo->hBlendDC, imageInfo->hBlendBitmap);
 
-	ReleaseDC(g_hWnd, hdc);
+	ReleaseDC(hWnd, hdc);
 
 	if (imageInfo->hBitmap == NULL)
 	{
@@ -35,14 +35,14 @@ HRESULT Image::Init(int width, int height)
 	return S_OK;
 }
 
-HRESULT Image::Init(const DWORD /*resID*/, int /*width*/, int /*height*/, bool /*isTrans*/, COLORREF /*transColor*/)
+HRESULT Image::Init(HWND /*hWnd*/, const DWORD /*resID*/, int /*width*/, int /*height*/, bool /*isTrans*/, COLORREF /*transColor*/)
 {
 	return E_NOTIMPL;
 }
 
-HRESULT Image::Init(const char* _fileName, int _width, int _height, bool _isTrans, COLORREF _transColor)
+HRESULT Image::Init(HWND hWnd, const char* _fileName, int _width, int _height, bool _isTrans, COLORREF _transColor)
 {
-	HDC hdc = GetDC(g_hWnd);
+	HDC hdc = GetDC(hWnd);
 
 	imageInfo = new IMAGE_INFO;
 	imageInfo->resID = 0;
@@ -58,7 +58,7 @@ HRESULT Image::Init(const char* _fileName, int _width, int _height, bool _isTran
 	imageInfo->hBlendBitmap = CreateCompatibleBitmap(hdc, _width, _height);
 	imageInfo->hOldBlendBit = (HBITMAP)SelectObject(imageInfo->hBlendDC, imageInfo->hBlendBitmap);
 
-	ReleaseDC(g_hWnd, hdc);
+	ReleaseDC(hWnd, hdc);
 
 	this->isTrans = _isTrans;
 	this->transColor = _transColor;
@@ -77,9 +77,9 @@ HRESULT Image::Init(const char* _fileName, int _width, int _height, bool _isTran
 	return S_OK;
 }
 
-HRESULT Image::Init(const char * _fileName, int width, int height, int maxFrameX, int maxFrameY, bool _isTrans, COLORREF _transColor)
+HRESULT Image::Init(HWND hWnd, const char * _fileName, int width, int height, int maxFrameX, int maxFrameY, bool _isTrans, COLORREF _transColor)
 {
-	HDC hdc = GetDC(g_hWnd);
+	HDC hdc = GetDC(hWnd);
 
 	imageInfo = new IMAGE_INFO;
 	imageInfo->resID = 0;
@@ -104,7 +104,7 @@ HRESULT Image::Init(const char * _fileName, int width, int height, int maxFrameX
 	imageInfo->frameWidth = width / maxFrameX;
 	imageInfo->frameHeight = height / maxFrameY;
 
-	ReleaseDC(g_hWnd, hdc);
+	ReleaseDC(hWnd, hdc);
 
 	this->isTrans = _isTrans;
 	this->transColor = _transColor;
@@ -137,8 +137,8 @@ void Image::Release()
 
 void Image::Render(HDC hdc, int destX, int destY, int sizeX, int sizeY)
 {
-	imageInfo->x = destX - (imageInfo->width / 2);
-	imageInfo->y = destY - (imageInfo->height / 2);
+	imageInfo->x = static_cast<float>(destX - (imageInfo->width / 2));
+	imageInfo->y = static_cast<float>(destY - (imageInfo->height / 2));
 
 	if (isTrans)
 	{
@@ -170,8 +170,8 @@ void Image::Render(HDC hdc, int destX, int destY, int sizeX, int sizeY)
 
 void Image::Render(HDC hdc, int destX, int destY, int srcX, int srcY, int srcWidth, int srcHeight)
 {
-	imageInfo->x = destX - (imageInfo->width / 2);
-	imageInfo->y = destY - (imageInfo->height / 2);
+	imageInfo->x = static_cast<float>(destX - (imageInfo->width / 2));
+	imageInfo->y = static_cast<float>(destY - (imageInfo->height / 2));
 
 	if (isTrans)
 	{
@@ -208,8 +208,8 @@ void Image::FrameRender(HDC hdc, int destX, int destY, int currFrameX, int currF
 	imageInfo->currFrameX = currFrameX;
 	imageInfo->currFrameY = currFrameY;
 
-	imageInfo->x = destX - (imageInfo->frameWidth / 2);
-	imageInfo->y = destY - (imageInfo->frameHeight / 2);
+	imageInfo->x = static_cast<float>(destX - (imageInfo->frameWidth / 2));
+	imageInfo->y = static_cast<float>(destY - (imageInfo->frameHeight / 2));
 
 	if (isTrans)
 	{

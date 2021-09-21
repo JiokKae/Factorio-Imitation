@@ -1,5 +1,6 @@
 #pragma once
-#include "GameNode.h"
+#include "../GameNode.h"
+
 class Scene : public GameNode
 {
 protected:

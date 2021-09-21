@@ -1,14 +1,13 @@
 ﻿#pragma once
-#include "framework.h"
+#include "../framework.h"
 #include "Singleton.h"
 
 // FMOD 관련
 //#pragma comment(lib, "lib/fmodex_vc.lib")
-#pragma comment(lib, "../../Librarys/fmod/fmodex64_vc.lib")
-#pragma comment(lib, "../../Librarys/fmod/fmodex64_vc.lib")
+#pragma comment(lib, "../../../Librarys/fmod/fmodex64_vc.lib")
+#pragma comment(lib, "../../../Librarys/fmod/fmodex64_vc.lib")
 
-
-#include "inc/fmod.hpp"
+#include "fmod/inc/fmod.hpp"
 
 using namespace FMOD;
 
@@ -21,7 +20,7 @@ private:
 	Sound** sounds;		// 음원
 	Channel** channels;	// 출력 사운드 관리
 
-	map<string, Sound**> mapSoundData;
+	std::map<string, Sound**> mapSoundData;
 
 public:
 	HRESULT Init();
