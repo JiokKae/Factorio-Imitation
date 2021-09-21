@@ -8,7 +8,7 @@ private:
 	vector<int> vecPlayList;		// 플레이 리스트
 
 	int frameCount;		// 전체 프레임 수
-	int frameWitdh;		// 프레임 가로 크기
+	int frameWidth;		// 프레임 가로 크기
 	int frameHeight;	// 프레임 세로 크기
 	
 	bool isLoop;		// 반복 되는지 여부
