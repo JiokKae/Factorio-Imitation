@@ -1,6 +1,6 @@
 ﻿#include "SlotUI.h"
-#include "GLImage.h"
-#include "TextRenderer.h"
+#include "../GLFramework/Image/GLImage.h"
+#include "../GLFramework/TextRenderer/TextRenderer.h"
 #include "HandUI.h"
 #include "Character.h"
 #include "Inventory.h"

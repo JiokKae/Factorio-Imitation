@@ -1,7 +1,7 @@
 ﻿#include "LightingScene.h"
-#include "FreeCamera.h"
-#include "Shader.h"
-#include "Texture.h"
+#include "../GLFramework/Camera3D/FreeCamera.h"
+#include "../GLFramework/Shader/Shader.h"
+#include "../GLFramework/Texture/Texture.h"
 
 HRESULT LightingScene::Init()
 {

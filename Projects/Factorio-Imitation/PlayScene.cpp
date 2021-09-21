@@ -1,14 +1,14 @@
 ﻿#include "PlayScene.h"
 #include "Character.h"
-#include "Camera.h"
+#include "../GLFramework/Camera/Camera.h"
 #include "Tile.h"
 #include "TileManager.h"
-#include "PointLight.h"
-#include "DirectionalLight.h"
+#include "../GLFramework/Light/PointLight.h"
+#include "../GLFramework/Light/DirectionalLight.h"
 #include "EntityManager.h"
 #include "Ore.h"
 #include "MainGameUIFactory.h"
-#include "UI.h"
+#include "../GLFramework/UI/UI.h"
 #include "Structure.h"
 
 HRESULT PlayScene::Init()

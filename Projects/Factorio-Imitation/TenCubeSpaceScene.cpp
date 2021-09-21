@@ -1,7 +1,7 @@
 ﻿#include "TenCubeSpaceScene.h"
-#include "Shader.h"
-#include "FreeCamera.h"
-#include "Texture.h"
+#include "../GLFramework/Shader/Shader.h"
+#include "../GLFramework/Camera3D/FreeCamera.h"
+#include "../GLFramework/Texture/Texture.h"
 
 HRESULT TenCubeSpaceScene::Init()
 {

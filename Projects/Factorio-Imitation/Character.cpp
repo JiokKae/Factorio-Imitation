@@ -1,6 +1,6 @@
 #include "Character.h"
 #include "Animation.h"
-#include "GLImage.h"
+#include "../GLFramework/Image/GLImage.h"
 #include "Inventory.h"
 #include "Structure.h"
 #include "Tile.h"

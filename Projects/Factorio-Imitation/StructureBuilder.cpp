@@ -1,11 +1,11 @@
 ﻿#include "StructureBuilder.h"
-#include "Shader.h"
+#include "../GLFramework/Shader/Shader.h"
 #include "ItemEnum.h"
-#include "GLImage.h"
+#include "../GLFramework/Image/GLImage.h"
 #include "EntityManager.h"
 #include "Tile.h"
 #include "HandUI.h"
-#include "Texture.h"
+#include "../GLFramework/Texture/Texture.h"
 #include "Structure.h"
 HRESULT StructureBuilder::Init()
 {

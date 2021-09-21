@@ -1,6 +1,6 @@
 #include "Ore.h"
-#include "GLImage.h"
-#include "Shader.h"
+#include "../GLFramework/Image/GLImage.h"
+#include "../GLFramework/Shader/Shader.h"
 #include "ItemEnum.h"
 
 HRESULT Ore::Init(int x, int y)

@@ -1,5 +1,5 @@
 #pragma once
-#include "UI.h"
+#include "../GLFramework/UI/UI.h"
 
 struct ItemInfo;
 class Structure;

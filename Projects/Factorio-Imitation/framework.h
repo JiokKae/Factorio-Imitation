@@ -98,8 +98,8 @@ struct ItemInfo {
 #include "ImageManager.h"
 #include "SceneManager.h"
 #include "SoundManager.h"
-#include "TextureManager.h"
-#include "TextRenderer.h"
+#include "../GLFramework/Texture/TextureManager.h"
+#include "../GLFramework/TextRenderer/TextRenderer.h"
 #include "UIManager.h"
 #include "TileManager.h"
 #include "EntityManager.h"
@@ -107,8 +107,8 @@ struct ItemInfo {
 #include "DebugHelper.h"
 
 // Useful
-#include "GLImage.h"
-#include "Shader.h"
+#include "../GLFramework/Image/GLImage.h"
+#include "../GLFramework/Shader/Shader.h"
 
 #define WINSIZE_X		900
 #define WINSIZE_Y		900

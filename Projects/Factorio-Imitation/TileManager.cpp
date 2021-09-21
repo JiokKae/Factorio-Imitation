@@ -1,12 +1,12 @@
 ﻿#include "TileManager.h"
 #include "Tile.h"
-#include "GLImage.h"
-#include "Shader.h"
-#include "Texture.h"
+#include "../GLFramework/Image/GLImage.h"
+#include "../GLFramework/Shader/Shader.h"
+#include "../GLFramework/Texture/Texture.h"
 #include "Ore.h"
 #include "Chunk.h"
-#include "VertexArrayObject.h"
-#include "VertexBufferObject.h"
+#include "../GLFramework/VertexDataObject/VertexArrayObject.h"
+#include "../GLFramework/VertexDataObject/VertexBufferObject.h"
 #include "ItemEnum.h"
 
 HRESULT TileManager::Init()

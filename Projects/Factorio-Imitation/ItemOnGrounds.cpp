@@ -1,8 +1,8 @@
 ﻿#include "ItemOnGrounds.h"
 #include "ItemOnGround.h"
-#include "VertexArrayObject.h"
-#include "VertexBufferObject.h"
-#include "Texture.h"
+#include "../GLFramework/VertexDataObject/VertexArrayObject.h"
+#include "../GLFramework/VertexDataObject/VertexBufferObject.h"
+#include "../GLFramework/Texture/Texture.h"
 #include "Character.h"
 #include "Inventory.h"
 
