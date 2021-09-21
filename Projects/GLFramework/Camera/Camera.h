@@ -24,7 +24,7 @@ private:
 public:
 	void Init();
 	void Release();
-	void Update();
+	void Update(float mousezDelta);
 
 	float GetZoom()		{ return powf(2, zoom); }
 	glm::vec3 GerFront()	{ return front; }

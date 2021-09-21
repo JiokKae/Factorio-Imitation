@@ -15,11 +15,11 @@ void Camera::Release()
 {
 }
 
-void Camera::Update()
+void Camera::Update(float mousezDelta)
 {
 	// zoom
-	float offset = lastMouseZDelta - g_mousezDelta;
-	lastMouseZDelta = g_mousezDelta;
+	float offset = lastMouseZDelta - mousezDelta;
+	lastMouseZDelta = mousezDelta;
 	zoom -= offset / 120.0f * zoomSpeed;
 	zoom = Clamp(zoom, -2.3f, 0.7f);
 

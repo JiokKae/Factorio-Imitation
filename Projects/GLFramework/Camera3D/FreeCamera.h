@@ -20,12 +20,11 @@ private:
     float zoomSpeed;
     float lastMouseZDelta;
     bool firstMouse = true;
-    std::function<void()> onUpdate;
 
 public:
-	void Init(std::function<void()> _onUpdate);
+	void Init();
 	void Release();
-	void Update(float mousezDelta, float dt);
+	void Update(float mousezDelta, float dt, POINT ptMouse);
 
     float GetFov() { return fov; }
     glm::vec3 GerFront() { return front; }

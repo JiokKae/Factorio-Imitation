@@ -135,7 +135,7 @@ void LightingScene::Update()
         return;
     }
 
-    camera->Update();
+    camera->Update(g_mousezDelta, TimerManager::GetSingleton()->GetTimeElapsed(), g_ptMouse);
 }
 
 void LightingScene::Render(HDC /*hdc*/)

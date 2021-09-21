@@ -170,7 +170,7 @@ void TenCubeSpaceScene::Update()
 	projection = glm::perspective(glm::radians(camera->GetFov()), float(WINSIZE_X) / WINSIZE_Y, 0.1f, 100.0f);
 
 	// camera vecs
-	camera->Update();
+	camera->Update(g_mousezDelta, TimerManager::GetSingleton()->GetTimeElapsed(), g_ptMouse);
 	glm::mat4 view;
 	view = camera->GetViewMatrix();
 

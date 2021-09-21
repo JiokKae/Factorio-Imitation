@@ -200,7 +200,7 @@ void PlayScene::Update()
     g_cursorCoord = ivec2(POS_TO_COORD(g_cursorPosition));
 
     g_currScreenSize = vec2(width, height);
-	camera->Update();
+	camera->Update(g_mousezDelta);
     
     debugHelper->SetFloat("1. Zoom", camera->GetZoom());
 }

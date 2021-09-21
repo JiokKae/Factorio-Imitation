@@ -32,9 +32,9 @@ FRECT UI::GetFrect()
 {
 	FRECT rect;
 	
-	rect.left =		GetPosition().x - GetWidth() / 2;
+	rect.left =	GetPosition().x - GetWidth() / 2;
 	rect.right =	GetPosition().x + GetWidth() / 2;
-	rect.top =		GetPosition().y + GetHeight() / 2;
+	rect.top =	GetPosition().y + GetHeight() / 2;
 	rect.bottom =	GetPosition().y - GetHeight() / 2;
 
 	return rect;

@@ -82,7 +82,7 @@ void TextRenderer::Load(const std::string& font, unsigned int fontSize)
             texture,
             glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
             glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-            face->glyph->advance.x
+            static_cast<unsigned int>(face->glyph->advance.x)
         };
         Characters.insert(std::pair<char, Text::Character>(c, character));
     }
@@ -100,7 +100,7 @@ void TextRenderer::RenderText(const std::string& text, float x, float y, float s
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(this->VAO);
     
-    int startX = x;
+    int startX = static_cast<int>(x);
 
     // iterate through all characters
     std::string::const_iterator c;
@@ -108,7 +108,7 @@ void TextRenderer::RenderText(const std::string& text, float x, float y, float s
     {
         if (*c == '\n')
         {
-            x = startX;
+            x = static_cast<float>(startX);
             y -= (this->Characters['H'].Size.y * 1.8f) * scale;
             continue;
         }
@@ -121,7 +121,7 @@ void TextRenderer::RenderText(const std::string& text, float x, float y, float s
                 str += *c;
                 c++;
             }
-            x = stoi(str) * (int)(x / stoi(str) + 1);
+            x = static_cast<float>(stoi(str) * (int)(x / stoi(str) + 1));
 
             continue;
         }
@@ -130,7 +130,7 @@ void TextRenderer::RenderText(const std::string& text, float x, float y, float s
 
         float xpos = x + ch.Bearing.x * scale;
         float ypos = y - (this->Characters['H'].Bearing.y - ch.Bearing.y) * scale;
-        float yoffset = ypos - y;
+        //float yoffset = ypos - y;
 
         float w = ch.Size.x * scale;
         float h = ch.Size.y * scale;
@@ -167,7 +167,7 @@ void TextRenderer::RenderOutText(const std::string& text, float x, float y, floa
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(this->VAO);
 
-    int startX = x;
+    int startX = static_cast<int>(x);
 
     // iterate through all characters
     std::string::const_iterator c;
@@ -175,7 +175,7 @@ void TextRenderer::RenderOutText(const std::string& text, float x, float y, floa
     {
         if (*c == '\n')
         {
-            x = startX;
+            x = static_cast<float>(startX);
             y -= (this->Characters['H'].Size.y * 1.8f) * scale;
             continue;
         }
@@ -188,7 +188,7 @@ void TextRenderer::RenderOutText(const std::string& text, float x, float y, floa
                 str += *c;
                 c++;
             }
-            x = stoi(str) * (int)(x / stoi(str) + 1);
+            x = static_cast<float>(stoi(str) * (int)(x / stoi(str) + 1));
 
             continue;
         }
@@ -197,7 +197,7 @@ void TextRenderer::RenderOutText(const std::string& text, float x, float y, floa
 
         float xpos = x + ch.Bearing.x * scale;
         float ypos = y - (this->Characters['H'].Bearing.y - ch.Bearing.y) * scale;
-        float yoffset = ypos - y;
+        //float yoffset = ypos - y;
 
         float w = ch.Size.x * scale;
         float h = ch.Size.y * scale;
