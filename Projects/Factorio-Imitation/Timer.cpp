@@ -60,7 +60,7 @@ bool Timer::Tick()
 
 float Timer::CheckTime()
 {
-	LONGLONG currTime;
-	QueryPerformanceCounter((LARGE_INTEGER*)&currTime);
-	return (currTime - lastTime) * timeScale;
+	LONGLONG _currTime;
+	QueryPerformanceCounter((LARGE_INTEGER*)&_currTime);
+	return (_currTime - lastTime) * timeScale;
 }

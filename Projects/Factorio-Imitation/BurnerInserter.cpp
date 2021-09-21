@@ -2,10 +2,10 @@
 #include "Tile.h"
 #include "ItemOnGround.h"
 
-HRESULT BurnerInserter::Init(int x, int y, DIRECTION direction, bool temp)
+HRESULT BurnerInserter::Init(int x, int y, DIRECTION _direction, bool _temp)
 {
 	itemId = ItemEnum::BURNER_INSERTER;
-	Structure::Init(x, y, direction, temp);
+	Structure::Init(x, y, _direction, _temp);
 	status = WORKING;
 
 	platformImage = new GLImage();
@@ -29,7 +29,7 @@ HRESULT BurnerInserter::Init(int x, int y, DIRECTION direction, bool temp)
 	allItemsImage->Init("Icons/AllItems", 8, 8, 0.25f, 0.25f);
 	allItemsImage->SetScale({0.25f, 0.25f});
 	
-	handAngle = -90.0f * direction;
+	handAngle = -90.0f * _direction;
 	handAngleSpeed = 216.0f;
 
 

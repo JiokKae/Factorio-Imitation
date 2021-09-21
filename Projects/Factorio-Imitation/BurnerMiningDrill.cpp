@@ -4,11 +4,11 @@
 #include "ItemOnGround.h"
 #include "BurnerMiningDrillUI.h"
 
-HRESULT BurnerMiningDrill::Init(int x, int y, DIRECTION direction, bool temp)
+HRESULT BurnerMiningDrill::Init(int x, int y, DIRECTION _direction, bool _temp)
 {
 	itemId = ItemEnum::BURNER_MINING_DRILL;
 	usingClickEvent = true;
-	Structure::Init(x, y, direction, temp);
+	Structure::Init(x, y, _direction, _temp);
 
 	image = new GLImage[DIRECTION_END]();
 	image[NORTH].Init(	"Entity/BurnerMiningDrill-N", 4, 8);

@@ -2,11 +2,11 @@
 #include "selectRecipeAssemblingUI.h"
 #include "Recipe.h"
 
-HRESULT AssemblingMachine1::Init(int x, int y, DIRECTION direction, bool temp)
+HRESULT AssemblingMachine1::Init(int x, int y, DIRECTION _direction, bool _temp)
 {
 	itemId = ItemEnum::ASSEMBLING_MACHINE_1;
 	usingClickEvent = true;
-	Structure::Init(x, y, direction, temp);
+	Structure::Init(x, y, _direction, _temp);
 
 	mainImage = new GLImage();
 	mainImage->Init("Entity/AssemblingMachine1", 8, 4);

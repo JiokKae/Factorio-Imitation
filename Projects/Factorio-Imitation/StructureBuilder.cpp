@@ -106,10 +106,10 @@ void StructureBuilder::Render(Shader* shader)
     shader->setVec3("material.diffuseColor", vec3(1.0f, 1.0f, 1.0f));
 }
 
-void StructureBuilder::Active(int itemId)
+void StructureBuilder::Active(int _itemId)
 {
     active = true;
-    this->itemId = itemId;
+    itemId = _itemId;
     ItemSpec spec = g_itemSpecs[itemId];
 
     if (tempStructure)

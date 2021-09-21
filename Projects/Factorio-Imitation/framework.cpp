@@ -25,9 +25,9 @@ bool ItemInfo::IsEmpty()
     return amount == 0;
 }
 
-void ItemInfo::SetAbleItems(vector<int> vecAbleItems)
+void ItemInfo::SetAbleItems(vector<int> _vecAbleItems)
 {
-	this->vecAbleItems = vecAbleItems;
+	vecAbleItems = _vecAbleItems;
 }
 
 void ItemInfo::AddAbleItem(int itemEnum)

@@ -69,31 +69,31 @@ void EntityManager::Update(FRECT cameraFrect)
 
 void EntityManager::Render(Shader* shader)
 {
-	vector<Entity*>::iterator it;
-	for (it = vecEntityInScreen.begin(); it != vecEntityInScreen.end(); it++)
+	vector<Entity*>::iterator entityItr;
+	for (entityItr = vecEntityInScreen.begin(); entityItr != vecEntityInScreen.end(); entityItr++)
 	{
 		//그림자 렌더
-		(*it)->FirstRender(shader);
+		(*entityItr)->FirstRender(shader);
 	}
-	for (it = vecEntityInScreen.begin(); it != vecEntityInScreen.end(); it++)
+	for (entityItr = vecEntityInScreen.begin(); entityItr != vecEntityInScreen.end(); entityItr++)
 	{
-		if ((*it)->IsPassable())
-			(*it)->Render(shader);
+		if ((*entityItr)->IsPassable())
+			(*entityItr)->Render(shader);
 	}
 	itemOnGrounds->Render();
-	for (it = vecEntityInScreen.begin(); it != vecEntityInScreen.end(); it++)
+	for (entityItr = vecEntityInScreen.begin(); entityItr != vecEntityInScreen.end(); entityItr++)
 	{
-		if ((*it)->GetPosition().y > player->GetPosition().y && !(*it)->IsPassable())
-			(*it)->Render(shader);
+		if ((*entityItr)->GetPosition().y > player->GetPosition().y && !(*entityItr)->IsPassable())
+			(*entityItr)->Render(shader);
 	}
 
 	player->Render(shader);
 
-	for (it = vecEntityInScreen.begin(); it != vecEntityInScreen.end(); it++)
+	for (entityItr = vecEntityInScreen.begin(); entityItr != vecEntityInScreen.end(); entityItr++)
 	{
-		if ((*it)->GetPosition().y <= player->GetPosition().y && !(*it)->IsPassable())
-			(*it)->Render(shader);
-		(*it)->LateRender(shader);
+		if ((*entityItr)->GetPosition().y <= player->GetPosition().y && !(*entityItr)->IsPassable())
+			(*entityItr)->Render(shader);
+		(*entityItr)->LateRender(shader);
 	}
 
 	structureBuilder->Render(shader);
@@ -105,9 +105,9 @@ void EntityManager::Collision()
 	FRECT entityRect;
 	FRECT playerRect = player->GetCollisionFRect();
 
-	for (auto it = vecEntityInScreen.begin(); it != vecEntityInScreen.end(); it++)
+	for (auto entityItr = vecEntityInScreen.begin(); entityItr != vecEntityInScreen.end(); entityItr++)
 	{
-		Entity* entity = *it;
+		Entity* entity = *entityItr;
 		if (entity->IsPassable())
 			continue;
 

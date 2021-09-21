@@ -3,18 +3,18 @@
 #include "Structure.h"
 #include "TransportBelt.h"
 
-void ItemOnGround::Init(ItemEnum itemId, float positionX, float positionY)
+void ItemOnGround::Init(ItemEnum _itemId, float _positionX, float _positionY)
 {
-	this->itemId = itemId;
-	position.x = positionX;
-	position.y = positionY;
+	itemId = _itemId;
+	position.x = _positionX;
+	position.y = _positionY;
 	parentTile = TileManager::GetSingleton()->GetLpTile(position.x, position.y);
 	parentTile->LinkItemOnGround(this);
 }
 
-void ItemOnGround::Init(ItemEnum itemId, glm::vec2 position)
+void ItemOnGround::Init(ItemEnum _itemId, glm::vec2 _position)
 {
-	Init(itemId, position.x, position.y);
+	Init(_itemId, _position.x, _position.y);
 }
 
 void ItemOnGround::Release()
@@ -46,9 +46,9 @@ void ItemOnGround::Update()
 	}
 }
 
-void ItemOnGround::SetPosition(Vec2 position)
+void ItemOnGround::SetPosition(Vec2 _position)
 {
-	this->position = position;
+	this->position = _position;
 	positionChange = true;
 }
 

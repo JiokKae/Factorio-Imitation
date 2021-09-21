@@ -27,11 +27,11 @@ const char* Structure::statusString[STATUS::END] = {
 	"Item ingredient shortage"
 };
 
-HRESULT Structure::Init(int x, int y, DIRECTION direction, bool temp)
+HRESULT Structure::Init(int x, int y, DIRECTION _direction, bool _temp)
 {
 	this->position = { x, y };
-	this->direction = direction;
-	this->temp = temp;
+	this->direction = _direction;
+	this->temp = _temp;
 	this->coord = ivec2(POS_TO_COORD(position));
 	this->passable = g_itemSpecs[itemId].passable;
 	this->coordSize = g_itemSpecs[itemId].coordSize;

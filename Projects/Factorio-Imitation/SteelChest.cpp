@@ -1,6 +1,6 @@
 #include "SteelChest.h"
 
-HRESULT SteelChest::Init(int x, int y, DIRECTION direction, bool temp)
+HRESULT SteelChest::Init(int x, int y, DIRECTION _direction, bool _temp)
 {
 	itemId = ItemEnum::STEEL_CHEST;
 	inventorySize = 48;
@@ -12,7 +12,7 @@ HRESULT SteelChest::Init(int x, int y, DIRECTION direction, bool temp)
 	shadowImage->Init("Entity/SteelChest-shadow");
 	shadowImage->SetAlpha(0.5f);
 
-	Container::Init(x, y, direction, temp);
+	Container::Init(x, y, _direction, _temp);
 	status = WORKING;
 
 	return S_OK;

@@ -1,10 +1,10 @@
 #include "Recipe.h"
 
-HRESULT Recipe::Init(ItemInfo output, float craftingTime, vector<ItemInfo> vecIngredients)
+HRESULT Recipe::Init(ItemInfo _output, float _craftingTime, vector<ItemInfo> _vecIngredients)
 {
-	this->output = output;
-	this->craftingTime = craftingTime;
-	this->vecIngredients = vecIngredients;
+	this->output = _output;
+	this->craftingTime = _craftingTime;
+	this->vecIngredients = _vecIngredients;
 	return S_OK;
 }
 

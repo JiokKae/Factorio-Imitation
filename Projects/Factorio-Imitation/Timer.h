@@ -19,11 +19,11 @@ public:
 	HRESULT Init();
 	bool Tick();
 
-	ULONG GetFPS()			{ return fps; }
+	ULONG GetFPS()		{ return fps; }
 	float GetTimeElapsed()	{ return timeElapsed; }
 	float CheckTime();
 
-	void SetTargetFPS(ULONG targetFps)	{ this->targetFps = targetFps; }
-	void SetIsSC_MOVE(bool isSC_MOVE)	{ this->isSC_MOVE = isSC_MOVE; }
+	void SetTargetFPS(ULONG _targetFps)	{ targetFps = _targetFps; }
+	void SetIsSC_MOVE(bool _isSC_MOVE)	{ isSC_MOVE = _isSC_MOVE; }
 };
 

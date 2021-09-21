@@ -17,14 +17,14 @@ glm::ivec2 TransportBelt::imageTopPosOffset[DIRECTION_END] = {
 	{ -TILE_SIZE, 0 },	// WEST
 };
 
-HRESULT TransportBelt::Init(int x, int y, DIRECTION direction, bool temp)
+HRESULT TransportBelt::Init(int x, int y, DIRECTION _direction, bool _temp)
 {
 	itemId = ItemEnum::TRANSPORT_BELT;
 	speed = 45.0f;
 	image = new GLImage();
 	image->Init("Entity/TransportBelt", 16, 20);
 
-	Structure::Init(x, y, direction, temp);
+	Structure::Init(x, y, _direction, _temp);
 	status = WORKING;
 
 	LinkAroundBelts();
@@ -273,9 +273,9 @@ bool TransportBelt::InputItem(ItemInfo* inputItem, glm::vec2 pos)
 	return true;
 }
 
-void TransportBelt::SetPosition(Vec2 position)
+void TransportBelt::SetPosition(Vec2 _position)
 {
-	Entity::SetPosition(position);
+	Entity::SetPosition(_position);
 	coord = glm::ivec2(POS_TO_COORD(this->position));
 
 	Tile* tile = TileManager::GetSingleton()->GetLpTile(coord.x, coord.y);
@@ -295,9 +295,9 @@ void TransportBelt::SetPosition(Vec2 position)
 	}
 }
 
-void TransportBelt::SetAroundBelts(DIRECTION direction, TransportBelt* aroundBelt)
+void TransportBelt::SetAroundBelts(DIRECTION _direction, TransportBelt* aroundBelt)
 {
-	aroundBelts[direction] = aroundBelt;
+	aroundBelts[_direction] = aroundBelt;
 }
 
 bool TransportBelt::IsTransportBelt(int itemEnum)

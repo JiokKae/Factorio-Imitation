@@ -106,9 +106,9 @@ void Character::Render(Shader* lpShader)
 	image[state].Render(lpShader, position.x + imageAniOffset[state].x, position.y + imageAniOffset[state].y, animationCurrFrame[state] % image->GetMaxFrame().x, direction);
 }
 
-void Character::ChangeState(State state)
+void Character::ChangeState(State _state)
 {
-	this->state = state;
+	state = _state;
 	animationCurrFrame[state] = 0;
 	accumulateTime = 0;
 }

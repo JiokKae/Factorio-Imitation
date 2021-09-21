@@ -9,8 +9,8 @@ protected:
 public:
 	bool IsUseBackBuffer() { return useBackBuffer; }
 
-	void SetUseBackBuffer(bool b)				{ this->useBackBuffer = b; }
-	void SetWidthHeight(int width, int height)	{ this->width = width, this->height = height; }
+	void SetUseBackBuffer(bool b)			{ useBackBuffer = b; }
+	void SetWidthHeight(int _width, int _height)	{ width = _width, height = _height; }
 	
 	int GetWidth()	{ return width; }
 	int GetHeight() { return height; }

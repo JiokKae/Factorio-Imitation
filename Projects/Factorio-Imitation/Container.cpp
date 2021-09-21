@@ -1,9 +1,9 @@
 ﻿#include "Container.h"
 
-HRESULT Container::Init(int x, int y, DIRECTION direction, bool temp)
+HRESULT Container::Init(int x, int y, DIRECTION _direction, bool _temp)
 {
 	vecInventory.resize(inventorySize);
-	return Structure::Init(x, y, direction, temp);
+	return Structure::Init(x, y, _direction, _temp);
 }
 
 void Container::Release()

@@ -33,8 +33,8 @@ public:
 	RECT GetRect(int winWidth, int winHeight);
 	FRECT GetFRect(int winWidth, int winHeight);
 
-	void SetTarget(glm::vec2* targetPos) { this->target = targetPos; }
-	void SetPosition(glm::vec3 position) { this->position = position; }
+	void SetTarget(glm::vec2* targetPos)	{ target = targetPos; }
+	void SetPosition(glm::vec3 _position)	{ position = _position; }
 
 	Camera()
 		: target()

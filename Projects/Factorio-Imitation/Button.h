@@ -32,10 +32,10 @@ public:
 	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
 
-	void SetButtonFunc(void (*buttonFunc)(void*), Argument_Kind kind = Argument_Kind::None, void* arg = nullptr) {
-		this->buttonFunc = buttonFunc;
-		this->kind = kind;
-		this->arg = arg;
+	void SetButtonFunc(void (*_buttonFunc)(void*), Argument_Kind _kind = Argument_Kind::None, void* _arg = nullptr) {
+		buttonFunc = _buttonFunc;
+		kind = _kind;
+		arg = _arg;
 	}
 	void ButtonFunc() { buttonFunc(arg); }
 

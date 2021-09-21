@@ -18,10 +18,10 @@ public:
 	virtual void Update();
 	virtual void Render(Shader* lpShader);
 
-	void SetParent(UI* parent)			{ this->parent = parent; }
-	void SetActive(bool active)			{ this->active = active; }
-	void TurnActive()				{ this->active = !active; }
-	void SetLocalPosition(glm::vec2 position)	{ this->localPosition = position; }
+	void SetParent(UI* ui)				{ parent = ui; }
+	void SetActive(bool value)			{ active = value; }
+	void TurnActive()				{ active = !active; }
+	void SetLocalPosition(glm::vec2 position)	{ localPosition = position; }
 
 	bool IsActive() { return this->active; }
 	float GetWidth();

@@ -5,11 +5,11 @@
 #include "StoneFurnaceUI.h"
 #include "Recipe.h"
 
-HRESULT StoneFurnace::Init(int x, int y, DIRECTION direction, bool temp)
+HRESULT StoneFurnace::Init(int x, int y, DIRECTION _direction, bool _temp)
 {
 	usingClickEvent = true;
 	itemId = ItemEnum::STONE_FURNACE;
-	Structure::Init(x, y, direction, temp);
+	Structure::Init(x, y, _direction, _temp);
 
 	// 이미지 초기화
 	mainImage = new GLImage();

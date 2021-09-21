@@ -40,28 +40,28 @@ HRESULT Image::Init(const DWORD /*resID*/, int /*width*/, int /*height*/, bool /
 	return E_NOTIMPL;
 }
 
-HRESULT Image::Init(const char * fileName, int width, int height, bool isTrans, COLORREF transColor)
+HRESULT Image::Init(const char* _fileName, int _width, int _height, bool _isTrans, COLORREF _transColor)
 {
 	HDC hdc = GetDC(g_hWnd);
 
 	imageInfo = new IMAGE_INFO;
 	imageInfo->resID = 0;
 	imageInfo->hMemDC = CreateCompatibleDC(hdc);
-	imageInfo->hBitmap = (HBITMAP)LoadImage(g_hInstance, fileName,
-		IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
+	imageInfo->hBitmap = (HBITMAP)LoadImage(g_hInstance, _fileName,
+		IMAGE_BITMAP, _width, _height, LR_LOADFROMFILE);
 	imageInfo->hOldBit = (HBITMAP)SelectObject(imageInfo->hMemDC, imageInfo->hBitmap);
-	imageInfo->width = width;
-	imageInfo->height = height;
+	imageInfo->width = _width;
+	imageInfo->height = _height;
 	imageInfo->loadType = IMAGE_LOAD_KIND::FILE;
 
 	imageInfo->hBlendDC = CreateCompatibleDC(hdc);
-	imageInfo->hBlendBitmap = CreateCompatibleBitmap(hdc, width, height);
+	imageInfo->hBlendBitmap = CreateCompatibleBitmap(hdc, _width, _height);
 	imageInfo->hOldBlendBit = (HBITMAP)SelectObject(imageInfo->hBlendDC, imageInfo->hBlendBitmap);
 
 	ReleaseDC(g_hWnd, hdc);
 
-	this->isTrans = isTrans;
-	this->transColor = transColor;
+	this->isTrans = _isTrans;
+	this->transColor = _transColor;
 
 	if (imageInfo->hBitmap == NULL)
 	{
@@ -77,14 +77,14 @@ HRESULT Image::Init(const char * fileName, int width, int height, bool isTrans, 
 	return S_OK;
 }
 
-HRESULT Image::Init(const char * fileName, int width, int height, int maxFrameX, int maxFrameY, bool isTrans, COLORREF transColor)
+HRESULT Image::Init(const char * _fileName, int width, int height, int maxFrameX, int maxFrameY, bool _isTrans, COLORREF _transColor)
 {
 	HDC hdc = GetDC(g_hWnd);
 
 	imageInfo = new IMAGE_INFO;
 	imageInfo->resID = 0;
 	imageInfo->hMemDC = CreateCompatibleDC(hdc);
-	imageInfo->hBitmap = (HBITMAP)LoadImage(g_hInstance, fileName,
+	imageInfo->hBitmap = (HBITMAP)LoadImage(g_hInstance, _fileName,
 		IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
 	imageInfo->hOldBit =
 		(HBITMAP)SelectObject(imageInfo->hMemDC, imageInfo->hBitmap);
@@ -106,8 +106,8 @@ HRESULT Image::Init(const char * fileName, int width, int height, int maxFrameX,
 
 	ReleaseDC(g_hWnd, hdc);
 
-	this->isTrans = isTrans;
-	this->transColor = transColor;
+	this->isTrans = _isTrans;
+	this->transColor = _transColor;
 
 	if (imageInfo->hBitmap == NULL)
 	{

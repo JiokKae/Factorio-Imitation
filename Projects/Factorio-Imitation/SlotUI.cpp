@@ -27,11 +27,11 @@ void SlotUI::Release()
 	SAFE_RELEASE(allItemImage);
 }
 
-void SlotUI::Update(ItemInfo* itemInfo)
+void SlotUI::Update(ItemInfo* _itemInfo)
 {
 	if (active)
 	{
-		this->itemInfo = itemInfo;
+		this->itemInfo = _itemInfo;
 
 		if (PtInFRect(GetFrect(), { g_ptMouse.x, g_ptMouse.y }))
 		{

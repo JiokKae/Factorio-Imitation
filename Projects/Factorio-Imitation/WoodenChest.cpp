@@ -1,6 +1,6 @@
 #include "WoodenChest.h"
 
-HRESULT WoodenChest::Init(int x, int y, DIRECTION direction, bool temp)
+HRESULT WoodenChest::Init(int x, int y, DIRECTION _direction, bool _temp)
 {
 	itemId = ItemEnum::WOODEN_CHEST;
 	inventorySize = 16;
@@ -12,7 +12,7 @@ HRESULT WoodenChest::Init(int x, int y, DIRECTION direction, bool temp)
 	shadowImage->Init("Entity/WoodenChest-shadow");
 	shadowImage->SetAlpha(0.5f);
 
-	Container::Init(x, y, direction, temp);
+	Container::Init(x, y, _direction, _temp);
 	status = WORKING;
 
 	return S_OK;
