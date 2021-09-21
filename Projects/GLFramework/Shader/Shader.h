@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "framework.h"
+#include "../framework.h"
 #include <string>
 #include <fstream>
 #include <sstream>

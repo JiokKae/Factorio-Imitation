@@ -1,5 +1,5 @@
 #pragma once
-#include "framework.h"
+#include "../framework.h"
 
 /// Holds all state information relevant to a character as loaded using FreeType
 namespace Text {

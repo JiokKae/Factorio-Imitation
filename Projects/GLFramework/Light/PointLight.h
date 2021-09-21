@@ -1,6 +1,6 @@
 #pragma once
 // CC
-#include "framework.h"
+#include "../framework.h"
 using namespace glm;
 
 class PointLight

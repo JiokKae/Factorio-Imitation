@@ -23,7 +23,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{6f9daaa0-0322-405c-a917-39e3d9bf194e}</ProjectGuid>
     <RootNamespace>GLFramework</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -155,32 +155,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Factorio-Imitation\Camera.cpp" />
-    <ClCompile Include="..\..\Factorio-Imitation\DirectionalLight.cpp" />
-    <ClCompile Include="..\..\Factorio-Imitation\FreeCamera.cpp" />
-    <ClCompile Include="..\..\Factorio-Imitation\GLImage.cpp" />
-    <ClCompile Include="..\..\Factorio-Imitation\PointLight.cpp" />
-    <ClCompile Include="..\..\Factorio-Imitation\Shader.cpp" />
-    <ClCompile Include="..\..\Factorio-Imitation\TextRenderer.cpp" />
-    <ClCompile Include="..\..\Factorio-Imitation\Texture.cpp" />
-    <ClCompile Include="..\..\Factorio-Imitation\TextureManager.cpp" />
-    <ClCompile Include="..\..\Factorio-Imitation\UI.cpp" />
-    <ClCompile Include="..\..\Factorio-Imitation\VertexArrayObject.cpp" />
-    <ClCompile Include="..\..\Factorio-Imitation\VertexBufferObject.cpp" />
+    <ClCompile Include="Camera3D\FreeCamera.cpp" />
+    <ClCompile Include="Camera\Camera.cpp" />
+    <ClCompile Include="Image\GLImage.cpp" />
+    <ClCompile Include="Light\DirectionalLight.cpp" />
+    <ClCompile Include="Light\PointLight.cpp" />
+    <ClCompile Include="Shader\Shader.cpp" />
+    <ClCompile Include="TextRenderer\TextRenderer.cpp" />
+    <ClCompile Include="Texture\Texture.cpp" />
+    <ClCompile Include="Texture\TextureManager.cpp" />
+    <ClCompile Include="UI\UI.cpp" />
+    <ClCompile Include="VertexDataObject\VertexArrayObject.cpp" />
+    <ClCompile Include="VertexDataObject\VertexBufferObject.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Factorio-Imitation\Camera.h" />
-    <ClInclude Include="..\..\Factorio-Imitation\DirectionalLight.h" />
-    <ClInclude Include="..\..\Factorio-Imitation\FreeCamera.h" />
-    <ClInclude Include="..\..\Factorio-Imitation\GLImage.h" />
-    <ClInclude Include="..\..\Factorio-Imitation\PointLight.h" />
-    <ClInclude Include="..\..\Factorio-Imitation\Shader.h" />
-    <ClInclude Include="..\..\Factorio-Imitation\TextRenderer.h" />
-    <ClInclude Include="..\..\Factorio-Imitation\Texture.h" />
-    <ClInclude Include="..\..\Factorio-Imitation\TextureManager.h" />
-    <ClInclude Include="..\..\Factorio-Imitation\UI.h" />
-    <ClInclude Include="..\..\Factorio-Imitation\VertexArrayObject.h" />
-    <ClInclude Include="..\..\Factorio-Imitation\VertexBufferObject.h" />
+    <ClInclude Include="Camera3D\FreeCamera.h" />
+    <ClInclude Include="Camera\Camera.h" />
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="Image\GLImage.h" />
+    <ClInclude Include="Light\DirectionalLight.h" />
+    <ClInclude Include="Light\PointLight.h" />
+    <ClInclude Include="Shader\Shader.h" />
+    <ClInclude Include="TextRenderer\TextRenderer.h" />
+    <ClInclude Include="Texture\Texture.h" />
+    <ClInclude Include="Texture\TextureManager.h" />
+    <ClInclude Include="UI\UI.h" />
+    <ClInclude Include="VertexDataObject\VertexArrayObject.h" />
+    <ClInclude Include="VertexDataObject\VertexBufferObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

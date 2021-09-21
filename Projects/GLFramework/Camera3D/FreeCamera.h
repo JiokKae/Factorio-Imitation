@@ -1,5 +1,5 @@
 #pragma once
-#include "framework.h"
+#include "../framework.h"
 
 class FreeCamera
 {
@@ -20,11 +20,12 @@ private:
     float zoomSpeed;
     float lastMouseZDelta;
     bool firstMouse = true;
+    std::function<void()> onUpdate;
 
 public:
-	HRESULT Init();
+	void Init(std::function<void()> _onUpdate);
 	void Release();
-	void Update();
+	void Update(float mousezDelta, float dt);
 
     float GetFov() { return fov; }
     glm::vec3 GerFront() { return front; }

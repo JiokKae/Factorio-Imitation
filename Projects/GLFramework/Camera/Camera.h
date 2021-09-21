@@ -1,5 +1,5 @@
 #pragma once
-#include "framework.h"
+#include "../../Factorio-Imitation/framework.h"
 
 class Camera
 {
@@ -22,7 +22,7 @@ private:
 	glm::vec2* target;
 
 public:
-	HRESULT Init();
+	void Init();
 	void Release();
 	void Update();
 

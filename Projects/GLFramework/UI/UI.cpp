@@ -1,5 +1,5 @@
 #include "UI.h"
-#include "GLImage.h"
+#include "../Image/GLImage.h"
 
 HRESULT UI::Init()
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include "framework.h"
+#include "../framework.h"
 
 class VertexBufferObject;
 typedef class VertexArrayObject

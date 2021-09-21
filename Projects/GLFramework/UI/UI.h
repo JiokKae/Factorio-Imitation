@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "GameNode.h"
-#include "framework.h"
+#include "../../Factorio-Imitation/GameNode.h"
+#include "../framework.h"
 
 class Shader;
 class GLImage;

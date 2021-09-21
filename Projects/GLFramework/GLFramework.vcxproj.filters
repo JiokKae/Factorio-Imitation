@@ -30,79 +30,80 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Factorio-Imitation\Camera.cpp">
+    <ClCompile Include="Camera\Camera.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Factorio-Imitation\FreeCamera.cpp">
+    <ClCompile Include="Camera3D\FreeCamera.cpp">
       <Filter>Camera3D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Factorio-Imitation\GLImage.cpp">
+    <ClCompile Include="Image\GLImage.cpp">
       <Filter>Image</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Factorio-Imitation\DirectionalLight.cpp">
+    <ClCompile Include="Light\DirectionalLight.cpp">
       <Filter>Light</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Factorio-Imitation\PointLight.cpp">
+    <ClCompile Include="Light\PointLight.cpp">
       <Filter>Light</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Factorio-Imitation\Shader.cpp">
+    <ClCompile Include="Shader\Shader.cpp">
       <Filter>Shader</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Factorio-Imitation\TextRenderer.cpp">
+    <ClCompile Include="TextRenderer\TextRenderer.cpp">
       <Filter>TextRenderer</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Factorio-Imitation\Texture.cpp">
+    <ClCompile Include="Texture\Texture.cpp">
       <Filter>Texture</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Factorio-Imitation\TextureManager.cpp">
+    <ClCompile Include="Texture\TextureManager.cpp">
       <Filter>Texture</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Factorio-Imitation\UI.cpp">
+    <ClCompile Include="UI\UI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Factorio-Imitation\VertexArrayObject.cpp">
+    <ClCompile Include="VertexDataObject\VertexArrayObject.cpp">
       <Filter>VertexDataObject</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Factorio-Imitation\VertexBufferObject.cpp">
+    <ClCompile Include="VertexDataObject\VertexBufferObject.cpp">
       <Filter>VertexDataObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Factorio-Imitation\Camera.h">
+    <ClInclude Include="Camera\Camera.h">
       <Filter>Camera</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Factorio-Imitation\FreeCamera.h">
+    <ClInclude Include="Camera3D\FreeCamera.h">
       <Filter>Camera3D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Factorio-Imitation\GLImage.h">
+    <ClInclude Include="Image\GLImage.h">
       <Filter>Image</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Factorio-Imitation\DirectionalLight.h">
+    <ClInclude Include="Light\DirectionalLight.h">
       <Filter>Light</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Factorio-Imitation\PointLight.h">
+    <ClInclude Include="Light\PointLight.h">
       <Filter>Light</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Factorio-Imitation\Shader.h">
+    <ClInclude Include="Shader\Shader.h">
       <Filter>Shader</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Factorio-Imitation\TextRenderer.h">
+    <ClInclude Include="TextRenderer\TextRenderer.h">
       <Filter>TextRenderer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Factorio-Imitation\Texture.h">
+    <ClInclude Include="Texture\Texture.h">
       <Filter>Texture</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Factorio-Imitation\TextureManager.h">
+    <ClInclude Include="Texture\TextureManager.h">
       <Filter>Texture</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Factorio-Imitation\UI.h">
+    <ClInclude Include="UI\UI.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Factorio-Imitation\VertexArrayObject.h">
+    <ClInclude Include="VertexDataObject\VertexArrayObject.h">
       <Filter>VertexDataObject</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Factorio-Imitation\VertexBufferObject.h">
+    <ClInclude Include="VertexDataObject\VertexBufferObject.h">
       <Filter>VertexDataObject</Filter>
     </ClInclude>
+    <ClInclude Include="framework.h" />
   </ItemGroup>
 </Project>

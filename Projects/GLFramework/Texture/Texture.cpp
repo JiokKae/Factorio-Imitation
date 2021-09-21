@@ -1,7 +1,7 @@
 #include "Texture.h"
 #include <iostream>
 #define STB_IMAGE_IMPLEMENTATION
-#include "lib/stb_image.h"
+#include "../../../Librarys/stb_image/stb_image.h"
 
 HRESULT Texture::Init(char const* path, bool mipmap, bool flip, GLint filter)
 {

@@ -1,14 +1,14 @@
 #include "GLImage.h"
-#include "Texture.h"
-#include "Shader.h"
-#include "Scene.h"
-#include "VertexArrayObject.h"
-#include "VertexBufferObject.h"
+#include "../Texture/Texture.h"
+#include "../Shader/Shader.h"
+#include "../../Factorio-Imitation/Scene.h"
+#include "../VertexDataObject/VertexArrayObject.h"
+#include "../VertexDataObject/VertexBufferObject.h"
 
-HRESULT GLImage::Init(char const* sourceTexture, int maxFrameX, int maxFrameY, float marginX, float marginY, int width, int height)
+HRESULT GLImage::Init(char const* _sourceTexture, int maxFrameX, int maxFrameY, float marginX, float marginY, int width, int height)
 {
-	this->sourceTexture = TextureManager::GetSingleton()->FindTexture(sourceTexture);
-    if (sourceTexture == nullptr)
+	this->sourceTexture = TextureManager::GetSingleton()->FindTexture(_sourceTexture);
+    if (_sourceTexture == nullptr)
         return E_FAIL;
 
     // Load base width, height;
@@ -19,8 +19,8 @@ HRESULT GLImage::Init(char const* sourceTexture, int maxFrameX, int maxFrameY, f
 
 	maxFrame.x = maxFrameX;
 	maxFrame.y = maxFrameY;
-    frameWidth = width / maxFrame.x;
-    frameHeight = height / maxFrame.y;
+    frameWidth = static_cast<float>(width / maxFrame.x);
+    frameHeight = static_cast<float>(height / maxFrame.y);
     margin.x = marginX;
     margin.y = marginY;
     scale = glm::vec2(1.0f, 1.0f);
@@ -91,6 +91,6 @@ void GLImage::Render(Shader* shader, float destX, float destY, int currFrameX, i
     glBindVertexArray(0);
 }
 
-void GLImage::AnimationRender(Shader* shader, float destX, float destY, Animation* ani)
+void GLImage::AnimationRender(Shader* /*shader*/, float /*destX*/, float /*destY*/, Animation* /*ani*/)
 {
 }

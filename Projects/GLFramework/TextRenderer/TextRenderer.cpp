@@ -1,5 +1,5 @@
 #include "TextRenderer.h"
-#include "Shader.h"
+#include "../Shader/Shader.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
 

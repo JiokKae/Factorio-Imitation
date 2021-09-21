@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-HRESULT Camera::Init()
+void Camera::Init()
 {
 	position = glm::vec3(0.0f, 0.0f, 3.0f);
 	front = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -9,8 +9,6 @@ HRESULT Camera::Init()
 	movementSpeed = 15.0f;
 	zoom = 0.0f;
 	zoomSpeed = 0.1f;
-
-	return S_OK;
 }
 
 void Camera::Release()
@@ -31,7 +29,7 @@ void Camera::Update()
 		position.y = (*target).y;
 	}
 	
-	float cameraSpeed = movementSpeed * TimerManager::GetSingleton()->GetTimeElapsed(); // adjust accordingly
+	//float cameraSpeed = movementSpeed * TimerManager::GetSingleton()->GetTimeElapsed(); // adjust accordingly
 }
 
 glm::mat4 Camera::GetViewMatrix()
@@ -42,10 +40,10 @@ glm::mat4 Camera::GetViewMatrix()
 RECT Camera::GetRect(int winWidth, int winHeight)
 {
 	RECT rect;
-	rect.left =	position.x - ( winWidth / 2) / GetZoom();
-	rect.right =	position.x + ( winWidth / 2) / GetZoom();
-	rect.top =	position.y + (winHeight / 2) / GetZoom();
-	rect.bottom =	position.y - (winHeight / 2) / GetZoom();
+	rect.left =	static_cast<LONG>(position.x - ( winWidth / 2) / GetZoom());
+	rect.right =	static_cast<LONG>(position.x + ( winWidth / 2) / GetZoom());
+	rect.top =	static_cast<LONG>(position.y + (winHeight / 2) / GetZoom());
+	rect.bottom =	static_cast<LONG>(position.y - (winHeight / 2) / GetZoom());
 
 	return rect;
 }
