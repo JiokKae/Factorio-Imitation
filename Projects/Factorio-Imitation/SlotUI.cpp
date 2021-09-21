@@ -81,7 +81,7 @@ void SlotUI::Render(Shader* lpShader)
 	}
 }
 
-void SlotUI::LateRender(Shader* shader)
+void SlotUI::LateRender(Shader* /*shader*/)
 {
 	if (itemInfo && itemInfo->amount != 0)
 	{

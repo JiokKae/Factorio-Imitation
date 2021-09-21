@@ -178,7 +178,7 @@ void TenCubeSpaceScene::Update()
 	ourShader->setMat4("projection", projection);
 }
 
-void TenCubeSpaceScene::Render(HDC hdc)
+void TenCubeSpaceScene::Render(HDC /*hdc*/)
 {
 	// ..:: 드로잉 코드 (렌더링 루프 내부) :: ..
 

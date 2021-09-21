@@ -12,7 +12,7 @@ void Container::Release()
 	Structure::Release();
 }
 
-bool Container::InputItem(ItemInfo* inputtedItem, glm::vec2 pos)
+bool Container::InputItem(ItemInfo* inputtedItem, glm::vec2 /*pos*/)
 {
 	for (int i = 0; i < inventorySize; i++)
 	{

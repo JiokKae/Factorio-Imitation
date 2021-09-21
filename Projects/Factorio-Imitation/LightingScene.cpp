@@ -138,7 +138,7 @@ void LightingScene::Update()
     camera->Update();
 }
 
-void LightingScene::Render(HDC hdc)
+void LightingScene::Render(HDC /*hdc*/)
 {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

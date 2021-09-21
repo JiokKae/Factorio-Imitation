@@ -8,7 +8,7 @@ void ButtonFunction::ChangeScene(void* arg)
 	SceneManager::GetSingleton()->ChangeScene(changeSceneArg->sceneName.c_str(), changeSceneArg->loadingSceneName.c_str());
 }
 
-void ButtonFunction::QuitProgram(void* arg)
+void ButtonFunction::QuitProgram(void* /*arg*/)
 {
 	if (MessageBox(g_hWnd, "게임을 종료하시겠습니까?", "종료 확인", MB_OKCANCEL) == IDOK)
 	{

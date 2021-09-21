@@ -44,10 +44,10 @@ public:
 	virtual void ClickEvent() {};
 
 	// 모든 아이템이 투입되었을 때 True 반환
-	virtual bool InputItem(ItemInfo* inputtedItem, glm::vec2 pos) { return false; };
+	virtual bool InputItem(ItemInfo* /*inputtedItem*/ , glm::vec2 /*pos*/) { return false; };
 
 	virtual bool OutputItem() { return false; };
-	virtual bool TakeOutItem(ItemInfo* outItem) { return false; };
+	virtual bool TakeOutItem(ItemInfo* /*outItem*/) { return false; };
 	virtual string ToString();
 
 	FRECT GetFRect();

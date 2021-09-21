@@ -162,7 +162,7 @@ void BurnerMiningDrill::RenderInScreen(Shader* shader, float posX, float posY)
 	image[direction].Render(shader, posX, posY, frameX, frameY);
 }
 
-bool BurnerMiningDrill::InputItem(ItemInfo* inputItem, glm::vec2 pos)
+bool BurnerMiningDrill::InputItem(ItemInfo* inputItem, glm::vec2 /*pos*/)
 {
 	// 받는 아이템이 연료라면
 	if (g_itemSpecs[inputItem->id].fuel)

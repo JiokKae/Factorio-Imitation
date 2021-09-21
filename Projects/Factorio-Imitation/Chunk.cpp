@@ -36,7 +36,7 @@ void Chunk::Update()
     }
 }
 
-void Chunk::Render(Shader* lpShader)
+void Chunk::Render(Shader* /*lpShader*/)
 {
 
 }

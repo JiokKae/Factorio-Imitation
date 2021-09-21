@@ -33,7 +33,7 @@ public:
 	virtual void OnMouse() {};
 
 	// 클릭 이벤트
-	virtual void OnClick(int key) {};
+	virtual void OnClick(int /*key*/) {};
 
 	UI()
 		: image(nullptr)

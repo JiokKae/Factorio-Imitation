@@ -108,7 +108,7 @@ void TransportBelt::Render(Shader* lpShader)
 
 }
 
-void TransportBelt::LateRender(Shader* lpShader)
+void TransportBelt::LateRender(Shader* /*lpShader*/)
 {
 }
 

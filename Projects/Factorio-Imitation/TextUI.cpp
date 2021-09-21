@@ -13,7 +13,7 @@ void TextUI::Update()
 {
 }
 
-void TextUI::Render(Shader* lpShader)
+void TextUI::Render(Shader* /*lpShader*/)
 {
 	TextRenderer::GetSingleton()->RenderText(text, GetPosition().x, GetPosition().y, 1.0f, glm::vec3(1.0f));
 }

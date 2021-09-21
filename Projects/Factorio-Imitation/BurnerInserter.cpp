@@ -164,7 +164,7 @@ void BurnerInserter::Update()
 
 }
 
-void BurnerInserter::FirstRender(Shader* lpShader)
+void BurnerInserter::FirstRender(Shader* /*lpShader*/)
 {
 }
 

@@ -211,7 +211,7 @@ void StoneFurnace::RenderInScreen(Shader* shader, float posX, float posY)
 	}
 }
 
-bool StoneFurnace::InputItem(ItemInfo* inputItem, glm::vec2 pos)
+bool StoneFurnace::InputItem(ItemInfo* inputItem, glm::vec2 /*pos*/)
 {
 	// 받는 아이템이 연료라면
 	if (g_itemSpecs[inputItem->id].fuel)

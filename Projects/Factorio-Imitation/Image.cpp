@@ -35,7 +35,7 @@ HRESULT Image::Init(int width, int height)
 	return S_OK;
 }
 
-HRESULT Image::Init(const DWORD resID, int width, int height, bool isTrans, COLORREF transColor)
+HRESULT Image::Init(const DWORD /*resID*/, int /*width*/, int /*height*/, bool /*isTrans*/, COLORREF /*transColor*/)
 {
 	return E_NOTIMPL;
 }
