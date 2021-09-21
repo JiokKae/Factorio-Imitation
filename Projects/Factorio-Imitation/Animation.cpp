@@ -1,7 +1,14 @@
 #include "Animation.h"
 
-HRESULT Animation::Init(int totalWidth, int totalHeight, int frameWidth, int frameHeight)
+HRESULT Animation::Init(int totalWidth, int totalHeight, int _frameWidth, int _frameHeight)
 {
+	if (_frameWidth < 1 || _frameHeight < 1)
+	{
+		return S_FALSE;
+	}
+	frameWidth = _frameWidth;
+	frameHeight = _frameHeight;
+
 	// 가로 프레임 수
 	int frameWidthCount = totalWidth / frameWidth;
 
