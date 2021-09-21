@@ -79,7 +79,7 @@ void HandUI::Update()
 		{
 			if (!handItem->IsEmpty())
 			{
-				handItem->AddAmount(-1);
+				handItem->IncreaseAmount(-1);
 
 				ItemOnGround* item = new ItemOnGround();
 				item->Init((ItemEnum)handItem->id, g_cursorPosition);

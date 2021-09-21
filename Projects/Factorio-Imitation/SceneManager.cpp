@@ -4,9 +4,10 @@
 
 DWORD CALLBACK LoadingThread(LPVOID pvParam);
 
-Scene* SceneManager::currScene = nullptr;
-Scene* SceneManager::loadingScene = nullptr;
-Scene* SceneManager::readyScene = nullptr;
+Scene* SceneManager::currScene( nullptr );
+Scene* SceneManager::loadingScene( nullptr );
+Scene* SceneManager::readyScene( nullptr );
+
 SceneManager::~SceneManager()
 {
 }

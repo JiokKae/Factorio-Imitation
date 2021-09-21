@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{4a13c605-f55b-4553-a457-f759bc22acb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera3D">
+      <UniqueIdentifier>{a0a94042-0624-4fdd-8d70-473f8caedecd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Image">
+      <UniqueIdentifier>{776f9d92-58d7-406b-b1c0-496e036d76f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Light">
+      <UniqueIdentifier>{a6c2ed73-9666-4b95-8122-1d71f80054e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{6c865d72-3cfe-4c4d-8ea9-fb9abad61972}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TextRenderer">
+      <UniqueIdentifier>{19dfb80a-2b7b-40c0-bc0e-7fd510e1e3b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{664a38f1-7d29-4931-9912-028bf07d6fbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{e9db1194-428c-4781-bba3-a5b0f0a6fd5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VertexDataObject">
+      <UniqueIdentifier>{1900a001-2ed1-4a3e-840c-024331ebae0d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Factorio-Imitation\Camera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Factorio-Imitation\FreeCamera.cpp">
+      <Filter>Camera3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Factorio-Imitation\GLImage.cpp">
+      <Filter>Image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Factorio-Imitation\DirectionalLight.cpp">
+      <Filter>Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Factorio-Imitation\PointLight.cpp">
+      <Filter>Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Factorio-Imitation\Shader.cpp">
+      <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Factorio-Imitation\TextRenderer.cpp">
+      <Filter>TextRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Factorio-Imitation\Texture.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Factorio-Imitation\TextureManager.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Factorio-Imitation\UI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Factorio-Imitation\VertexArrayObject.cpp">
+      <Filter>VertexDataObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Factorio-Imitation\VertexBufferObject.cpp">
+      <Filter>VertexDataObject</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Factorio-Imitation\Camera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Factorio-Imitation\FreeCamera.h">
+      <Filter>Camera3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Factorio-Imitation\GLImage.h">
+      <Filter>Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Factorio-Imitation\DirectionalLight.h">
+      <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Factorio-Imitation\PointLight.h">
+      <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Factorio-Imitation\Shader.h">
+      <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Factorio-Imitation\TextRenderer.h">
+      <Filter>TextRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Factorio-Imitation\Texture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Factorio-Imitation\TextureManager.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Factorio-Imitation\UI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Factorio-Imitation\VertexArrayObject.h">
+      <Filter>VertexDataObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Factorio-Imitation\VertexBufferObject.h">
+      <Filter>VertexDataObject</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

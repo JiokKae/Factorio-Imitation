@@ -5,21 +5,21 @@
 
 HRESULT TextRenderer::Init()
 {
-    // load and configure shader
-    this->TextShader = new Shader("Text2DVertexShader.glsl", "Text2DFragmentShader.glsl");
-    this->TextShader->use();
-    this->TextShader->setInt("text", 0);
+	// load and configure shader
+	this->TextShader = new Shader("Text2DVertexShader.glsl", "Text2DFragmentShader.glsl");
+	this->TextShader->use();
+	this->TextShader->setInt("text", 0);
 
-    // configure VAO/VBO for texture quads
-    glGenVertexArrays(1, &this->VAO);
-    glGenBuffers(1, &this->VBO);
-    glBindVertexArray(this->VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+	// configure VAO/VBO for texture quads
+	glGenVertexArrays(1, &this->VAO);
+	glGenBuffers(1, &this->VBO);
+	glBindVertexArray(this->VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 
 	return S_OK;
 }

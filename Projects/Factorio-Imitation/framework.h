@@ -59,11 +59,11 @@ struct ItemInfo {
 
 	bool IsEmpty();
 
-	void AddAmount(int amount)
+	void IncreaseAmount(int value)
 	{
-		this->amount += amount;
-		if (this->amount < 0)
-			this->amount = 0;
+		amount += value;
+		if (amount < 0)
+			amount = 0;
 	}
 
 	void SetAbleItems(vector<int> vecAbleItems);
@@ -162,11 +162,11 @@ extern float		g_time;
 extern HINSTANCE	g_hInstance;
 extern POINT		g_ptMouse;
 extern float		g_mousezDelta;
-extern bool			g_debuggingMode;
+extern bool		g_debuggingMode;
 extern glm::vec2	g_cursorPosition;	// 마우스 커서의 포지션
 extern glm::ivec2	g_cursorCoord;		// 마우스 커서의 좌표
 extern glm::vec2	g_currScreenSize;	// 현재 씬 윈도우의 크기
-extern ItemSpec		g_itemSpecs[];
+extern const ItemSpec	g_itemSpecs[];
 enum class Argument_Kind {
 	None,
 	ChangeSceneArgument,

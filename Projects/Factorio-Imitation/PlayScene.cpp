@@ -210,74 +210,74 @@ void PlayScene::Render(HDC hdc)
 	glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // be sure to activate shader when setting uniforms/drawing objects
-    lightingShader->use();
-    
-    glBindBuffer(GL_UNIFORM_BUFFER, uboLights);
-    // player point light(dynamic)
-    pointLights[0].position = glm::vec3(entityManager->GetLpPlayer()->GetLpPosition()->x, entityManager->GetLpPlayer()->GetLpPosition()->y, 0.01f);
-    glBufferSubData(GL_UNIFORM_BUFFER, DirectionalLight::std140Size(), sizeof(glm::vec3), glm::value_ptr(pointLights[0].position));
-    // directional light(dynamic)
-    dirLight->diffuse = glm::vec3((sin(g_time / 3000.0f) + 1));
-    //dirLight->diffuse = glm::vec3(0.0f);
-    glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::vec4), sizeof(glm::vec3), glm::value_ptr(dirLight->diffuse));
+	// be sure to activate shader when setting uniforms/drawing objects
+	lightingShader->use();
 
-    glBindBuffer(GL_UNIFORM_BUFFER, 0);
-    
-    // 뷰/프로젝션 매트릭스 연산
-    glm::mat4 projection = glm::ortho(0.0f, float(width) / camera->GetZoom(), 0.0f, float(height) / camera->GetZoom());
-    glm::mat4 view = camera->GetViewMatrix();
-    view = glm::translate(view, glm::vec3(float(width) / camera->GetZoom() / 2, float(height) / camera->GetZoom() / 2, 0.0f));
+	glBindBuffer(GL_UNIFORM_BUFFER, uboLights);
+	// player point light(dynamic)
+	pointLights[0].position = glm::vec3(entityManager->GetLpPlayer()->GetLpPosition()->x, entityManager->GetLpPlayer()->GetLpPosition()->y, 0.01f);
+	glBufferSubData(GL_UNIFORM_BUFFER, DirectionalLight::std140Size(), sizeof(glm::vec3), glm::value_ptr(pointLights[0].position));
+	// directional light(dynamic)
+	dirLight->diffuse = glm::vec3((sin(g_time / 3000.0f) + 1));
+	//dirLight->diffuse = glm::vec3(0.0f);
+	glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::vec4), sizeof(glm::vec3), glm::value_ptr(dirLight->diffuse));
 
-    // uniform buffer object 0번 바인딩 인덱스에 프로젝션과 뷰 매트릭스 설정
-    glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
-    glBufferSubData(GL_UNIFORM_BUFFER,                  0, sizeof(glm::mat4), glm::value_ptr(projection));
-    glBufferSubData(GL_UNIFORM_BUFFER,  sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
-    glBindBuffer(GL_UNIFORM_BUFFER, 0);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-    // UI프로젝션 매트릭스 연산
-    glm::mat4 UIprojection = glm::ortho(0.0f, float(width), 0.0f, float(height));
+	// 뷰/프로젝션 매트릭스 연산
+	glm::mat4 projection = glm::ortho(0.0f, float(width) / camera->GetZoom(), 0.0f, float(height) / camera->GetZoom());
+	glm::mat4 view = camera->GetViewMatrix();
+	view = glm::translate(view, glm::vec3(float(width) / camera->GetZoom() / 2, float(height) / camera->GetZoom() / 2, 0.0f));
 
-    // uniform buffer object 2번 바인딩 인덱스에 UI프로젝션 설정
-    glBindBuffer(GL_UNIFORM_BUFFER, uboUIMatrices);
-    glBufferSubData(GL_UNIFORM_BUFFER,                  0, sizeof(glm::mat4), glm::value_ptr(UIprojection));
-    glBindBuffer(GL_UNIFORM_BUFFER, 0);
+	// uniform buffer object 0번 바인딩 인덱스에 프로젝션과 뷰 매트릭스 설정
+	glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(projection));
+	glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-    TimerManager* timerManager = TimerManager::GetSingleton();
-    debugHelper->SetFloat("2. Render UpdateTime", timerManager->updateTime);
+	// UI프로젝션 매트릭스 연산
+	glm::mat4 UIprojection = glm::ortho(0.0f, float(width), 0.0f, float(height));
 
-    tileManager->Render(camera->GetRect(width, height));
-    debugHelper->SetFloat("3. tileRenderer_time", timerManager->CheckTime());
+	// uniform buffer object 2번 바인딩 인덱스에 UI프로젝션 설정
+	glBindBuffer(GL_UNIFORM_BUFFER, uboUIMatrices);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(UIprojection));
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-    entityManager->Render(lightingShader);
-    debugHelper->SetFloat("4. entityManager_time", timerManager->CheckTime());
+	TimerManager* timerManager(TimerManager::GetSingleton());
+	debugHelper->SetFloat("2. Render UpdateTime", timerManager->updateTime);
 
-    UIManager::GetSingleton()->Render(UIShader);
-    debugHelper->SetFloat("5. UIManager_time", timerManager->CheckTime());
-   
-    char str[128];
-    textRenderer->RenderText("FPS: " + to_string(timerManager->GetFPS()),                           (float)10, (float)height - 10);
+	tileManager->Render(camera->GetRect(width, height));
+	debugHelper->SetFloat("3. tileRenderer_time", timerManager->CheckTime());
 
-    if (g_debuggingMode)
-    {
-         textRenderer->RenderText("g_ptMouse : " + to_string(g_ptMouse.x) + ", " + to_string(g_ptMouse.y),	10, height - 40);
-         sprintf_s(str, "cameraPos: (%.1f, %.1f)", camera->GetPosition().x, camera->GetPosition().y);
-         textRenderer->RenderText(string(str),									10, height - 70);
-         sprintf_s(str, "g_cursorPosition: (%.1f, %.1f)", g_cursorPosition.x, g_cursorPosition.y );
-         textRenderer->RenderText(string(str),									10, height - 100);
-         sprintf_s(str, "Cursor: (%d, %d)", g_cursorCoord.x, g_cursorCoord.y);
-         textRenderer->RenderText(string(str),									10, height - 130);
-         Tile* tile = TileManager::GetSingleton()->GetLPTileUnderMouse();
-         if (tile)
-         {
-             sprintf_s(str, "Ore Amount: %d", tile->GetLpOre()->GetAmount() );
-             textRenderer->RenderText(string(str),								10, height - 160);
-             sprintf_s(str, "Item Amount: %d", (int)tile->GetItems().size() );
-             textRenderer->RenderText(string(str),								10, height - 190);
-         }
-    }
-    
-    DebugHelper::GetSingleton()->Render(10, height - 220);
+	entityManager->Render(lightingShader);
+	debugHelper->SetFloat("4. entityManager_time", timerManager->CheckTime());
+
+	UIManager::GetSingleton()->Render(UIShader);
+	debugHelper->SetFloat("5. UIManager_time", timerManager->CheckTime());
+
+	char str[128];
+	textRenderer->RenderText("FPS: " + to_string(timerManager->GetFPS()), (float)10, (float)height - 10);
+
+	if (g_debuggingMode)
+	{
+		textRenderer->RenderText("g_ptMouse : " + to_string(g_ptMouse.x) + ", " + to_string(g_ptMouse.y), 10, height - 40);
+		sprintf_s(str, "cameraPos: (%.1f, %.1f)", camera->GetPosition().x, camera->GetPosition().y);
+		textRenderer->RenderText(string(str), 10, height - 70);
+		sprintf_s(str, "g_cursorPosition: (%.1f, %.1f)", g_cursorPosition.x, g_cursorPosition.y);
+		textRenderer->RenderText(string(str), 10, height - 100);
+		sprintf_s(str, "Cursor: (%d, %d)", g_cursorCoord.x, g_cursorCoord.y);
+		textRenderer->RenderText(string(str), 10, height - 130);
+		Tile* tile = TileManager::GetSingleton()->GetLPTileUnderMouse();
+		if (tile)
+		{
+			sprintf_s(str, "Ore Amount: %d", tile->GetLpOre()->GetAmount());
+			textRenderer->RenderText(string(str), 10, height - 160);
+			sprintf_s(str, "Item Amount: %d", (int)tile->GetItems().size());
+			textRenderer->RenderText(string(str), 10, height - 190);
+		}
+	}
+
+	DebugHelper::GetSingleton()->Render(10, height - 220);
 
 	glFlush();
 }

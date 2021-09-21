@@ -13,11 +13,11 @@ class GLImage
 	float frameWidth;
 	float frameHeight;
 	VertexArrayObject* imageVAO;
-	glm::vec2 offset;				// 이미지의 오프셋
-	float alpha;					// 이미지의 투명도
-	glm::vec2 scale;				// 이미지의 스케일
-	float angle;					// 이미지의 회전 각도
-	glm::vec2 margin;				// 이미지의 마진
+	glm::vec2 offset;
+	float alpha;			// 이미지의 투명도
+	glm::vec2 scale;
+	float angle;			// 이미지의 회전 각도
+	glm::vec2 margin;
 	bool isInit;
 
 public:
@@ -30,11 +30,11 @@ public:
 	void Render(Shader* shader, float destX, float destY, int currFrameX = 0, int currFrameY = 0);
 	void AnimationRender(Shader* shader, float destX, float destY, Animation* ani);
 
-	void SetAngle(float angle)				{ this->angle = angle; }
-	void SetAlpha(float alpha)				{ this->alpha = alpha; }
-	void SetScale(glm::vec2 scale)			{ this->scale = scale; }
-	void SetOffset(glm::vec2 offset)		{ this->offset = offset; }
-	void SetSourceTexture(Texture* texture) { this->sourceTexture = texture; }
+	void SetAngle(float value)			{ angle = value; }
+	void SetAlpha(float value)			{ alpha = value; }
+	void SetScale(glm::vec2 value)			{ scale = value; }
+	void SetOffset(glm::vec2 value)			{ offset = value; }
+	void SetSourceTexture(Texture* texture)		{ sourceTexture = texture; }
 
 	glm::vec2 GetScale()				{ return scale; }
 	float GetFrameWidth()				{ return frameWidth; }
@@ -42,8 +42,8 @@ public:
 	glm::vec2 GetMargin()				{ return margin; }
 	glm::ivec2 GetMaxFrame()			{ return maxFrame; }
 	float GetZoomedFrameWidth()			{ return frameWidth * scale.x; }
-	float GetZoomedFrameHeight()		{ return frameHeight * scale.y; }
-	Texture* GetLpSourceTexture()		{ return sourceTexture; }
+	float GetZoomedFrameHeight()			{ return frameHeight * scale.y; }
+	Texture* GetLpSourceTexture()			{ return sourceTexture; }
 
 	GLImage()
 		: sourceTexture(nullptr)

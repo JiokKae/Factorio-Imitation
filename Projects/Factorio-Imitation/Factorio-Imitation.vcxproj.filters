@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="MainGame">
       <UniqueIdentifier>{896f9533-993f-430f-a5bb-88128c4fa2fd}</UniqueIdentifier>
     </Filter>
@@ -40,26 +36,8 @@
     <Filter Include="2DFrameWork\Scene">
       <UniqueIdentifier>{d35c4b11-88bd-4258-86dd-22b1bd68cda4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GLFrameWork">
-      <UniqueIdentifier>{94e33f7c-4cee-43ef-89e4-952e29080a76}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GLFrameWork\Camera3D">
-      <UniqueIdentifier>{e07ffde3-429b-46d6-9104-c74635b73841}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GLFrameWork\Shader">
-      <UniqueIdentifier>{a7678590-22cc-4b01-88a6-2a932c625ca4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GLFrameWork\Texture">
-      <UniqueIdentifier>{ca62b113-7fec-46c3-97aa-85f124a34488}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GLFrameWork\Camera">
-      <UniqueIdentifier>{f62a6598-a5fc-4ac4-be5d-337509381762}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainGame\Shader">
       <UniqueIdentifier>{f328a868-77ea-4aa0-97ae-30a1463613d3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GLFrameWork\Image">
-      <UniqueIdentifier>{554ab6e3-78db-4b50-92f5-b809b51d07f0}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainGame\Character">
       <UniqueIdentifier>{65ea402a-7da0-47ca-9f02-cc6c540403f0}</UniqueIdentifier>
@@ -94,15 +72,6 @@
     <Filter Include="MainGame\Entity\Ore">
       <UniqueIdentifier>{146395d1-b902-4ffc-9653-8bf2f9318799}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GLFrameWork\TextRenderer">
-      <UniqueIdentifier>{3cf64f20-07ad-40a1-9540-fa1707684808}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GLFrameWork\Light">
-      <UniqueIdentifier>{320186c3-c873-43f3-80cd-1c43613725b8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GLFrameWork\VertexDataObject">
-      <UniqueIdentifier>{8f0485d7-9cf0-48ee-9cfd-dabd95d5563a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainGame\Entity\Structure">
       <UniqueIdentifier>{13f602e5-3d97-432f-9fb6-c2a9a4025319}</UniqueIdentifier>
     </Filter>
@@ -132,9 +101,6 @@
     </Filter>
     <Filter Include="MainGame\Entity\Structure\StoneFurnace">
       <UniqueIdentifier>{0ba6f8a7-63aa-4b85-ae23-86d41193665d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GLFrameWork\UI">
-      <UniqueIdentifier>{edfe1fec-8fce-47f4-b125-9c64785e83ba}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainGame\Recipe">
       <UniqueIdentifier>{63d1f8b6-a7ea-4b13-a43b-70eeb1aa22fc}</UniqueIdentifier>
@@ -201,17 +167,8 @@
     <ClInclude Include="SoundManager.h">
       <Filter>2DFrameWork\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>GLFrameWork\Shader</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>2DFrameWork\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>GLFrameWork\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>GLFrameWork\Texture</Filter>
     </ClInclude>
     <ClInclude Include="ImageManager.h">
       <Filter>2DFrameWork\Image</Filter>
@@ -221,15 +178,6 @@
     </ClInclude>
     <ClInclude Include="TimerManager.h">
       <Filter>2DFrameWork\Timer</Filter>
-    </ClInclude>
-    <ClInclude Include="FreeCamera.h">
-      <Filter>GLFrameWork\Camera3D</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>GLFrameWork\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="GLImage.h">
-      <Filter>GLFrameWork\Image</Filter>
     </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>MainGame\Character</Filter>
@@ -258,26 +206,11 @@
     <ClInclude Include="Ore.h">
       <Filter>MainGame\Entity\Ore</Filter>
     </ClInclude>
-    <ClInclude Include="TextRenderer.h">
-      <Filter>GLFrameWork\TextRenderer</Filter>
-    </ClInclude>
     <ClInclude Include="Chunk.h">
       <Filter>MainGame\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="PointLight.h">
-      <Filter>GLFrameWork\Light</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectionalLight.h">
-      <Filter>GLFrameWork\Light</Filter>
-    </ClInclude>
-    <ClInclude Include="VertexArrayObject.h">
-      <Filter>GLFrameWork\VertexDataObject</Filter>
-    </ClInclude>
     <ClInclude Include="TileManager.h">
       <Filter>MainGame\Tile</Filter>
-    </ClInclude>
-    <ClInclude Include="VertexBufferObject.h">
-      <Filter>GLFrameWork\VertexDataObject</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>MainGame\Entity</Filter>
@@ -344,9 +277,6 @@
     </ClInclude>
     <ClInclude Include="StoneFurnaceUI.h">
       <Filter>MainGame\UI\StoneFurnaceUI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI.h">
-      <Filter>GLFrameWork\UI</Filter>
     </ClInclude>
     <ClInclude Include="MainGameUIFactory.h">
       <Filter>MainGame\UI</Filter>
@@ -416,17 +346,8 @@
     <ClCompile Include="SoundManager.cpp">
       <Filter>2DFrameWork\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>GLFrameWork\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>2DFrameWork\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>GLFrameWork\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
-      <Filter>GLFrameWork\Texture</Filter>
     </ClCompile>
     <ClCompile Include="ImageManager.cpp">
       <Filter>2DFrameWork\Image</Filter>
@@ -439,15 +360,6 @@
     </ClCompile>
     <ClCompile Include="Factorio-Imitation.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="FreeCamera.cpp">
-      <Filter>GLFrameWork\Camera3D</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>GLFrameWork\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="GLImage.cpp">
-      <Filter>GLFrameWork\Image</Filter>
     </ClCompile>
     <ClCompile Include="Character.cpp">
       <Filter>MainGame\Character</Filter>
@@ -476,26 +388,11 @@
     <ClCompile Include="Ore.cpp">
       <Filter>MainGame\Entity\Ore</Filter>
     </ClCompile>
-    <ClCompile Include="TextRenderer.cpp">
-      <Filter>GLFrameWork\TextRenderer</Filter>
-    </ClCompile>
     <ClCompile Include="Chunk.cpp">
       <Filter>MainGame\Tile</Filter>
     </ClCompile>
-    <ClCompile Include="PointLight.cpp">
-      <Filter>GLFrameWork\Light</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectionalLight.cpp">
-      <Filter>GLFrameWork\Light</Filter>
-    </ClCompile>
-    <ClCompile Include="VertexArrayObject.cpp">
-      <Filter>GLFrameWork\VertexDataObject</Filter>
-    </ClCompile>
     <ClCompile Include="TileManager.cpp">
       <Filter>MainGame\Tile</Filter>
-    </ClCompile>
-    <ClCompile Include="VertexBufferObject.cpp">
-      <Filter>GLFrameWork\VertexDataObject</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>MainGame\Entity</Filter>
@@ -562,9 +459,6 @@
     </ClCompile>
     <ClCompile Include="StoneFurnaceUI.cpp">
       <Filter>MainGame\UI\StoneFurnaceUI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI.cpp">
-      <Filter>GLFrameWork\UI</Filter>
     </ClCompile>
     <ClCompile Include="MainGameUIFactory.cpp">
       <Filter>MainGame\UI</Filter>

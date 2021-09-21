@@ -240,9 +240,9 @@ void Character::Mining()
 FRECT Character::GetCollisionFRect()
 {
 	FRECT rect;
-	rect.left =		position.x - (TILE_SIZE / 4 * (4.0f / 5.0f));
+	rect.left =	position.x - (TILE_SIZE / 4 * (4.0f / 5.0f));
 	rect.right =	position.x + (TILE_SIZE / 4 * (4.0f / 5.0f));
-	rect.top =		position.y + (TILE_SIZE / 4 * (4.0f / 5.0f));
+	rect.top =	position.y + (TILE_SIZE / 4 * (4.0f / 5.0f));
 	rect.bottom =	position.y - (TILE_SIZE / 4 * (4.0f / 5.0f));
 	return rect;
 }
@@ -250,9 +250,9 @@ FRECT Character::GetCollisionFRect()
 FRECT Character::GetPickUpFRect()
 {
 	FRECT rect;
-	rect.left =		position.x - (TILE_SIZE / 2);
+	rect.left =	position.x - (TILE_SIZE / 2);
 	rect.right =	position.x + (TILE_SIZE / 2);
-	rect.top =		position.y + (TILE_SIZE / 2);
+	rect.top =	position.y + (TILE_SIZE / 2);
 	rect.bottom =	position.y - (TILE_SIZE / 2);
 	return rect;
 }

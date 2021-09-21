@@ -34,5 +34,3 @@ public:
 	HRESULT ChangeScene(const string& sceneName);
 	HRESULT ChangeScene(const string& sceneName, const string& loadingSceneName);
 };
-
-

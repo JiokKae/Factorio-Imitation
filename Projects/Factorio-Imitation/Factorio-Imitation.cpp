@@ -17,7 +17,7 @@ glm::ivec2	g_cursorCoord;		// 마우스 커서의 좌표
 glm::vec2	g_currScreenSize;	// 현재 씬 윈도우의 크기
 float		g_time;
 bool		g_debuggingMode = false;
-ItemSpec	g_itemSpecs[] = {
+const ItemSpec	g_itemSpecs[] = {
 //		name				buildable	coordSize	direction	passable	fuel,	fuelValue,	stackSize
 //										Count
 	{	"Assembling Machine 1",		true,		{ 3, 3 },	1,		FALSE,		FALSE,	NULL,		50,	},
