@@ -20,9 +20,9 @@ private:
 
 public:
 	HRESULT Init(int totalWidth, int totalHeight, int frameWidth, int frameHeight);
-	void SetPlayFrame(bool isLoop = false, bool isReverse = false);
-	void SetPlayFrame(int startFrame, int endFrame, bool isLoop = false, bool isReverse = false);
-	void SetPlayFrame(int* arr, int arrLength, bool isLoop = false, bool isReverse = false);
+	void SetPlayFrame(bool _isLoop = false, bool isReverse = false);
+	void SetPlayFrame(int startFrame, int endFrame, bool _isLoop = false, bool isReverse = false);
+	void SetPlayFrame(int* arr, int arrLength, bool _isLoop = false, bool isReverse = false);
 	void UpdateFrmae();
 	
 	void Start();

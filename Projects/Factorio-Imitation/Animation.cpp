@@ -33,10 +33,10 @@ HRESULT Animation::Init(int totalWidth, int totalHeight, int _frameWidth, int _f
 	return S_OK;
 }
 
-void Animation::SetPlayFrame(bool isLoop, bool isReverse)
+void Animation::SetPlayFrame(bool _isLoop, bool isReverse)
 {
 	// 루프 여부 결정
-	this->isLoop = isLoop;
+	isLoop = _isLoop;
 
 	// 리버스 여부 결정
 
@@ -65,10 +65,10 @@ void Animation::SetPlayFrame(bool isLoop, bool isReverse)
 
 }
 
-void Animation::SetPlayFrame(int startFrame, int endFrame, bool isLoop, bool isReverse)
+void Animation::SetPlayFrame(int startFrame, int endFrame, bool _isLoop, bool isReverse)
 {
 	// 루프 여부 결정
-	this->isLoop = isLoop;
+	isLoop = _isLoop;
 
 	vecPlayList.clear();
 
@@ -134,10 +134,10 @@ void Animation::SetPlayFrame(int startFrame, int endFrame, bool isLoop, bool isR
 	}
 }
 
-void Animation::SetPlayFrame(int * arr, int arrLength, bool isLoop, bool isReverse)
+void Animation::SetPlayFrame(int * arr, int arrLength, bool _isLoop, bool isReverse)
 {
 	// 루프 여부 결정
-	this->isLoop = isLoop;
+	isLoop = _isLoop;
 
 	// 리버스 여부 결정
 
