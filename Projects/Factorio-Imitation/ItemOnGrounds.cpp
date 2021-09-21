@@ -106,7 +106,7 @@ void ItemOnGrounds::Update(FRECT cameraFRect)
 
 void ItemOnGrounds::Render()
 {
-    int renderItemSize = vecItemsInScreen.size();
+    int renderItemSize = static_cast<int>(vecItemsInScreen.size());
     glm::vec2* infoDatas = new glm::vec2[renderItemSize]();
     
     instancingShader->use();

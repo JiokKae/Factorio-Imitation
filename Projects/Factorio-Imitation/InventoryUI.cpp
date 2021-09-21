@@ -29,7 +29,7 @@ void InventoryUI::Update()
 	{
 		slotUI[i].Update(arr[i]);
 	}
-	for (int i = arr.size(); i < SLOT_SIZE; i++)
+	for (size_t i = arr.size(); i < SLOT_SIZE; i++)
 	{
 		slotUI[i].Update(nullptr);
 	}
