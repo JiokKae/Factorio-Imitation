@@ -220,7 +220,7 @@ void Animation::Resume()
 Animation::Animation() :
 	frameCount(0),
 	frameHeight(0),
-	frameWitdh(0),
+	frameWidth(0),
 	isLoop(false),
 	nowPlayIdx(0),
 	isPlaying(false),
