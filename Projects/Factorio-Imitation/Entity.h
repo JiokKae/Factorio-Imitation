@@ -11,16 +11,16 @@ public:
 	virtual HRESULT Init();
 	virtual void Release();
 	virtual void Update();
-	virtual void FirstRender(Shader* lpShader) {};
+	virtual void FirstRender(Shader* /*lpShader*/) {};
 	virtual void Render(Shader* lpShader) = 0;
-	virtual void LateRender(Shader* lpShader) {};
+	virtual void LateRender(Shader* /*lpShader*/) {};
 
 	bool IsPassable()			{ return passable; }
-	Vec2 GetPosition()			{ return position; }
+	const Vec2& GetPosition()		{ return position; }
 	virtual FRECT GetCollisionFRect()	{ return FRECT(); }
 	virtual FRECT GetFRect()		{ return FRECT(); }
 
-	virtual void SetPosition(Vec2 position) { this->position = position; }
+	virtual void SetPosition(Vec2 value)	{ position = value; }
 
 	Entity()
 		: passable(false)
