@@ -165,6 +165,8 @@
     <ClInclude Include="Container.h" />
     <ClInclude Include="DebugHelper.h" />
     <ClInclude Include="IronChest.h" />
+    <ClInclude Include="MainGame\Button\ButtonFunction.h" />
+    <ClInclude Include="MainGame\Scene\TileMapToolScene.h" />
     <ClInclude Include="SelectRecipeAssemblingUI.h" />
     <ClInclude Include="BurnerInserter.h" />
     <ClInclude Include="BurnerMiningDrill.h" />
@@ -202,7 +204,6 @@
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="TenCubeSpaceScene.h" />
     <ClInclude Include="Tile.h" />
-    <ClInclude Include="TileMapToolScene.h" />
     <ClInclude Include="TileManager.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="TransportBelt.h" />
@@ -215,6 +216,8 @@
     <ClCompile Include="Container.cpp" />
     <ClCompile Include="DebugHelper.cpp" />
     <ClCompile Include="IronChest.cpp" />
+    <ClCompile Include="MainGame\Button\ButtonFunction.cpp" />
+    <ClCompile Include="MainGame\Scene\TileMapToolScene.cpp" />
     <ClCompile Include="SelectRecipeAssemblingUI.cpp" />
     <ClCompile Include="BurnerInserter.cpp" />
     <ClCompile Include="BurnerMiningDrill.cpp" />
@@ -252,7 +255,6 @@
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="TenCubeSpaceScene.cpp" />
     <ClCompile Include="Tile.cpp" />
-    <ClCompile Include="TileMapToolScene.cpp" />
     <ClCompile Include="TileManager.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="TransportBelt.cpp" />

@@ -149,7 +149,6 @@
   <ItemGroup>
     <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Button\Button.cpp" />
-    <ClCompile Include="Button\ButtonFunction.cpp" />
     <ClCompile Include="GameNode.cpp" />
     <ClCompile Include="Image\Image.cpp" />
     <ClCompile Include="Image\ImageManager.cpp" />
@@ -163,7 +162,6 @@
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Button\Button.h" />
-    <ClInclude Include="Button\ButtonFunction.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="Image\Image.h" />

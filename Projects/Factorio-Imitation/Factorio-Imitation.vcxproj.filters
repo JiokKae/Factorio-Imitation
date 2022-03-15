@@ -36,9 +36,6 @@
     <Filter Include="MainGame\Scene\LoadingScene1">
       <UniqueIdentifier>{e97c33fa-b240-4787-a74b-1ea93b1eb440}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Scene\TileMapToolScene">
-      <UniqueIdentifier>{a3f88dd2-0ea1-4233-aa3f-3e223fb21030}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainGame\Scene\PlayScene">
       <UniqueIdentifier>{533fe382-1ad8-4ff8-b730-28348027c827}</UniqueIdentifier>
     </Filter>
@@ -114,6 +111,9 @@
     <Filter Include="MainGame\Entity\Structure\Container\SteelChest">
       <UniqueIdentifier>{b7a0f907-0258-4afb-802b-a29db330cbf2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Button">
+      <UniqueIdentifier>{7a49e9d8-c5a5-4505-b73c-d24e25f1ed03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -139,9 +139,6 @@
     </ClInclude>
     <ClInclude Include="PlayScene.h">
       <Filter>MainGame\Scene\PlayScene</Filter>
-    </ClInclude>
-    <ClInclude Include="TileMapToolScene.h">
-      <Filter>MainGame\Scene\TileMapToolScene</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>MainGame\Tile</Filter>
@@ -260,6 +257,12 @@
     <ClInclude Include="TextUI.h">
       <Filter>MainGame\UI</Filter>
     </ClInclude>
+    <ClInclude Include="MainGame\Button\ButtonFunction.h">
+      <Filter>MainGame\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\Scene\TileMapToolScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainGame.cpp">
@@ -285,9 +288,6 @@
     </ClCompile>
     <ClCompile Include="PlayScene.cpp">
       <Filter>MainGame\Scene\PlayScene</Filter>
-    </ClCompile>
-    <ClCompile Include="TileMapToolScene.cpp">
-      <Filter>MainGame\Scene\TileMapToolScene</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>MainGame\Tile</Filter>
@@ -405,6 +405,12 @@
     </ClCompile>
     <ClCompile Include="TextUI.cpp">
       <Filter>MainGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\Button\ButtonFunction.cpp">
+      <Filter>MainGame\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\Scene\TileMapToolScene.cpp">
+      <Filter>MainGame\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
