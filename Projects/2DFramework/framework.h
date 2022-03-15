@@ -17,3 +17,32 @@
 #include "Timer/TimerManager.h"
 #include "Image/ImageManager.h"
 #include "Manager/SoundManager.h"
+
+enum class Argument_Kind {
+	None,
+	ChangeSceneArgument,
+	TileInfoArgument,
+};
+
+struct ChangeSceneArgument
+{
+	string sceneName;
+	string loadingSceneName;
+
+	ChangeSceneArgument(string sceneName, string loadingSceneName)
+	{
+		this->sceneName = sceneName;
+		this->loadingSceneName = loadingSceneName;
+	}
+};
+
+typedef struct tagTile TILE_INFO;
+struct TileInfoArgument
+{
+	TILE_INFO* tileInfo;
+
+	TileInfoArgument(TILE_INFO* lpTileInfo)
+	{
+		this->tileInfo = lpTileInfo;
+	}
+};
