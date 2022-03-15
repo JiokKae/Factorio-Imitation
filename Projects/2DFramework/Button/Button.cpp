@@ -40,9 +40,9 @@ void Button::Release()
 	}
 }
 
-void Button::Update()
+void Button::Update( int mouseX, int mouseY, int windowSizeY )
 {
-	if (PtInRect(&rc, { (int)g_ptMouse.x, WINSIZE_TITLE_Y - (int)g_ptMouse.y }))
+	if ( PtInRect( &rc, { mouseX, windowSizeY - mouseY } ) )
 	{
 		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
 		{
