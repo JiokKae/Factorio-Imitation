@@ -168,35 +168,6 @@ extern glm::vec2	g_cursorPosition;	// 마우스 커서의 포지션
 extern glm::ivec2	g_cursorCoord;		// 마우스 커서의 좌표
 extern glm::vec2	g_currScreenSize;	// 현재 씬 윈도우의 크기
 extern const ItemSpec	g_itemSpecs[];
-enum class Argument_Kind {
-	None,
-	ChangeSceneArgument,
-	TileInfoArgument,
-};
-
-struct ChangeSceneArgument
-{
-	string sceneName;
-	string loadingSceneName;
-
-	ChangeSceneArgument(string sceneName, string loadingSceneName)
-	{
-		this->sceneName = sceneName;
-		this->loadingSceneName = loadingSceneName;
-	}
-};
-
-typedef struct tagTile TILE_INFO;
-struct TileInfoArgument
-{
-	TILE_INFO* tileInfo;
-
-	TileInfoArgument(TILE_INFO* lpTileInfo)
-	{
-		this->tileInfo = lpTileInfo;
-	}
-};
-
 
 inline void SetWindowSize(int startX, int startY, int sizeX, int sizeY)
 {
