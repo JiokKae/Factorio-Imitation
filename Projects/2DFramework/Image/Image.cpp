@@ -77,7 +77,7 @@ HRESULT Image::Init(HWND hWnd, HINSTANCE hInst, const char* _fileName, int _widt
 	return S_OK;
 }
 
-HRESULT Image::Init(HWND hWnd, HINSTANCE hInst, const char * _fileName, int width, int height, int maxFrameX, int maxFrameY, bool _isTrans, COLORREF _transColor)
+HRESULT Image::Init(HWND hWnd, HINSTANCE hInst, const char* _fileName, int width, int height, int maxFrameX, int maxFrameY, bool _isTrans, COLORREF _transColor)
 {
 	HDC hdc = GetDC(hWnd);
 
@@ -191,8 +191,8 @@ void Image::Render(HDC hdc, int destX, int destY, int srcX, int srcY, int srcWid
 	{
 		BitBlt(
 			hdc,						// 복사 목적지 DC
-			destX - (srcWidth / 2), 
-			destY - (srcHeight / 2) ,	// 복사 시작 위치
+			destX - (srcWidth / 2),
+			destY - (srcHeight / 2),	// 복사 시작 위치
 			srcWidth,					// 원본에서 복사될 가로 크기
 			srcHeight,					// 원본에서 복사될 세로 크기
 			imageInfo->hMemDC,			// 원본 DC
@@ -253,11 +253,11 @@ void Image::AlphaRender(HDC hdc, int destX, int destY, BYTE alpha)
 			SRCCOPY);
 		GdiTransparentBlt(
 			imageInfo->hBlendDC, 0, 0,
-			imageInfo->width, imageInfo->height, 
+			imageInfo->width, imageInfo->height,
 			imageInfo->hMemDC, 0, 0,
 			imageInfo->width, imageInfo->height, RGB(255, 0, 255));
 		AlphaBlend(
-			hdc, destX, destY, 
+			hdc, destX, destY,
 			imageInfo->width, imageInfo->height,
 			imageInfo->hBlendDC, 0, 0,
 			imageInfo->width, imageInfo->height, blendFunc);
@@ -269,7 +269,7 @@ void Image::AlphaRender(HDC hdc, int destX, int destY, BYTE alpha)
 	}
 }
 
-void Image::AnimationRender(HDC hdc, int destX, int destY, Animation * ani)
+void Image::AnimationRender(HDC hdc, int destX, int destY, Animation* ani)
 {
 	Render(hdc, destX, destY, ani->GetFramePoint().x, ani->GetFramePoint().y, imageInfo->frameWidth, imageInfo->frameHeight);
 }
