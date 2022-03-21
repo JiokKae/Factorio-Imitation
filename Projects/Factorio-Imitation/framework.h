@@ -114,10 +114,7 @@ struct ItemInfo {
 #define WINSIZE_TITLE_Y		900
 #define WINSIZE_TILE_MAP_X	1600
 #define WINSIZE_TILE_MAP_Y	900
-#define SAFE_DELETE(p) 			{ if (p) delete p, p = nullptr; }
-#define SAFE_ARR_DELETE(p) 		{ if (p) delete[] p, p = nullptr; }
-#define SAFE_RELEASE(p) 		{ if (p) p->Release(), delete p, p = nullptr; }
-#define SAFE_ARR_RELEASE(p, size)	{ if (p) { for (int i = 0; i < size; i++) { p[i].Release(); } delete[] p, p = nullptr; } }
+
 
 #define TILE_SIZE		64
 #define CHUNK_IN_TILE		32

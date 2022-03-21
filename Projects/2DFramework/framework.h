@@ -18,6 +18,11 @@
 #include "Image/ImageManager.h"
 #include "Manager/SoundManager.h"
 
+#define SAFE_DELETE(p) 			{ if (p) delete p, p = nullptr; }
+#define SAFE_ARR_DELETE(p) 		{ if (p) delete[] p, p = nullptr; }
+#define SAFE_RELEASE(p) 		{ if (p) p->Release(), delete p, p = nullptr; }
+#define SAFE_ARR_RELEASE(p, size)	{ if (p) { for (int i = 0; i < size; i++) { p[i].Release(); } delete[] p, p = nullptr; } }
+
 enum class Argument_Kind {
 	None,
 	ChangeSceneArgument,
