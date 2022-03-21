@@ -78,15 +78,15 @@ public:
 	HRESULT Init(HWND hWnd, int width, int height);
 
 	// 리소스로부터 데이터를 읽어서 비트맵을 만든다.
-	HRESULT Init(HWND hWnd, const DWORD resID, int width, int height,
+	HRESULT Init(HWND hWnd, HINSTANCE HInst, const DWORD resID, int width, int height,
 		bool isTrans = FALSE, COLORREF transColor = FALSE);
 
 	// 파일로부터 데이터를 읽어서 비트맵을 만든다.
-	HRESULT Init(HWND hWnd, const char* fileName, int width, int height,
+	HRESULT Init(HWND hWnd, HINSTANCE HInst, const char* fileName, int width, int height,
 		bool isTrans = FALSE, COLORREF transColor = FALSE);
 
 	// 파일로부터 데이터를 읽어서 비트맵을 만든다. (애니메이션)
-	HRESULT Init(HWND hWnd, const char* fileName, int width, int height,
+	HRESULT Init(HWND hWnd, HINSTANCE HInst, const char* fileName, int width, int height,
 		int maxFrameX, int maxFrameY,
 		bool isTrans = FALSE, COLORREF transColor = FALSE);
 

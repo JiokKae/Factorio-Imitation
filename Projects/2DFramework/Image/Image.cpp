@@ -35,19 +35,19 @@ HRESULT Image::Init(HWND hWnd, int width, int height)
 	return S_OK;
 }
 
-HRESULT Image::Init(HWND /*hWnd*/, const DWORD /*resID*/, int /*width*/, int /*height*/, bool /*isTrans*/, COLORREF /*transColor*/)
+HRESULT Image::Init(HWND /*hWnd*/, HINSTANCE /*hInst*/, const DWORD /*resID*/, int /*width*/, int /*height*/, bool /*isTrans*/, COLORREF /*transColor*/)
 {
 	return E_NOTIMPL;
 }
 
-HRESULT Image::Init(HWND hWnd, const char* _fileName, int _width, int _height, bool _isTrans, COLORREF _transColor)
+HRESULT Image::Init(HWND hWnd, HINSTANCE hInst, const char* _fileName, int _width, int _height, bool _isTrans, COLORREF _transColor)
 {
 	HDC hdc = GetDC(hWnd);
 
 	imageInfo = new IMAGE_INFO;
 	imageInfo->resID = 0;
 	imageInfo->hMemDC = CreateCompatibleDC(hdc);
-	imageInfo->hBitmap = (HBITMAP)LoadImage(g_hInstance, _fileName,
+	imageInfo->hBitmap = (HBITMAP)LoadImage(hInst, _fileName,
 		IMAGE_BITMAP, _width, _height, LR_LOADFROMFILE);
 	imageInfo->hOldBit = (HBITMAP)SelectObject(imageInfo->hMemDC, imageInfo->hBitmap);
 	imageInfo->width = _width;
@@ -77,14 +77,14 @@ HRESULT Image::Init(HWND hWnd, const char* _fileName, int _width, int _height, b
 	return S_OK;
 }
 
-HRESULT Image::Init(HWND hWnd, const char * _fileName, int width, int height, int maxFrameX, int maxFrameY, bool _isTrans, COLORREF _transColor)
+HRESULT Image::Init(HWND hWnd, HINSTANCE hInst, const char * _fileName, int width, int height, int maxFrameX, int maxFrameY, bool _isTrans, COLORREF _transColor)
 {
 	HDC hdc = GetDC(hWnd);
 
 	imageInfo = new IMAGE_INFO;
 	imageInfo->resID = 0;
 	imageInfo->hMemDC = CreateCompatibleDC(hdc);
-	imageInfo->hBitmap = (HBITMAP)LoadImage(g_hInstance, _fileName,
+	imageInfo->hBitmap = (HBITMAP)LoadImage(hInst, _fileName,
 		IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
 	imageInfo->hOldBit =
 		(HBITMAP)SelectObject(imageInfo->hMemDC, imageInfo->hBitmap);
