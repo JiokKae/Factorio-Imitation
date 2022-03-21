@@ -215,7 +215,7 @@ void Image::FrameRender(HDC hdc, int destX, int destY, int currFrameX, int currF
 	{
 		GdiTransparentBlt(
 			hdc,
-			imageInfo->x, imageInfo->y,
+			static_cast<int>(imageInfo->x), static_cast<int>(imageInfo->y),
 			imageInfo->frameWidth, imageInfo->frameHeight,
 
 			imageInfo->hMemDC,
@@ -227,15 +227,15 @@ void Image::FrameRender(HDC hdc, int destX, int destY, int currFrameX, int currF
 	else
 	{
 		BitBlt(
-			hdc,				// 복사 목적지 DC
-			imageInfo->x, imageInfo->y,	// 복사 시작 위치
-			imageInfo->frameWidth,		// 원본에서 복사될 가로 크기
-			imageInfo->frameHeight,		// 원본에서 복사될 세로 크기
+			hdc,															// 복사 목적지 DC
+			static_cast<int>(imageInfo->x), static_cast<int>(imageInfo->y),	// 복사 시작 위치
+			imageInfo->frameWidth,											// 원본에서 복사될 가로 크기
+			imageInfo->frameHeight,											// 원본에서 복사될 세로 크기
 
-			imageInfo->hMemDC,		// 원본 DC
+			imageInfo->hMemDC,												// 원본 DC
 			imageInfo->currFrameX * imageInfo->frameWidth,
 			imageInfo->currFrameY * imageInfo->frameHeight,
-			SRCCOPY				// 복사 옵션
+			SRCCOPY															// 복사 옵션
 		);
 	}
 
