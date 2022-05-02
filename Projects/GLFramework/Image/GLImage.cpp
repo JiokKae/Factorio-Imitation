@@ -1,7 +1,6 @@
 #include "GLImage.h"
 #include "../Texture/Texture.h"
 #include "../Shader/Shader.h"
-#include "../../Factorio-Imitation/Scene.h"
 #include "../VertexDataObject/VertexArrayObject.h"
 #include "../VertexDataObject/VertexBufferObject.h"
 

@@ -1,35 +1,38 @@
 ﻿#include "Shader.h"
 
+std::string GetShaderCodeFromFile(const GLchar* path)
+{
+	// 1. 파일 경로를 통해 vertex/fragment shader 소스 코드를 검색합니다.
+	std::string shaderCode;
+	std::ifstream shaderFile;
+	// ifstream 객체들이 예외를 던질 수 있도록 합니다.
+	shaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+	try
+	{
+		// 파일 열기
+		shaderFile.open(("shader/" + string(path)).c_str());
+		std::stringstream shaderStream;
+		// stream에 파일의 버퍼 내용을 읽기
+		shaderStream << shaderFile.rdbuf();
+		// 파일 핸들러 닫기
+		shaderFile.close();
+		// stream을 string으로 변환
+		shaderCode = shaderStream.str();
+	}
+	catch (std::ifstream::failure e)
+	{
+		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+	}
+
+	return shaderCode;
+}
+
 Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 {
     // 1. 파일 경로를 통해 vertex/fragment shader 소스 코드를 검색합니다.
-    std::string vertexCode;
-    std::string fragmentCode;
-    std::ifstream vShaderFile;
-    std::ifstream fShaderFile;
-    // ifstream 객체들이 예외를 던질 수 있도록 합니다.
-    vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-    fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-    try
-    {
-        // 파일 열기
-        vShaderFile.open(("shader/" + string(vertexPath)).c_str());
-        fShaderFile.open(("shader/" + string(fragmentPath)).c_str());
-        std::stringstream vShaderStream, fShaderStream;
-        // stream에 파일의 버퍼 내용을 읽기
-        vShaderStream << vShaderFile.rdbuf();
-        fShaderStream << fShaderFile.rdbuf();
-        // 파일 핸들러 닫기
-        vShaderFile.close();
-        fShaderFile.close();
-        // stream을 string으로 변환
-        vertexCode = vShaderStream.str();
-        fragmentCode = fShaderStream.str();
-    }
-    catch (std::ifstream::failure e)
-    {
-        std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
-    }
+    std::string vertexCode = GetShaderCodeFromFile(vertexPath);
+    std::string fragmentCode = GetShaderCodeFromFile(fragmentPath);
+  
     const char* vShaderCode = vertexCode.c_str();
     const char* fShaderCode = fragmentCode.c_str();
 

@@ -1,6 +1,5 @@
 #pragma once
 #include "../framework.h"
-#include "../../Factorio-Imitation/Singleton.h"
 
 class Texture;
 class TextureManager : public Singleton<TextureManager>

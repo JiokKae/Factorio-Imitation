@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include "../../Factorio-Imitation/GameNode.h"
 #include "../framework.h"
 
 class Shader;
