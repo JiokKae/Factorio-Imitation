@@ -4,8 +4,8 @@
 
 // FMOD 관련
 //#pragma comment(lib, "lib/fmodex_vc.lib")
-#pragma comment(lib, "../../../Librarys/fmod/fmodex64_vc.lib")
-#pragma comment(lib, "../../../Librarys/fmod/fmodex64_vc.lib")
+#pragma comment(lib, "../../Librarys/fmod/fmodex64_vc.lib")
+//#pragma comment(lib, "../../Librarys/fmod/fmodex64_vc.lib")
 
 #include "fmod/inc/fmod.hpp"
 

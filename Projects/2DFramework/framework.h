@@ -18,6 +18,9 @@
 #include "Image/ImageManager.h"
 #include "Manager/SoundManager.h"
 
+extern float g_time;
+extern bool g_hWndFocus;
+
 #define SAFE_DELETE(p) 			{ if (p) delete p, p = nullptr; }
 #define SAFE_ARR_DELETE(p) 		{ if (p) delete[] p, p = nullptr; }
 #define SAFE_RELEASE(p) 		{ if (p) p->Release(), delete p, p = nullptr; }

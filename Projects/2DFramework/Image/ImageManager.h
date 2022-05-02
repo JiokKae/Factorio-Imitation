@@ -9,8 +9,11 @@ class ImageManager : public Singleton<ImageManager>
 {
 private:
 	map<string, Image*> mapImageDatas;
+	HINSTANCE hInstance;
+	HWND hWnd;
+
 public:
-	HRESULT Init();
+	HRESULT Init(HINSTANCE hInstance, HWND hWnd);
 	void Release();
 
 	Image* AddImage(string strKey, const char* fileName, int width, int height, bool isTrans = false, COLORREF transColor = 0UL);

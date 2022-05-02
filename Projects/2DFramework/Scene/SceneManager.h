@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "../framework.h"
-#include "Singleton.h"
+#include "../Manager/Singleton.h"
 
 class Image;
 class Scene;
@@ -21,7 +21,7 @@ public:
 public:
 	virtual ~SceneManager();
 
-	HRESULT Init();
+	HRESULT Init(HWND g_hWnd);
 	void Release();
 	void Update();
 	void Render(HDC hdc);

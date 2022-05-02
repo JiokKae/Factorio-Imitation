@@ -1,8 +1,11 @@
 #include "ImageManager.h"
 #include "Image.h"
 
-HRESULT ImageManager::Init()
+HRESULT ImageManager::Init(HINSTANCE g_hInstance, HWND g_hWnd)
 {
+	this->hInstance = g_hInstance;
+	this->hWnd = g_hWnd;
+
 	return S_OK;
 }
 
@@ -20,7 +23,7 @@ Image* ImageManager::AddImage(string strKey, const char* fileName, int width, in
 		return image;
 	}
 	image = new Image();
-	if (FAILED(image->Init(fileName, width, height, isTrans, transColor)))
+	if (FAILED(image->Init(hWnd, hInstance, fileName, width, height, isTrans, transColor)))
 	{
 		image->Release();
 		delete image;
@@ -42,7 +45,7 @@ Image* ImageManager::AddImage(string strKey, const char* fileName, int width, in
 		return image;
 	}
 	image = new Image();
-	if (FAILED(image->Init(fileName, width, height, maxFrameX, maxFrameY, isTrans, transColor)))
+	if (FAILED(image->Init(hWnd, hInstance, fileName, width, height, maxFrameX, maxFrameY, isTrans, transColor)))
 	{
 		image->Release();
 		delete image;

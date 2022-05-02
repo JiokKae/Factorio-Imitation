@@ -1,7 +1,5 @@
 ﻿#include "KeyManager.h"
 
-
-
 HRESULT KeyManager::Init()
 {
 	for (int i = 0; i < KEY_MAX_COUNT; i++)

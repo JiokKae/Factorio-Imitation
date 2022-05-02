@@ -1,6 +1,6 @@
 ﻿#include "SceneManager.h"
 #include "Scene.h"
-#include "Image.h"
+#include "../Image/Image.h"
 
 DWORD CALLBACK LoadingThread(LPVOID pvParam);
 
@@ -12,10 +12,10 @@ SceneManager::~SceneManager()
 {
 }
 
-HRESULT SceneManager::Init()
+HRESULT SceneManager::Init(HWND g_hWnd)
 {
 	backBuffer = new Image();
-	backBuffer->Init(1920, 1080);
+	backBuffer->Init(g_hWnd, 1920, 1080);
 	backDC = backBuffer->GetMemDC();
 
 	return S_OK;
@@ -64,7 +64,7 @@ void SceneManager::Render(HDC hdc)
 			currScene->Render(backDC);
 			TimerManager::GetSingleton()->Render(backDC);
 			// 백버퍼 복사(출력)
-			backBuffer->Render(hdc, 0, 0, WINSIZE_X, WINSIZE_Y);
+			backBuffer->Render(hdc, 0, 0, currScene->GetWidth(), currScene->GetHeight());
 		}
 		else
 		{
