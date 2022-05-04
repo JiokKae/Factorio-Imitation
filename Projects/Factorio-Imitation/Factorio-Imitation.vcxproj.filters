@@ -119,9 +119,6 @@
     <ClInclude Include="framework.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="MainGame.h">
-      <Filter>MainGame</Filter>
-    </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>MainGame\Character</Filter>
     </ClInclude>
@@ -263,11 +260,11 @@
     <ClInclude Include="MainGame\Scene\TileMapToolScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="MainGame\MainGame.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MainGame.cpp">
-      <Filter>MainGame</Filter>
-    </ClCompile>
     <ClCompile Include="Factorio-Imitation.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -411,6 +408,9 @@
     </ClCompile>
     <ClCompile Include="MainGame\Scene\TileMapToolScene.cpp">
       <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\MainGame.cpp">
+      <Filter>MainGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
