@@ -1,10 +1,10 @@
 #include "ImageManager.h"
 #include "Image.h"
 
-HRESULT ImageManager::Init(HINSTANCE g_hInstance, HWND g_hWnd)
+HRESULT ImageManager::Init(HINSTANCE g_hInstance, HWND _hWnd)
 {
 	this->hInstance = g_hInstance;
-	this->hWnd = g_hWnd;
+	this->hWnd = _hWnd;
 
 	return S_OK;
 }

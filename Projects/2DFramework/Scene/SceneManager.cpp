@@ -12,10 +12,10 @@ SceneManager::~SceneManager()
 {
 }
 
-HRESULT SceneManager::Init(HWND g_hWnd)
+HRESULT SceneManager::Init(HWND _hWnd)
 {
 	backBuffer = new Image();
-	backBuffer->Init(g_hWnd, 1920, 1080);
+	backBuffer->Init(_hWnd, 1920, 1080);
 	backDC = backBuffer->GetMemDC();
 
 	return S_OK;

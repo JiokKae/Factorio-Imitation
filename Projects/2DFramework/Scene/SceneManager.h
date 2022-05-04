@@ -21,7 +21,7 @@ public:
 public:
 	virtual ~SceneManager();
 
-	HRESULT Init(HWND g_hWnd);
+	HRESULT Init(HWND _hWnd);
 	void Release();
 	void Update();
 	void Render(HDC hdc);

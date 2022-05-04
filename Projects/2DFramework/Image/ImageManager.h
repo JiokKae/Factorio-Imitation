@@ -13,7 +13,7 @@ private:
 	HWND hWnd;
 
 public:
-	HRESULT Init(HINSTANCE hInstance, HWND hWnd);
+	HRESULT Init(HINSTANCE hInstance, HWND _hWnd);
 	void Release();
 
 	Image* AddImage(string strKey, const char* fileName, int width, int height, bool isTrans = false, COLORREF transColor = 0UL);

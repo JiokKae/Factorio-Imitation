@@ -52,6 +52,7 @@
       <Filter>Timer</Filter>
     </ClCompile>
     <ClCompile Include="GameNode.cpp" />
+    <ClCompile Include="framework.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h">

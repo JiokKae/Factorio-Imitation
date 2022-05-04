@@ -18,6 +18,7 @@
 #include "Image/ImageManager.h"
 #include "Manager/SoundManager.h"
 
+extern HWND g_hWnd;
 extern float g_time;
 extern bool g_hWndFocus;
 
@@ -37,11 +38,7 @@ struct ChangeSceneArgument
 	string sceneName;
 	string loadingSceneName;
 
-	ChangeSceneArgument(string sceneName, string loadingSceneName)
-	{
-		this->sceneName = sceneName;
-		this->loadingSceneName = loadingSceneName;
-	}
+	ChangeSceneArgument(string sceneName, string loadingSceneName);
 };
 
 typedef struct tagTile TILE_INFO;
@@ -49,8 +46,42 @@ struct TileInfoArgument
 {
 	TILE_INFO* tileInfo;
 
-	TileInfoArgument(TILE_INFO* lpTileInfo)
-	{
-		this->tileInfo = lpTileInfo;
-	}
+	TileInfoArgument(TILE_INFO* lpTileInfo);
+
 };
+
+typedef struct tagFRECT
+{
+	float left;
+	float top;
+	float right;
+	float bottom;
+
+	tagFRECT(float left = 0, float top = 0, float right = 0, float bottom = 0);
+	const tagFRECT operator+(const tagFRECT& rect) const;
+	template<typename T>
+	const tagFRECT operator*(const T& scalar);
+
+} FRECT, * LPFRECT;
+
+inline RECT GetWindowRect()
+{
+	RECT rc;
+	POINT lt, rb;
+	GetClientRect(g_hWnd, &rc);
+	// 클라이언트 크기를 받아옴
+	lt.x = rc.left;
+	lt.y = rc.top;
+	rb.x = rc.right;
+	rb.y = rc.bottom;
+	// 받아온 클라이언트 크기를좌표로 입력
+	ClientToScreen(g_hWnd, &lt);
+	ClientToScreen(g_hWnd, &rb);
+	// 클라이언트 내 좌표를 윈도우상 좌표로 변환
+	rc.left = lt.x;
+	rc.top = lt.y;
+	rc.right = rb.x;
+	rc.bottom = rb.y;
+
+	return rc;
+}

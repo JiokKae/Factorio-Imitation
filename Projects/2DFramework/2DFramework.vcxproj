@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Button\Button.cpp" />
+    <ClCompile Include="framework.cpp" />
     <ClCompile Include="GameNode.cpp" />
     <ClCompile Include="Image\Image.cpp" />
     <ClCompile Include="Image\ImageManager.cpp" />
