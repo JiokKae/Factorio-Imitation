@@ -2,7 +2,7 @@
 //
 
 #include "framework.h"
-#include "MainGame.h"
+#include "MainGame/MainGame.h"
 
 // 전역 변수:
 HINSTANCE	g_hInstance;	// 현재 인스턴스입니다.

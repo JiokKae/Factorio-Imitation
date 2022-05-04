@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30717.126
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLFramework", "Projects\GLFramework\GLFramework.vcxproj", "{6F9DAAA0-0322-405C-A917-39E3D9BF194E}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -10,7 +10,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLFramework", "Projects\GLF
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Factorio-Imitation", "Projects\Factorio-Imitation\Factorio-Imitation.vcxproj", "{243A1CC8-B066-42E9-9E14-5FFF7D1919FD}"
 	ProjectSection(ProjectDependencies) = postProject
-		{47E2AB28-A0D2-4CAA-95EB-DD3E1542E795} = {47E2AB28-A0D2-4CAA-95EB-DD3E1542E795}
 		{6F9DAAA0-0322-405C-A917-39E3D9BF194E} = {6F9DAAA0-0322-405C-A917-39E3D9BF194E}
 	EndProjectSection
 EndProject

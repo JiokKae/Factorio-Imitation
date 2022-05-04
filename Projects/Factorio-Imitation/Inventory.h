@@ -1,5 +1,6 @@
 #pragma once
-#include "../2DFramework/GameNode.h"
+#include "framework.h"
+#include "2DFramework/GameNode.h"
 #include "ItemEnum.h"
 
 class Inventory : public GameNode

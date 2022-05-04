@@ -1,5 +1,5 @@
 #include "DeactiveButtonUI.h"
-#include "../GLFramework/Image/GLImage.h"
+#include "GLFramework/Image/GLImage.h"
 
 HRESULT DeactiveButtonUI::Init()
 {

@@ -2,6 +2,7 @@
 #include "../GLFramework/Image/GLImage.h"
 #include "../GLFramework/Shader/Shader.h"
 #include "ItemEnum.h"
+#include "framework.h"
 
 HRESULT Ore::Init(int x, int y)
 {

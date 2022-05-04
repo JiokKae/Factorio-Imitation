@@ -1,5 +1,7 @@
-﻿#include "ButtonFunction.h"
-#include "TileMapToolScene.h"
+﻿#include "../../framework.h"
+#include "ButtonFunction.h"
+#include "../../../2DFramework/Scene/SceneManager.h"
+#include "../Scene/TileMapToolScene.h"
 
 void ButtonFunction::ChangeScene(void* arg)
 {

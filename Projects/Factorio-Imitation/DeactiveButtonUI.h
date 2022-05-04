@@ -1,5 +1,6 @@
 #pragma once
-#include "../GLFramework/UI/UI.h"
+#include "GLFramework/UI/UI.h"
+
 class DeactiveButtonUI : public UI
 {
 	bool onMouse;

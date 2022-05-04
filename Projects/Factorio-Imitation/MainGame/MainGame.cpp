@@ -33,7 +33,7 @@ HRESULT MainGame::Init()
 	
 	// Singleton Init
 	TimerManager::GetSingleton()->Init();
-	SceneManager::GetSingleton()->Init();
+	SceneManager::GetSingleton()->Init(g_hWnd);
 	SoundManager::GetSingleton()->Init();
 	TextureManager::GetSingleton()->Init();
 	RecipeManager::GetSingleton()->Init();

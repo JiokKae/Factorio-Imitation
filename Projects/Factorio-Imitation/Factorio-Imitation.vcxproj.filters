@@ -114,6 +114,9 @@
     <Filter Include="MainGame\Button">
       <UniqueIdentifier>{7a49e9d8-c5a5-4505-b73c-d24e25f1ed03}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Scene\TileMapToolScene">
+      <UniqueIdentifier>{20ed2795-8745-42f6-bc60-ccfc9d472e66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -263,6 +266,9 @@
     <ClInclude Include="MainGame\MainGame.h">
       <Filter>MainGame</Filter>
     </ClInclude>
+    <ClInclude Include="..\GLFramework\UI\UI.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factorio-Imitation.cpp">
@@ -411,6 +417,9 @@
     </ClCompile>
     <ClCompile Include="MainGame\MainGame.cpp">
       <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GLFramework\UI\UI.cpp">
+      <Filter>MainGame\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

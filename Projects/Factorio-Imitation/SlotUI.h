@@ -1,5 +1,6 @@
 #pragma once
-#include "../GLFramework/UI/UI.h"
+#include "framework.h"
+#include "GLFramework/UI/UI.h"
 
 class SlotUI : public UI
 {

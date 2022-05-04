@@ -1,5 +1,6 @@
 #include "SelectRecipeAssemblingUI.h"
 #include "DeactiveButtonUI.h"
+#include "GLFramework/Image/GLImage.h"
 
 HRESULT SelectRecipeAssemblingUI::Init()
 {

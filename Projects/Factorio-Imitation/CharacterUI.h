@@ -1,6 +1,6 @@
 #pragma once
-#include "UI.h"
 #include "framework.h"
+#include "GLFramework/UI/UI.h"
 
 class Inventory;
 class InventoryUI;

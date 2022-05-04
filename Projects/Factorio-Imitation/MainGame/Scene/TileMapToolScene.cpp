@@ -1,7 +1,8 @@
-﻿#include "TileMapToolScene.h"
-#include "Image.h"
-#include "Button.h"
-#include "ButtonFunction.h"
+﻿#include "../../framework.h"
+#include "TileMapToolScene.h"
+#include "2DFramework/Image/Image.h"
+#include "2DFramework/Button/Button.h"
+#include "../Button/ButtonFunction.h"
 
 HRESULT TileMapToolScene::Init()
 {

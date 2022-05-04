@@ -1,6 +1,7 @@
 #pragma once
-#include "Scene.h"
+#include "2DFramework/Scene/Scene.h"
 
+class Shader;
 class Camera;
 class PointLight;
 class TileManager;

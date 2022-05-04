@@ -1,5 +1,6 @@
 #pragma once
-#include "../2DFramework/GameNode.h"
+#include "framework.h"
+#include "2DFramework/GameNode.h"
 
 class Tile;
 class Chunk;

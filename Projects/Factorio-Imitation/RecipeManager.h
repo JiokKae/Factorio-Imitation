@@ -1,5 +1,4 @@
 #pragma once
-#include "Singleton.h"
 #include "framework.h"
 
 class Recipe;

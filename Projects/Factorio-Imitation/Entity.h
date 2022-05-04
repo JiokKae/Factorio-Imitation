@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "framework.h"
 #include "../2DFramework/GameNode.h"
 
 class Entity : public GameNode

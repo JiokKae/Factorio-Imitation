@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Scene.h"
+#include "../../../2DFramework/Scene/Scene.h"
 
 #define	SAMPLE_TILE_X	20
 #define	SAMPLE_TILE_Y	9

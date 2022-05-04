@@ -1,5 +1,4 @@
 #include "Character.h"
-#include "Animation.h"
 #include "../GLFramework/Image/GLImage.h"
 #include "Inventory.h"
 #include "Structure.h"

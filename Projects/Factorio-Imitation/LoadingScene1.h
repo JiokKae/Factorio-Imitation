@@ -1,5 +1,6 @@
 #pragma once
-#include "Scene.h"
+#include "2DFramework/Scene/Scene.h"
+
 class LoadingScene1 : public Scene
 {
 private:
