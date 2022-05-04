@@ -1,6 +1,7 @@
 ﻿#include "FreeCamera.h"
+#include "2DFramework/Manager/KeyManager.h"
 
-void FreeCamera::Init()
+void FreeCamera::Init(const glm::ivec2& windowSize)
 {
 	position = glm::vec3(0.0f, 0.0f, 3.0f);
 	front = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -13,13 +14,14 @@ void FreeCamera::Init()
 	movementSpeed = 1.5f;
 	this->mouseSensitivity = 0.03f;
 	zoomSpeed = 2.0f;
+	this->windowSize = windowSize;
 }
 
 void FreeCamera::Release()
 {
 }
 
-void FreeCamera::Update(float mousezDelta, float dt, POINT ptMouse)	// g_mousezDelta, TimerManager::GetSingleton()->GetTimeElapsed()
+void FreeCamera::Update(float mousezDelta, float dt, glm::ivec2 mouseCoord)	// g_mousezDelta, TimerManager::GetSingleton()->GetTimeElapsed()
 {
 	// fov
 	float offset = lastMouseZDelta - mousezDelta;
@@ -43,9 +45,9 @@ void FreeCamera::Update(float mousezDelta, float dt, POINT ptMouse)	// g_mousezD
 
 	RECT winRect = GetWindowRect();
 
-	float xoffset = static_cast<float>(ptMouse.x - WINSIZE_X / 2);
-	float yoffset = static_cast<float>(ptMouse.y - WINSIZE_Y / 2); // y 좌표의 범위는 밑에서부터 위로가기 때문에 반대로 바꿉니다.
-	SetCursorPos(winRect.left+ WINSIZE_X / 2, winRect.top + WINSIZE_Y / 2);
+	float xoffset = static_cast<float>(mouseCoord.x - windowSize.x / 2);
+	float yoffset = static_cast<float>(mouseCoord.y - windowSize.y / 2); // y 좌표의 범위는 밑에서부터 위로가기 때문에 반대로 바꿉니다.
+	SetCursorPos(winRect.left + windowSize.x / 2, winRect.top + windowSize.y / 2);
 	xoffset *= mouseSensitivity;
 	yoffset *= mouseSensitivity;
 

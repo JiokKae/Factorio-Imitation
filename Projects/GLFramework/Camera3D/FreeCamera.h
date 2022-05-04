@@ -20,11 +20,12 @@ private:
     float zoomSpeed;
     float lastMouseZDelta;
     bool firstMouse = true;
+    glm::ivec2 windowSize;
 
 public:
-	void Init();
+	void Init(const glm::ivec2& windowSize);
 	void Release();
-	void Update(float mousezDelta, float dt, POINT ptMouse);
+	void Update(float mousezDelta, float dt, glm::ivec2 mouseCoord);
 
     float GetFov() { return fov; }
     glm::vec3 GerFront() { return front; }
