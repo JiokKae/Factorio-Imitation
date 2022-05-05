@@ -1,4 +1,5 @@
 #include "TextUI.h"
+#include "GLFramework/TextRenderer/TextRenderer.h"
 
 HRESULT TextUI::Init()
 {

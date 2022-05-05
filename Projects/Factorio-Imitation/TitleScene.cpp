@@ -1,7 +1,8 @@
 #include "TitleScene.h"
-#include "Image.h"
-#include "Button.h"
-#include "ButtonFunction.h"
+#include "2DFramework/Image/Image.h"
+#include "2DFramework/Button/Button.h"
+#include "MainGame/Button/ButtonFunction.h"
+#include "framework.h"
 
 HRESULT TitleScene::Init()
 {
@@ -54,20 +55,20 @@ void TitleScene::Update()
 		SendMessage(g_hWnd, WM_DESTROY, 0, 0);
 
 	if (gameStartButton)
-		gameStartButton->Update();
+		gameStartButton->Update(g_ptMouse.x, g_ptMouse.y, WINSIZE_Y);
 
 	if (g_debuggingMode)
 	{
 		if (button1)
-			button1->Update();
+			button1->Update(g_ptMouse.x, g_ptMouse.y, WINSIZE_Y);
 		if (TenCubeButton)
-			TenCubeButton->Update();
+			TenCubeButton->Update(g_ptMouse.x, g_ptMouse.y, WINSIZE_Y);
 		if (lightingButton)
-			lightingButton->Update();
+			lightingButton->Update(g_ptMouse.x, g_ptMouse.y, WINSIZE_Y);
 	}
 
 	if (quitButton)
-		quitButton->Update();
+		quitButton->Update(g_ptMouse.x, g_ptMouse.y, WINSIZE_Y);
 }
 
 void TitleScene::Render(HDC hdc)

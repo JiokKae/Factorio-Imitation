@@ -2,6 +2,7 @@
 #include "../GLFramework/Shader/Shader.h"
 #include "../GLFramework/Camera3D/FreeCamera.h"
 #include "../GLFramework/Texture/Texture.h"
+#include "framework.h"
 
 HRESULT TenCubeSpaceScene::Init()
 {
@@ -91,7 +92,7 @@ HRESULT TenCubeSpaceScene::Init()
 	ourShader->setFloat("radio", radio);
 
 	camera = new FreeCamera();
-	camera->Init();
+	camera->Init(glm::ivec2(WINSIZE_X, WINSIZE_Y));
 
 	return S_OK;
 }
@@ -170,7 +171,7 @@ void TenCubeSpaceScene::Update()
 	projection = glm::perspective(glm::radians(camera->GetFov()), float(WINSIZE_X) / WINSIZE_Y, 0.1f, 100.0f);
 
 	// camera vecs
-	camera->Update(g_mousezDelta, TimerManager::GetSingleton()->GetTimeElapsed(), g_ptMouse);
+	camera->Update(g_mousezDelta, TimerManager::GetSingleton()->GetTimeElapsed(), glm::ivec2(g_ptMouse.x, g_ptMouse.y));
 	glm::mat4 view;
 	view = camera->GetViewMatrix();
 

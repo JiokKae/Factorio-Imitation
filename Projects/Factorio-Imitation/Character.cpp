@@ -115,7 +115,7 @@ void Character::ChangeState(State _state)
 void Character::Idle()
 {
 	float scaledspeed = speed * TimerManager::GetSingleton()->GetTimeElapsed();
-	glm::vec2 deltaPos;
+	glm::vec2 deltaPos{};
 	if (KeyManager::GetSingleton()->IsStayKeyDown('W'))
 		deltaPos.y += scaledspeed;
 
@@ -176,7 +176,7 @@ void Character::Idle()
 void Character::Running()
 {
 	float scaledspeed = speed * TimerManager::GetSingleton()->GetTimeElapsed();
-	glm::vec2 deltaPos;
+	glm::vec2 deltaPos{};
 	if (KeyManager::GetSingleton()->IsStayKeyDown('W'))
 		deltaPos.y += scaledspeed;
 

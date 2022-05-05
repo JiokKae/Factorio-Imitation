@@ -1,5 +1,6 @@
 #pragma once
 #include "2DFramework/Scene/Scene.h"
+#include "framework.h"
 
 class Shader;
 class FreeCamera;

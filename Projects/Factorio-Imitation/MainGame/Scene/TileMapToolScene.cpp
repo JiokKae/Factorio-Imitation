@@ -182,8 +182,8 @@ void TileMapToolScene::Update()
 	#pragma endregion
 
 	
-	saveButton->Update();
-	loadButton->Update();
+	saveButton->Update(g_ptMouse.x, g_ptMouse.y, WINSIZE_Y);
+	loadButton->Update(g_ptMouse.x, g_ptMouse.y, WINSIZE_Y);
 }
 
 void TileMapToolScene::Render(HDC hdc)

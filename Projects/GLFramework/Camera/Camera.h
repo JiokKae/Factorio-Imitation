@@ -1,5 +1,5 @@
 #pragma once
-#include "../../Factorio-Imitation/framework.h"
+#include "../framework.h"
 
 class Camera
 {

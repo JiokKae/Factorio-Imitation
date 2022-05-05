@@ -1,4 +1,5 @@
 #pragma once
+#include "framework.h"
 #include "GLFramework/UI/UI.h"
 
 class DeactiveButtonUI : public UI

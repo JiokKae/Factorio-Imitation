@@ -29,7 +29,7 @@ HRESULT BurnerInserter::Init(int x, int y, DIRECTION _direction, bool _temp)
 	allItemsImage->Init("Icons/AllItems", 8, 8, 0.25f, 0.25f);
 	allItemsImage->SetScale({0.25f, 0.25f});
 	
-	handAngle = -90.0f * _direction;
+	handAngle = -90.0f * static_cast<int>(_direction);
 	handAngleSpeed = 216.0f;
 
 

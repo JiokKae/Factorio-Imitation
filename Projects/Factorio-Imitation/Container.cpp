@@ -77,14 +77,15 @@ bool Container::TakeOutItem(ItemInfo* outItem)
 string Container::ToString()
 {
 	string strBuf;
-	char szBuf[128];
+	//char szBuf[128];
 	for (int i = 0; i < inventorySize; i++)
 	{
 		ItemInfo* item = &vecInventory[i];
 		if (item->amount != 0)
 		{
-			wsprintf(szBuf, "\n %d\t10\t x %s", item->amount, g_itemSpecs[item->id].name.c_str());
-			strBuf += string(szBuf);
+			strBuf += std::format("\n {}\t10\t x {}", item->amount, g_itemSpecs[item->id].name);
+			//wsprintf(szBuf, "\n %d\t10\t x %s", item->amount, g_itemSpecs[item->id].name.c_str());
+			//strBuf += string(szBuf);
 		}
 	}
 

@@ -1,5 +1,5 @@
 #include "LoadingScene1.h"
-#include "Image.h"
+#include "2DFramework/Image/Image.h"
 
 HRESULT LoadingScene1::Init()
 {

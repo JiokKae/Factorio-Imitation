@@ -10,8 +10,9 @@ HRESULT LightingScene::Init()
 
 	// camera
 	camera = new FreeCamera();
-	camera->Init();
-
+	
+	camera->Init(glm::ivec2(WINSIZE_X, WINSIZE_Y));
+	
 	// configure global opengl state
 	// -----------------------------
 	glEnable(GL_DEPTH_TEST);
@@ -135,7 +136,7 @@ void LightingScene::Update()
         return;
     }
 
-    camera->Update(g_mousezDelta, TimerManager::GetSingleton()->GetTimeElapsed(), g_ptMouse);
+    camera->Update(g_mousezDelta, TimerManager::GetSingleton()->GetTimeElapsed(), glm::ivec2(g_ptMouse.x, g_ptMouse.y));
 }
 
 void LightingScene::Render(HDC /*hdc*/)

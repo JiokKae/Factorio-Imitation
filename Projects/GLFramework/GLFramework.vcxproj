@@ -43,7 +43,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -182,6 +182,11 @@
     <ClInclude Include="UI\UI.h" />
     <ClInclude Include="VertexDataObject\VertexArrayObject.h" />
     <ClInclude Include="VertexDataObject\VertexBufferObject.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\2DFramework\2DFramework.vcxproj">
+      <Project>{47e2ab28-a0d2-4caa-95eb-dd3e1542e795}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

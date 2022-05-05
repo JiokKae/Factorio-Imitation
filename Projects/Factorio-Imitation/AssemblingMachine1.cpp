@@ -182,26 +182,33 @@ void AssemblingMachine1::ClickEvent()
 
 string AssemblingMachine1::ToString()
 {
-	char buf[256];
-	char buf2[128];
-	wsprintf(buf, " \n Crafting Speed: %d \n Recipe: %s", (int)craftingSpeed, g_itemSpecs[currRecipe->GetOutput().id].name.c_str());
+	//TODO: 제대로 출력되는지 확인
+	//char buf[256];
+	//char buf2[128];
+	std::string bufstr = std::format(" \n Crafting Speed: {} \n Recipe: {}", (int)craftingSpeed, g_itemSpecs[currRecipe->GetOutput().id].name.c_str());
+	//wsprintf(buf, " \n Crafting Speed: %d \n Recipe: %s", );
 
 	for (size_t i = 0; i < currRecipe->size(); i++)
 	{
-		wsprintf(buf2, "\n %d/%d x %s", ingredients[i].amount, currRecipe->GetIngredient(i).amount, g_itemSpecs[currRecipe->GetIngredient(i).id].name.c_str());
-		strcat_s(buf, buf2);
+		std::string bufstr2 = std::format("\n {}/{} x {}", ingredients[i].amount, currRecipe->GetIngredient(i).amount, g_itemSpecs[currRecipe->GetIngredient(i).id].name.c_str());
+		bufstr += bufstr2;
+		//wsprintf(buf2, "\n %d/%d x %s", ingredients[i].amount, currRecipe->GetIngredient(i).amount, g_itemSpecs[currRecipe->GetIngredient(i).id].name.c_str());
+		//strcat_s(buf, buf2);
 	}
 
 	if (!result.IsEmpty())
 	{
-		wsprintf(buf2, "\n Result: %s (%d)", g_itemSpecs[result.id].name.c_str(), result.amount);
-		strcat_s(buf, buf2);
+		std::string bufstr2 = std::format("\n Result: {} ({})", g_itemSpecs[result.id].name.c_str(), result.amount);
+		bufstr += bufstr2;
+		//wsprintf(buf2, "\n Result: %s (%d)", g_itemSpecs[result.id].name.c_str(), result.amount);
+		//strcat_s(buf, buf2);
 	}
+	std::string bufstr2 = std::format("\n Products finished: {}", (int)productsFinished);
+	bufstr += bufstr2;
+	//wsprintf(buf2, "\n Products finished: %d", (int)productsFinished);
+	//strcat_s(buf, buf2);
 
-	wsprintf(buf2, "\n Products finished: %d", (int)productsFinished);
-	strcat_s(buf, buf2);
-
-	return Structure::ToString() + string(buf);
+	return Structure::ToString() + bufstr;
 }
 
 HRESULT AssemblingMachine1::Ingredients::Init(Recipe* recipe)

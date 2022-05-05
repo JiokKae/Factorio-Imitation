@@ -121,9 +121,7 @@ Structure* Structure::CreateStructure(ItemEnum itemId)
 
 string Structure::ToString()
 {
-	char buf[128];
-	wsprintf(buf, " Coord: (%d, %d)\n Status: %s", coord.x, coord.y, statusString[status]);
-	return string(buf);
+	return std::format(" Coord: ({}, {})\n Status: {}", coord.x, coord.y, statusString[status]);
 }
 
 FRECT Structure::GetFRect()
