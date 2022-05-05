@@ -1,0 +1,93 @@
+cbuffer _34
+{
+    float2 _34_resolution : packoffset(c0);
+    float _34_secondsSinceGameLaunch : packoffset(c0.z);
+    uint _34_tick : packoffset(c0.w);
+    float _34_opacity : packoffset(c1);
+    float _34_guiScale : packoffset(c1.y);
+};
+Texture2D<float4> tex : register(t0);
+SamplerState _tex_sampler : register(s0);
+
+static float2 vUV;
+static float4 fragColor;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+float seconds()
+{
+    return _34_secondsSinceGameLaunch;
+}
+
+float jitterActive()
+{
+    float sinSample = sin(seconds() * 0.139644443988800048828125f);
+    float timingActive = step(0.997777760028839111328125f, sinSample);
+    float fadeInActive = abs(1.0f - step(1.0f, _34_opacity));
+    return step(1.0f, timingActive + fadeInActive);
+}
+
+float2 jitterUvs(inout float2 uv)
+{
+    float bigWobble = sin((uv.y * 15.0f) + (seconds() * 2.0f)) / 100.0f;
+    float smallJitter = 1.0f + (sin(seconds() * 100.0f) / 2.0f);
+    uv.x += (jitterActive() * (bigWobble * smallJitter));
+    return uv;
+}
+
+float stripes(float2 uv)
+{
+    float width = ceil(2.0f * _34_guiScale);
+    float offset = seconds() * 20.0f;
+    float y = (uv.y * _34_resolution.y) + offset;
+    y = floor(y / width);
+    return float(uint(y) & 1u);
+}
+
+float4 alphaBlend(float4 src, float4 dest)
+{
+    float3 _137 = lerp(dest.xyz, src.xyz, src.w.xxx);
+    float4 ret;
+    ret = float4(_137.x, _137.y, _137.z, ret.w);
+    ret.w = src.w + ((1.0f - src.w) * dest.w);
+    return ret;
+}
+
+float flickerAlpha()
+{
+    return 1.0f;
+}
+
+void frag_main()
+{
+    float2 param = vUV;
+    float2 _160 = jitterUvs(param);
+    float2 uv = _160;
+    float4 texSample = tex.Sample(_tex_sampler, uv);
+    float2 param_1 = uv;
+    float4 stripesColor = float4(1.0f, 1.0f, 1.0f, stripes(param_1) * 0.3499999940395355224609375f);
+    float4 param_2 = stripesColor;
+    float4 param_3 = texSample;
+    float4 texWithStripes = alphaBlend(param_2, param_3);
+    float pick = 1.0f - step(1.0f, 1.0f - texSample.w);
+    fragColor = lerp(texSample, texWithStripes, pick.xxxx);
+    fragColor.w *= flickerAlpha();
+    fragColor.w *= _34_opacity;
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    vUV = stage_input.vUV;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

@@ -1,0 +1,50 @@
+cbuffer _24
+{
+    float4 _24_specularLightness : packoffset(c0);
+    float4 _24_foamColor : packoffset(c1);
+    float2 _24_texSize : packoffset(c2);
+    float _24_animationSpeed : packoffset(c2.z);
+    float _24_animationScale : packoffset(c2.w);
+    float _24_darkThreshold : packoffset(c3);
+    float _24_reflectionThreshold : packoffset(c3.y);
+    float _24_specularThreshold : packoffset(c3.z);
+    float _24_time : packoffset(c3.w);
+};
+Texture2D<float4> atlasTexture : register(t0);
+SamplerState _atlasTexture_sampler : register(s0);
+
+static float2 vUV;
+static float vVariation;
+static float4 fragColor;
+static uint vFlags;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+    float vVariation : TEXCOORD1;
+    nointerpolation uint vFlags : TEXCOORD2;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+void frag_main()
+{
+    float4 color = atlasTexture.Sample(_atlasTexture_sampler, vUV);
+    float wave = (sin((_24_time * 0.1500000059604644775390625f) + vVariation) + 1.0f) * 0.357142865657806396484375f;
+    color.y = smoothstep(wave, wave + 0.300000011920928955078125f, color.y);
+    fragColor = color;
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    vUV = stage_input.vUV;
+    vVariation = stage_input.vVariation;
+    vFlags = stage_input.vFlags;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

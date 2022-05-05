@@ -1,0 +1,466 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="MainGame">
+      <UniqueIdentifier>{896f9533-993f-430f-a5bb-88128c4fa2fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DFrameWork">
+      <UniqueIdentifier>{3d7f4ce1-77d5-4392-a75d-50151a4ce2aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene">
+      <UniqueIdentifier>{da98538c-e337-4357-b2c4-b1f8aec531ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Shader">
+      <UniqueIdentifier>{f328a868-77ea-4aa0-97ae-30a1463613d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Character">
+      <UniqueIdentifier>{65ea402a-7da0-47ca-9f02-cc6c540403f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene\LightingScene">
+      <UniqueIdentifier>{3588c314-9f5e-47c2-a652-50e5161a12bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene\TitleScene">
+      <UniqueIdentifier>{b8d7c194-5a70-496d-a3b2-f40803de2c84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene\TenCubeSpaceScene">
+      <UniqueIdentifier>{b1ec984b-f8c3-4f95-89bf-afde80f704c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene\LoadingScene1">
+      <UniqueIdentifier>{e97c33fa-b240-4787-a74b-1ea93b1eb440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene\PlayScene">
+      <UniqueIdentifier>{533fe382-1ad8-4ff8-b730-28348027c827}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI">
+      <UniqueIdentifier>{c53c5724-0256-4215-b8e8-c4b64e6514c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Tile">
+      <UniqueIdentifier>{59f27837-67e1-44a7-b47a-035f26772753}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Entity">
+      <UniqueIdentifier>{99aaed30-0b8c-4d00-9f1d-4b95d3a8ff82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Entity\Ore">
+      <UniqueIdentifier>{146395d1-b902-4ffc-9653-8bf2f9318799}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Entity\Structure">
+      <UniqueIdentifier>{13f602e5-3d97-432f-9fb6-c2a9a4025319}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Entity\Structure\AssemblingMachine1">
+      <UniqueIdentifier>{7087a311-16c2-4d99-beb6-7489b166f34f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Entity\Structure\BurnerMiningDrill">
+      <UniqueIdentifier>{69cb2ab0-d338-4ae2-9bcc-21c822688eef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Entity\Structure\TransportBelt">
+      <UniqueIdentifier>{2f46f621-7b61-4063-ab59-0678a187081d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Entity\Structure\BurnerInserter">
+      <UniqueIdentifier>{a6ae06b0-37cf-4f38-95e8-a34d480bc12d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\BurnerMiningDrillUI">
+      <UniqueIdentifier>{3d7838ec-b738-4c8d-9f47-8d611a987db4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\CharacterUI">
+      <UniqueIdentifier>{7543c071-6d39-404a-9e40-61ba7f70f2dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\DeactiveButtonUI">
+      <UniqueIdentifier>{5244c5e1-beea-48fd-bafe-fba86a86593e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\HandUI">
+      <UniqueIdentifier>{9fe3016b-af32-4960-95e4-dd69f53d0813}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Entity\Structure\StoneFurnace">
+      <UniqueIdentifier>{0ba6f8a7-63aa-4b85-ae23-86d41193665d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Recipe">
+      <UniqueIdentifier>{63d1f8b6-a7ea-4b13-a43b-70eeb1aa22fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\SlotUI">
+      <UniqueIdentifier>{8007ef8a-1665-4888-ab7a-f4eb21a78fc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\InventoryUI">
+      <UniqueIdentifier>{50623911-81a8-4ea8-999a-e57b877b37e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\SlotUI\InventorySlotUI">
+      <UniqueIdentifier>{64bfa3bb-e2ae-4f95-8561-e257c1f27c81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\SlotUI\FuelSlotUI">
+      <UniqueIdentifier>{c1695168-f75a-494c-98f7-ec97523b0afd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\UI\StoneFurnaceUI">
+      <UniqueIdentifier>{c7ada55c-2d8f-4ca4-b9f5-71c113f9fb97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Entity\Structure\Container">
+      <UniqueIdentifier>{9b2bdabc-9e82-4db7-b8e8-5b6a37adb896}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Entity\Structure\Container\WoodenChest">
+      <UniqueIdentifier>{dee3eee5-b0db-41d7-b2a3-3fbff6e3ac02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Entity\Structure\Container\IronChest">
+      <UniqueIdentifier>{ef44e711-df87-4d59-aaf1-7a8550fea625}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Entity\Structure\Container\SteelChest">
+      <UniqueIdentifier>{b7a0f907-0258-4afb-802b-a29db330cbf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Button">
+      <UniqueIdentifier>{7a49e9d8-c5a5-4505-b73c-d24e25f1ed03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene\TileMapToolScene">
+      <UniqueIdentifier>{20ed2795-8745-42f6-bc60-ccfc9d472e66}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>MainGame\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="LightingScene.h">
+      <Filter>MainGame\Scene\LightingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>MainGame\Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="TenCubeSpaceScene.h">
+      <Filter>MainGame\Scene\TenCubeSpaceScene</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingScene1.h">
+      <Filter>MainGame\Scene\LoadingScene1</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>MainGame\Scene\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>MainGame\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Ore.h">
+      <Filter>MainGame\Entity\Ore</Filter>
+    </ClInclude>
+    <ClInclude Include="Chunk.h">
+      <Filter>MainGame\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="TileManager.h">
+      <Filter>MainGame\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>MainGame\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>MainGame\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemEnum.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>MainGame\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Structure.h">
+      <Filter>MainGame\Entity\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="AssemblingMachine1.h">
+      <Filter>MainGame\Entity\Structure\AssemblingMachine1</Filter>
+    </ClInclude>
+    <ClInclude Include="BurnerMiningDrill.h">
+      <Filter>MainGame\Entity\Structure\BurnerMiningDrill</Filter>
+    </ClInclude>
+    <ClInclude Include="TransportBelt.h">
+      <Filter>MainGame\Entity\Structure\TransportBelt</Filter>
+    </ClInclude>
+    <ClInclude Include="BurnerInserter.h">
+      <Filter>MainGame\Entity\Structure\BurnerInserter</Filter>
+    </ClInclude>
+    <ClInclude Include="StructureBuilder.h">
+      <Filter>MainGame\Entity\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemOnGround.h">
+      <Filter>MainGame\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemOnGrounds.h">
+      <Filter>MainGame\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="BurnerMiningDrillUI.h">
+      <Filter>MainGame\UI\BurnerMiningDrillUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterUI.h">
+      <Filter>MainGame\UI\CharacterUI</Filter>
+    </ClInclude>
+    <ClInclude Include="DeactiveButtonUI.h">
+      <Filter>MainGame\UI\DeactiveButtonUI</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryUI.h">
+      <Filter>MainGame\UI\InventoryUI</Filter>
+    </ClInclude>
+    <ClInclude Include="FuelSlotUI.h">
+      <Filter>MainGame\UI\SlotUI\FuelSlotUI</Filter>
+    </ClInclude>
+    <ClInclude Include="HandUI.h">
+      <Filter>MainGame\UI\HandUI</Filter>
+    </ClInclude>
+    <ClInclude Include="InventorySlotUI.h">
+      <Filter>MainGame\UI\SlotUI\InventorySlotUI</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneFurnace.h">
+      <Filter>MainGame\Entity\Structure\StoneFurnace</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneFurnaceUI.h">
+      <Filter>MainGame\UI\StoneFurnaceUI</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGameUIFactory.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Recipe.h">
+      <Filter>MainGame\Recipe</Filter>
+    </ClInclude>
+    <ClInclude Include="RecipeManager.h">
+      <Filter>MainGame\Recipe</Filter>
+    </ClInclude>
+    <ClInclude Include="SlotUI.h">
+      <Filter>MainGame\UI\SlotUI</Filter>
+    </ClInclude>
+    <ClInclude Include="FastTransportBelt.h">
+      <Filter>MainGame\Entity\Structure\TransportBelt</Filter>
+    </ClInclude>
+    <ClInclude Include="ExpressTransportBelt.h">
+      <Filter>MainGame\Entity\Structure\TransportBelt</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectRecipeAssemblingUI.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugHelper.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Container.h">
+      <Filter>MainGame\Entity\Structure\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="WoodenChest.h">
+      <Filter>MainGame\Entity\Structure\Container\WoodenChest</Filter>
+    </ClInclude>
+    <ClInclude Include="IronChest.h">
+      <Filter>MainGame\Entity\Structure\Container\IronChest</Filter>
+    </ClInclude>
+    <ClInclude Include="SteelChest.h">
+      <Filter>MainGame\Entity\Structure\Container\SteelChest</Filter>
+    </ClInclude>
+    <ClInclude Include="TextUI.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\Button\ButtonFunction.h">
+      <Filter>MainGame\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\Scene\TileMapToolScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\MainGame.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GLFramework\UI\UI.h">
+      <Filter>MainGame\UI</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Factorio-Imitation.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>MainGame\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="LightingScene.cpp">
+      <Filter>MainGame\Scene\LightingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>MainGame\Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="TenCubeSpaceScene.cpp">
+      <Filter>MainGame\Scene\TenCubeSpaceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingScene1.cpp">
+      <Filter>MainGame\Scene\LoadingScene1</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>MainGame\Scene\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>MainGame\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Ore.cpp">
+      <Filter>MainGame\Entity\Ore</Filter>
+    </ClCompile>
+    <ClCompile Include="Chunk.cpp">
+      <Filter>MainGame\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="TileManager.cpp">
+      <Filter>MainGame\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>MainGame\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>MainGame\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>MainGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityManager.cpp">
+      <Filter>MainGame\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Structure.cpp">
+      <Filter>MainGame\Entity\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="framework.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="AssemblingMachine1.cpp">
+      <Filter>MainGame\Entity\Structure\AssemblingMachine1</Filter>
+    </ClCompile>
+    <ClCompile Include="BurnerMiningDrill.cpp">
+      <Filter>MainGame\Entity\Structure\BurnerMiningDrill</Filter>
+    </ClCompile>
+    <ClCompile Include="TransportBelt.cpp">
+      <Filter>MainGame\Entity\Structure\TransportBelt</Filter>
+    </ClCompile>
+    <ClCompile Include="BurnerInserter.cpp">
+      <Filter>MainGame\Entity\Structure\BurnerInserter</Filter>
+    </ClCompile>
+    <ClCompile Include="StructureBuilder.cpp">
+      <Filter>MainGame\Entity\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemOnGround.cpp">
+      <Filter>MainGame\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemOnGrounds.cpp">
+      <Filter>MainGame\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="BurnerMiningDrillUI.cpp">
+      <Filter>MainGame\UI\BurnerMiningDrillUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterUI.cpp">
+      <Filter>MainGame\UI\CharacterUI</Filter>
+    </ClCompile>
+    <ClCompile Include="DeactiveButtonUI.cpp">
+      <Filter>MainGame\UI\DeactiveButtonUI</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryUI.cpp">
+      <Filter>MainGame\UI\InventoryUI</Filter>
+    </ClCompile>
+    <ClCompile Include="FuelSlotUI.cpp">
+      <Filter>MainGame\UI\SlotUI\FuelSlotUI</Filter>
+    </ClCompile>
+    <ClCompile Include="HandUI.cpp">
+      <Filter>MainGame\UI\HandUI</Filter>
+    </ClCompile>
+    <ClCompile Include="InventorySlotUI.cpp">
+      <Filter>MainGame\UI\SlotUI\InventorySlotUI</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneFurnace.cpp">
+      <Filter>MainGame\Entity\Structure\StoneFurnace</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneFurnaceUI.cpp">
+      <Filter>MainGame\UI\StoneFurnaceUI</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGameUIFactory.cpp">
+      <Filter>MainGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Recipe.cpp">
+      <Filter>MainGame\Recipe</Filter>
+    </ClCompile>
+    <ClCompile Include="RecipeManager.cpp">
+      <Filter>MainGame\Recipe</Filter>
+    </ClCompile>
+    <ClCompile Include="SlotUI.cpp">
+      <Filter>MainGame\UI\SlotUI</Filter>
+    </ClCompile>
+    <ClCompile Include="FastTransportBelt.cpp">
+      <Filter>MainGame\Entity\Structure\TransportBelt</Filter>
+    </ClCompile>
+    <ClCompile Include="ExpressTransportBelt.cpp">
+      <Filter>MainGame\Entity\Structure\TransportBelt</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectRecipeAssemblingUI.cpp">
+      <Filter>MainGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugHelper.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Container.cpp">
+      <Filter>MainGame\Entity\Structure\Container</Filter>
+    </ClCompile>
+    <ClCompile Include="WoodenChest.cpp">
+      <Filter>MainGame\Entity\Structure\Container\WoodenChest</Filter>
+    </ClCompile>
+    <ClCompile Include="IronChest.cpp">
+      <Filter>MainGame\Entity\Structure\Container\IronChest</Filter>
+    </ClCompile>
+    <ClCompile Include="SteelChest.cpp">
+      <Filter>MainGame\Entity\Structure\Container\SteelChest</Filter>
+    </ClCompile>
+    <ClCompile Include="TextUI.cpp">
+      <Filter>MainGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\Button\ButtonFunction.cpp">
+      <Filter>MainGame\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\Scene\TileMapToolScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\MainGame.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GLFramework\UI\UI.cpp">
+      <Filter>MainGame\UI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shader/1.colors.frag">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="shader/1.colors.vert">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="shader/1.light_cube.frag">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="shader/1.light_cube.vert">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="shader/InstancingVertexShader.glsl">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="shader/SimpleFragmentShader.glsl">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="shader/SimpleVertexShader.glsl">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="shader/StandardFragmentShader.glsl">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="shader/StandardVertexShader.glsl">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="shader/Text2DFragmentShader.glsl">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="shader/Text2DVertexShader.glsl">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="shader/UIFragmentShader.glsl">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+    <None Include="shader/UIVertexShader.glsl">
+      <Filter>MainGame\Shader</Filter>
+    </None>
+  </ItemGroup>
+</Project>

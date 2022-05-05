@@ -1,0 +1,51 @@
+Texture2D<uint4> tex : register(t0);
+SamplerState _tex_sampler : register(s0);
+
+static float2 vUV;
+static float4 fragColor;
+static float4 vTintWith565Multiplier;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+    float4 vTintWith565Multiplier : TEXCOORD1;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+uint2 SPIRV_Cross_textureSize(Texture2D<uint4> Tex, uint Level, out uint Param)
+{
+    uint2 ret;
+    Tex.GetDimensions(Level, ret.x, ret.y, Param);
+    return ret;
+}
+
+float3 unpackRGB565(int rgb5)
+{
+    return float3(rgb5.xxx & int3(63488, 2016, 31));
+}
+
+void frag_main()
+{
+    uint _36_dummy_parameter;
+    int2 size = int2(SPIRV_Cross_textureSize(tex, uint(0), _36_dummy_parameter));
+    float2 coord = floor(vUV * float2(size));
+    int rgb5 = int(tex.Load(int3(int2(coord), 0)).x);
+    int param = rgb5;
+    float3 _67 = unpackRGB565(param) * vTintWith565Multiplier.xyz;
+    fragColor = float4(_67.x, _67.y, _67.z, fragColor.w);
+    fragColor.w = vTintWith565Multiplier.w;
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    vUV = stage_input.vUV;
+    vTintWith565Multiplier = stage_input.vTintWith565Multiplier;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

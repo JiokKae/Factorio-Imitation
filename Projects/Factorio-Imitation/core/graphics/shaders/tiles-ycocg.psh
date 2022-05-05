@@ -1,0 +1,73 @@
+Texture2D<float4> atlasTexture : register(t0);
+SamplerState _atlasTexture_sampler : register(s0);
+Texture2D<float4> atlasAlpha : register(t3);
+SamplerState _atlasAlpha_sampler : register(s3);
+Texture2D<float4> mask1Texture : register(t1);
+SamplerState _mask1Texture_sampler : register(s1);
+Texture2D<float4> mask2Texture : register(t2);
+SamplerState _mask2Texture_sampler : register(s2);
+
+static float2 vUV;
+static float4 maskUVs;
+static float4 fragColor;
+static float3 vTint;
+static uint vFlags;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+    float4 maskUVs : TEXCOORD1;
+    nointerpolation uint vFlags : TEXCOORD2;
+    float3 vTint : TEXCOORD3;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+float4 YCoCgToRGB(float4 ycocg, float alpha)
+{
+    float Y = ycocg.w;
+    float scale = 1.0f / ((31.875f * ycocg.z) + 1.0f);
+    float Co = (ycocg.x - 0.501960813999176025390625f) * scale;
+    float Cg = (ycocg.y - 0.501960813999176025390625f) * scale;
+    float R = (Y + Co) - Cg;
+    float G = Y + Cg;
+    float B = (Y - Co) - Cg;
+    return float4(R, G, B, alpha);
+}
+
+void frag_main()
+{
+    float4 yCoCg = atlasTexture.Sample(_atlasTexture_sampler, vUV);
+    float alpha = atlasAlpha.Sample(_atlasAlpha_sampler, vUV).x;
+    float mask = 1.0f;
+    float2 mask1UV = maskUVs.xy;
+    float2 mask2UV = maskUVs.zw;
+    if (mask1UV.x > (-1.0f))
+    {
+        mask = mask1Texture.Sample(_mask1Texture_sampler, mask1UV).x;
+        if (mask2UV.x > (-1.0f))
+        {
+            mask *= mask2Texture.Sample(_mask2Texture_sampler, mask2UV).x;
+        }
+    }
+    float4 param = yCoCg;
+    float param_1 = alpha;
+    fragColor = YCoCgToRGB(param, param_1) * mask;
+    float3 _133 = fragColor.xyz * vTint;
+    fragColor = float4(_133.x, _133.y, _133.z, fragColor.w);
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    vUV = stage_input.vUV;
+    maskUVs = stage_input.maskUVs;
+    vTint = stage_input.vTint;
+    vFlags = stage_input.vFlags;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

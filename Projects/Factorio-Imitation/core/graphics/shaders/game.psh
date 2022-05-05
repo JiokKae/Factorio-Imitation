@@ -1,0 +1,58 @@
+cbuffer _70
+{
+    float2 _70_zoom_to_world_params : packoffset(c0);
+    float _70_timer : packoffset(c0.z);
+    float _70_lutSize : packoffset(c0.w);
+    float2 _70_resolution : packoffset(c1);
+    float _70_lutAlpha : packoffset(c1.z);
+    float _70_lightMul : packoffset(c1.w);
+    float _70_lightAdd : packoffset(c2);
+    uint _70_debugShowLut : packoffset(c2.y);
+};
+Texture2D<float4> gameview : register(t0);
+SamplerState _gameview_sampler : register(s0);
+Texture3D<float4> lut1 : register(t2);
+SamplerState _lut1_sampler : register(s2);
+Texture2D<float4> lightmap : register(t1);
+SamplerState _lightmap_sampler : register(s1);
+
+static float2 vUV;
+static float4 fragColor;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+float3 colorToLut16Index(float3 inputColor)
+{
+    return (inputColor * 0.9375f) + 0.03125f.xxx;
+}
+
+void frag_main()
+{
+    float2 uv = vUV;
+    float4 color = gameview.Sample(_gameview_sampler, uv);
+    float3 param = color.xyz;
+    float3 lookupIndex = colorToLut16Index(param);
+    float4 sunlitColor = float4(lut1.SampleLevel(_lut1_sampler, lookupIndex, 0.0f).xyz, color.w);
+    float4 light = lightmap.Sample(_lightmap_sampler, uv);
+    float3 _82 = (light.xyz * _70_lightMul.xxx) + _70_lightAdd.xxx;
+    light = float4(_82.x, _82.y, _82.z, light.w);
+    float4 finalColor = lerp(sunlitColor, color, light);
+    fragColor = finalColor;
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    vUV = stage_input.vUV;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

@@ -1,0 +1,93 @@
+cbuffer _82
+{
+    float2 _82_zoom_to_world_params : packoffset(c0);
+    float _82_timer : packoffset(c0.z);
+    float _82_lutSize : packoffset(c0.w);
+    float2 _82_resolution : packoffset(c1);
+    float _82_lutAlpha : packoffset(c1.z);
+    float _82_lightMul : packoffset(c1.w);
+    float _82_lightAdd : packoffset(c2);
+    uint _82_debugShowLut : packoffset(c2.y);
+};
+Texture2D<float4> gameview : register(t0);
+SamplerState _gameview_sampler : register(s0);
+Texture3D<float4> lut1 : register(t2);
+SamplerState _lut1_sampler : register(s2);
+Texture2D<float4> lightmap : register(t1);
+SamplerState _lightmap_sampler : register(s1);
+
+static float2 vUV;
+static float4 fragColor;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+float hmix(float a, float b)
+{
+    return frac(sin((a * 12.98980045318603515625f) + b) * 43758.546875f);
+}
+
+float hash3(float a, float b, float c)
+{
+    float param = a;
+    float param_1 = b;
+    float ab = hmix(param, param_1);
+    float param_2 = a;
+    float param_3 = c;
+    float ac = hmix(param_2, param_3);
+    float param_4 = b;
+    float param_5 = c;
+    float bc = hmix(param_4, param_5);
+    float param_6 = ac;
+    float param_7 = bc;
+    float param_8 = ab;
+    float param_9 = hmix(param_6, param_7);
+    return hmix(param_8, param_9);
+}
+
+float3 getnoise3(float2 p)
+{
+    float param = p.x;
+    float param_1 = p.y;
+    float param_2 = floor(_82_timer / 3.0f);
+    return hash3(param, param_1, param_2).xxx;
+}
+
+float3 colorToLut16Index(float3 inputColor)
+{
+    return (inputColor * 0.9375f) + 0.03125f.xxx;
+}
+
+void frag_main()
+{
+    float2 uv = vUV;
+    float4 color = gameview.Sample(_gameview_sampler, uv);
+    float2 param = uv;
+    float3 _noise = getnoise3(param);
+    float3 _133 = color.xyz + ((_noise * _82_zoom_to_world_params.x) + _82_zoom_to_world_params.y.xxx);
+    color = float4(_133.x, _133.y, _133.z, color.w);
+    float3 param_1 = color.xyz;
+    float3 lookupIndex = colorToLut16Index(param_1);
+    float4 sunlitColor = float4(lut1.SampleLevel(_lut1_sampler, lookupIndex, 0.0f).xyz, color.w);
+    float4 light = lightmap.Sample(_lightmap_sampler, uv);
+    float3 _174 = (light.xyz * _82_lightMul.xxx) + _82_lightAdd.xxx;
+    light = float4(_174.x, _174.y, _174.z, light.w);
+    float4 finalColor = lerp(sunlitColor, color, light);
+    fragColor = finalColor;
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    vUV = stage_input.vUV;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

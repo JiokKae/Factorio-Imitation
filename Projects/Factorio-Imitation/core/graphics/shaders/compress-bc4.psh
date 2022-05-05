@@ -1,0 +1,146 @@
+cbuffer _43
+{
+    int2 _43_offset : packoffset(c0);
+    int _43_unusedLevel : packoffset(c0.z);
+    uint _43_useChannelVec : packoffset(c0.w);
+    float4 _43_channelVec : packoffset(c1);
+};
+Texture2D<float4> tex : register(t0);
+SamplerState _tex_sampler : register(s0);
+
+static float4 gl_FragCoord;
+static uint2 fragColor;
+static float2 vUV;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+    float4 gl_FragCoord : SV_Position;
+};
+
+struct SPIRV_Cross_Output
+{
+    uint2 fragColor : SV_Target0;
+};
+
+static float blockAlpha[16];
+
+void fetchBlock()
+{
+    int2 baseCoord = (int2(4, 4) * int2(gl_FragCoord.xy)) + _43_offset;
+    for (int by = 0; by < 4; by++)
+    {
+        for (int bx = 0; bx < 4; bx++)
+        {
+            float4 color = 0.0f.xxxx;
+            int2 coord = baseCoord + int2(bx, by);
+            float4 t1 = tex.Load(int3(coord, 0));
+            float alpha = t1.x;
+            if (_43_useChannelVec != 0u)
+            {
+                alpha = dot(t1, _43_channelVec);
+            }
+            blockAlpha[(by * 4) + bx] = alpha;
+        }
+    }
+}
+
+void InsetYBBox(inout float mincol, inout float maxcol)
+{
+    float inset = ((maxcol - mincol) / 32.0f) - 0.00196078442968428134918212890625f;
+    mincol = clamp(mincol + inset, 0.0f, 1.0f);
+    maxcol = clamp(maxcol - inset, 0.0f, 1.0f);
+}
+
+uint EmitAlphaEndPointsYCoCgDXT5(inout float mincol, inout float maxcol)
+{
+    float param = mincol;
+    float param_1 = maxcol;
+    InsetYBBox(param, param_1);
+    mincol = param;
+    maxcol = param_1;
+    uint c0 = uint(round(mincol * 255.0f));
+    uint c1 = uint(round(maxcol * 255.0f));
+    return (c0 << uint(8)) | c1;
+}
+
+uint2 EmitAlphaIndicesYCoCgDXT5(float minAlpha, float maxAlpha)
+{
+    float mid = (maxAlpha - minAlpha) / 14.0f;
+    float ab1 = minAlpha + mid;
+    float ab2 = (((6.0f * maxAlpha) + (1.0f * minAlpha)) * 0.14285714924335479736328125f) + mid;
+    float ab3 = (((5.0f * maxAlpha) + (2.0f * minAlpha)) * 0.14285714924335479736328125f) + mid;
+    float ab4 = (((4.0f * maxAlpha) + (3.0f * minAlpha)) * 0.14285714924335479736328125f) + mid;
+    float ab5 = (((3.0f * maxAlpha) + (4.0f * minAlpha)) * 0.14285714924335479736328125f) + mid;
+    float ab6 = (((2.0f * maxAlpha) + (5.0f * minAlpha)) * 0.14285714924335479736328125f) + mid;
+    float ab7 = (((1.0f * maxAlpha) + (6.0f * minAlpha)) * 0.14285714924335479736328125f) + mid;
+    uint2 indices = uint2(0u, 0u);
+    uint index = 0u;
+    for (int i = 0; i < 6; i++)
+    {
+        float a = blockAlpha[i];
+        index = 1u;
+        index += uint(a <= ab1);
+        index += uint(a <= ab2);
+        index += uint(a <= ab3);
+        index += uint(a <= ab4);
+        index += uint(a <= ab5);
+        index += uint(a <= ab6);
+        index += uint(a <= ab7);
+        index &= 7u;
+        index ^= uint(2u > index);
+        indices.x |= (index << uint((3 * i) + 16));
+    }
+    indices.y = index >> uint(1);
+    for (int i_1 = 6; i_1 < 16; i_1++)
+    {
+        float a_1 = blockAlpha[i_1];
+        index = 1u;
+        index += uint(a_1 <= ab1);
+        index += uint(a_1 <= ab2);
+        index += uint(a_1 <= ab3);
+        index += uint(a_1 <= ab4);
+        index += uint(a_1 <= ab5);
+        index += uint(a_1 <= ab6);
+        index += uint(a_1 <= ab7);
+        index &= 7u;
+        index ^= uint(2u > index);
+        indices.y |= (index << uint((3 * i_1) - 16));
+    }
+    return indices;
+}
+
+void frag_main()
+{
+    fetchBlock();
+    float minAlpha = blockAlpha[0];
+    float maxAlpha = blockAlpha[0];
+    for (int i = 1; i < 16; i++)
+    {
+        minAlpha = min(minAlpha, blockAlpha[i]);
+        maxAlpha = max(maxAlpha, blockAlpha[i]);
+    }
+    float param = minAlpha;
+    float param_1 = maxAlpha;
+    uint _423 = EmitAlphaEndPointsYCoCgDXT5(param, param_1);
+    minAlpha = param;
+    maxAlpha = param_1;
+    uint2 result;
+    result.x = _423;
+    float param_2 = minAlpha;
+    float param_3 = maxAlpha;
+    uint2 indices = EmitAlphaIndicesYCoCgDXT5(param_2, param_3);
+    result.x |= indices.x;
+    result.y = indices.y;
+    fragColor = result;
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    gl_FragCoord = stage_input.gl_FragCoord;
+    vUV = stage_input.vUV;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}

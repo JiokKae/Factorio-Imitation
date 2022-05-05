@@ -1,0 +1,33 @@
+Texture2D<float4> atlasTexture : register(t0);
+SamplerState _atlasTexture_sampler : register(s0);
+
+static float2 vUV;
+static float4 fragColor;
+static float4 vColor;
+
+struct SPIRV_Cross_Input
+{
+    float2 vUV : TEXCOORD0;
+    nointerpolation float4 vColor : TEXCOORD1;
+};
+
+struct SPIRV_Cross_Output
+{
+    float4 fragColor : SV_Target0;
+};
+
+void frag_main()
+{
+    float4 texColor = atlasTexture.Sample(_atlasTexture_sampler, vUV);
+    fragColor = vColor * texColor.x;
+}
+
+SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
+{
+    vUV = stage_input.vUV;
+    vColor = stage_input.vColor;
+    frag_main();
+    SPIRV_Cross_Output stage_output;
+    stage_output.fragColor = fragColor;
+    return stage_output;
+}
