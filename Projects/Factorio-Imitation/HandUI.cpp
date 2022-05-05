@@ -101,10 +101,10 @@ void HandUI::Render(Shader* shader)
 		if (!g_itemSpecs[handItem->id].buildable || isMouseOnUI)
 		{
 			glm::ivec2 maxFrame = allItemImage->GetMaxFrame();
-			allItemImage->Render(shader, g_ptMouse.x + 16, g_ptMouse.y - 16, handItem->id % maxFrame.x, maxFrame.y - 1 - handItem->id / maxFrame.y);
+			allItemImage->Render(shader, static_cast<float>(g_ptMouse.x + 16), static_cast<float>(g_ptMouse.y - 16), handItem->id % maxFrame.x, maxFrame.y - 1 - handItem->id / maxFrame.y);
 		}
 		// 핸드의 아이템 개수 출력
-		TextRenderer::GetSingleton()->RenderText(to_string(handItem->amount), g_ptMouse.x + 16 - to_string(handItem->amount).length() * 6 + 17, g_ptMouse.y - 16 - 7.0f, 0.46f);
+		TextRenderer::GetSingleton()->RenderText(to_string(handItem->amount), static_cast<float>(g_ptMouse.x + 16 - to_string(handItem->amount).length() * 6 + 17), g_ptMouse.y - 16 - 7.0f, 0.46f);
 	}
 
 	// UI 위에 마우스가 있을 때 적용

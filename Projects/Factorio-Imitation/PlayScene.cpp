@@ -260,24 +260,24 @@ void PlayScene::Render(HDC /*hdc*/)
 
 	if (g_debuggingMode)
 	{
-		textRenderer->RenderText("g_ptMouse : " + to_string(g_ptMouse.x) + ", " + to_string(g_ptMouse.y), 10, height - 40);
+		textRenderer->RenderText("g_ptMouse : " + to_string(g_ptMouse.x) + ", " + to_string(g_ptMouse.y), 10.0f, static_cast<float>(height) - 40.0f);
 		sprintf_s(str, "cameraPos: (%.1f, %.1f)", camera->GetPosition().x, camera->GetPosition().y);
-		textRenderer->RenderText(string(str), 10, height - 70);
+		textRenderer->RenderText(string(str), 10.0f, height - 70.0f);
 		sprintf_s(str, "g_cursorPosition: (%.1f, %.1f)", g_cursorPosition.x, g_cursorPosition.y);
-		textRenderer->RenderText(string(str), 10, height - 100);
+		textRenderer->RenderText(string(str), 10.0f, height - 100.0f);
 		sprintf_s(str, "Cursor: (%d, %d)", g_cursorCoord.x, g_cursorCoord.y);
-		textRenderer->RenderText(string(str), 10, height - 130);
+		textRenderer->RenderText(string(str), 10.0f, height - 130.0f);
 		Tile* tile = TileManager::GetSingleton()->GetLPTileUnderMouse();
 		if (tile)
 		{
 			sprintf_s(str, "Ore Amount: %d", tile->GetLpOre()->GetAmount());
-			textRenderer->RenderText(string(str), 10, height - 160);
+			textRenderer->RenderText(string(str), 10.0f, height - 160.0f);
 			sprintf_s(str, "Item Amount: %d", (int)tile->GetItems().size());
-			textRenderer->RenderText(string(str), 10, height - 190);
+			textRenderer->RenderText(string(str), 10.0f, height - 190.0f);
 		}
 	}
 
-	DebugHelper::GetSingleton()->Render(10, height - 220);
+	DebugHelper::GetSingleton()->Render(10.0f, height - 220.0f);
 
 	glFlush();
 }

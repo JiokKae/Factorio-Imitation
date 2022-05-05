@@ -240,7 +240,7 @@ void TransportBelt::FlowItem(Entity* item, bool isItem)
 		case SOUTH:	zeroPoint = Vec2(position.x + TILE_SIZE / 2, position.y - TILE_SIZE / 2); break;
 		case WEST:	zeroPoint = Vec2(position.x - TILE_SIZE / 2, position.y - TILE_SIZE / 2); break;
 		}
-		float angle = glm::atan((itemPosition.y - zeroPoint.y) , (itemPosition.x - zeroPoint.x)) + glm::pi<double>() / 2.025f;
+		float angle = glm::atan((itemPosition.y - zeroPoint.y) , (itemPosition.x - zeroPoint.x)) + glm::pi<float>() / 2.025f;
 		item->SetPosition(itemPosition + Vec2(cos(angle), sin(angle)) * speed * 2.0f * TimerManager::GetSingleton()->GetTimeElapsed());
 		break;
 	}
@@ -255,7 +255,7 @@ void TransportBelt::FlowItem(Entity* item, bool isItem)
 		case SOUTH:	zeroPoint = Vec2(position.x - TILE_SIZE / 2, position.y - TILE_SIZE / 2); break;
 		case WEST:	zeroPoint = Vec2(position.x - TILE_SIZE / 2, position.y + TILE_SIZE / 2); break;
 		}
-		float angle = glm::atan((itemPosition.y - zeroPoint.y), (itemPosition.x - zeroPoint.x)) + glm::pi<double>() / 2.025f;
+		float angle = glm::atan((itemPosition.y - zeroPoint.y), (itemPosition.x - zeroPoint.x)) + glm::pi<float>() / 2.025f;
 		item->SetPosition(itemPosition + Vec2(-cos(angle), -sin(angle)) * speed * 2.0f * TimerManager::GetSingleton()->GetTimeElapsed());
 		break;
 	}

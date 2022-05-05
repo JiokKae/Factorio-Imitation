@@ -86,7 +86,7 @@ void SlotUI::LateRender(Shader* /*shader*/)
 	if (itemInfo && itemInfo->amount != 0)
 	{
 		if (onMouse)
-			TextRenderer::GetSingleton()->RenderText(g_itemSpecs[itemInfo->id].name, g_ptMouse.x + 20, g_ptMouse.y - 20, 1.0f, glm::vec3(1.0f));
+			TextRenderer::GetSingleton()->RenderText(g_itemSpecs[itemInfo->id].name, g_ptMouse.x + 20.0f, g_ptMouse.y - 20.0f, 1.0f, glm::vec3(1.0f));
 	}
 }
 
