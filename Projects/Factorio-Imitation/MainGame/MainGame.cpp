@@ -1,11 +1,6 @@
 #include "MainGame.h"
 #include "2DFramework/Image/Image.h"
-#include "../TitleScene.h"
-#include "../PlayScene.h"
-#include "Scene/TileMapToolScene.h"
-#include "../TenCubeSpaceScene.h"
-#include "../LightingScene.h"
-#include "../LoadingScene1.h"
+#include "Scene/Scenes.h"
 #include "GLFramework/TextRenderer/TextRenderer.h"
 
 HRESULT MainGame::Init()
