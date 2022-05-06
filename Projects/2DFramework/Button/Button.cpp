@@ -46,11 +46,11 @@ void Button::Update( int mouseX, int mouseY, int windowSizeY )
 	{
 		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
 		{
-			state = BUTTON_STATE::DOWN;
+			state = STATE::DOWN;
 		}
-		else if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LBUTTON) && state == BUTTON_STATE::DOWN)
+		else if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LBUTTON) && state == STATE::DOWN)
 		{
-			state = BUTTON_STATE::UP;
+			state = STATE::UP;
 			SoundManager::GetSingleton()->Play("GUI-ButtonMini", 0.8f);
 			// 버튼 기능 수행
 			ButtonFunc();
@@ -58,7 +58,7 @@ void Button::Update( int mouseX, int mouseY, int windowSizeY )
 	}
 	else
 	{
-		state = BUTTON_STATE::NONE;
+		state = STATE::NONE;
 	}
 }
 
@@ -84,7 +84,7 @@ void Button::Render(HDC hdc)
 }
 
 Button::Button() 
-	: state(BUTTON_STATE::NONE)
+	: state(STATE::NONE)
 	, img(nullptr)
 {
 }
