@@ -16,7 +16,7 @@ private:
 	STATE state;
 	Image* img;
 	RECT rc;
-	POINT pos;
+	POINT position;
 	
 	POINT ptDownFrame;
 	POINT ptUpFrame;

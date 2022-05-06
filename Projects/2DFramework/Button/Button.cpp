@@ -3,8 +3,8 @@
 
 HRESULT Button::Init(const char* imageName, int posX, int posY, POINT downFramePoint, POINT upFramePoint)
 {
-	pos.x = posX;
-	pos.y = posY;
+	position.x = posX;
+	position.y = posY;
 	ptDownFrame = downFramePoint;
 	ptUpFrame = upFramePoint;
 
@@ -64,21 +64,20 @@ void Button::Update( int mouseX, int mouseY, int windowSizeY )
 
 void Button::Render(HDC hdc)
 {
+	if (img == nullptr)
+	{
+		return;
+	}
+
 	switch (state)
 	{
-	case NONE:
-	case UP:
-		if (img)
-		{
-			img->FrameRender(hdc, pos.x, pos.y, ptUpFrame.x, ptUpFrame.y);
-		}
+	case STATE::NONE:
+	case STATE::UP:
+		img->FrameRender(hdc, position.x, position.y, ptUpFrame.x, ptUpFrame.y);
 		break;
 
-	case DOWN:
-		if (img)
-		{
-			img->FrameRender(hdc, pos.x, pos.y, ptDownFrame.x, ptDownFrame.y);
-		}
+	case STATE::DOWN:
+		img->FrameRender(hdc, position.x, position.y, ptDownFrame.x, ptDownFrame.y);
 		break;
 	}
 }
