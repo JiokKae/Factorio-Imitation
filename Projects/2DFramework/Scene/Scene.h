@@ -8,13 +8,13 @@ protected:
 	bool useBackBuffer;
 
 public:
-	bool IsUseBackBuffer() { return useBackBuffer; }
+	bool IsUseBackBuffer(); 
 
-	void SetUseBackBuffer(bool b)			{ useBackBuffer = b; }
-	void SetWidthHeight(int _width, int _height)	{ width = _width, height = _height; }
-	
-	int GetWidth()	{ return width; }
-	int GetHeight() { return height; }
+	void SetUseBackBuffer(bool b); 
+	void SetWidthHeight(int _width, int _height); 
+
+	int GetWidth();
+	int GetHeight();
 
 	Scene(int width, int height)
 		: width(width)
