@@ -170,12 +170,6 @@ inline void SetWindowSize(int startX, int startY, int sizeX, int sizeY)
 	MoveWindow(g_hWnd, startX, startY, rc.right - rc.left, rc.bottom - rc.top, true);
 }
 
-template <typename T>
-inline T Lerp(T a, T b, float v)
-{
-	return a + (b - a) * v;
-}
-
 inline bool IntersectFRect(LPFRECT lpfrcDst, const FRECT* lpfrcSrc1, const FRECT* lpfrcSrc2)
 {
 	if (lpfrcSrc1->right	< lpfrcSrc2->left ||
