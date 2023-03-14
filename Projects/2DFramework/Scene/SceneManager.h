@@ -10,7 +10,6 @@ private:
 	map<string, Scene*> mapSceneData;
 	map<string, Scene*> mapLoadingSceneData;
 
-	HDC backDC;
 	Image* backBuffer;
 	
 public:
