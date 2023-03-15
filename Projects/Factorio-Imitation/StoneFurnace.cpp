@@ -33,7 +33,7 @@ HRESULT StoneFurnace::Init(int x, int y, DIRECTION _direction, bool _temp)
 	result = new ItemInfo();
 	for (int i = 0; i < vecRecipes->size(); i++)
 	{
-		resource->AddAbleItem((*vecRecipes)[i]->GetIngredient(0).id);
+		resource->AddAbleItem((*vecRecipes)[i]->GetIngredients()[0].id);
 		result->AddAbleItem((*vecRecipes)[i]->GetOutput().id);
 	}
 	usingResource = new ItemInfo();
@@ -81,7 +81,7 @@ void StoneFurnace::Update()
 		{
 			status = NO_POWER;
 		}
-		else if (resource->amount && resource->amount >= FindRecipeByIngredient(resource->id)->GetIngredient(0).amount)
+		else if (resource->amount && resource->amount >= FindRecipeByIngredient(resource->id)->GetIngredients()[0].amount)
 		{
 			status = WORKING;
 		}
@@ -95,7 +95,7 @@ void StoneFurnace::Update()
 			break;
 		}
 		// 재료가 없고 사용중인 재료가 없다면
-		else if (resource->amount < FindRecipeByIngredient(resource->id)->GetIngredient(0).amount && usingResource->amount <= 0)
+		else if (resource->amount < FindRecipeByIngredient(resource->id)->GetIngredients()[0].amount && usingResource->amount <= 0)
 		{
 			status = NO_RECIPE;
 			break;
@@ -122,8 +122,8 @@ void StoneFurnace::Update()
 			if (usingResource->amount <= 0)
 			{
 				currRecipe = FindRecipeByIngredient(resource->id);
-				resource->amount -= currRecipe->GetIngredient(0).amount;
-				usingResource->amount += currRecipe->GetIngredient(0).amount;
+				resource->amount -= currRecipe->GetIngredients()[0].amount;
+				usingResource->amount += currRecipe->GetIngredients()[0].amount;
 			}
 
 			// 에너지 소모
@@ -133,7 +133,7 @@ void StoneFurnace::Update()
 			// 제작 완료
 			if (craftedTime >= currRecipe->GetCraftingTime())
 			{
-				usingResource->amount -= currRecipe->GetIngredient(0).amount;
+				usingResource->amount -= currRecipe->GetIngredients()[0].amount;
 				newResult->id = currRecipe->GetOutput().id;
 				newResult->amount = currRecipe->GetOutput().amount;
 				productsFinished++;
