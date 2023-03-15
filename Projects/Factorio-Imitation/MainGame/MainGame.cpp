@@ -8,19 +8,14 @@ HRESULT MainGame::Init()
 	hdc = GetDC(g_hWnd);
 
 	#pragma region Win OpenGL Init
-	PIXELFORMATDESCRIPTOR pfd;
-	int nPixelFormat;
-	memset(&pfd, 0, sizeof(pfd));
-
-	pfd.nSize = sizeof(pfd);
-	pfd.nVersion = 1;
-	pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER_DONTCARE;
-	pfd.iPixelType = PFD_TYPE_RGBA;
-	pfd.cColorBits = 32;
-
-	nPixelFormat = ChoosePixelFormat(hdc, &pfd);
-	SetPixelFormat(hdc, nPixelFormat, &pfd);
-
+	PIXELFORMATDESCRIPTOR pfd{
+		.nSize = sizeof(pfd),
+		.nVersion = 1,
+		.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER_DONTCARE,
+		.iPixelType = PFD_TYPE_RGBA,
+		.cColorBits = 32,
+	};
+	SetPixelFormat(hdc, ChoosePixelFormat(hdc, &pfd), &pfd);
 	hrc = wglCreateContext(hdc);
 	wglMakeCurrent(hdc, hrc);
 	glewInit();
