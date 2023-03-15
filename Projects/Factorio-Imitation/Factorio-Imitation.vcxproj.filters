@@ -24,21 +24,6 @@
     <Filter Include="MainGame\Character">
       <UniqueIdentifier>{65ea402a-7da0-47ca-9f02-cc6c540403f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Scene\LightingScene">
-      <UniqueIdentifier>{3588c314-9f5e-47c2-a652-50e5161a12bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainGame\Scene\TitleScene">
-      <UniqueIdentifier>{b8d7c194-5a70-496d-a3b2-f40803de2c84}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainGame\Scene\TenCubeSpaceScene">
-      <UniqueIdentifier>{b1ec984b-f8c3-4f95-89bf-afde80f704c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainGame\Scene\LoadingScene1">
-      <UniqueIdentifier>{e97c33fa-b240-4787-a74b-1ea93b1eb440}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainGame\Scene\PlayScene">
-      <UniqueIdentifier>{533fe382-1ad8-4ff8-b730-28348027c827}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainGame\UI">
       <UniqueIdentifier>{c53c5724-0256-4215-b8e8-c4b64e6514c7}</UniqueIdentifier>
     </Filter>
@@ -114,9 +99,6 @@
     <Filter Include="MainGame\Button">
       <UniqueIdentifier>{7a49e9d8-c5a5-4505-b73c-d24e25f1ed03}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Scene\TileMapToolScene">
-      <UniqueIdentifier>{20ed2795-8745-42f6-bc60-ccfc9d472e66}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -124,21 +106,6 @@
     </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>MainGame\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="LightingScene.h">
-      <Filter>MainGame\Scene\LightingScene</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleScene.h">
-      <Filter>MainGame\Scene\TitleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="TenCubeSpaceScene.h">
-      <Filter>MainGame\Scene\TenCubeSpaceScene</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadingScene1.h">
-      <Filter>MainGame\Scene\LoadingScene1</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayScene.h">
-      <Filter>MainGame\Scene\PlayScene</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>MainGame\Tile</Filter>
@@ -260,14 +227,14 @@
     <ClInclude Include="MainGame\Button\ButtonFunction.h">
       <Filter>MainGame\Button</Filter>
     </ClInclude>
-    <ClInclude Include="MainGame\Scene\TileMapToolScene.h">
-      <Filter>MainGame\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="MainGame\MainGame.h">
       <Filter>MainGame</Filter>
     </ClInclude>
     <ClInclude Include="..\GLFramework\UI\UI.h">
       <Filter>MainGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\Scene\Scenes.h">
+      <Filter>MainGame\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -276,21 +243,6 @@
     </ClCompile>
     <ClCompile Include="Character.cpp">
       <Filter>MainGame\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="LightingScene.cpp">
-      <Filter>MainGame\Scene\LightingScene</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
-      <Filter>MainGame\Scene\TitleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="TenCubeSpaceScene.cpp">
-      <Filter>MainGame\Scene\TenCubeSpaceScene</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadingScene1.cpp">
-      <Filter>MainGame\Scene\LoadingScene1</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayScene.cpp">
-      <Filter>MainGame\Scene\PlayScene</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>MainGame\Tile</Filter>
@@ -412,14 +364,14 @@
     <ClCompile Include="MainGame\Button\ButtonFunction.cpp">
       <Filter>MainGame\Button</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame\Scene\TileMapToolScene.cpp">
-      <Filter>MainGame\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="MainGame\MainGame.cpp">
       <Filter>MainGame</Filter>
     </ClCompile>
     <ClCompile Include="..\GLFramework\UI\UI.cpp">
       <Filter>MainGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\Scene\Scenes.cpp">
+      <Filter>MainGame\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

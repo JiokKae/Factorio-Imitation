@@ -45,7 +45,7 @@ void RecipeManager::Release()
 	map<string, Recipe*>::iterator it = mapRecipes.begin();
 	while (it != mapRecipes.end())
 	{
-		SAFE_RELEASE(it->second);
+		SAFE_DELETE(it->second);
 		it = mapRecipes.erase(it);
 	}
 	mapRecipes.clear();
@@ -55,22 +55,14 @@ void RecipeManager::Release()
 
 Recipe* RecipeManager::AddRecipe(string strKey, ItemInfo output, float craftingTime, vector<ItemInfo> vecIngredients)
 {
-	Recipe* recipe = nullptr;
-	recipe = FindRecipe(strKey);
+	Recipe* recipe = FindRecipe(strKey);
 	if (recipe)
 	{
 		return recipe;
 	}
-	recipe = new Recipe();
-	if (FAILED(recipe->Init(output, craftingTime, vecIngredients)))
-	{
-		recipe->Release();
-		delete recipe;
+	recipe = new Recipe(vecIngredients, craftingTime, output);
 
-		return nullptr;
-	}
-
-	mapRecipes.insert(make_pair(strKey, recipe));
+	mapRecipes.emplace(strKey, recipe);
 
 	return recipe;
 }
@@ -80,7 +72,7 @@ void RecipeManager::DeleteRecipe(string strKey)
 	map<string, Recipe*>::iterator it = mapRecipes.find(strKey);
 	if (it != mapRecipes.end())
 	{
-		SAFE_RELEASE(it->second);
+		SAFE_DELETE(it->second);
 		mapRecipes.erase(it);
 	}
 }

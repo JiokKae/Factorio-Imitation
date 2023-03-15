@@ -1,21 +1,22 @@
 ﻿#pragma once
 #include "../GameNode.h"
 
-enum BUTTON_STATE
-{
-	NONE,
-	UP,
-	DOWN
-};
-
 class Image;
 class Button :public GameNode 
 {
 private:
-	BUTTON_STATE state;
+	enum class STATE
+	{
+		NONE,
+		UP,
+		DOWN,
+	};
+
+private:
+	STATE state;
 	Image* img;
 	RECT rc;
-	POINT pos;
+	POINT position;
 	
 	POINT ptDownFrame;
 	POINT ptUpFrame;

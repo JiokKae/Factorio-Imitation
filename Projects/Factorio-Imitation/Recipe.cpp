@@ -1,23 +1,29 @@
 #include "Recipe.h"
+#include <algorithm>
 
-HRESULT Recipe::Init(ItemInfo _output, float _craftingTime, vector<ItemInfo> _vecIngredients)
-{
-	this->output = _output;
-	this->craftingTime = _craftingTime;
-	this->vecIngredients = _vecIngredients;
-	return S_OK;
-}
-
-void Recipe::Release()
+Recipe::Recipe(const std::vector<ItemInfo>& ingredients, float craftingTime, const ItemInfo& output)
+	: ingredients(ingredients)
+	, output(output)
+	, craftingTime(craftingTime)
 {
 }
 
-bool Recipe::IsIngredient(int itemEnum)
+const std::vector<ItemInfo>& Recipe::GetIngredients() const
 {
-	for (int i = 0; i < vecIngredients.size(); i++)
-	{
-		if (vecIngredients[i].id == itemEnum)
-			return true;
-	}
-	return false;
+	return ingredients;
+}
+
+bool Recipe::IsIngredient(int itemEnum) const
+{
+	return std::find_if(ingredients.cbegin(), ingredients.cend(), [itemEnum](const auto& ingredient) { return ingredient.id == itemEnum; }) != ingredients.end();
+}
+
+const ItemInfo& Recipe::GetOutput() const
+{
+	return output;
+}
+
+float Recipe::GetCraftingTime() const
+{
+	return craftingTime;
 }

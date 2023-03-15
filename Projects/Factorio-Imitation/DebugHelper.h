@@ -29,7 +29,7 @@ class DebugHelper : public Singleton<DebugHelper>
 		Property(float data);
 		Property(double data);
 
-		string ToString();
+		operator std::string() const;
 	};
 
 	map<string, Property> Values;
@@ -40,11 +40,11 @@ public:
 	virtual void Update();
 	virtual void Render(float x, float y);
 
-	void	SetFloat(string key, float value);
-	void	SetInt(string key, int value);
+	void	SetFloat(const std::string& key, float value);
+	void	SetInt(const std::string& key, int value);
 
-	float	GetFloat(string key);
-	int	GetInt(string key);
+	float GetFloat(const std::string& key) const;
+	int GetInt(const std::string& key) const;
 };
 
 
