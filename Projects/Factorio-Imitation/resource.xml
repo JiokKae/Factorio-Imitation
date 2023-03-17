@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resource>
+	<groups item="texture">
+		<group name="Entity">
+			<texture name="Character-level1_idle" path="graphics/entity/character/hr-level1_idle.png" />
+			<texture name="Character-level1_idle_shadow" path="graphics/entity/character/hr-level1_idle_shadow.png" />
+			<texture name="Character-level1_running" path="graphics/entity/character/hr-level1_running.png" />
+			<texture name="Character-level1_running_shadow" path="graphics/entity/character/hr-level1_running_shadow.png" />
+			<texture name="Character-level1_mining_tool" path="graphics/entity/character/hr-level1_mining_tool.png" />
+			<texture name="Character-level1_mining_tool_shadow" path="graphics/entity/character/hr-level1_mining_tool_shadow.png" />
+			<texture name="BurnerMiningDrill-N" path="graphics/entity/burner_mining_drill/hr-burner-mining-drill-N.png" />
+			<texture name="BurnerMiningDrill-E" path="graphics/entity/burner_mining_drill/hr-burner-mining-drill-E.png" />
+			<texture name="BurnerMiningDrill-S" path="graphics/entity/burner_mining_drill/hr-burner-mining-drill-S.png" />
+			<texture name="BurnerMiningDrill-W" path="graphics/entity/burner_mining_drill/hr-burner-mining-drill-W.png" />
+			<texture name="BurnerMiningDrill-N-shadow" path="graphics/entity/burner_mining_drill/hr-burner-mining-drill-N-shadow.png" />
+			<texture name="BurnerMiningDrill-E-shadow" path="graphics/entity/burner_mining_drill/hr-burner-mining-drill-E-shadow.png" />
+			<texture name="BurnerMiningDrill-S-shadow" path="graphics/entity/burner_mining_drill/hr-burner-mining-drill-S-shadow.png" />
+			<texture name="BurnerMiningDrill-W-shadow" path="graphics/entity/burner_mining_drill/hr-burner-mining-drill-W-shadow.png" />
+			<texture name="AssemblingMachine1" path="graphics/entity/assembling_machine_1/hr-assembling-machine-1.png" />
+			<texture name="AssemblingMachine1-shadow" path="graphics/entity/assembling_machine_1/hr-assembling-machine-1-shadow.png" />
+			<texture name="BurnerInserter-platform" path="graphics/entity/burner_inserter/hr-burner-inserter-platform.png" />
+			<texture name="BurnerInserter-handBase" path="graphics/entity/burner_inserter/hr-burner-inserter-hand-base.png" />
+			<texture name="BurnerInserter-handBase-shadow" path="graphics/entity/burner_inserter/hr-burner-inserter-hand-base-shadow.png" />
+			<texture name="BurnerInserter-handClosed" path="graphics/entity/burner_inserter/hr-burner-inserter-hand-closed.png" />
+			<texture name="BurnerInserter-handClosed-shadow" path="graphics/entity/burner_inserter/hr-burner-inserter-hand-closed-shadow.png" />
+			<texture name="BurnerInserter-handOpen" path="graphics/entity/burner_inserter/hr-burner-inserter-hand-open.png" />
+			<texture name="BurnerInserter-handOpen-shadow" path="graphics/entity/burner_inserter/hr-burner-inserter-hand-open-shadow.png" />
+			<texture name="StoneFurnace" path="graphics/entity/stone_furnace/hr-stone-furnace.png" />
+			<texture name="StoneFurnace-shadow" path="graphics/entity/stone_furnace/hr-stone-furnace-shadow.png" />
+			<texture name="StoneFurnace-fire" path="graphics/entity/stone_furnace/hr-stone-furnace-fire.png" />
+			<texture name="IronOre" path="graphics/entity/iron_ore/hr-iron-ore.png" />
+			<texture name="Coal" path="graphics/entity/coal/hr-coal.png" />
+			<texture name="CopperOre" path="graphics/entity/copper_ore/hr-copper-ore.png" />
+			<texture name="Stone" path="graphics/entity/stone/hr-stone.png" />
+			<texture name="WoodenChest" path="graphics/entity/wooden_chest/hr-wooden-chest.png" />
+			<texture name="WoodenChest-shadow" path="graphics/entity/wooden_chest/hr-wooden-chest-shadow.png" />
+			<texture name="IronChest" path="graphics/entity/iron_chest/hr-iron-chest.png" />
+			<texture name="IronChest-shadow" path="graphics/entity/iron_chest/hr-iron-chest-shadow.png" />
+			<texture name="SteelChest" path="graphics/entity/steel_chest/hr-steel-chest.png" />
+			<texture name="SteelChest-shadow" path="graphics/entity/steel_chest/hr-steel-chest-shadow.png" />
+			<texture name="TransportBelt" path="graphics/entity/transport_belt/hr-transport-belt.png" filter="GL_NEAREST" />
+			<texture name="FastTransportBelt" path="graphics/entity/fast_transport_belt/hr-fast-transport-belt.png" filter="GL_NEAREST" />
+			<texture name="ExpressTransportBelt" path="graphics/entity/express_transport_belt/hr-express-transport-belt.png" filter="GL_NEAREST" />
+		</group>
+		<group name="Icons">
+			<texture name="Hand" path="graphics/icons/hand.png" />
+			<texture name="AllItems" path="graphics/icons/all-items.png" />
+			<texture name="AllItems-stroke" path="graphics/icons/all-items-stroke.png" />
+		</group>
+		<group name="Terrain">
+			<texture name="Dirt_1" path="graphics/terrain/hr-dirt-1.png" />
+		</group>
+		<group name="UI">
+			<texture name="CharacterUI" path="graphics/ui/CharacterUI.png" mipmap="false" />
+			<texture name="SlotUI" path="graphics/ui/slotUI.png" mipmap="false" />
+			<texture name="BunerMiningDrillUI" path="graphics/ui/BunerMiningDrillUI.png" mipmap="false" />
+			<texture name="DeactiveButtonUI" path="graphics/ui/DeactiveButtonUI.png" mipmap="false" />
+			<texture name="RedProgressiveBarUI" path="graphics/ui/redProgressiveBarUI.png" mipmap="false" />
+			<texture name="GreenProgressiveBarUI" path="graphics/ui/greenProgressiveBarUI.png" mipmap="false" />
+			<texture name="FuelSlotUI" path="graphics/ui/fuelSlotUI.png" mipmap="false" />
+			<texture name="StoneFurnaceUI" path="graphics/ui/stoneFurnaceUI.png" mipmap="false" />
+			<texture name="BackgroundUI" path="graphics/ui/BacgroundUI.png" mipmap="false" />
+			<texture name="BackgroundNameUI" path="graphics/ui/BacgroundNameUI.png" mipmap="false" />
+			<texture name="DismantleBarUI" path="graphics/ui/dismantleBarUI.png" mipmap="false" />
+			<texture name="DismantleEmptyBarUI" path="graphics/ui/dismantleEmptyBarUI.png" mipmap="false" />
+			<texture name="SelectRecipeAssemblingUI" path="graphics/ui/selectRecipeAssemblingUI.png" mipmap="false" />
+			<texture name="RecipeButtonUI" path="graphics/ui/recipeButtonUI.png" mipmap="false" />
+		</group>
+	</groups>
+	<groups item="sound">
+		<group>
+			<sound name="Rotate-small" path="sound/rotate-small.ogg" />
+			<sound name="Rotate-medium" path="sound/rotate-medium.ogg" />
+			<sound name="Rotate-big" path="sound/rotate-big.ogg" />
+			<sound name="Build-small" path="sound/build-small.ogg" />
+			<sound name="Build-medium" path="sound/build-medium.ogg" />
+			<sound name="Build-large" path="sound/build-large.ogg" />
+			<sound name="Deconstruct-small" path="sound/deconstruct-small.ogg" />
+			<sound name="Deconstruct-medium" path="sound/deconstruct-medium.ogg" />
+			<sound name="Deconstruct-large" path="sound/deconstruct-large.ogg" />
+			<sound name="GUI-ToolButton" path="sound/gui-tool-button.ogg" />
+			<sound name="GUI-ButtonMini" path="sound/gui-button-mini.ogg" />
+			<sound name="Machine-open" path="sound/machine-open.ogg" />
+			<sound name="Machine-close" path="sound/machine-close.ogg" />
+			<sound name="PickedUpItem" path="sound/picked-up-item.ogg" />
+		</group>
+		<group name="Ambient">
+			<sound name="Expansion" path="sound/ambient/expansion.ogg" is_bgm="true" is_loop="true" />
+		</group>
+	</groups>
+</resource>
