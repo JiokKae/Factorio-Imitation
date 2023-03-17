@@ -212,6 +212,7 @@
     <ClInclude Include="WoodenChest.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Librarys\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\GLFramework\UI\UI.cpp" />
     <ClCompile Include="AssemblingMachine1.cpp" />
     <ClCompile Include="Container.cpp" />

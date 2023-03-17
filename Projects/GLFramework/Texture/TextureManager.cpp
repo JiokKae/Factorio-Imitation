@@ -27,6 +27,26 @@ void TextureManager::Release()
 	ReleaseSingleton();
 }
 
+GLint TextureManager::GetFilterInt(const std::string& filter)
+{
+	const static std::map<std::string, GLint> filters{ 
+		{"GL_NEAREST", GL_NEAREST},
+		{"GL_LINEAR", GL_LINEAR},
+		{"GL_NEAREST_MIPMAP_NEAREST", GL_NEAREST_MIPMAP_NEAREST},
+		{"GL_LINEAR_MIPMAP_NEAREST", GL_LINEAR_MIPMAP_NEAREST},
+		{"GL_NEAREST_MIPMAP_LINEAR", GL_NEAREST_MIPMAP_LINEAR},
+		{"GL_LINEAR_MIPMAP_LINEAR", GL_LINEAR_MIPMAP_LINEAR},
+	};
+	
+	auto itr = filters.find(filter);
+	return itr != filters.end() ? itr->second : GL_LINEAR;
+}
+
+Texture* TextureManager::AddTexture(string strKey, char const* path, bool mipmap, bool flip, const std::string& filter)
+{
+	return AddTexture(strKey, path, mipmap, flip, GetFilterInt(filter));
+}
+
 Texture* TextureManager::AddTexture(string strKey, char const* path, bool mipmap, bool flip, GLint filter)
 {
 	Texture* texture = nullptr;

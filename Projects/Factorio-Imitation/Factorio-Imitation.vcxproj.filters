@@ -12,9 +12,6 @@
     <Filter Include="MainGame">
       <UniqueIdentifier>{896f9533-993f-430f-a5bb-88128c4fa2fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2DFrameWork">
-      <UniqueIdentifier>{3d7f4ce1-77d5-4392-a75d-50151a4ce2aa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainGame\Scene">
       <UniqueIdentifier>{da98538c-e337-4357-b2c4-b1f8aec531ee}</UniqueIdentifier>
     </Filter>
@@ -372,6 +369,9 @@
     </ClCompile>
     <ClCompile Include="MainGame\Scene\Scenes.cpp">
       <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Librarys\tinyxml2\tinyxml2.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
