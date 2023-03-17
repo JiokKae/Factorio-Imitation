@@ -6,6 +6,7 @@
 * [GLM (OpenGL Mathematics)](https://github.com/g-truc/glm)
 * [GLEW (OpenGL Extension Wrangler Library)](http://glew.sourceforge.net/)
 * [stb_image (Image Loader)](https://github.com/nothings/stb#stb)
+* [tinyxml2 (XML parser)](https://github.com/leethomason/tinyxml2)
 
 ## 사용한 기술
 #### Design Pattern
