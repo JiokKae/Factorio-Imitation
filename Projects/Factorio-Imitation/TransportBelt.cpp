@@ -21,8 +21,7 @@ HRESULT TransportBelt::Init(int x, int y, DIRECTION _direction, bool _temp)
 {
 	itemId = ItemEnum::TRANSPORT_BELT;
 	speed = 45.0f;
-	image = new GLImage();
-	image->Init("Entity/TransportBelt", 16, 20);
+	image = new GLImage("Entity/TransportBelt", 16, 20);
 
 	Structure::Init(x, y, _direction, _temp);
 	status = WORKING;

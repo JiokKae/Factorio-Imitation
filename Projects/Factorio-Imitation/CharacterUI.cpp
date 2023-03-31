@@ -4,8 +4,7 @@
 
 HRESULT CharacterUI::Init()
 {
-	image = new GLImage();
-	image->Init("UI/CharacterUI");
+	image = new GLImage("UI/CharacterUI");
 	
 	inventoryUI = new InventoryUI();
 	inventoryUI->Init();
@@ -22,7 +21,7 @@ HRESULT CharacterUI::Init()
 
 void CharacterUI::Release()
 {
-	SAFE_RELEASE(image);
+	SAFE_DELETE(image);
 	SAFE_RELEASE(inventoryUI);
 	SAFE_RELEASE(deactiveButtonUI);
 }

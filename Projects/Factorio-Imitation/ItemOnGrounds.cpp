@@ -8,8 +8,7 @@
 
 HRESULT ItemOnGrounds::Init()
 {
-    allItemsImage = new GLImage();
-    allItemsImage->Init("Icons/AllItems", 8, 8, 0.25f, 0.25f);
+    allItemsImage = new GLImage("Icons/AllItems", 8, 8, 0.25f, 0.25f);
 
     instancingShader = new Shader("InstancingVertexShader.glsl", "StandardFragmentShader.glsl");
     instancingShader->use();
@@ -62,7 +61,7 @@ void ItemOnGrounds::Release()
 {
     SAFE_DELETE(itemsVAO);
     SAFE_DELETE(instancingShader);
-    SAFE_RELEASE(allItemsImage);
+    SAFE_DELETE(allItemsImage);
 }
 
 void ItemOnGrounds::Update(FRECT cameraFRect)

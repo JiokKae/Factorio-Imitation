@@ -9,23 +9,23 @@ HRESULT Character::Init()
 	position = { 0.0f, 0.0f };
 	
 	direction = Direction::up;
-	image = new GLImage[State::END]();
-	image[IDLE].Init("Entity/Character-level1_idle", 22, 8);
+	mainImages.resize(State::END);
+	mainImages[IDLE] = new GLImage("Entity/Character-level1_idle", 22, 8);
 	imageAniOffset[IDLE] = { 0.0f, 43.0f };
-	image[RUNNING].Init("Entity/Character-level1_running", 22, 8);
+	mainImages[RUNNING] = new GLImage("Entity/Character-level1_running", 22, 8);
 	imageAniOffset[RUNNING] = { 0.0f, 43.0f };
-	image[MINING].Init("Entity/Character-level1_mining_tool", 26, 8);
+	mainImages[MINING] = new GLImage("Entity/Character-level1_mining_tool", 26, 8);
 	imageAniOffset[MINING] = { 0.0f, 33.0f };
 
-	shadow = new GLImage[(int)State::END];
-	shadow[IDLE].Init("Entity/Character-level1_idle_shadow", 22, 8);
-	shadow[IDLE].SetAlpha(0.6f);
+	shadowImages.resize(State::END);
+	shadowImages[IDLE] = new GLImage("Entity/Character-level1_idle_shadow", 22, 8);
+	shadowImages[IDLE]->SetAlpha(0.6f);
 	shadowAniOffset[IDLE] = {60.0f, 1.0f};
-	shadow[RUNNING].Init("Entity/Character-level1_running_shadow", 22, 8);
-	shadow[RUNNING].SetAlpha(0.6f);
+	shadowImages[RUNNING] = new GLImage("Entity/Character-level1_running_shadow", 22, 8);
+	shadowImages[RUNNING]->SetAlpha(0.6f);
 	shadowAniOffset[RUNNING] = { 60.0f, 1.0f };
-	shadow[MINING].Init("Entity/Character-level1_mining_tool_shadow", 26, 8);
-	shadow[MINING].SetAlpha(0.6f);
+	shadowImages[MINING] = new GLImage("Entity/Character-level1_mining_tool_shadow", 26, 8);
+	shadowImages[MINING]->SetAlpha(0.6f);
 	shadowAniOffset[MINING] = { 50.0f, 5.0f };
 
 	animationSpeed[IDLE] = 0.105f;
@@ -59,8 +59,16 @@ HRESULT Character::Init()
 void Character::Release()
 {
 	SAFE_RELEASE(inventory);
-	SAFE_ARR_DELETE(image);
-	SAFE_ARR_DELETE(shadow);
+	
+	for (auto& image : mainImages)
+	{
+		SAFE_DELETE(image);
+	}
+
+	for (auto& image : shadowImages)
+	{
+		SAFE_DELETE(image);
+	}
 }
 
 void Character::Update()
@@ -101,8 +109,10 @@ void Character::Update()
 
 void Character::Render(Shader* lpShader)
 {
-	shadow[state].Render(lpShader, position.x + shadowAniOffset[state].x, position.y + shadowAniOffset[state].y, animationCurrFrame[state] % image->GetMaxFrame().x, direction);
-	image[state].Render(lpShader, position.x + imageAniOffset[state].x, position.y + imageAniOffset[state].y, animationCurrFrame[state] % image->GetMaxFrame().x, direction);
+	shadowImages[state]->Render(lpShader, position.x + shadowAniOffset[state].x, position.y + shadowAniOffset[state].y, 
+		animationCurrFrame[state] % shadowImages[state]->GetMaxFrame().x, direction);
+	mainImages[state]->Render(lpShader, position.x + imageAniOffset[state].x, position.y + imageAniOffset[state].y, 
+		animationCurrFrame[state] % mainImages[state]->GetMaxFrame().x, direction);
 }
 
 void Character::ChangeState(State _state)

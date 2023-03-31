@@ -8,22 +8,17 @@
 
 HRESULT HandUI::Init()
 {
-	allItemImage = new GLImage();
-	allItemImage->Init("Icons/AllItems", 8, 8, 0.25f, 0.25f);
+	allItemImage = new GLImage("Icons/AllItems", 8, 8, 0.25f, 0.25f);
 	allItemImage->SetScale(glm::vec2(0.25f));
 
-	background = new GLImage();
-	background->Init("UI/BackgroundUI");
+	background = new GLImage("UI/BackgroundUI");
 	background->SetAlpha(0.7f);
 
-	backgroundName = new GLImage();
-	backgroundName->Init("UI/BackgroundNameUI");
+	backgroundName = new GLImage("UI/BackgroundNameUI");;
 
-	dismantleBar = new GLImage();
-	dismantleBar->Init("UI/DismantleBarUI");
+	dismantleBar = new GLImage("UI/DismantleBarUI");
 	dismantleBar->SetOffset(glm::vec2(dismantleBar->GetFrameWidth() / 2, 1.0f));
-	dismantleEmptyBar = new GLImage();
-	dismantleEmptyBar->Init("UI/DismantleEmptyBarUI");
+	dismantleEmptyBar = new GLImage("UI/DismantleEmptyBarUI");
 
 	handItem = new ItemInfo();
 
@@ -32,11 +27,11 @@ HRESULT HandUI::Init()
 
 void HandUI::Release()
 {
-	SAFE_RELEASE(allItemImage);
-	SAFE_RELEASE(background);
-	SAFE_RELEASE(backgroundName);
-	SAFE_RELEASE(dismantleBar);
-	SAFE_RELEASE(dismantleEmptyBar);
+	SAFE_DELETE(allItemImage);
+	SAFE_DELETE(background);
+	SAFE_DELETE(backgroundName);
+	SAFE_DELETE(dismantleBar);
+	SAFE_DELETE(dismantleEmptyBar);
 
 	SAFE_DELETE(handItem);
 }

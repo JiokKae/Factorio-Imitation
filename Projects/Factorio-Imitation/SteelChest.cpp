@@ -5,11 +5,9 @@ HRESULT SteelChest::Init(int x, int y, DIRECTION _direction, bool _temp)
 	itemId = ItemEnum::STEEL_CHEST;
 	inventorySize = 48;
 
-	mainImage = new GLImage();
-	mainImage->Init("Entity/SteelChest");
+	mainImage = new GLImage("Entity/SteelChest");
 
-	shadowImage = new GLImage();
-	shadowImage->Init("Entity/SteelChest-shadow");
+	shadowImage = new GLImage("Entity/SteelChest-shadow");
 	shadowImage->SetAlpha(0.5f);
 
 	Container::Init(x, y, _direction, _temp);
@@ -22,8 +20,8 @@ void SteelChest::Release()
 {
 	Container::Release();
 
-	SAFE_RELEASE(mainImage);
-	SAFE_RELEASE(shadowImage);
+	SAFE_DELETE(mainImage);
+	SAFE_DELETE(shadowImage);
 }
 
 void SteelChest::FirstRender(Shader* shader)

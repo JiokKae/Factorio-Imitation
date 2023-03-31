@@ -1,61 +1,51 @@
-#include "GLImage.h"
+﻿#include "GLImage.h"
 #include "../Texture/Texture.h"
 #include "../Texture/TextureManager.h"
 #include "../Shader/Shader.h"
 #include "../VertexDataObject/VertexArrayObject.h"
 #include "../VertexDataObject/VertexBufferObject.h"
 
-HRESULT GLImage::Init(char const* _sourceTexture, int maxFrameX, int maxFrameY, float marginX, float marginY, int width, int height)
+GLImage::GLImage(const std::string& textureKey, int maxFrameX, int maxFrameY, float marginX, float marginY, int width, int height)
+	: offset(0.0f, 0.0f)
+	, scale(1.0f, 1.0f)
+	, margin(marginX, marginY)
+	, maxFrame(maxFrameX, maxFrameY)
+	, sourceTexture{ TextureManager::GetSingleton()->FindTexture(textureKey) }
+	, imageVAO{ nullptr }
+	, frameWidth{ 0.0f }
+	, frameHeight{ 0.0f }
+	, alpha{ 1.0f }
+	, angle{ 0.0f }
 {
-	this->sourceTexture = TextureManager::GetSingleton()->FindTexture(_sourceTexture);
-    if (_sourceTexture == nullptr)
-        return E_FAIL;
+	if (sourceTexture == nullptr)
+		return;
+	// Load base width, height;
+	width = (width == -1) ? sourceTexture->GetWidth() : width;
+	height = (height == -1) ? sourceTexture->GetHeight() : height;
 
-    // Load base width, height;
-    if (width == -1) 
-        width = this->sourceTexture->GetWidth();
-    if (height == -1) 
-        height = this->sourceTexture->GetHeight();
+	frameWidth = static_cast<float>(width / maxFrame.x);
+	frameHeight = static_cast<float>(height / maxFrame.y);
 
-	maxFrame.x = maxFrameX;
-	maxFrame.y = maxFrameY;
-    frameWidth = static_cast<float>(width / maxFrame.x);
-    frameHeight = static_cast<float>(height / maxFrame.y);
-    margin.x = marginX;
-    margin.y = marginY;
-    scale = glm::vec2(1.0f, 1.0f);
-    angle = 0.0f;
-    offset = glm::vec2(0.0f, 0.0f);
+	float vertices[] = {
+		// positions                        // texture coords
+		-frameWidth / 2, -frameHeight / 2,  0.0f, 0.0f,
+		 frameWidth / 2, -frameHeight / 2,  1.0f, 0.0f,
+		 frameWidth / 2,  frameHeight / 2,  1.0f, 1.0f,
+		 frameWidth / 2,  frameHeight / 2,  1.0f, 1.0f,
+		-frameWidth / 2,  frameHeight / 2,  0.0f, 1.0f,
+		-frameWidth / 2, -frameHeight / 2,  0.0f, 0.0f,
+	};
 
-    float vertices[] = {
-        // positions                        // texture coords
-        -frameWidth / 2, -frameHeight / 2,  0.0f, 0.0f,
-         frameWidth / 2, -frameHeight / 2,  1.0f, 0.0f,
-         frameWidth / 2,  frameHeight / 2,  1.0f, 1.0f,
-         frameWidth / 2,  frameHeight / 2,  1.0f, 1.0f,
-        -frameWidth / 2,  frameHeight / 2,  0.0f, 1.0f,
-        -frameWidth / 2, -frameHeight / 2,  0.0f, 0.0f,
-    };
-
-    if (isInit)
-    {
-        SAFE_DELETE(imageVAO);
-    }
-    imageVAO = new VAO();
-    VBO* posTexcoordVBO = new VBO();
-    posTexcoordVBO->SetData(sizeof(vertices), vertices, GL_STATIC_DRAW);
-    imageVAO->AddVBO(0, posTexcoordVBO, 4);
-
-    isInit = true;
-	return S_OK;
+	// TODO: VBO할당 해제 잘 하고 있는지 확인
+	imageVAO = new VAO();
+	VBO* posTexcoordVBO = new VBO();
+	posTexcoordVBO->SetData(sizeof(vertices), vertices, GL_STATIC_DRAW);
+	imageVAO->AddVBO(0, posTexcoordVBO, 4);
 }
 
-void GLImage::Release()
+GLImage::~GLImage()
 {
-    if (isInit)
-    {
-        SAFE_DELETE(imageVAO);
-    }
+	SAFE_DELETE(imageVAO);
 }
 
 void GLImage::Render(Shader* shader, float destX, float destY, int currFrameX, int currFrameY)
@@ -89,8 +79,4 @@ void GLImage::Render(Shader* shader, float destX, float destY, int currFrameX, i
     glDrawArrays(GL_TRIANGLES, 0, 6);
     
     glBindVertexArray(0);
-}
-
-void GLImage::AnimationRender(Shader* /*shader*/, float /*destX*/, float /*destY*/, Animation* /*ani*/)
-{
 }

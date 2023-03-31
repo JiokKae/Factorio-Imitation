@@ -10,24 +10,24 @@ HRESULT BurnerMiningDrill::Init(int _x, int _y, DIRECTION _direction, bool _temp
 	usingClickEvent = true;
 	Structure::Init(_x, _y, _direction, _temp);
 
-	image = new GLImage[DIRECTION_END]();
-	image[NORTH].Init(	"Entity/BurnerMiningDrill-N", 4, 8);
-	image[EAST].Init(	"Entity/BurnerMiningDrill-E", 4, 8);
-	image[SOUTH].Init(	"Entity/BurnerMiningDrill-S", 4, 8);
-	image[WEST].Init(	"Entity/BurnerMiningDrill-W", 4, 8);
+	images.resize(DIRECTION_END);
+	images[NORTH] = new GLImage("Entity/BurnerMiningDrill-N", 4, 8);
+	images[EAST] = new GLImage("Entity/BurnerMiningDrill-E", 4, 8);
+	images[SOUTH] = new GLImage("Entity/BurnerMiningDrill-S", 4, 8);
+	images[WEST] = new GLImage("Entity/BurnerMiningDrill-W", 4, 8);
 
-	shadow = new GLImage[DIRECTION_END]();
-	shadow[NORTH].Init("Entity/BurnerMiningDrill-N-shadow", 4, 8);
-	shadow[NORTH].SetAlpha(0.6f);
+	shadows.resize(DIRECTION_END);
+	shadows[NORTH] = new GLImage("Entity/BurnerMiningDrill-N-shadow", 4, 8);
+	shadows[NORTH]->SetAlpha(0.6f);
 	shadowOffset[NORTH] = { 40, 0 };
-	shadow[EAST].Init("Entity/BurnerMiningDrill-E-shadow", 4, 8);
-	shadow[EAST].SetAlpha(0.6f);
+	shadows[EAST] = new GLImage("Entity/BurnerMiningDrill-E-shadow", 4, 8);
+	shadows[EAST]->SetAlpha(0.6f);
 	shadowOffset[EAST] = { 20, 0 };
-	shadow[SOUTH].Init("Entity/BurnerMiningDrill-S-shadow", 4, 8);
-	shadow[SOUTH].SetAlpha(0.6f);
+	shadows[SOUTH] = new GLImage("Entity/BurnerMiningDrill-S-shadow", 4, 8);
+	shadows[SOUTH]->SetAlpha(0.6f);
 	shadowOffset[SOUTH] = { 20, 0 };
-	shadow[WEST].Init("Entity/BurnerMiningDrill-W-shadow", 4, 8);
-	shadow[WEST].SetAlpha(0.6f);
+	shadows[WEST] = new GLImage("Entity/BurnerMiningDrill-W-shadow", 4, 8);
+	shadows[WEST]->SetAlpha(0.6f);
 	shadowOffset[WEST] = { 20, 0 };
 
 	miningArea = glm::ivec2(2, 2);
@@ -66,8 +66,15 @@ void BurnerMiningDrill::Release()
 {
 	Structure::Release();
 
-	SAFE_ARR_RELEASE(image, 4);
-	SAFE_ARR_RELEASE(shadow, 4);
+	for (auto& image : images)
+	{
+		SAFE_DELETE(image);
+	}
+
+	for (auto& image : shadows)
+	{
+		SAFE_DELETE(image);
+	}
 }
 
 void BurnerMiningDrill::Update()
@@ -130,36 +137,36 @@ void BurnerMiningDrill::Update()
 
 void BurnerMiningDrill::FirstRender(Shader* lpShader)
 {
-	glm::ivec2 maxFrame = image->GetMaxFrame();
+	glm::ivec2 maxFrame = images[direction]->GetMaxFrame();
 	int frame = abs(int(time * 30) % (maxFrame.x * maxFrame.y * 2 - 1) - maxFrame.x * maxFrame.y + 1);
 
 	int frameX = frame % maxFrame.x;
 	int frameY = maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y;
 
-	shadow[direction].Render(lpShader, position.x + shadowOffset[direction].x, position.y + shadowOffset[direction].y,
+	shadows[direction]->Render(lpShader, position.x + shadowOffset[direction].x, position.y + shadowOffset[direction].y,
 		frameX, frameY);
 }
 
 void BurnerMiningDrill::Render(Shader* shader)
 {
-	glm::ivec2 maxFrame = image->GetMaxFrame();
+	glm::ivec2 maxFrame = images[direction]->GetMaxFrame();
 	int frame = abs(int(time * 30) % (maxFrame.x * maxFrame.y * 2 - 1) - maxFrame.x * maxFrame.y + 1);
 
 	int frameX = frame % maxFrame.x;
 	int frameY = maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y;
 
-	image[direction].Render(shader, position.x, position.y, frameX, frameY);
+	images[direction]->Render(shader, position.x, position.y, frameX, frameY);
 }
 
 void BurnerMiningDrill::RenderInScreen(Shader* shader, float posX, float posY)
 {
-	glm::ivec2 maxFrame = image->GetMaxFrame();
+	glm::ivec2 maxFrame = images[direction]->GetMaxFrame();
 	int frame = abs(int(time * 30) % (maxFrame.x * maxFrame.y * 2 - 1) - maxFrame.x * maxFrame.y + 1);
 
 	int frameX = frame % maxFrame.x;
 	int frameY = maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y;
 
-	image[direction].Render(shader, posX, posY, frameX, frameY);
+	images[direction]->Render(shader, posX, posY, frameX, frameY);
 }
 
 bool BurnerMiningDrill::InputItem(ItemInfo* inputItem, glm::vec2 /*pos*/)

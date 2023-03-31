@@ -11,17 +11,12 @@
 
 HRESULT TileManager::Init()
 {
-    tileImages = new GLImage[int(Tile::KIND::END)]();
-    tileImages[int(Tile::KIND::DIRT_1)].Init("Terrain/Dirt_1", 4096, 576, 64, 9);
-    
-    mapOreImages[COAL] = new GLImage();
-    mapOreImages[COAL]->Init("Entity/Coal", 8, 8);
-    mapOreImages[IRON_ORE] = new GLImage();
-    mapOreImages[IRON_ORE]->Init("Entity/IronOre", 8, 8);
-    mapOreImages[COPPER_ORE] = new GLImage();
-    mapOreImages[COPPER_ORE]->Init("Entity/CopperOre", 8, 8);
-    mapOreImages[STONE] = new GLImage();
-    mapOreImages[STONE]->Init("Entity/Stone", 8, 8);
+	tileImages[static_cast<int>(Tile::KIND::DIRT_1)] = new GLImage("Terrain/Dirt_1", 4096, 576, 64, 9);
+
+	mapOreImages[COAL] = new GLImage("Entity/Coal", 8, 8);
+	mapOreImages[IRON_ORE] = new GLImage("Entity/IronOre", 8, 8);
+	mapOreImages[COPPER_ORE] = new GLImage("Entity/CopperOre", 8, 8);
+	mapOreImages[STONE] = new GLImage("Entity/Stone", 8, 8);
 
     // 14 * 14 청크 생성
     for (int y = -7; y < 7; y++)
@@ -95,13 +90,16 @@ void TileManager::Release()
 {
     SAFE_DELETE(tilesVAO);
     SAFE_DELETE(instancingShader);
-    SAFE_RELEASE(tileImages);
 
-    for (auto it = mapOreImages.begin(); it != mapOreImages.end(); ++it)
-    {
-        SAFE_RELEASE(it->second);
-    }
-    mapOreImages.clear();
+	for (auto& image : tileImages)
+	{
+		SAFE_DELETE(image.second);
+	}
+  
+	for (auto& image : mapOreImages)
+	{
+		SAFE_DELETE(image.second);
+	}
 
     SAFE_ARR_DELETE(tileOffset);
     SAFE_ARR_DELETE(tileCurrFrame);
@@ -142,7 +140,7 @@ void TileManager::Render(RECT cameraRect)
         for (int kind = 0; kind < int(Tile::KIND::END); kind++)
         {
             glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, tileImages[kind].GetLpSourceTexture()->GetID());
+            glBindTexture(GL_TEXTURE_2D, tileImages[kind]->GetLpSourceTexture()->GetID());
             glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 1024);
         }
     }

@@ -7,9 +7,9 @@ class BurnerMiningDrill : public Structure
 {
 private:
 	// 출력
-	GLImage* image;
+	std::vector<GLImage*> images;
 	glm::vec2 imageOffset[DIRECTION_END];
-	GLImage* shadow;
+	std::vector<GLImage*> shadows;
 	glm::vec2 shadowOffset[DIRECTION_END];
 	float time;				
 	
@@ -58,9 +58,7 @@ public:
 	bool IsMiningAreaEmpty();
 
 	BurnerMiningDrill()
-		: image(nullptr)
-		, shadow(nullptr)
-		, time()
+		: time()
 		, currPower()
 		, productionPercent()
 		, energyConsumption()

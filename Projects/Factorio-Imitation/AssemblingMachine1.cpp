@@ -8,17 +8,14 @@ HRESULT AssemblingMachine1::Init(int x, int y, DIRECTION _direction, bool _temp)
 	usingClickEvent = true;
 	Structure::Init(x, y, _direction, _temp);
 
-	mainImage = new GLImage();
-	mainImage->Init("Entity/AssemblingMachine1", 8, 4);
+	mainImage = new GLImage("Entity/AssemblingMachine1", 8, 4);
 	mainImage->SetAlpha(1.0f);
 
-	shadowImage = new GLImage();
-	shadowImage->Init("Entity/AssemblingMachine1-shadow", 8, 4);
+	shadowImage = new GLImage("Entity/AssemblingMachine1-shadow", 8, 4);
 	shadowImage->SetAlpha(0.5f);
 	shadowImageOffset = { 16, -6 };
 
-	altModeIcon = new GLImage();
-	altModeIcon->Init("Icons/AllItems-stroke", 8, 8, 0.1f, 0.1f);
+	altModeIcon = new GLImage("Icons/AllItems-stroke", 8, 8, 0.1f, 0.1f);
 	altModeIcon->SetScale({ 0.9f, 0.9f });
 
 	craftingSpeed = 0.5f;
@@ -38,9 +35,9 @@ void AssemblingMachine1::Release()
 
 	ingredients.Release();
 
-	SAFE_RELEASE(altModeIcon);
-	SAFE_RELEASE(mainImage);
-	SAFE_RELEASE(shadowImage);
+	SAFE_DELETE(altModeIcon);
+	SAFE_DELETE(mainImage);
+	SAFE_DELETE(shadowImage);
 }
 
 void AssemblingMachine1::Update()

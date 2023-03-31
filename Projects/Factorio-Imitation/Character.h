@@ -3,7 +3,6 @@
 
 class Shader;
 class GLImage;
-class Animation;
 class Inventory;
 class Character : public Entity
 {
@@ -24,9 +23,8 @@ public:
 	};
 
 private:
-	GLImage* image;
-	GLImage* shadow;
-	Animation* animation;
+	std::vector<GLImage*> mainImages;
+	std::vector<GLImage*> shadowImages;
 	
 	float animationSpeed[State::END];
 	int animationCurrFrame[State::END];

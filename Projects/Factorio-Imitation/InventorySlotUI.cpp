@@ -8,8 +8,7 @@ HRESULT InventorySlotUI::Init(int x, int y)
 {
 	SlotUI::Init();
 
-	handImage = new GLImage();
-	handImage->Init("Icons/Hand", 1, 1, 32, 32);
+	handImage = new GLImage("Icons/Hand", 1, 1, 32, 32);
 
 	localPosition.x = x * (GetWidth() + 2);
 	localPosition.y = -y * (GetHeight() + 2);
@@ -21,7 +20,7 @@ void InventorySlotUI::Release()
 {
 	SlotUI::Release();
 
-	SAFE_RELEASE(handImage);
+	SAFE_DELETE(handImage);
 }
 
 void InventorySlotUI::OnClick(int key)

@@ -8,25 +8,21 @@ HRESULT BurnerInserter::Init(int x, int y, DIRECTION _direction, bool _temp)
 	Structure::Init(x, y, _direction, _temp);
 	status = WORKING;
 
-	platformImage = new GLImage();
-	platformImage->Init("Entity/BurnerInserter-platform", 4, 1);
+	platformImage = new GLImage("Entity/BurnerInserter-platform", 4, 1);
 
-	handBaseImage = new GLImage();
-	handBaseImage->Init("Entity/BurnerInserter-handBase");
+	handBaseImage = new GLImage("Entity/BurnerInserter-handBase");
 	handBaseScale = { 0.4f, 0.4f };
 	handBaseImage->SetScale(handBaseScale);
 	handBaseImage->SetOffset(glm::vec2(0.0f, 60.0f));
 	handBaseAngle = 45;
 
-	handOpenImage = new GLImage();
-	handOpenImage->Init("Entity/BurnerInserter-handOpen");
+	handOpenImage = new GLImage("Entity/BurnerInserter-handOpen");
 	handOpenScale = { 0.4f, 0.4f };
 	handOpenImage->SetScale(handOpenScale);
 	handOpenImage->SetOffset({ 0, 82 });
 	handOpenAngle = -45;
 
-	allItemsImage = new GLImage();
-	allItemsImage->Init("Icons/AllItems", 8, 8, 0.25f, 0.25f);
+	allItemsImage = new GLImage("Icons/AllItems", 8, 8, 0.25f, 0.25f);
 	allItemsImage->SetScale({0.25f, 0.25f});
 	
 	handAngle = -90.0f * static_cast<int>(_direction);
@@ -40,10 +36,10 @@ void BurnerInserter::Release()
 {
 	Structure::Release();
 
-	SAFE_RELEASE(handOpenImage);
-	SAFE_RELEASE(handBaseImage);
-	SAFE_RELEASE(platformImage);
-	SAFE_RELEASE(allItemsImage);
+	SAFE_DELETE(handOpenImage);
+	SAFE_DELETE(handBaseImage);
+	SAFE_DELETE(platformImage);
+	SAFE_DELETE(allItemsImage);
 }
 
 void BurnerInserter::Update()

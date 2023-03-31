@@ -17,7 +17,7 @@ private:
 	vector<Chunk*> vecChunkInScreen;
 	vector<Chunk*>::iterator vecChunkIt;
 
-	GLImage* tileImages;
+	std::map<int, GLImage*> tileImages;
 
 	glm::vec2 oreCurrFrame[1024];
 	glm::vec2 oreOffset[1024];
@@ -39,8 +39,6 @@ public:
 	Tile* GetLPTileUnderMouse();
 	Chunk* GetLpChunk(int x, int y);
 
-	TileManager() 
-		: tileImages(nullptr)
-	{};
+	TileManager() {};
 };
 
