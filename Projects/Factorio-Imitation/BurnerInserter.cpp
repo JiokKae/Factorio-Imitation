@@ -160,17 +160,17 @@ void BurnerInserter::Update()
 
 }
 
-void BurnerInserter::FirstRender(Shader* /*lpShader*/)
+void BurnerInserter::FirstRender(ShaderProgram* /*lpShaderProgram*/)
 {
 }
 
-void BurnerInserter::Render(Shader* lpShader)
+void BurnerInserter::Render(ShaderProgram* lpShader)
 {
 	platformImage->Render(lpShader, position.x, position.y, OPPOSITE_DIR(direction), 0);
 	
 }
 
-void BurnerInserter::LateRender(Shader* lpShader)
+void BurnerInserter::LateRender(ShaderProgram* lpShader)
 {
 	handOpenImage->Render(lpShader, 
 		position.x - sin(glm::radians(handBaseRenderAngle)) * 120 * handBaseScale.y ,
@@ -187,7 +187,7 @@ void BurnerInserter::LateRender(Shader* lpShader)
 	}
 }
 
-void BurnerInserter::RenderInScreen(Shader* lpShader, float posX, float posY)
+void BurnerInserter::RenderInScreen(ShaderProgram* lpShader, float posX, float posY)
 {
 	platformImage->Render(lpShader, posX, posY, OPPOSITE_DIR(direction), 0);
 

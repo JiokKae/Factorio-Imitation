@@ -4,7 +4,7 @@
 
 class Tile;
 class Chunk;
-class Shader;
+class ShaderProgram;
 class GLImage;
 class VertexArrayObject;
 class TileManager : public Singleton<TileManager>
@@ -24,7 +24,7 @@ private:
 
 	map<int, GLImage*> mapOreImages;
 
-	Shader* instancingShader;
+	ShaderProgram* instancingShader;
 	VertexArrayObject* tilesVAO;
 	glm::vec2* tileCurrFrame;
 	glm::vec2* tileOffset;

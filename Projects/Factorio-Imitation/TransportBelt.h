@@ -27,10 +27,10 @@ public:
 	virtual HRESULT Init(int x, int y, DIRECTION direction, bool temp = false) override;
 	virtual void Release();
 	virtual void Update();
-	virtual void FirstRender(Shader* lpShader) override;
-	virtual void Render(Shader* lpShader) override;
-	virtual void LateRender(Shader* lpShader) override;
-	virtual void RenderInScreen(Shader* shader, float posX, float posY) override;
+	virtual void FirstRender(ShaderProgram* lpShader) override;
+	virtual void Render(ShaderProgram* lpShader) override;
+	virtual void LateRender(ShaderProgram* lpShader) override;
+	virtual void RenderInScreen(ShaderProgram* shader, float posX, float posY) override;
 
 	// 주변의 벨트들과 연결하는 함수
 	void LinkAroundBelts();

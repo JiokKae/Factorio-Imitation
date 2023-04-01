@@ -107,7 +107,7 @@ void Character::Update()
 	accumulateTime += TimerManager::GetSingleton()->GetTimeElapsed();
 }
 
-void Character::Render(Shader* lpShader)
+void Character::Render(ShaderProgram* lpShader)
 {
 	shadowImages[state]->Render(lpShader, position.x + shadowAniOffset[state].x, position.y + shadowAniOffset[state].y, 
 		animationCurrFrame[state] % shadowImages[state]->GetMaxFrame().x, direction);

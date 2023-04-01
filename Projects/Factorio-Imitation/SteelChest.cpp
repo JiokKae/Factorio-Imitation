@@ -24,17 +24,17 @@ void SteelChest::Release()
 	SAFE_DELETE(shadowImage);
 }
 
-void SteelChest::FirstRender(Shader* shader)
+void SteelChest::FirstRender(ShaderProgram* shader)
 {
 	shadowImage->Render(shader, position.x + 22, position.y - 18);
 }
 
-void SteelChest::Render(Shader* shader)
+void SteelChest::Render(ShaderProgram* shader)
 {
 	mainImage->Render(shader, position.x, position.y);
 }
 
-void SteelChest::RenderInScreen(Shader* shader, float posX, float posY)
+void SteelChest::RenderInScreen(ShaderProgram* shader, float posX, float posY)
 {
 	mainImage->Render(shader, posX, posY);
 }

@@ -79,7 +79,7 @@ void StoneFurnaceUI::Update()
 	}
 }
 
-void StoneFurnaceUI::Render(Shader* lpShader)
+void StoneFurnaceUI::Render(ShaderProgram* lpShader)
 {
 	if (active)
 	{

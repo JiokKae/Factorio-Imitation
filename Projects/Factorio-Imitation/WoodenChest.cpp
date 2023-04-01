@@ -24,17 +24,17 @@ void WoodenChest::Release()
 	SAFE_DELETE(shadowImage);
 }
 
-void WoodenChest::FirstRender(Shader* shader)
+void WoodenChest::FirstRender(ShaderProgram* shader)
 {
 	shadowImage->Render(shader, position.x + 22, position.y - 18);
 }
 
-void WoodenChest::Render(Shader* shader)
+void WoodenChest::Render(ShaderProgram* shader)
 {
 	mainImage->Render(shader, position.x, position.y);
 }
 
-void WoodenChest::RenderInScreen(Shader* shader, float posX, float posY)
+void WoodenChest::RenderInScreen(ShaderProgram* shader, float posX, float posY)
 {
 	mainImage->Render(shader, posX, posY);
 }

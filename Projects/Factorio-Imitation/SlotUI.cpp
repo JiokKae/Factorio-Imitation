@@ -64,7 +64,7 @@ void SlotUI::Update(ItemInfo* _itemInfo)
 	}
 }
 
-void SlotUI::Render(Shader* lpShader)
+void SlotUI::Render(ShaderProgram* lpShader)
 {
 	if (active)
 	{
@@ -79,7 +79,7 @@ void SlotUI::Render(Shader* lpShader)
 	}
 }
 
-void SlotUI::LateRender(Shader* /*shader*/)
+void SlotUI::LateRender(ShaderProgram* /*shader*/)
 {
 	if (itemInfo && itemInfo->amount != 0)
 	{

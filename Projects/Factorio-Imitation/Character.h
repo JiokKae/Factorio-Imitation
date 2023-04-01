@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Entity.h"
 
-class Shader;
+class ShaderProgram;
 class GLImage;
 class Inventory;
 class Character : public Entity
@@ -41,7 +41,7 @@ public:
 	virtual HRESULT Init();
 	virtual void Release();
 	virtual void Update();
-	virtual void Render(Shader* lpShader);
+	virtual void Render(ShaderProgram* lpShader);
 
 	void ChangeState(State state);
 

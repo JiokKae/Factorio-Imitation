@@ -14,6 +14,6 @@ public:
 	virtual HRESULT Init();
 	virtual void Release() override;
 	virtual void Update() override;
-	virtual void Render(Shader* lpShader) override;
+	virtual void Render(ShaderProgram* lpShader) override;
 
 };

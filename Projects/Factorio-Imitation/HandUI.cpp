@@ -87,7 +87,7 @@ void HandUI::Update()
 
 }
 
-void HandUI::Render(Shader* shader)
+void HandUI::Render(ShaderProgram* shader)
 {
 	bool isMouseOnUI = UIManager::GetSingleton()->IsMouseOnUI();
 

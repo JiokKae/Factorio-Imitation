@@ -39,7 +39,7 @@ void CharacterUI::Update()
 	}
 }
 
-void CharacterUI::Render(Shader* lpShader)
+void CharacterUI::Render(ShaderProgram* lpShader)
 {
 	if (active)
 	{

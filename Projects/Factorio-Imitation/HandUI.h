@@ -20,7 +20,7 @@ public:
 	virtual HRESULT Init() override;
 	virtual void Release() override;
 	virtual void Update() override;
-	virtual void Render(Shader* shader) override;
+	virtual void Render(ShaderProgram* shader) override;
 
 	ItemInfo* GetHandItem() { return handItem; }
 	bool DismantleStructure(Structure* structure);

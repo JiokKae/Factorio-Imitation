@@ -32,9 +32,9 @@ public:
 	virtual HRESULT Init(int x, int y, DIRECTION direction, bool temp = false) override;
 	virtual void Release();
 	virtual void Update();
-	virtual void FirstRender(Shader* shader) override;
-	virtual void Render(Shader* shader) override;
-	virtual void RenderInScreen(Shader* shader, float posX, float posY) override;
+	virtual void FirstRender(ShaderProgram* shader) override;
+	virtual void Render(ShaderProgram* shader) override;
+	virtual void RenderInScreen(ShaderProgram* shader, float posX, float posY) override;
 
 	// 아이템을 받는 함수
 	// 레시피에 존재하는 재료를 받아온다.

@@ -48,7 +48,7 @@ GLImage::~GLImage()
 	SAFE_DELETE(imageVAO);
 }
 
-void GLImage::Render(Shader* shader, float destX, float destY, int currFrameX, int currFrameY)
+void GLImage::Render(ShaderProgram* shader, float destX, float destY, int currFrameX, int currFrameY)
 {
     if (sourceTexture == nullptr)
         return;

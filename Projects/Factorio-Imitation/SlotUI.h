@@ -17,8 +17,8 @@ public:
 	virtual HRESULT Init() override;
 	virtual void Release() override;
 	virtual void Update(ItemInfo* itemInfo);
-	virtual void Render(Shader* shader) override;
-	virtual void LateRender(Shader* shader);
+	virtual void Render(ShaderProgram* shader) override;
+	virtual void LateRender(ShaderProgram* shader);
 
 	virtual void OnClick(int key) override;
 

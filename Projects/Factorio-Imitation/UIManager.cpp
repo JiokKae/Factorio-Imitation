@@ -51,7 +51,7 @@ void UIManager::HandUpdate()
 	handUI->Update();
 }
 
-void UIManager::Render(Shader* lpShader)
+void UIManager::Render(ShaderProgram* lpShader)
 {
 	if(currUI)
 		currUI->Render(lpShader);

@@ -173,12 +173,12 @@ void StoneFurnace::Update()
 
 }
 
-void StoneFurnace::FirstRender(Shader* shader)
+void StoneFurnace::FirstRender(ShaderProgram* shader)
 {
 	shadowImage->Render(shader, position.x + 27, position.y - 14);
 }
 
-void StoneFurnace::Render(Shader* shader)
+void StoneFurnace::Render(ShaderProgram* shader)
 {
 	mainImage->Render(shader, position.x, position.y);
 
@@ -193,7 +193,7 @@ void StoneFurnace::Render(Shader* shader)
 	}
 }
 
-void StoneFurnace::RenderInScreen(Shader* shader, float posX, float posY)
+void StoneFurnace::RenderInScreen(ShaderProgram* shader, float posX, float posY)
 {
 	mainImage->Render(shader, posX, posY);
 

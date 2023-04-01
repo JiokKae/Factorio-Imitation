@@ -19,7 +19,7 @@ void FuelSlotUI::Release()
 	SlotUI::Release();
 }
 
-void FuelSlotUI::Render(Shader* shader)
+void FuelSlotUI::Render(ShaderProgram* shader)
 {
 	if (active)
 	{

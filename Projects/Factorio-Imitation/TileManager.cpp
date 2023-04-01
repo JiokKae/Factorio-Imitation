@@ -29,7 +29,7 @@ HRESULT TileManager::Init()
     }
 
     // 인스턴싱 쉐이더 생성 및 초기화
-    instancingShader = new Shader("InstancingVertexShader.glsl", "StandardFragmentShader.glsl");
+    instancingShader = new ShaderProgram("shader/InstancingVertexShader.glsl", "shader/StandardFragmentShader.glsl");
     instancingShader->use();
     instancingShader->setInt("material.diffuse", 0);
     instancingShader->setVec3("material.diffuseColor", glm::vec3(1.0f, 1.0f, 1.0f));

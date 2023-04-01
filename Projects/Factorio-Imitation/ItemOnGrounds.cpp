@@ -10,7 +10,7 @@ HRESULT ItemOnGrounds::Init()
 {
     allItemsImage = new GLImage("Icons/AllItems", 8, 8, 0.25f, 0.25f);
 
-    instancingShader = new Shader("InstancingVertexShader.glsl", "StandardFragmentShader.glsl");
+    instancingShader = new ShaderProgram("shader/InstancingVertexShader.glsl", "shader/StandardFragmentShader.glsl");
     instancingShader->use();
 
     // VertexShader uniform var

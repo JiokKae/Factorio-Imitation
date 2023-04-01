@@ -2,7 +2,7 @@
 #include <glm/vec2.hpp>
 #include <string>
 
-class Shader;
+class ShaderProgram;
 class Texture;
 class VertexArrayObject;
 class GLImage final
@@ -11,7 +11,7 @@ public:
 	GLImage(const std::string& textureKey, int maxFrameX = 1, int maxFrameY = 1, float marginX = 0, float marginY = 0, int width = -1, int height = -1);
 	~GLImage();
 
-	void Render(Shader* shader, float destX, float destY, int currFrameX = 0, int currFrameY = 0);
+	void Render(ShaderProgram* shader, float destX, float destY, int currFrameX = 0, int currFrameY = 0);
 
 	void SetAngle(float value)			{ angle = value; }
 	void SetAlpha(float value)			{ alpha = value; }

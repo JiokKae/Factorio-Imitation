@@ -135,7 +135,7 @@ void BurnerMiningDrill::Update()
 
 }
 
-void BurnerMiningDrill::FirstRender(Shader* lpShader)
+void BurnerMiningDrill::FirstRender(ShaderProgram* lpShader)
 {
 	glm::ivec2 maxFrame = images[direction]->GetMaxFrame();
 	int frame = abs(int(time * 30) % (maxFrame.x * maxFrame.y * 2 - 1) - maxFrame.x * maxFrame.y + 1);
@@ -147,7 +147,7 @@ void BurnerMiningDrill::FirstRender(Shader* lpShader)
 		frameX, frameY);
 }
 
-void BurnerMiningDrill::Render(Shader* shader)
+void BurnerMiningDrill::Render(ShaderProgram* shader)
 {
 	glm::ivec2 maxFrame = images[direction]->GetMaxFrame();
 	int frame = abs(int(time * 30) % (maxFrame.x * maxFrame.y * 2 - 1) - maxFrame.x * maxFrame.y + 1);
@@ -158,7 +158,7 @@ void BurnerMiningDrill::Render(Shader* shader)
 	images[direction]->Render(shader, position.x, position.y, frameX, frameY);
 }
 
-void BurnerMiningDrill::RenderInScreen(Shader* shader, float posX, float posY)
+void BurnerMiningDrill::RenderInScreen(ShaderProgram* shader, float posX, float posY)
 {
 	glm::ivec2 maxFrame = images[direction]->GetMaxFrame();
 	int frame = abs(int(time * 30) % (maxFrame.x * maxFrame.y * 2 - 1) - maxFrame.x * maxFrame.y + 1);

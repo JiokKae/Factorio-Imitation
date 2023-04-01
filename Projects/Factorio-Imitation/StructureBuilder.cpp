@@ -89,7 +89,7 @@ void StructureBuilder::Update(vec2* playerPos)
     }
 }
 
-void StructureBuilder::Render(Shader* shader)
+void StructureBuilder::Render(ShaderProgram* shader)
 {
     if (!active)
         return;

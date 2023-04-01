@@ -28,7 +28,7 @@ void SelectRecipeAssemblingUI::Update()
 	}
 }
 
-void SelectRecipeAssemblingUI::Render(Shader* lpShader)
+void SelectRecipeAssemblingUI::Render(ShaderProgram* lpShader)
 {
 	if (active)
 	{

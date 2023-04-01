@@ -85,7 +85,7 @@ void AssemblingMachine1::Update()
 	}
 }
 
-void AssemblingMachine1::FirstRender(Shader* shader)
+void AssemblingMachine1::FirstRender(ShaderProgram* shader)
 {
 	int frame = (int)(time * 30);
 	glm::ivec2 maxFrame = mainImage->GetMaxFrame();
@@ -94,7 +94,7 @@ void AssemblingMachine1::FirstRender(Shader* shader)
 		frame % maxFrame.x, maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y);
 }
 
-void AssemblingMachine1::Render(Shader* shader)
+void AssemblingMachine1::Render(ShaderProgram* shader)
 {
 	int frame = (int)(time * 30);
 	glm::ivec2 maxFrame = mainImage->GetMaxFrame();
@@ -103,7 +103,7 @@ void AssemblingMachine1::Render(Shader* shader)
 		frame % maxFrame.x, maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y);
 }
 
-void AssemblingMachine1::RenderInScreen(Shader* shader, float posX, float posY)
+void AssemblingMachine1::RenderInScreen(ShaderProgram* shader, float posX, float posY)
 {
 	int frame = (int)(time * 30);
 	glm::ivec2 maxFrame = mainImage->GetMaxFrame();
@@ -112,7 +112,7 @@ void AssemblingMachine1::RenderInScreen(Shader* shader, float posX, float posY)
 		frame % maxFrame.x, maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y);
 }
 
-void AssemblingMachine1::LateRender(Shader* shader)
+void AssemblingMachine1::LateRender(ShaderProgram* shader)
 {
 	if(currRecipe)
 		altModeIcon->Render(shader, position.x, position.y + 16, currRecipe->GetOutput().id % 8, 7 - currRecipe->GetOutput().id / 8);

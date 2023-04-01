@@ -54,7 +54,7 @@ void BurnerMiningDrillUI::Update()
 	}
 }
 
-void BurnerMiningDrillUI::Render(Shader* lpShader)
+void BurnerMiningDrillUI::Render(ShaderProgram* lpShader)
 {
 	if (active)
 	{

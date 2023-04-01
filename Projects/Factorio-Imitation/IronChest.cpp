@@ -24,17 +24,17 @@ void IronChest::Release()
 	SAFE_DELETE(shadowImage);
 }
 
-void IronChest::FirstRender(Shader* shader)
+void IronChest::FirstRender(ShaderProgram* shader)
 {
 	shadowImage->Render(shader, position.x + 22, position.y - 18);
 }
 
-void IronChest::Render(Shader* shader)
+void IronChest::Render(ShaderProgram* shader)
 {
 	mainImage->Render(shader, position.x, position.y);
 }
 
-void IronChest::RenderInScreen(Shader* shader, float posX, float posY)
+void IronChest::RenderInScreen(ShaderProgram* shader, float posX, float posY)
 {
 	mainImage->Render(shader, posX, posY);
 }

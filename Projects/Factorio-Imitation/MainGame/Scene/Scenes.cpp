@@ -34,8 +34,8 @@ HRESULT LightingScene::Init()
 
 	// build and compile our shader zprogram
 	// ------------------------------------
-	lightingShader = new Shader("1.colors.vert", "1.colors.frag");
-	lightCubeShader = new Shader("1.light_cube.vert", "1.light_cube.frag");
+	lightingShader = new ShaderProgram("shader/1.colors.vert", "shader/1.colors.frag");
+	lightCubeShader = new ShaderProgram("shader/1.light_cube.vert", "shader/1.light_cube.frag");
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
@@ -366,8 +366,8 @@ HRESULT PlayScene::Init()
 
 	// build and compile our shader zprogram
 	// ------------------------------------
-	lightingShader = new Shader("StandardVertexShader.glsl", "StandardFragmentShader.glsl");
-	UIShader = new Shader("UIVertexShader.glsl", "UIFragmentShader.glsl");
+	lightingShader = new ShaderProgram("shader/StandardVertexShader.glsl", "shader/StandardFragmentShader.glsl");
+	UIShader = new ShaderProgram("shader/UIVertexShader.glsl", "shader/UIFragmentShader.glsl");
 
 	// UI Init
 	UI* characterUI = MainGameUIFactory::CreateUI(MainGameUIFactory::CHARACTER_UI);
@@ -665,7 +665,7 @@ HRESULT TenCubeSpaceScene::Init()
 	glEnableVertexAttribArray(1);
 
 	// 5. 오브젝트를 그리고 싶을 때 우리가 생성한 shader program을 사용
-	ourShader = new Shader("SimpleVertexShader.glsl", "SimpleFragmentShader.glsl");
+	ourShader = new ShaderProgram("shader/SimpleVertexShader.glsl", "shader/SimpleFragmentShader.glsl");
 
 	// uncomment this call to draw in wireframe polygons.
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

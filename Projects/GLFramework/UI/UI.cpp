@@ -14,7 +14,7 @@ void UI::Update()
 {
 }
 
-void UI::Render(Shader* /*lpShader*/)
+void UI::Render(ShaderProgram* /*lpShaderProgram*/)
 {
 }
 

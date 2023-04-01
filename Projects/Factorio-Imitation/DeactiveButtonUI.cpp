@@ -48,7 +48,7 @@ void DeactiveButtonUI::Update()
 	}
 }
 
-void DeactiveButtonUI::Render(Shader* lpShader)
+void DeactiveButtonUI::Render(ShaderProgram* lpShader)
 {
 	if (active)
 	{
