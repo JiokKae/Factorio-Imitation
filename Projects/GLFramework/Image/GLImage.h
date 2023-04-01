@@ -1,5 +1,6 @@
 ﻿#pragma once
-#include "../framework.h"
+#include <glm/vec2.hpp>
+#include <string>
 
 class Shader;
 class Texture;
