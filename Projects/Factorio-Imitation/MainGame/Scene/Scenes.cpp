@@ -4,7 +4,7 @@
 #include "GLFramework/Camera3D/FreeCamera.h"
 #include "GLFramework/Light/DirectionalLight.h"
 #include "GLFramework/Light/PointLight.h"
-#include "GLFramework/Shader/Shader.h"
+#include "GLFramework/ShaderProgram/ShaderProgram.h"
 #include "GLFramework/Texture/Texture.h"
 #include "GLFramework/UI/UI.h"
 #include "2DFramework/Button/Button.h"

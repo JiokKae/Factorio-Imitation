@@ -94,7 +94,7 @@ struct ItemInfo {
 
 // Useful
 #include "../GLFramework/Image/GLImage.h"
-#include "../GLFramework/Shader/Shader.h"
+#include "../GLFramework/ShaderProgram/ShaderProgram.h"
 
 #define WINSIZE_X		900
 #define WINSIZE_Y		900

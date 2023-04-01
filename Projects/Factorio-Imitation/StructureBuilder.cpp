@@ -1,5 +1,5 @@
 ﻿#include "StructureBuilder.h"
-#include "../GLFramework/Shader/Shader.h"
+#include "../GLFramework/ShaderProgram/ShaderProgram.h"
 #include "ItemEnum.h"
 #include "../GLFramework/Image/GLImage.h"
 #include "EntityManager.h"

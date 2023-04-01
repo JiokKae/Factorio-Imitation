@@ -1,7 +1,7 @@
 ﻿#include "GLImage.h"
 #include "../Texture/Texture.h"
 #include "../Texture/TextureManager.h"
-#include "../Shader/Shader.h"
+#include "../ShaderProgram/ShaderProgram.h"
 #include "../VertexDataObject/VertexArrayObject.h"
 #include "../VertexDataObject/VertexBufferObject.h"
 

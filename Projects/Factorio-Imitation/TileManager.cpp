@@ -1,7 +1,7 @@
 ﻿#include "TileManager.h"
 #include "Tile.h"
 #include "../GLFramework/Image/GLImage.h"
-#include "../GLFramework/Shader/Shader.h"
+#include "../GLFramework/ShaderProgram/ShaderProgram.h"
 #include "../GLFramework/Texture/Texture.h"
 #include "Ore.h"
 #include "Chunk.h"

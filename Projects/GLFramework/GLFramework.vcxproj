@@ -160,7 +160,7 @@
     <ClCompile Include="Image\GLImage.cpp" />
     <ClCompile Include="Light\DirectionalLight.cpp" />
     <ClCompile Include="Light\PointLight.cpp" />
-    <ClCompile Include="Shader\Shader.cpp" />
+    <ClCompile Include="ShaderProgram\ShaderProgram.cpp" />
     <ClCompile Include="TextRenderer\TextRenderer.cpp" />
     <ClCompile Include="Texture\Texture.cpp" />
     <ClCompile Include="Texture\TextureManager.cpp" />
@@ -175,7 +175,7 @@
     <ClInclude Include="Image\GLImage.h" />
     <ClInclude Include="Light\DirectionalLight.h" />
     <ClInclude Include="Light\PointLight.h" />
-    <ClInclude Include="Shader\Shader.h" />
+    <ClInclude Include="ShaderProgram\ShaderProgram.h" />
     <ClInclude Include="TextRenderer\TextRenderer.h" />
     <ClInclude Include="Texture\Texture.h" />
     <ClInclude Include="Texture\TextureManager.h" />
