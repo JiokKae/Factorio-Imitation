@@ -6,8 +6,7 @@
 
 HRESULT BurnerMiningDrillUI::Init()
 {
-	image = new GLImage();
-	image->Init("UI/BunerMiningDrillUI");
+	image = new GLImage("UI/BunerMiningDrillUI");
 
 	inventoryUI = new InventoryUI();
 	inventoryUI->Init();
@@ -19,12 +18,10 @@ HRESULT BurnerMiningDrillUI::Init()
 	deactiveButtonUI->SetParent(this);
 	deactiveButtonUI->SetLocalPosition(glm::vec2(200, 286));
 
-	redProgressiveBar = new GLImage();
-	redProgressiveBar->Init("UI/RedProgressiveBarUI");
+	redProgressiveBar = new GLImage("UI/RedProgressiveBarUI");
 	redProgressiveBar->SetOffset(glm::vec2(redProgressiveBar->GetFrameWidth() / 2, 0.0f));
 
-	greenProgressiveBar = new GLImage();
-	greenProgressiveBar->Init("UI/GreenProgressiveBarUI");
+	greenProgressiveBar = new GLImage("UI/GreenProgressiveBarUI");
 	greenProgressiveBar->SetOffset(glm::vec2(greenProgressiveBar->GetFrameWidth() / 2, 0.0f));
 
 	fuelSlotUI = new FuelSlotUI();
@@ -38,11 +35,11 @@ HRESULT BurnerMiningDrillUI::Init()
 void BurnerMiningDrillUI::Release()
 {
 	SAFE_RELEASE(fuelSlotUI);
-	SAFE_RELEASE(greenProgressiveBar);
-	SAFE_RELEASE(redProgressiveBar);
+	SAFE_DELETE(greenProgressiveBar);
+	SAFE_DELETE(redProgressiveBar);
 	SAFE_RELEASE(deactiveButtonUI);
 	SAFE_RELEASE(inventoryUI);
-	SAFE_RELEASE(image);
+	SAFE_DELETE(image);
 }
 
 void BurnerMiningDrillUI::Update()
@@ -57,7 +54,7 @@ void BurnerMiningDrillUI::Update()
 	}
 }
 
-void BurnerMiningDrillUI::Render(Shader* lpShader)
+void BurnerMiningDrillUI::Render(ShaderProgram* lpShader)
 {
 	if (active)
 	{

@@ -94,7 +94,7 @@ struct ItemInfo {
 
 // Useful
 #include "../GLFramework/Image/GLImage.h"
-#include "../GLFramework/Shader/Shader.h"
+#include "../GLFramework/ShaderProgram/ShaderProgram.h"
 
 #define WINSIZE_X		900
 #define WINSIZE_Y		900
@@ -168,12 +168,6 @@ inline void SetWindowSize(int startX, int startY, int sizeX, int sizeY)
 
 	// 이동
 	MoveWindow(g_hWnd, startX, startY, rc.right - rc.left, rc.bottom - rc.top, true);
-}
-
-template <typename T>
-inline T Lerp(T a, T b, float v)
-{
-	return a + (b - a) * v;
 }
 
 inline bool IntersectFRect(LPFRECT lpfrcDst, const FRECT* lpfrcSrc1, const FRECT* lpfrcSrc2)

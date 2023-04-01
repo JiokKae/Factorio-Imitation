@@ -12,13 +12,10 @@ HRESULT StoneFurnace::Init(int x, int y, DIRECTION _direction, bool _temp)
 	Structure::Init(x, y, _direction, _temp);
 
 	// 이미지 초기화
-	mainImage = new GLImage();
-	mainImage->Init("Entity/StoneFurnace");
-	shadowImage = new GLImage();
-	shadowImage->Init("Entity/StoneFurnace-shadow");
+	mainImage = new GLImage("Entity/StoneFurnace");
+	shadowImage = new GLImage("Entity/StoneFurnace-shadow");
 	shadowImage->SetAlpha(0.6f);
-	fireImage = new GLImage();
-	fireImage->Init("Entity/StoneFurnace-fire", 8, 6);
+	fireImage = new GLImage("Entity/StoneFurnace-fire", 8, 6);
 
 	// 초기값 세팅
 	energyConsumption = 90.0f;
@@ -33,7 +30,7 @@ HRESULT StoneFurnace::Init(int x, int y, DIRECTION _direction, bool _temp)
 	result = new ItemInfo();
 	for (int i = 0; i < vecRecipes->size(); i++)
 	{
-		resource->AddAbleItem((*vecRecipes)[i]->GetIngredient(0).id);
+		resource->AddAbleItem((*vecRecipes)[i]->GetIngredients()[0].id);
 		result->AddAbleItem((*vecRecipes)[i]->GetOutput().id);
 	}
 	usingResource = new ItemInfo();
@@ -46,9 +43,9 @@ void StoneFurnace::Release()
 {
 	Structure::Release();
 
-	SAFE_RELEASE(mainImage);
-	SAFE_RELEASE(shadowImage);
-	SAFE_RELEASE(fireImage);
+	SAFE_DELETE(mainImage);
+	SAFE_DELETE(shadowImage);
+	SAFE_DELETE(fireImage);
 
 	SAFE_DELETE(fuel);
 	SAFE_DELETE(resource);
@@ -81,7 +78,7 @@ void StoneFurnace::Update()
 		{
 			status = NO_POWER;
 		}
-		else if (resource->amount && resource->amount >= FindRecipeByIngredient(resource->id)->GetIngredient(0).amount)
+		else if (resource->amount && resource->amount >= FindRecipeByIngredient(resource->id)->GetIngredients()[0].amount)
 		{
 			status = WORKING;
 		}
@@ -95,7 +92,7 @@ void StoneFurnace::Update()
 			break;
 		}
 		// 재료가 없고 사용중인 재료가 없다면
-		else if (resource->amount < FindRecipeByIngredient(resource->id)->GetIngredient(0).amount && usingResource->amount <= 0)
+		else if (resource->amount < FindRecipeByIngredient(resource->id)->GetIngredients()[0].amount && usingResource->amount <= 0)
 		{
 			status = NO_RECIPE;
 			break;
@@ -122,8 +119,8 @@ void StoneFurnace::Update()
 			if (usingResource->amount <= 0)
 			{
 				currRecipe = FindRecipeByIngredient(resource->id);
-				resource->amount -= currRecipe->GetIngredient(0).amount;
-				usingResource->amount += currRecipe->GetIngredient(0).amount;
+				resource->amount -= currRecipe->GetIngredients()[0].amount;
+				usingResource->amount += currRecipe->GetIngredients()[0].amount;
 			}
 
 			// 에너지 소모
@@ -133,7 +130,7 @@ void StoneFurnace::Update()
 			// 제작 완료
 			if (craftedTime >= currRecipe->GetCraftingTime())
 			{
-				usingResource->amount -= currRecipe->GetIngredient(0).amount;
+				usingResource->amount -= currRecipe->GetIngredients()[0].amount;
 				newResult->id = currRecipe->GetOutput().id;
 				newResult->amount = currRecipe->GetOutput().amount;
 				productsFinished++;
@@ -176,12 +173,12 @@ void StoneFurnace::Update()
 
 }
 
-void StoneFurnace::FirstRender(Shader* shader)
+void StoneFurnace::FirstRender(ShaderProgram* shader)
 {
 	shadowImage->Render(shader, position.x + 27, position.y - 14);
 }
 
-void StoneFurnace::Render(Shader* shader)
+void StoneFurnace::Render(ShaderProgram* shader)
 {
 	mainImage->Render(shader, position.x, position.y);
 
@@ -196,7 +193,7 @@ void StoneFurnace::Render(Shader* shader)
 	}
 }
 
-void StoneFurnace::RenderInScreen(Shader* shader, float posX, float posY)
+void StoneFurnace::RenderInScreen(ShaderProgram* shader, float posX, float posY)
 {
 	mainImage->Render(shader, posX, posY);
 

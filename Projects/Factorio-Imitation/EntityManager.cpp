@@ -67,7 +67,7 @@ void EntityManager::Update(FRECT cameraFrect)
 	structureBuilder->Update(player->GetLpPosition());
 }
 
-void EntityManager::Render(Shader* shader)
+void EntityManager::Render(ShaderProgram* shader)
 {
 	vector<Entity*>::iterator entityItr;
 	for (entityItr = vecEntityInScreen.begin(); entityItr != vecEntityInScreen.end(); entityItr++)

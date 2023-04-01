@@ -5,11 +5,9 @@ HRESULT WoodenChest::Init(int x, int y, DIRECTION _direction, bool _temp)
 	itemId = ItemEnum::WOODEN_CHEST;
 	inventorySize = 16;
 
-	mainImage = new GLImage();
-	mainImage->Init("Entity/WoodenChest");
+	mainImage = new GLImage("Entity/WoodenChest");
 
-	shadowImage = new GLImage();
-	shadowImage->Init("Entity/WoodenChest-shadow");
+	shadowImage = new GLImage("Entity/WoodenChest-shadow");
 	shadowImage->SetAlpha(0.5f);
 
 	Container::Init(x, y, _direction, _temp);
@@ -22,21 +20,21 @@ void WoodenChest::Release()
 {
 	Container::Release();
 
-	SAFE_RELEASE(mainImage);
-	SAFE_RELEASE(shadowImage);
+	SAFE_DELETE(mainImage);
+	SAFE_DELETE(shadowImage);
 }
 
-void WoodenChest::FirstRender(Shader* shader)
+void WoodenChest::FirstRender(ShaderProgram* shader)
 {
 	shadowImage->Render(shader, position.x + 22, position.y - 18);
 }
 
-void WoodenChest::Render(Shader* shader)
+void WoodenChest::Render(ShaderProgram* shader)
 {
 	mainImage->Render(shader, position.x, position.y);
 }
 
-void WoodenChest::RenderInScreen(Shader* shader, float posX, float posY)
+void WoodenChest::RenderInScreen(ShaderProgram* shader, float posX, float posY)
 {
 	mainImage->Render(shader, posX, posY);
 }

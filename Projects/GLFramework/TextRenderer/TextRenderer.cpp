@@ -1,12 +1,13 @@
 #include "TextRenderer.h"
-#include "../Shader/Shader.h"
+#include "../ShaderProgram/ShaderProgram.h"
+#include <iostream>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
 HRESULT TextRenderer::Init()
 {
 	// load and configure shader
-	this->TextShader = new Shader("Text2DVertexShader.glsl", "Text2DFragmentShader.glsl");
+	this->TextShader = new ShaderProgram("shader/Text2DVertexShader.glsl", "shader/Text2DFragmentShader.glsl");
 	this->TextShader->use();
 	this->TextShader->setInt("text", 0);
 

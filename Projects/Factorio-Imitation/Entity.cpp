@@ -13,6 +13,6 @@ void Entity::Update()
 {
 }
 
-void Entity::Render(Shader* /*lpShader*/)
+void Entity::Render(ShaderProgram* /*lpShaderProgram*/)
 {
 }

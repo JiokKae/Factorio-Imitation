@@ -25,7 +25,7 @@ public:
 	virtual HRESULT Init();
 	virtual void Release();
 	virtual void Update(FRECT cameraFrect);
-	virtual void Render(Shader* shader);
+	virtual void Render(ShaderProgram* shader);
 
 	Character* GetLpPlayer()			{ return player; }
 	StructureBuilder* GetLpStructureBuilder()	{ return structureBuilder; }

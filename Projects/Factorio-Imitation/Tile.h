@@ -9,7 +9,7 @@ class Tile : public GameNode
 public:
 	enum class KIND {
 		DIRT_1,
-		END
+		END,
 	};
 
 private:

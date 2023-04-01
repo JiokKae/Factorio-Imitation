@@ -21,8 +21,7 @@ HRESULT TransportBelt::Init(int x, int y, DIRECTION _direction, bool _temp)
 {
 	itemId = ItemEnum::TRANSPORT_BELT;
 	speed = 45.0f;
-	image = new GLImage();
-	image->Init("Entity/TransportBelt", 16, 20);
+	image = new GLImage("Entity/TransportBelt", 16, 20);
 
 	Structure::Init(x, y, _direction, _temp);
 	status = WORKING;
@@ -66,7 +65,7 @@ void TransportBelt::Update()
 
 }
 
-void TransportBelt::FirstRender(Shader* lpShader)
+void TransportBelt::FirstRender(ShaderProgram* lpShader)
 {
 	int frame = int(g_time * speed);
 	glm::ivec2 maxFrame = image->GetMaxFrame();
@@ -74,7 +73,7 @@ void TransportBelt::FirstRender(Shader* lpShader)
 	image->Render(lpShader, position.x, position.y, frame % maxFrame.x, imageFrameYByDirection[direction][renderState]);
 }
 
-void TransportBelt::Render(Shader* lpShader)
+void TransportBelt::Render(ShaderProgram* lpShader)
 {
 	int frame = int(g_time * speed);
 	glm::ivec2 maxFrame = image->GetMaxFrame();
@@ -108,11 +107,11 @@ void TransportBelt::Render(Shader* lpShader)
 
 }
 
-void TransportBelt::LateRender(Shader* /*lpShader*/)
+void TransportBelt::LateRender(ShaderProgram* /*lpShaderProgram*/)
 {
 }
 
-void TransportBelt::RenderInScreen(Shader* shader, float posX, float posY)
+void TransportBelt::RenderInScreen(ShaderProgram* shader, float posX, float posY)
 {
 	int frame = int(g_time * speed);
 	glm::ivec2 maxFrame = image->GetMaxFrame();

@@ -12,9 +12,9 @@ public:
 	virtual HRESULT Init();
 	virtual void Release();
 	virtual void Update();
-	virtual void FirstRender(Shader* /*lpShader*/) {};
-	virtual void Render(Shader* lpShader) = 0;
-	virtual void LateRender(Shader* /*lpShader*/) {};
+	virtual void FirstRender(ShaderProgram* /*lpShaderProgram*/) {};
+	virtual void Render(ShaderProgram* lpShader) = 0;
+	virtual void LateRender(ShaderProgram* /*lpShaderProgram*/) {};
 
 	bool IsPassable()			{ return passable; }
 	const Vec2& GetPosition()		{ return position; }

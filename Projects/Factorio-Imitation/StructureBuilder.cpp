@@ -1,5 +1,5 @@
 ﻿#include "StructureBuilder.h"
-#include "../GLFramework/Shader/Shader.h"
+#include "../GLFramework/ShaderProgram/ShaderProgram.h"
 #include "ItemEnum.h"
 #include "../GLFramework/Image/GLImage.h"
 #include "EntityManager.h"
@@ -89,7 +89,7 @@ void StructureBuilder::Update(vec2* playerPos)
     }
 }
 
-void StructureBuilder::Render(Shader* shader)
+void StructureBuilder::Render(ShaderProgram* shader)
 {
     if (!active)
         return;

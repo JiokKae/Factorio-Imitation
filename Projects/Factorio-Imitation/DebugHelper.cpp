@@ -16,101 +16,79 @@ void DebugHelper::Update()
 
 void DebugHelper::Render(float x, float y)
 {
-	if (!g_debuggingMode)
+	if (g_debuggingMode == false)
 		return;
 
 	string buffer;
-	auto it = Values.begin();
 
-	while (it != Values.end())
-	{
-		buffer += it->first + ":\t210\t" +it->second.ToString() + "\n";
-		++it;
-	}
+	for (auto it = Values.cbegin(); it != Values.cend(); ++it)
+		buffer += std::format("{}:\t210\t{}\n", it->first, std::string{ it->second });
+
 	TextRenderer::GetSingleton()->RenderText(buffer, x, y, 0.7f);
 }
 
-void DebugHelper::SetFloat(string key, float value)
+void DebugHelper::SetFloat(const std::string& key, float value)
 {
-	if (!g_debuggingMode)
-		return;
-
 	auto it = Values.find(key);
 
 	if (it == Values.end())
-		Values.insert(make_pair(key, Property(value)));
+		Values.emplace(key, Property(value));
 	else
 		it->second.data._float = value;
 }
 
-void DebugHelper::SetInt(string key, int value)
+void DebugHelper::SetInt(const std::string& key, int value)
 {
-	if (!g_debuggingMode)
-		return;
-
 	auto it = Values.find(key);
 
 	if (it == Values.end())
-		Values.insert(make_pair(key, Property(value)));
+		Values.emplace(key, Property(value));
 	else
 		it->second.data._int = value;
 }
 
-float DebugHelper::GetFloat(string key)
+float DebugHelper::GetFloat(const std::string& key) const
 {
-	if (!g_debuggingMode)
-		return 0.0f;
-
 	auto it = Values.find(key);
 
-	if (it == Values.end())
-		return it->second.data._float;
-	else
-		return 0.0f;
+	return (it == Values.end()) ? 0.0f : it->second.data._float;
 }
 
-int DebugHelper::GetInt(string key)
+int DebugHelper::GetInt(const std::string& key) const
 {
-	if (!g_debuggingMode)
-		return 0;
-
 	auto it = Values.find(key);
 
-	if (it == Values.end())
-		return it->second.data._int;
-	else
-		return 0;
+	return (it == Values.end()) ? 0 : it->second.data._int;
 }
 
 DebugHelper::Property::Property(int data)
+	: type{ Type::INT }
+	, data{ ._int = data }
 {
-	this->type = Type::INT;
-	this->data._int = data;
 }
 
 DebugHelper::Property::Property(float data)
+	: type{ Type::FLOAT }
+	, data{ ._float = data }
 {
-	this->type = Type::FLOAT;
-	this->data._float = data;
 }
 
 DebugHelper::Property::Property(double data)
+	: type{ Type::DOUBLE }
+	, data{ ._double = data }
 {
-	this->type = Type::DOUBLE;
-	this->data._double = data;
 }
 
-string DebugHelper::Property::ToString()
+DebugHelper::Property::operator std::string() const
 {
 	switch (type)
 	{
 	case DebugHelper::Property::INT:
-		return to_string(data._int);
+		return std::to_string(data._int);
 	case DebugHelper::Property::FLOAT:
-		return to_string(data._float);
+		return std::to_string(data._float);
 	case DebugHelper::Property::DOUBLE:
-		return to_string(data._double);
+		return std::to_string(data._double);
 	}
-
-	return string();
+	return std::string{};
 }

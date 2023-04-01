@@ -7,8 +7,7 @@
 
 HRESULT StoneFurnaceUI::Init()
 {
-	image = new GLImage();
-	image->Init("UI/StoneFurnaceUI");
+	image = new GLImage("UI/StoneFurnaceUI");
 
 	inventoryUI = new InventoryUI();
 	inventoryUI->Init();
@@ -20,12 +19,10 @@ HRESULT StoneFurnaceUI::Init()
 	deactiveButtonUI->SetParent(this);
 	deactiveButtonUI->SetLocalPosition(glm::vec2(200, 290));
 
-	redProgressiveBar = new GLImage();
-	redProgressiveBar->Init("UI/RedProgressiveBarUI");
+	redProgressiveBar = new GLImage("UI/RedProgressiveBarUI");
 	redProgressiveBar->SetOffset(glm::vec2(redProgressiveBar->GetFrameWidth() / 2, 0.0f));
 
-	greenProgressiveBar = new GLImage();
-	greenProgressiveBar->Init("UI/GreenProgressiveBarUI");
+	greenProgressiveBar = new GLImage("UI/GreenProgressiveBarUI");
 	greenProgressiveBar->SetOffset(glm::vec2(greenProgressiveBar->GetFrameWidth() / 2, 0.0f));
 
 	// slots init
@@ -49,11 +46,11 @@ HRESULT StoneFurnaceUI::Init()
 
 void StoneFurnaceUI::Release()
 {
-	SAFE_RELEASE(greenProgressiveBar);
-	SAFE_RELEASE(redProgressiveBar);
+	SAFE_DELETE(greenProgressiveBar);
+	SAFE_DELETE(redProgressiveBar);
 	SAFE_RELEASE(deactiveButtonUI);
 	SAFE_RELEASE(inventoryUI);
-	SAFE_RELEASE(image);
+	SAFE_DELETE(image);
 
 	// slots release
 	SAFE_RELEASE(fuelSlotUI);
@@ -82,7 +79,7 @@ void StoneFurnaceUI::Update()
 	}
 }
 
-void StoneFurnaceUI::Render(Shader* lpShader)
+void StoneFurnaceUI::Render(ShaderProgram* lpShader)
 {
 	if (active)
 	{

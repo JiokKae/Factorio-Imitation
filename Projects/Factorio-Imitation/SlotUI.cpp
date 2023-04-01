@@ -7,11 +7,9 @@
 
 HRESULT SlotUI::Init()
 {
-	image = new GLImage();
-	image->Init("UI/SlotUI", 3, 1);
+	image = new GLImage("UI/SlotUI", 3, 1);
 
-	allItemImage = new GLImage();
-	allItemImage->Init("Icons/AllItems", 8, 8, 0.25f, 0.25f);
+	allItemImage = new GLImage("Icons/AllItems", 8, 8, 0.25f, 0.25f);
 	allItemImage->SetScale(glm::vec2(0.25f));
 
 	onMouse = false;
@@ -23,8 +21,8 @@ HRESULT SlotUI::Init()
 
 void SlotUI::Release()
 {
-	SAFE_RELEASE(image);
-	SAFE_RELEASE(allItemImage);
+	SAFE_DELETE(image);
+	SAFE_DELETE(allItemImage);
 }
 
 void SlotUI::Update(ItemInfo* _itemInfo)
@@ -66,7 +64,7 @@ void SlotUI::Update(ItemInfo* _itemInfo)
 	}
 }
 
-void SlotUI::Render(Shader* lpShader)
+void SlotUI::Render(ShaderProgram* lpShader)
 {
 	if (active)
 	{
@@ -81,7 +79,7 @@ void SlotUI::Render(Shader* lpShader)
 	}
 }
 
-void SlotUI::LateRender(Shader* /*shader*/)
+void SlotUI::LateRender(ShaderProgram* /*shader*/)
 {
 	if (itemInfo && itemInfo->amount != 0)
 	{

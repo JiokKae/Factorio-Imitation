@@ -11,7 +11,7 @@ namespace Text {
 	};
 }
 
-class Shader;
+class ShaderProgram;
 class TextRenderer : public Singleton<TextRenderer>
 {
 private:
@@ -20,7 +20,7 @@ private:
 	// holds a list of pre-compiled Characters
 	std::map<char, Text::Character> Characters;
 	// shader used for text rendering
-	Shader* TextShader;
+	ShaderProgram* TextShader;
 
 public:
 	virtual HRESULT Init();

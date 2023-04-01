@@ -172,7 +172,7 @@
     <ClInclude Include="IronChest.h" />
     <ClInclude Include="MainGame\Button\ButtonFunction.h" />
     <ClInclude Include="MainGame\MainGame.h" />
-    <ClInclude Include="MainGame\Scene\TileMapToolScene.h" />
+    <ClInclude Include="MainGame\Scene\Scenes.h" />
     <ClInclude Include="SelectRecipeAssemblingUI.h" />
     <ClInclude Include="BurnerInserter.h" />
     <ClInclude Include="BurnerMiningDrill.h" />
@@ -196,7 +196,6 @@
     <ClInclude Include="ItemOnGrounds.h" />
     <ClInclude Include="MainGameUIFactory.h" />
     <ClInclude Include="Ore.h" />
-    <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Recipe.h" />
     <ClInclude Include="RecipeManager.h" />
     <ClInclude Include="SlotUI.h" />
@@ -205,18 +204,15 @@
     <ClInclude Include="StoneFurnaceUI.h" />
     <ClInclude Include="Structure.h" />
     <ClInclude Include="TextUI.h" />
-    <ClInclude Include="LightingScene.h" />
-    <ClInclude Include="LoadingScene1.h" />
-    <ClInclude Include="TenCubeSpaceScene.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileManager.h" />
-    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="TransportBelt.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="StructureBuilder.h" />
     <ClInclude Include="WoodenChest.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Librarys\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\GLFramework\UI\UI.cpp" />
     <ClCompile Include="AssemblingMachine1.cpp" />
     <ClCompile Include="Container.cpp" />
@@ -224,7 +220,7 @@
     <ClCompile Include="IronChest.cpp" />
     <ClCompile Include="MainGame\Button\ButtonFunction.cpp" />
     <ClCompile Include="MainGame\MainGame.cpp" />
-    <ClCompile Include="MainGame\Scene\TileMapToolScene.cpp" />
+    <ClCompile Include="MainGame\Scene\Scenes.cpp" />
     <ClCompile Include="SelectRecipeAssemblingUI.cpp" />
     <ClCompile Include="BurnerInserter.cpp" />
     <ClCompile Include="BurnerMiningDrill.cpp" />
@@ -248,7 +244,6 @@
     <ClCompile Include="ItemOnGrounds.cpp" />
     <ClCompile Include="MainGameUIFactory.cpp" />
     <ClCompile Include="Ore.cpp" />
-    <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Recipe.cpp" />
     <ClCompile Include="RecipeManager.cpp" />
     <ClCompile Include="SlotUI.cpp" />
@@ -257,12 +252,8 @@
     <ClCompile Include="StoneFurnaceUI.cpp" />
     <ClCompile Include="Structure.cpp" />
     <ClCompile Include="TextUI.cpp" />
-    <ClCompile Include="LightingScene.cpp" />
-    <ClCompile Include="LoadingScene1.cpp" />
-    <ClCompile Include="TenCubeSpaceScene.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileManager.cpp" />
-    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="TransportBelt.cpp" />
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="StructureBuilder.cpp" />

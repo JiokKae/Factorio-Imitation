@@ -10,6 +10,6 @@ public:
 	virtual HRESULT Init();
 	virtual void Release();
 	virtual void Update();
-	virtual void Render(Shader* lpShader);
+	virtual void Render(ShaderProgram* lpShader);
 };
 

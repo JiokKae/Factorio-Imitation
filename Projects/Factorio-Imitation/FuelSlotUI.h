@@ -7,7 +7,7 @@ class FuelSlotUI : public SlotUI
 public:
 	virtual HRESULT Init() override;
 	virtual void Release() override;
-	virtual void Render(Shader* shader) override;
+	virtual void Render(ShaderProgram* shader) override;
 
 	virtual void OnClick(int key) override;
 };

@@ -3,8 +3,7 @@
 
 HRESULT DeactiveButtonUI::Init()
 {
-	image = new GLImage();
-	image->Init("UI/DeactiveButtonUI", 3, 1);
+	image = new GLImage("UI/DeactiveButtonUI", 3, 1);
 
 	onMouse = false;
 	return S_OK;
@@ -12,6 +11,7 @@ HRESULT DeactiveButtonUI::Init()
 
 void DeactiveButtonUI::Release()
 {
+	SAFE_DELETE(image);
 }
 
 void DeactiveButtonUI::Update()
@@ -48,7 +48,7 @@ void DeactiveButtonUI::Update()
 	}
 }
 
-void DeactiveButtonUI::Render(Shader* lpShader)
+void DeactiveButtonUI::Render(ShaderProgram* lpShader)
 {
 	if (active)
 	{

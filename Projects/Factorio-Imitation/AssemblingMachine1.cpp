@@ -8,17 +8,14 @@ HRESULT AssemblingMachine1::Init(int x, int y, DIRECTION _direction, bool _temp)
 	usingClickEvent = true;
 	Structure::Init(x, y, _direction, _temp);
 
-	mainImage = new GLImage();
-	mainImage->Init("Entity/AssemblingMachine1", 8, 4);
+	mainImage = new GLImage("Entity/AssemblingMachine1", 8, 4);
 	mainImage->SetAlpha(1.0f);
 
-	shadowImage = new GLImage();
-	shadowImage->Init("Entity/AssemblingMachine1-shadow", 8, 4);
+	shadowImage = new GLImage("Entity/AssemblingMachine1-shadow", 8, 4);
 	shadowImage->SetAlpha(0.5f);
 	shadowImageOffset = { 16, -6 };
 
-	altModeIcon = new GLImage();
-	altModeIcon->Init("Icons/AllItems-stroke", 8, 8, 0.1f, 0.1f);
+	altModeIcon = new GLImage("Icons/AllItems-stroke", 8, 8, 0.1f, 0.1f);
 	altModeIcon->SetScale({ 0.9f, 0.9f });
 
 	craftingSpeed = 0.5f;
@@ -38,9 +35,9 @@ void AssemblingMachine1::Release()
 
 	ingredients.Release();
 
-	SAFE_RELEASE(altModeIcon);
-	SAFE_RELEASE(mainImage);
-	SAFE_RELEASE(shadowImage);
+	SAFE_DELETE(altModeIcon);
+	SAFE_DELETE(mainImage);
+	SAFE_DELETE(shadowImage);
 }
 
 void AssemblingMachine1::Update()
@@ -88,7 +85,7 @@ void AssemblingMachine1::Update()
 	}
 }
 
-void AssemblingMachine1::FirstRender(Shader* shader)
+void AssemblingMachine1::FirstRender(ShaderProgram* shader)
 {
 	int frame = (int)(time * 30);
 	glm::ivec2 maxFrame = mainImage->GetMaxFrame();
@@ -97,7 +94,7 @@ void AssemblingMachine1::FirstRender(Shader* shader)
 		frame % maxFrame.x, maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y);
 }
 
-void AssemblingMachine1::Render(Shader* shader)
+void AssemblingMachine1::Render(ShaderProgram* shader)
 {
 	int frame = (int)(time * 30);
 	glm::ivec2 maxFrame = mainImage->GetMaxFrame();
@@ -106,7 +103,7 @@ void AssemblingMachine1::Render(Shader* shader)
 		frame % maxFrame.x, maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y);
 }
 
-void AssemblingMachine1::RenderInScreen(Shader* shader, float posX, float posY)
+void AssemblingMachine1::RenderInScreen(ShaderProgram* shader, float posX, float posY)
 {
 	int frame = (int)(time * 30);
 	glm::ivec2 maxFrame = mainImage->GetMaxFrame();
@@ -115,7 +112,7 @@ void AssemblingMachine1::RenderInScreen(Shader* shader, float posX, float posY)
 		frame % maxFrame.x, maxFrame.y - 1 - frame / maxFrame.x % maxFrame.y);
 }
 
-void AssemblingMachine1::LateRender(Shader* shader)
+void AssemblingMachine1::LateRender(ShaderProgram* shader)
 {
 	if(currRecipe)
 		altModeIcon->Render(shader, position.x, position.y + 16, currRecipe->GetOutput().id % 8, 7 - currRecipe->GetOutput().id / 8);
@@ -123,15 +120,17 @@ void AssemblingMachine1::LateRender(Shader* shader)
 
 bool AssemblingMachine1::InputItem(ItemInfo* inputItem, glm::vec2 /*pos*/)
 {
-	if (currRecipe->IsIngredient(inputItem->id))
+	if (currRecipe->IsIngredient(inputItem->id) == false)
 	{
-		for (int i = 0; i < currRecipe->size(); i++)
+		return false;
+	}
+
+	for (int i = 0; i < currRecipe->GetIngredients().size(); i++)
+	{
+		if (currRecipe->GetIngredients()[i].id == inputItem->id)
 		{
-			if (currRecipe->GetIngredient(i).id == inputItem->id)
-			{
-				inputItem->MoveAllItemTo(&ingredients[i]);
-				return true;
-			}
+			inputItem->MoveAllItemTo(&ingredients[i]);
+			return true;
 		}
 	}
 	return false;
@@ -188,9 +187,9 @@ string AssemblingMachine1::ToString()
 	std::string bufstr = std::format(" \n Crafting Speed: {} \n Recipe: {}", (int)craftingSpeed, g_itemSpecs[currRecipe->GetOutput().id].name.c_str());
 	//wsprintf(buf, " \n Crafting Speed: %d \n Recipe: %s", );
 
-	for (size_t i = 0; i < currRecipe->size(); i++)
+	for (size_t i = 0; i < currRecipe->GetIngredients().size(); i++)
 	{
-		std::string bufstr2 = std::format("\n {}/{} x {}", ingredients[i].amount, currRecipe->GetIngredient(i).amount, g_itemSpecs[currRecipe->GetIngredient(i).id].name.c_str());
+		std::string bufstr2 = std::format("\n {}/{} x {}", ingredients[i].amount, currRecipe->GetIngredients()[i].amount, g_itemSpecs[currRecipe->GetIngredients()[i].id].name.c_str());
 		bufstr += bufstr2;
 		//wsprintf(buf2, "\n %d/%d x %s", ingredients[i].amount, currRecipe->GetIngredient(i).amount, g_itemSpecs[currRecipe->GetIngredient(i).id].name.c_str());
 		//strcat_s(buf, buf2);
@@ -214,9 +213,9 @@ string AssemblingMachine1::ToString()
 HRESULT AssemblingMachine1::Ingredients::Init(Recipe* recipe)
 {
 	vecIngredients.clear();
-	vecIngredients.resize(recipe->size());
+	vecIngredients.resize(recipe->GetIngredients().size());
 	vecUsingIngredients.clear();
-	vecUsingIngredients.resize(recipe->size());
+	vecUsingIngredients.resize(recipe->GetIngredients().size());
 	return S_OK;
 }
 
@@ -235,7 +234,7 @@ bool AssemblingMachine1::Ingredients::IsEnough(Recipe* recipe)
 	for (int i = 0; i < vecIngredients.size(); i++)
 	{
 		// 만약 레시피보다 재료가 적거나 같지 않으면
-		if (recipe->GetIngredient(i).amount > vecIngredients[i].amount || recipe->GetIngredient(i).id != vecIngredients[i].id)
+		if (recipe->GetIngredients()[i].amount > vecIngredients[i].amount || recipe->GetIngredients()[i].id != vecIngredients[i].id)
 			return false;
 	}
 	return true;
@@ -245,9 +244,9 @@ bool AssemblingMachine1::Ingredients::Consume(Recipe* recipe)
 {
 	if (IsEnough(recipe))
 	{
-		for (size_t i = 0; i < recipe->size(); i++)
+		for (size_t i = 0; i < recipe->GetIngredients().size(); i++)
 		{
-			vecIngredients[i].amount -= recipe->GetIngredient(i).amount;
+			vecIngredients[i].amount -= recipe->GetIngredients()[i].amount;
 		}
 		return true;
 	}

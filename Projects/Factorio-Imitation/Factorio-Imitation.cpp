@@ -50,18 +50,15 @@ const ItemSpec	g_itemSpecs[] = {
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
-BOOL                InitInstance(HINSTANCE, int);
+bool                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-					  _In_opt_ HINSTANCE hPrevInstance,
-					  _In_ LPWSTR	lpCmdLine,
-					  _In_ int		nCmdShow)
+	_In_opt_ HINSTANCE /*hPrevInstance*/,
+	_In_ LPWSTR /*lpCmdLine*/,
+	_In_ int nCmdShow)
 {
-	UNREFERENCED_PARAMETER(hPrevInstance);
-	UNREFERENCED_PARAMETER(lpCmdLine);
-
 	MyRegisterClass(hInstance);
 
 	// 애플리케이션 초기화를 수행합니다:
@@ -76,11 +73,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	MSG message;
 	while (true)
 	{
-		if (g_hWnd == GetFocus())
-			g_hWndFocus = true;
-		else
-			g_hWndFocus = false;
-
+		g_hWndFocus = g_hWnd == GetFocus();
+		
 		if (PeekMessage(&message, 0, 0, 0, PM_REMOVE))
 		{
 			if (message.message == WM_QUIT)
@@ -113,21 +107,20 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 //
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
-	WNDCLASSEX wcex;
-
-	wcex.cbSize = sizeof(WNDCLASSEX);
-
-	wcex.style = CS_HREDRAW | CS_VREDRAW;
-	wcex.lpfnWndProc = WndProc;
-	wcex.cbClsExtra = 0;
-	wcex.cbWndExtra = 0;
-	wcex.hInstance = hInstance;
-	wcex.hIcon = LoadIcon(hInstance, IDI_APPLICATION);
-	wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-	wcex.lpszMenuName = NULL;
-	wcex.lpszClassName = g_lpszClass;
-	wcex.hIconSm = LoadIcon(wcex.hInstance, IDI_APPLICATION);
+	WNDCLASSEX wcex{
+		.cbSize = sizeof(WNDCLASSEX),
+		.style = CS_HREDRAW | CS_VREDRAW,
+		.lpfnWndProc = WndProc,
+		.cbClsExtra = 0,
+		.cbWndExtra = 0,
+		.hInstance = hInstance,
+		.hIcon = LoadIcon(hInstance, IDI_APPLICATION),
+		.hCursor = LoadCursor(nullptr, IDC_ARROW),
+		.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1),
+		.lpszMenuName = NULL,
+		.lpszClassName = g_lpszClass,
+		.hIconSm = LoadIcon(wcex.hInstance, IDI_APPLICATION),
+	};
 
 	return RegisterClassEx(&wcex);
 }
@@ -142,7 +135,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //        이 함수를 통해 인스턴스 핸들을 전역 변수에 저장하고
 //        주 프로그램 창을 만든 다음 표시합니다.
 //
-BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
+bool InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	g_hInstance = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
@@ -151,13 +144,13 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 	if (!g_hWnd)
 	{
-		return FALSE;
+		return false;
 	}
 
 	ShowWindow(g_hWnd, nCmdShow);
 	UpdateWindow(g_hWnd);
 
-	return TRUE;
+	return true;
 }
 
 //

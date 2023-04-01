@@ -16,7 +16,6 @@ HRESULT SceneManager::Init(HWND _hWnd)
 {
 	backBuffer = new Image();
 	backBuffer->Init(_hWnd, 1920, 1080);
-	backDC = backBuffer->GetMemDC();
 
 	return S_OK;
 }
@@ -61,8 +60,8 @@ void SceneManager::Render(HDC hdc)
 	{
 		if (currScene->IsUseBackBuffer())
 		{
-			currScene->Render(backDC);
-			TimerManager::GetSingleton()->Render(backDC);
+			currScene->Render(backBuffer->GetMemDC());
+			TimerManager::GetSingleton()->Render(backBuffer->GetMemDC());
 			// 백버퍼 복사(출력)
 			backBuffer->Render(hdc, 0, 0, currScene->GetWidth(), currScene->GetHeight());
 		}

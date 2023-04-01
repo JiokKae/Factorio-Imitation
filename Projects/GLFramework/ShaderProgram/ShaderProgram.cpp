@@ -1,128 +1,108 @@
-﻿#include "Shader.h"
+﻿#include "ShaderProgram.h"
+#include <sstream>
+#include <fstream>
+#include <iostream>
+#include <glm/gtc/type_ptr.hpp>
 
-std::string GetShaderCodeFromFile(const GLchar* path)
+ShaderProgram::ShaderProgram(const GLchar* vertexPath, const GLchar* fragmentPath)
+	: ref{ glCreateProgram() }
 {
-	// 1. 파일 경로를 통해 vertex/fragment shader 소스 코드를 검색합니다.
-	std::string shaderCode;
-	std::ifstream shaderFile;
-	// ifstream 객체들이 예외를 던질 수 있도록 합니다.
-	shaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-	try
+	Shader vertexShader(GL_VERTEX_SHADER, ShaderCode(vertexPath).c_str());
+	Shader fragmentShader(GL_FRAGMENT_SHADER, ShaderCode(fragmentPath).c_str());
+
+	glAttachShader(ref, vertexShader.Ref());
+	glAttachShader(ref, fragmentShader.Ref());
+
+	glLinkProgram(ref);
+
+	GLint success;
+	glGetProgramiv(ref, GL_LINK_STATUS, &success);
+	if (success == GL_FALSE)
 	{
-		// 파일 열기
-		shaderFile.open(("shader/" + string(path)).c_str());
-		std::stringstream shaderStream;
-		// stream에 파일의 버퍼 내용을 읽기
-		shaderStream << shaderFile.rdbuf();
-		// 파일 핸들러 닫기
-		shaderFile.close();
-		// stream을 string으로 변환
-		shaderCode = shaderStream.str();
+		char infoLog[512];
+		glGetProgramInfoLog(ref, 512, NULL, infoLog);
+		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
 	}
-	catch (std::ifstream::failure e)
+
+	glDetachShader(ref, vertexShader.Ref());
+	glDetachShader(ref, fragmentShader.Ref());
+}
+
+ShaderProgram::~ShaderProgram()
+{
+	glDeleteProgram(ref);
+}
+
+void ShaderProgram::use()
+{
+	glUseProgram(ref);
+}
+
+void ShaderProgram::setBool(const std::string& name, bool value) const
+{
+	glUniform1i(glGetUniformLocation(ref, name.c_str()), (int)value);
+}
+
+void ShaderProgram::setInt(const std::string& name, int value) const
+{
+	glUniform1i(glGetUniformLocation(ref, name.c_str()), value);
+}
+
+void ShaderProgram::setFloat(const std::string& name, float value) const
+{
+	glUniform1f(glGetUniformLocation(ref, name.c_str()), value);
+}
+
+void ShaderProgram::setVec2(const std::string& name, const glm::vec2& value) const
+{
+	glUniform2fv(glGetUniformLocation(ref, name.c_str()), 1, &value[0]);
+}
+
+void ShaderProgram::setVec3(const std::string& name, const glm::vec3& value) const
+{
+	glUniform3fv(glGetUniformLocation(ref, name.c_str()), 1, &value[0]);
+}
+
+void ShaderProgram::setMat4(const std::string& name, glm::mat4 value, bool transpose) const
+{
+	glUniformMatrix4fv(glGetUniformLocation(ref, name.c_str()), 1, transpose, glm::value_ptr(value));
+}
+
+std::string ShaderProgram::ShaderCode(const GLchar* path) const
+{
+	std::ifstream shaderFile(path);
+
+	std::stringstream shaderStream;
+	shaderStream << shaderFile.rdbuf();
+
+	return shaderStream.str();
+}
+
+ShaderProgram::Shader::Shader(GLenum shaderType, const char* shaderCode)
+	: ref{ glCreateShader(shaderType) }
+{
+	glShaderSource(ref, 1, &shaderCode, NULL);
+	glCompileShader(ref);
+
+	GLint success;
+	glGetShaderiv(ref, GL_COMPILE_STATUS, &success);
+	if (success == GL_FALSE)
 	{
-		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
-	}
-
-	return shaderCode;
+		char infoLog[512];
+		glGetShaderInfoLog(ref, 512, NULL, infoLog);
+		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+	};
 }
 
-Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
+ShaderProgram::Shader::~Shader()
 {
-    // 1. 파일 경로를 통해 vertex/fragment shader 소스 코드를 검색합니다.
-    std::string vertexCode = GetShaderCodeFromFile(vertexPath);
-    std::string fragmentCode = GetShaderCodeFromFile(fragmentPath);
-  
-    const char* vShaderCode = vertexCode.c_str();
-    const char* fShaderCode = fragmentCode.c_str();
-
-    // 2. shader 컴파일
-    unsigned int vertex, fragment;
-    int success;
-    char infoLog[512];
-
-    // vertex Shader
-    vertex = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex, 1, &vShaderCode, NULL);
-    glCompileShader(vertex);
-    // 오류가 발생한다면 컴파일 오류를 출력
-    glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(vertex, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-    };
-
-    // Fragment shader도 마찬가지
-    fragment = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment, 1, &fShaderCode, NULL);
-    glCompileShader(fragment);
-    // 오류가 발생한다면 컴파일 오류를 출력
-    glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(fragment, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-    };
-
-    // shader Program
-    ID = glCreateProgram();
-    glAttachShader(ID, vertex);
-    glAttachShader(ID, fragment);
-    glLinkProgram(ID);
-    // 오류가 발생한다면 링킹 오류를 출력
-    glGetProgramiv(ID, GL_LINK_STATUS, &success);
-    if (!success)
-    {
-        glGetProgramInfoLog(ID, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-    }
-
-    glDetachShader(ID, vertex);
-    glDetachShader(ID, fragment);
-
-    // program 내부에서 shader들이 링크 완료되었다면 이제 필요 없으므로 shader들을 삭제
-    glDeleteShader(vertex);
-    glDeleteShader(fragment);
+	glDeleteShader(ref);
 }
 
-void Shader::use()
+GLuint ShaderProgram::Shader::Ref() const
 {
-    glUseProgram(ID);
+	return ref;
 }
-
-void Shader::setBool(const std::string& name, bool value) const
-{
-    glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
-}
-
-void Shader::setInt(const std::string& name, int value) const
-{
-    glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
-}
-
-void Shader::setFloat(const std::string& name, float value) const
-{
-    glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
-}
-
-void Shader::setVec2(const std::string& name, const glm::vec2& value) const
-{
-	glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
-}
-
-void Shader::setVec3(const std::string& name, const glm::vec3& value) const
-{
-	glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
-}
-
-void Shader::setMat4(const std::string& name, glm::mat4 value, bool transpose) const
-{
-	glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, transpose, glm::value_ptr(value));
-}
-
-
-
 
 // 함수형 쉐이더 로드
 /*
