@@ -1,5 +1,4 @@
 #include "Texture.h"
-#include <iostream>
 #define STB_IMAGE_IMPLEMENTATION
 #include "../../../Librarys/stb_image/stb_image.h"
 
@@ -83,7 +82,7 @@ GLenum Texture::Format(int nrComponents)
 }
 
 Texture::LoadImageException::LoadImageException(const std::string& path)
-	: message(std::string( "Texture failed to load at path: ") + path)
+	: message(std::string("Texture failed to load at path: ") + path)
 {
 }
 
