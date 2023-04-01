@@ -13,7 +13,7 @@ public:
 	virtual HRESULT Init(int x, int y);
 	virtual void Release();
 	virtual void Update();
-	virtual void Render(Shader* lpShader);
+	virtual void Render(ShaderProgram* lpShader);
 
 	RECT GetRect();
 	Tile* GetLpTile(int x, int y);

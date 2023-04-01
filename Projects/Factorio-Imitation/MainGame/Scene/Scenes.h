@@ -18,8 +18,8 @@ class Button;
 class LightingScene : public Scene
 {
 	FreeCamera* camera;
-	Shader* lightingShader;
-	Shader* lightCubeShader;
+	ShaderProgram* lightingShader;
+	ShaderProgram* lightCubeShader;
 
 	unsigned int VBO, cubeVAO;
 	unsigned int lightCubeVAO;
@@ -67,12 +67,12 @@ public:
 class PlayScene : public Scene
 {
 	Camera* camera;
-	Shader* lightingShader;
+	ShaderProgram* lightingShader;
 	GLuint uboMatrices;
 	GLuint uboLights;
 	GLuint uboUIMatrices;
 
-	Shader* UIShader;
+	ShaderProgram* UIShader;
 	TileManager* tileManager;
 
 	TextRenderer* textRenderer;
@@ -122,7 +122,7 @@ private:
 	Texture* texture2;
 	float radio = 0.5;
 
-	Shader* ourShader;
+	ShaderProgram* ourShader;
 	FreeCamera* camera;
 
 public:

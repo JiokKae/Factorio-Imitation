@@ -1,34 +1,17 @@
 ﻿#pragma once
-#include "../framework.h"
+#include <glm/vec2.hpp>
+#include <string>
 
-class Shader;
+class ShaderProgram;
 class Texture;
-class Animation;
 class VertexArrayObject;
-class GLImage
+class GLImage final
 {
-	Texture* sourceTexture;
-
-	glm::ivec2 maxFrame;
-	float frameWidth;
-	float frameHeight;
-	VertexArrayObject* imageVAO;
-	glm::vec2 offset;
-	float alpha;			// 이미지의 투명도
-	glm::vec2 scale;
-	float angle;			// 이미지의 회전 각도
-	glm::vec2 margin;
-	bool isInit;
-
 public:
-	// 이미지 초기화
-	HRESULT Init(char const* sourceTexture, int maxFrameX = 1, int maxFrameY = 1, float marginX = 0, float marginY = 0, int width = -1, int height = -1);
+	GLImage(const std::string& textureKey, int maxFrameX = 1, int maxFrameY = 1, float marginX = 0, float marginY = 0, int width = -1, int height = -1);
+	~GLImage();
 
-	// 메모리 해제
-	void Release();
-
-	void Render(Shader* shader, float destX, float destY, int currFrameX = 0, int currFrameY = 0);
-	void AnimationRender(Shader* shader, float destX, float destY, Animation* ani);
+	void Render(ShaderProgram* shader, float destX, float destY, int currFrameX = 0, int currFrameY = 0);
 
 	void SetAngle(float value)			{ angle = value; }
 	void SetAlpha(float value)			{ alpha = value; }
@@ -45,14 +28,15 @@ public:
 	float GetZoomedFrameHeight()			{ return frameHeight * scale.y; }
 	Texture* GetLpSourceTexture()			{ return sourceTexture; }
 
-	GLImage()
-		: sourceTexture(nullptr)
-		, imageVAO(nullptr)
-		, angle(0.0f)
-		, alpha(1.0f)
-		, frameWidth(0.0f)
-		, frameHeight(0.0f)
-		, isInit(false)
-	{};
+private:
+	glm::vec2 offset;
+	glm::vec2 scale;
+	glm::vec2 margin;
+	glm::ivec2 maxFrame;
+	Texture* sourceTexture;
+	VertexArrayObject* imageVAO;
+	float frameWidth;
+	float frameHeight;
+	float alpha;	// 이미지의 투명도
+	float angle;	// 이미지의 회전 각도
 };
-

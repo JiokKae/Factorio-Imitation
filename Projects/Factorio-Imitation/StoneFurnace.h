@@ -39,9 +39,9 @@ public:
 	virtual HRESULT Init(int x, int y, DIRECTION direction, bool temp = false) override;
 	virtual void Release();
 	virtual void Update();
-	virtual void FirstRender(Shader* lpShader) override;
-	virtual void Render(Shader* lpShader) override;
-	virtual void RenderInScreen(Shader* shader, float posX, float posY) override;
+	virtual void FirstRender(ShaderProgram* lpShader) override;
+	virtual void Render(ShaderProgram* lpShader) override;
+	virtual void RenderInScreen(ShaderProgram* shader, float posX, float posY) override;
 
 	virtual bool InputItem(ItemInfo* inputItem, glm::vec2 pos) override;
 	virtual bool TakeOutItem(ItemInfo* outItem) override;

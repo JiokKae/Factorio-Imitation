@@ -4,8 +4,7 @@
 
 HRESULT SelectRecipeAssemblingUI::Init()
 {
-	image = new GLImage();
-	image->Init("UI/SelectRecipeAssemblingUI");
+	image = new GLImage("UI/SelectRecipeAssemblingUI");
 
 	deactiveButtonUI = new DeactiveButtonUI();
 	deactiveButtonUI->Init();
@@ -18,7 +17,7 @@ HRESULT SelectRecipeAssemblingUI::Init()
 void SelectRecipeAssemblingUI::Release()
 {
 	SAFE_RELEASE(deactiveButtonUI);
-	SAFE_RELEASE(image);
+	SAFE_DELETE(image);
 }
 
 void SelectRecipeAssemblingUI::Update()
@@ -29,7 +28,7 @@ void SelectRecipeAssemblingUI::Update()
 	}
 }
 
-void SelectRecipeAssemblingUI::Render(Shader* lpShader)
+void SelectRecipeAssemblingUI::Render(ShaderProgram* lpShader)
 {
 	if (active)
 	{

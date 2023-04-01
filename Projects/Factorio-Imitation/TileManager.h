@@ -4,7 +4,7 @@
 
 class Tile;
 class Chunk;
-class Shader;
+class ShaderProgram;
 class GLImage;
 class VertexArrayObject;
 class TileManager : public Singleton<TileManager>
@@ -17,14 +17,14 @@ private:
 	vector<Chunk*> vecChunkInScreen;
 	vector<Chunk*>::iterator vecChunkIt;
 
-	GLImage* tileImages;
+	std::map<int, GLImage*> tileImages;
 
 	glm::vec2 oreCurrFrame[1024];
 	glm::vec2 oreOffset[1024];
 
 	map<int, GLImage*> mapOreImages;
 
-	Shader* instancingShader;
+	ShaderProgram* instancingShader;
 	VertexArrayObject* tilesVAO;
 	glm::vec2* tileCurrFrame;
 	glm::vec2* tileOffset;
@@ -39,8 +39,6 @@ public:
 	Tile* GetLPTileUnderMouse();
 	Chunk* GetLpChunk(int x, int y);
 
-	TileManager() 
-		: tileImages(nullptr)
-	{};
+	TileManager() {};
 };
 

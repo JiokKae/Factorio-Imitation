@@ -5,8 +5,7 @@ HRESULT FuelSlotUI::Init()
 {
 	SlotUI::Init();
 	
-	fuelImage = new GLImage();
-	fuelImage->Init("UI/FuelSlotUI", 3, 1);
+	fuelImage = new GLImage("UI/FuelSlotUI", 3, 1);
 
 	itemInfo = new ItemInfo(0, 0);
 
@@ -16,11 +15,11 @@ HRESULT FuelSlotUI::Init()
 void FuelSlotUI::Release()
 {
 	SAFE_DELETE(itemInfo);
-	SAFE_RELEASE(fuelImage);
+	SAFE_DELETE(fuelImage);
 	SlotUI::Release();
 }
 
-void FuelSlotUI::Render(Shader* shader)
+void FuelSlotUI::Render(ShaderProgram* shader)
 {
 	if (active)
 	{

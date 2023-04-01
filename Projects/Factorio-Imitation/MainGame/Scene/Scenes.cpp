@@ -4,7 +4,7 @@
 #include "GLFramework/Camera3D/FreeCamera.h"
 #include "GLFramework/Light/DirectionalLight.h"
 #include "GLFramework/Light/PointLight.h"
-#include "GLFramework/Shader/Shader.h"
+#include "GLFramework/ShaderProgram/ShaderProgram.h"
 #include "GLFramework/Texture/Texture.h"
 #include "GLFramework/UI/UI.h"
 #include "2DFramework/Button/Button.h"
@@ -34,8 +34,8 @@ HRESULT LightingScene::Init()
 
 	// build and compile our shader zprogram
 	// ------------------------------------
-	lightingShader = new Shader("1.colors.vert", "1.colors.frag");
-	lightCubeShader = new Shader("1.light_cube.vert", "1.light_cube.frag");
+	lightingShader = new ShaderProgram("shader/1.colors.vert", "shader/1.colors.frag");
+	lightCubeShader = new ShaderProgram("shader/1.light_cube.vert", "shader/1.light_cube.frag");
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
@@ -114,10 +114,8 @@ HRESULT LightingScene::Init()
 	glEnableVertexAttribArray(0);
 
 	// 텍스처 로드 및 생성
-	diffuseMap = new Texture();
-	diffuseMap->Init("base/graphics/entity/wooden-chest/hr-wooden-chest.png");
-	specularMap = new Texture();
-	specularMap->Init("base/graphics/entity/wooden-chest/hr-wooden-chest_specular.png");
+	diffuseMap = new Texture("base/graphics/entity/wooden-chest/hr-wooden-chest.png");
+	specularMap = new Texture("base/graphics/entity/wooden-chest/hr-wooden-chest_specular.png");
 
 	// shader configuration
 	// --------------------
@@ -136,8 +134,8 @@ void LightingScene::Release()
 	glDeleteVertexArrays(1, &lightCubeVAO);
 	glDeleteBuffers(1, &VBO);
 
-	SAFE_RELEASE(specularMap);
-	SAFE_RELEASE(diffuseMap);
+	SAFE_DELETE(specularMap);
+	SAFE_DELETE(diffuseMap);
 	SAFE_DELETE(lightCubeShader);
 	SAFE_DELETE(lightingShader);
 	SAFE_RELEASE(camera);
@@ -368,8 +366,8 @@ HRESULT PlayScene::Init()
 
 	// build and compile our shader zprogram
 	// ------------------------------------
-	lightingShader = new Shader("StandardVertexShader.glsl", "StandardFragmentShader.glsl");
-	UIShader = new Shader("UIVertexShader.glsl", "UIFragmentShader.glsl");
+	lightingShader = new ShaderProgram("shader/StandardVertexShader.glsl", "shader/StandardFragmentShader.glsl");
+	UIShader = new ShaderProgram("shader/UIVertexShader.glsl", "shader/UIFragmentShader.glsl");
 
 	// UI Init
 	UI* characterUI = MainGameUIFactory::CreateUI(MainGameUIFactory::CHARACTER_UI);
@@ -667,16 +665,14 @@ HRESULT TenCubeSpaceScene::Init()
 	glEnableVertexAttribArray(1);
 
 	// 5. 오브젝트를 그리고 싶을 때 우리가 생성한 shader program을 사용
-	ourShader = new Shader("SimpleVertexShader.glsl", "SimpleFragmentShader.glsl");
+	ourShader = new ShaderProgram("shader/SimpleVertexShader.glsl", "shader/SimpleFragmentShader.glsl");
 
 	// uncomment this call to draw in wireframe polygons.
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	// 텍스처 로드 및 생성
-	texture1 = new Texture();
-	texture1->Init("base/graphics/entity/assembling-machine-1/assembling-machine-1.png");
-	texture2 = new Texture();
-	texture2->Init("base/graphics/entity/artillery-turret/hr-artillery-turret-base.png");
+	texture1 = new Texture("base/graphics/entity/assembling-machine-1/assembling-machine-1.png");
+	texture2 = new Texture("base/graphics/entity/artillery-turret/hr-artillery-turret-base.png");
 
 	ourShader->use(); // uniform을 설정하기 전에 shader를 활성화해야 한다는 것을 잊지마세요!  
 	ourShader->setInt("texture1", texture1->GetID());
@@ -701,8 +697,8 @@ void TenCubeSpaceScene::Release()
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 
-	SAFE_RELEASE(texture1);
-	SAFE_RELEASE(texture2);
+	SAFE_DELETE(texture1);
+	SAFE_DELETE(texture2);
 	SAFE_RELEASE(camera);
 	SAFE_DELETE(ourShader);
 }

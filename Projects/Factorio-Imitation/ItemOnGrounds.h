@@ -12,7 +12,7 @@ class ItemOnGrounds : public GameNode
 
 	GLImage* allItemsImage;
 
-	Shader* instancingShader;
+	ShaderProgram* instancingShader;
 	VertexArrayObject* itemsVAO;
 
 public:

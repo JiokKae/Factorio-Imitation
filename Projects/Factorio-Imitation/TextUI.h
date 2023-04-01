@@ -8,7 +8,7 @@ public:
 	virtual HRESULT Init() override;
 	virtual void Release() override;
 	virtual void Update() override;
-	virtual void Render(Shader* lpShader) override;
+	virtual void Render(ShaderProgram* lpShader) override;
 
 	void SetText(string str) { text = str; }
 	string GetText() { return text; }

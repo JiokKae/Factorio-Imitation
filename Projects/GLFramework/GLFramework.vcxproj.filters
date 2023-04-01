@@ -13,9 +13,6 @@
     <Filter Include="Light">
       <UniqueIdentifier>{a6c2ed73-9666-4b95-8122-1d71f80054e6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader">
-      <UniqueIdentifier>{6c865d72-3cfe-4c4d-8ea9-fb9abad61972}</UniqueIdentifier>
-    </Filter>
     <Filter Include="TextRenderer">
       <UniqueIdentifier>{19dfb80a-2b7b-40c0-bc0e-7fd510e1e3b8}</UniqueIdentifier>
     </Filter>
@@ -27,6 +24,9 @@
     </Filter>
     <Filter Include="VertexDataObject">
       <UniqueIdentifier>{1900a001-2ed1-4a3e-840c-024331ebae0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShaderProgram">
+      <UniqueIdentifier>{6c865d72-3cfe-4c4d-8ea9-fb9abad61972}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -44,9 +44,6 @@
     </ClCompile>
     <ClCompile Include="Light\PointLight.cpp">
       <Filter>Light</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader\Shader.cpp">
-      <Filter>Shader</Filter>
     </ClCompile>
     <ClCompile Include="TextRenderer\TextRenderer.cpp">
       <Filter>TextRenderer</Filter>
@@ -66,6 +63,9 @@
     <ClCompile Include="VertexDataObject\VertexBufferObject.cpp">
       <Filter>VertexDataObject</Filter>
     </ClCompile>
+    <ClCompile Include="ShaderProgram\ShaderProgram.cpp">
+      <Filter>ShaderProgram</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera\Camera.h">
@@ -82,9 +82,6 @@
     </ClInclude>
     <ClInclude Include="Light\PointLight.h">
       <Filter>Light</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader\Shader.h">
-      <Filter>Shader</Filter>
     </ClInclude>
     <ClInclude Include="TextRenderer\TextRenderer.h">
       <Filter>TextRenderer</Filter>
@@ -105,5 +102,8 @@
       <Filter>VertexDataObject</Filter>
     </ClInclude>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="ShaderProgram\ShaderProgram.h">
+      <Filter>ShaderProgram</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

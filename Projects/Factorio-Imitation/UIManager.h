@@ -19,7 +19,7 @@ public:
 	void Release();
 	void Update();
 	void HandUpdate();
-	void Render(Shader* lpShader);
+	void Render(ShaderProgram* lpShader);
 
 	UI* AddUI(string strKey, UI* lpUi);
 	void DeleteUI(string strKey);

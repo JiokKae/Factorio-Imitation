@@ -5,11 +5,9 @@ HRESULT IronChest::Init(int x, int y, DIRECTION _direction, bool _temp)
 	itemId = ItemEnum::IRON_CHEST;
 	inventorySize = 32;
 
-	mainImage = new GLImage();
-	mainImage->Init("Entity/IronChest");
+	mainImage = new GLImage("Entity/IronChest");
 
-	shadowImage = new GLImage();
-	shadowImage->Init("Entity/IronChest-shadow");
+	shadowImage = new GLImage("Entity/IronChest-shadow");
 	shadowImage->SetAlpha(0.5f);
 
 	Container::Init(x, y, _direction, _temp);
@@ -22,21 +20,21 @@ void IronChest::Release()
 {
 	Container::Release();
 
-	SAFE_RELEASE(mainImage);
-	SAFE_RELEASE(shadowImage);
+	SAFE_DELETE(mainImage);
+	SAFE_DELETE(shadowImage);
 }
 
-void IronChest::FirstRender(Shader* shader)
+void IronChest::FirstRender(ShaderProgram* shader)
 {
 	shadowImage->Render(shader, position.x + 22, position.y - 18);
 }
 
-void IronChest::Render(Shader* shader)
+void IronChest::Render(ShaderProgram* shader)
 {
 	mainImage->Render(shader, position.x, position.y);
 }
 
-void IronChest::RenderInScreen(Shader* shader, float posX, float posY)
+void IronChest::RenderInScreen(ShaderProgram* shader, float posX, float posY)
 {
 	mainImage->Render(shader, posX, posY);
 }

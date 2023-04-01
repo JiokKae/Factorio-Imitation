@@ -35,7 +35,7 @@ void InventoryUI::Update()
 	}
 }
 
-void InventoryUI::Render(Shader* lpShader)
+void InventoryUI::Render(ShaderProgram* lpShader)
 {
 	for (int i = 0; i < SLOT_SIZE; i++)
 	{

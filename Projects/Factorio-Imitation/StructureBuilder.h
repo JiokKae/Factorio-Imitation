@@ -22,7 +22,7 @@ public:
 	virtual HRESULT Init();
 	virtual void Release();
 	virtual void Update(vec2* playerPos);
-	virtual void Render(Shader* shader);
+	virtual void Render(ShaderProgram* shader);
 
 	void Active(int itemId);
 	void Deactive();

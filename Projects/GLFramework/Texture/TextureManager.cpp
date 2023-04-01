@@ -13,7 +13,6 @@ void TextureManager::Release()
 	{
 		if (it->second)
 		{
-			(it->second)->Release();
 			delete (it->second);
 			it = mapTextureDatas.erase(it);
 		}
@@ -49,20 +48,22 @@ Texture* TextureManager::AddTexture(string strKey, char const* path, bool mipmap
 
 Texture* TextureManager::AddTexture(string strKey, char const* path, bool mipmap, bool flip, GLint filter)
 {
-	Texture* texture = nullptr;
-	texture = FindTexture(strKey);
+	Texture* texture{ FindTexture(strKey) };
 	if (texture)
 	{
 		return texture;
 	}
-	texture = new Texture();
-	if (FAILED(texture->Init(path, mipmap, flip, filter)))
+
+	try
 	{
-		SAFE_RELEASE(texture);
+		texture = new Texture(path, mipmap, flip, filter);
+	}
+	catch (Texture::LoadImageException e)
+	{
 		return nullptr;
 	}
 
-	mapTextureDatas.insert(make_pair(strKey, texture));
+	mapTextureDatas.emplace(strKey, texture);
 
 	return texture;
 }
@@ -72,7 +73,6 @@ void TextureManager::DeleteTexture(string strKey)
 	map<string, Texture*>::iterator it = mapTextureDatas.find(strKey);
 	if (it != mapTextureDatas.end())
 	{
-		it->second->Release();
 		delete it->second;
 
 		mapTextureDatas.erase(it);

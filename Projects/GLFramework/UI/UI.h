@@ -2,7 +2,7 @@
 #include "../framework.h"
 #include "2DFramework/GameNode.h"
 
-class Shader;
+class ShaderProgram;
 class GLImage;
 class UI : public GameNode
 {
@@ -16,7 +16,7 @@ public:
 	virtual HRESULT Init();
 	virtual void Release();
 	virtual void Update();
-	virtual void Render(Shader* lpShader);
+	virtual void Render(ShaderProgram* lpShader);
 
 	void SetParent(UI* ui)				{ parent = ui; }
 	void SetActive(bool value)			{ active = value; }

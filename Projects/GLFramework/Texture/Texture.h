@@ -1,24 +1,32 @@
 #pragma once
-#include "../framework.h"
-// CC
+#include <glew/glew.h>
+#include <string>
 
-class Texture
+class Texture final
 {
+public:
+	class LoadImageException : public std::exception 
+	{
+	public:
+		LoadImageException(const std::string& path);
+		const char* what() const noexcept override;
+	private:
+		std::string message;
+	};
+
+	Texture(const std::string& path, bool mipmap = true, bool flip = true, GLint filter = GL_NEAREST);
+	~Texture();
+
+	unsigned int GetID();
+	int GetWidth(); 
+	int GetHeight(); 
+
+private:
 	unsigned int ID;
 	int width;
 	int height;
-	int nrComponents;
-	GLenum format;
 
-public:
-	HRESULT Init(char const* path, bool mipmap = true, bool flip = true, GLint filter = GL_NEAREST);
-	void Release();
-
-	unsigned int GetID()	{ return ID; }
-	int GetWidth()			{ return width; }
-	int GetHeight()			{ return height; }
-
-	Texture() {};
-	~Texture() {};
+	GLint MinFilter(GLint filter, bool mipmap);
+	GLenum Format(int nrComponents);
 };
 
