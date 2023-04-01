@@ -114,10 +114,8 @@ HRESULT LightingScene::Init()
 	glEnableVertexAttribArray(0);
 
 	// 텍스처 로드 및 생성
-	diffuseMap = new Texture();
-	diffuseMap->Init("base/graphics/entity/wooden-chest/hr-wooden-chest.png");
-	specularMap = new Texture();
-	specularMap->Init("base/graphics/entity/wooden-chest/hr-wooden-chest_specular.png");
+	diffuseMap = new Texture("base/graphics/entity/wooden-chest/hr-wooden-chest.png");
+	specularMap = new Texture("base/graphics/entity/wooden-chest/hr-wooden-chest_specular.png");
 
 	// shader configuration
 	// --------------------
@@ -136,8 +134,8 @@ void LightingScene::Release()
 	glDeleteVertexArrays(1, &lightCubeVAO);
 	glDeleteBuffers(1, &VBO);
 
-	SAFE_RELEASE(specularMap);
-	SAFE_RELEASE(diffuseMap);
+	SAFE_DELETE(specularMap);
+	SAFE_DELETE(diffuseMap);
 	SAFE_DELETE(lightCubeShader);
 	SAFE_DELETE(lightingShader);
 	SAFE_RELEASE(camera);
@@ -673,10 +671,8 @@ HRESULT TenCubeSpaceScene::Init()
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	// 텍스처 로드 및 생성
-	texture1 = new Texture();
-	texture1->Init("base/graphics/entity/assembling-machine-1/assembling-machine-1.png");
-	texture2 = new Texture();
-	texture2->Init("base/graphics/entity/artillery-turret/hr-artillery-turret-base.png");
+	texture1 = new Texture("base/graphics/entity/assembling-machine-1/assembling-machine-1.png");
+	texture2 = new Texture("base/graphics/entity/artillery-turret/hr-artillery-turret-base.png");
 
 	ourShader->use(); // uniform을 설정하기 전에 shader를 활성화해야 한다는 것을 잊지마세요!  
 	ourShader->setInt("texture1", texture1->GetID());
@@ -701,8 +697,8 @@ void TenCubeSpaceScene::Release()
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 
-	SAFE_RELEASE(texture1);
-	SAFE_RELEASE(texture2);
+	SAFE_DELETE(texture1);
+	SAFE_DELETE(texture2);
 	SAFE_RELEASE(camera);
 	SAFE_DELETE(ourShader);
 }
