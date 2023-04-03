@@ -31,7 +31,7 @@ int Ore::GetFrameY() const
 
 	for (int i = 0; i < AMOUNTS.size(); ++i)
 		if (amount > AMOUNTS[i])
-			return AMOUNTS.size() - i;
+			return static_cast<int>(AMOUNTS.size()) - i;
 	return 0;
 }
 
