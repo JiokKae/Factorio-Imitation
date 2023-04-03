@@ -8,23 +8,18 @@ HRESULT Tile::Init(int x, int y)
 
 	kind = KIND::DIRT_1;
 
-	ore = new Ore();
-	ore->Init(x, y);
+	ore = new Ore(x, y);
 
 	return S_OK;
 }
 
 void Tile::Release()
 {
-	SAFE_RELEASE(ore);
+	SAFE_DELETE(ore);
 }
 
 void Tile::Update()
 {
-	if (ore)
-	{
-		ore->Update();
-	}
 }
 
 Tile* Tile::GetAroundTile(DIRECTION direction)
