@@ -77,7 +77,7 @@ void ItemOnGrounds::Update(FRECT cameraFRect)
             if (CheckRectCollision(playerRect, (*it)->GetCollisionFRect()))
             {
                 pickedUp = true;
-                player->GetLpInventory()->AddItem(new ItemInfo((*it)->GetItemEnum(), 1));
+                player->GetLpInventory()->AddItem(ItemInfo((*it)->GetItemEnum(), 1));
                 (*it)->Release();
                 delete (*it);
                 it = vecItems.erase(it);

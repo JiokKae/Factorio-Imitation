@@ -44,7 +44,7 @@ void InventorySlotUI::OnClick(int key)
 		else
 		{
 			// 핸드를 전부 주고
-			EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->AddItem(new ItemInfo(hand->id, hand->amount));
+			EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->AddItem(ItemInfo(hand->id, hand->amount));
 			hand->amount = 0;
 
 			// 슬롯에 아이템이 있다면 
@@ -62,7 +62,7 @@ void InventorySlotUI::OnClick(int key)
 		if (hand->amount)
 		{
 			// 핸드에서 하나만 슬롯으로
-			EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->AddItem(new ItemInfo(hand->id, 1));
+			EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->AddItem(ItemInfo(hand->id, 1));
 			hand->amount -= 1;
 		}
 		// 핸드가 없다면

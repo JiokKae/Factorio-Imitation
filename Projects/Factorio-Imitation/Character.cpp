@@ -33,23 +33,22 @@ HRESULT Character::Init()
 	animationSpeed[MINING] = 0.022f;
 	
 	inventory = new Inventory();
-	inventory->Init();
 
-	inventory->AddItem(new ItemInfo(COAL, 500));
-	inventory->AddItem(new ItemInfo(BURNER_MINING_DRILL, 40));
-	inventory->AddItem(new ItemInfo(IRON_PLATE, 30));
-	inventory->AddItem(new ItemInfo(IRON_PLATE, 30));
-	inventory->AddItem(new ItemInfo(ASSEMBLING_MACHINE_1, 30));
-	inventory->AddItem(new ItemInfo(TRANSPORT_BELT, 200));
-	inventory->AddItem(new ItemInfo(BURNER_INSERTER, 123));
-	inventory->AddItem(new ItemInfo(WOOD, 300));
-	inventory->AddItem(new ItemInfo(STONE_FURNACE, 200));
-	inventory->AddItem(new ItemInfo(SOLID_FUEL, 30));
-	inventory->AddItem(new ItemInfo(ROCKER_FUEL, 20));
-	inventory->AddItem(new ItemInfo(NUCLEAR_FUEL, 15));
+	inventory->AddItem(ItemInfo(COAL, 500));
+	inventory->AddItem(ItemInfo(BURNER_MINING_DRILL, 40));
+	inventory->AddItem(ItemInfo(IRON_PLATE, 30));
+	inventory->AddItem(ItemInfo(IRON_PLATE, 30));
+	inventory->AddItem(ItemInfo(ASSEMBLING_MACHINE_1, 30));
+	inventory->AddItem(ItemInfo(TRANSPORT_BELT, 200));
+	inventory->AddItem(ItemInfo(BURNER_INSERTER, 123));
+	inventory->AddItem(ItemInfo(WOOD, 300));
+	inventory->AddItem(ItemInfo(STONE_FURNACE, 200));
+	inventory->AddItem(ItemInfo(SOLID_FUEL, 30));
+	inventory->AddItem(ItemInfo(ROCKER_FUEL, 20));
+	inventory->AddItem(ItemInfo(NUCLEAR_FUEL, 15));
 	for (int i = 0; i < ItemEnum::END; i++)
 	{
-		inventory->AddItem(new ItemInfo(i, 200));
+		inventory->AddItem(ItemInfo(i, 200));
 	}
 
 	speed = 566.0f;
@@ -58,7 +57,7 @@ HRESULT Character::Init()
 
 void Character::Release()
 {
-	SAFE_RELEASE(inventory);
+	SAFE_DELETE(inventory);
 	
 	for (auto& image : mainImages)
 	{

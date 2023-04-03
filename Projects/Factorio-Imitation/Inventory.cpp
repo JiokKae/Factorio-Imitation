@@ -1,67 +1,65 @@
 #include "Inventory.h"
 
-HRESULT Inventory::Init()
+Inventory::Inventory()
 {
-	return S_OK;
 }
 
-void Inventory::Release()
+Inventory::~Inventory()
 {
-	auto it = mapInventory.begin();
-	while (it != mapInventory.end())
+	for (auto& [id, item] : inventory)
 	{
-		SAFE_DELETE(it->second);
-		it = mapInventory.erase(it);
+		SAFE_DELETE(item);
 	}
-	mapInventory.clear();
 }
 
-void Inventory::AddItem(ItemInfo* disposableItemInfo)
+void Inventory::AddItem(const ItemInfo& item)
 {
-	auto it = mapInventory.find((ItemEnum)disposableItemInfo->id);
-	if (it != mapInventory.end())
-	{
-		it->second->amount += disposableItemInfo->amount;
-		delete disposableItemInfo;
+	auto inventoryItem = FindItem(item.id);
+	if (inventoryItem)
+	{	
+		inventoryItem->amount += item.amount;
+		return;
 	}
-	else
-	{
-		mapInventory.insert(make_pair((ItemEnum)disposableItemInfo->id, disposableItemInfo));
-	}
+
+	inventory.emplace(static_cast<ItemEnum>(item.id), new ItemInfo(item.id, item.amount));
 }
 
 vector<ItemInfo*> Inventory::GetItemInfoArray()
 {
 	vector<ItemInfo*> vecItemInfo;
-	for (auto it = mapInventory.begin(); it != mapInventory.end(); it++)
+	for (auto& [id, item] : inventory)
 	{
-		if(!it->second->IsEmpty())
-			vecItemInfo.push_back(it->second);
+		if (item->IsEmpty() == false)
+			vecItemInfo.push_back(item);
 	}
 	return vecItemInfo;
 }
 
-bool Inventory::GetItem(int itemId, ItemInfo* destItemInfo)
+bool Inventory::GetItem(int itemId, ItemInfo* destItem)
 {
-	if (destItemInfo->IsEmpty())
+	if (destItem->IsEmpty() == false)
 	{
-		auto it = mapInventory.find((ItemEnum)itemId);
-		if (it != mapInventory.end())
-		{
-			it->second->MoveAllItemTo(destItemInfo);
-		}
+		return false;
 	}
 
-	return false;
+	auto item = FindItem(itemId);
+	if (item == nullptr)
+	{
+		return false;
+	}
+
+	item->MoveAllItemTo(destItem);
+
+	return true;
 }
 
 ItemInfo* Inventory::FindItem(int itemId)
 {
-	auto it = mapInventory.find((ItemEnum)itemId);
-	if (it != mapInventory.end())
+	auto it = inventory.find(static_cast<ItemEnum>(itemId));
+	if (it == inventory.end())
 	{
-		return it->second;
-	}
-	else
 		return nullptr;
+	}
+
+	return it->second;
 }
