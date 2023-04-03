@@ -77,7 +77,7 @@ void ItemOnGrounds::Update(FRECT cameraFRect)
             if (CheckRectCollision(playerRect, (*it)->GetCollisionFRect()))
             {
                 pickedUp = true;
-                player->GetLpInventory()->AddItem(ItemInfo((*it)->GetItemEnum(), 1));
+                player->GetLpInventory()->AddItem(ItemInfo((*it)->GetItemId(), 1));
                 (*it)->Release();
                 delete (*it);
                 it = vecItems.erase(it);
@@ -114,7 +114,7 @@ void ItemOnGrounds::Render()
     glBindVertexArray(itemsVAO->GetID());
 
     for (int i = 0; i < renderItemSize; i++)
-        infoDatas[i] = glm::vec2(vecItemsInScreen[i]->GetItemEnum() % 8, 7 - vecItemsInScreen[i]->GetItemEnum() / 8);
+        infoDatas[i] = glm::vec2(vecItemsInScreen[i]->GetItemId() % 8, 7 - vecItemsInScreen[i]->GetItemId() / 8);
     itemsVAO->SetVBOData(1, sizeof(glm::vec2) * renderItemSize, &infoDatas[0], GL_DYNAMIC_DRAW);
 
     for (int i = 0; i < renderItemSize; i++)

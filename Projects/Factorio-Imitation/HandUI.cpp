@@ -76,9 +76,7 @@ void HandUI::Update()
 			{
 				handItem->IncreaseAmount(-1);
 
-				ItemOnGround* item = new ItemOnGround();
-				item->Init((ItemEnum)handItem->id, g_cursorPosition);
-				EntityManager::GetSingleton()->AddItemOnGround(item);
+				EntityManager::GetSingleton()->AddItemOnGround(new ItemOnGround(static_cast<ItemEnum>(handItem->id), g_cursorPosition.x, g_cursorPosition.y));
 			}
 		}
 
