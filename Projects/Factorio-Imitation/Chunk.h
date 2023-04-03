@@ -6,8 +6,8 @@ class Tile;
 class Shader;
 class Chunk : public GameNode
 {
+	std::vector<Tile*> tiles;
 	glm::ivec2 coord;
-	Tile* tiles;
 
 public:
 	virtual HRESULT Init(int x, int y);
@@ -19,8 +19,6 @@ public:
 	Tile* GetLpTile(int x, int y);
 	glm::ivec2 GetCoord() { return coord; }
 
-	Chunk() 
-		: tiles(nullptr)
-	{};
+	Chunk() {};
 };
 

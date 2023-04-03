@@ -1,15 +1,16 @@
 #include "Chunk.h"
 #include "Tile.h"
 #include "Ore.h"
+
 HRESULT Chunk::Init(int _x, int _y)
 {
     coord = { _x, _y };
-    tiles = new Tile[CHUNK_IN_TILE * CHUNK_IN_TILE]();
+    tiles.reserve(CHUNK_IN_TILE * CHUNK_IN_TILE);
     for (int y = 0; y < CHUNK_IN_TILE; y++)
     {
         for (int x = 0; x < CHUNK_IN_TILE; x++)
         {
-            tiles[y * CHUNK_IN_TILE + x].Init(x + coord.x * CHUNK_IN_TILE, y + coord.y * CHUNK_IN_TILE);
+		tiles.push_back(new Tile(x + coord.x * CHUNK_IN_TILE, y + coord.y * CHUNK_IN_TILE));
         }
     }
 
@@ -18,22 +19,18 @@ HRESULT Chunk::Init(int _x, int _y)
 
 void Chunk::Release()
 {
-    if (tiles)
+    if (!tiles.empty())
     {
         for (int i = 0; i < CHUNK_IN_TILE * CHUNK_IN_TILE; i++)
         {
-            tiles[i].Release();
+            SAFE_DELETE(tiles[i]);
         }
+	tiles.clear();
     }
-    SAFE_ARR_DELETE(tiles);
 }
 
 void Chunk::Update()
 {
-    for (int i = 0; i < CHUNK_IN_TILE * CHUNK_IN_TILE; i++)
-    {
-        tiles[i].Update();
-    }
 }
 
 void Chunk::Render(ShaderProgram* /*lpShaderProgram*/)
@@ -55,5 +52,5 @@ RECT Chunk::GetRect()
 
 Tile* Chunk::GetLpTile(int x, int y)
 {
-    return &tiles[y * CHUNK_IN_TILE + x];
+    return tiles[y * CHUNK_IN_TILE + x];
 }

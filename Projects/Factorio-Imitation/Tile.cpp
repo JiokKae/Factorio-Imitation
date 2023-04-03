@@ -1,25 +1,52 @@
 #include "Tile.h"
 #include "Ore.h"
 
-HRESULT Tile::Init(int x, int y)
+Tile::Tile(int x, int y)
+	: coord(x, y)
+	, structure{ nullptr }
+	, ore{ new Ore(x, y) }
+	, kind{ KIND::DIRT_1 }
 {
-	coord.x = x;
-	coord.y = y;
-
-	kind = KIND::DIRT_1;
-
-	ore = new Ore(x, y);
-
-	return S_OK;
 }
 
-void Tile::Release()
+Tile::~Tile()
 {
 	SAFE_DELETE(ore);
 }
 
-void Tile::Update()
+const glm::ivec2& Tile::GetCoord() const
 {
+	return coord;
+}
+
+Tile::KIND Tile::GetKind() const
+{
+	return kind;
+}
+
+Ore* Tile::GetLpOre()
+{
+	return ore;
+}
+
+Structure* Tile::GetLpSturcture()
+{
+	return structure;
+}
+
+const std::vector<ItemOnGround*>& Tile::GetItems() const
+{
+	return items;
+}
+
+void Tile::LinkStructure(Structure* _structure)
+{
+	structure = _structure;
+}
+
+void Tile::UnlinkStructure()
+{
+	structure = nullptr;
 }
 
 Tile* Tile::GetAroundTile(DIRECTION direction)
@@ -41,12 +68,5 @@ void Tile::LinkItemOnGround(ItemOnGround* item)
 
 void Tile::UnlinkItemOnGround(ItemOnGround* item)
 {
-	for (auto it = items.cbegin(); it != items.cend(); ++it)
-	{
-		if (*it == item) 
-		{
-			items.erase(it);
-			return;
-		}
-	}
+	std::erase(items, item);
 }
