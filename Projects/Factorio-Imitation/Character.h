@@ -7,14 +7,12 @@ class Inventory;
 class Character : public Entity
 {
 public:
-	// 캐릭터의 방향
 	enum Direction {
 		leftup,	left, leftdown,
 		down, rightdown, right,
 		rightup, up,
 	};
 
-	// 캐릭터의 상태
 	enum State {
 		IDLE,
 		RUNNING,
@@ -22,10 +20,27 @@ public:
 		END
 	};
 
+	Character();
+	~Character();
+
+	void Update();
+	void Render(ShaderProgram* lpShader);
+
+	void ChangeState(State state);
+
+	void Idle();
+	void Running();
+	void Mining();
+
+	glm::vec2* GetLpPosition() { return &position; }
+	FRECT GetCollisionFRect() override;
+	FRECT GetPickUpFRect() const;
+	Inventory* GetLpInventory();
+
 private:
 	std::vector<GLImage*> mainImages;
 	std::vector<GLImage*> shadowImages;
-	
+
 	float animationSpeed[State::END];
 	int animationCurrFrame[State::END];
 	glm::vec2 imageAniOffset[State::END];
@@ -37,24 +52,7 @@ private:
 	float speed;
 	Inventory* inventory;
 
-public:
-	virtual HRESULT Init();
-	virtual void Release();
-	virtual void Update();
-	virtual void Render(ShaderProgram* lpShader);
-
-	void ChangeState(State state);
-
-	void Idle();
-	void Running();
-	void Mining();
-
-	glm::vec2* GetLpPosition() { return &position; }
-	virtual FRECT GetCollisionFRect() override;
-	FRECT GetPickUpFRect();
-	Inventory* GetLpInventory();
-
-	Character();
-	virtual ~Character() {};
+	Direction GetDirection(float deltaX, float deltaY) const;
+	glm::vec2 GetPositionDelta(float distance) const;
 };
 

@@ -1,15 +1,19 @@
-#include "Character.h"
+﻿#include "Character.h"
 #include "../GLFramework/Image/GLImage.h"
 #include "Inventory.h"
 #include "Structure.h"
 #include "Tile.h"
 #include "TransportBelt.h"
-HRESULT Character::Init()
+
+Character::Character()
+	: mainImages(State::END)
+	, shadowImages(State::END)
+	, accumulateTime{ 0.0f }
+	, direction{ Direction::up }
+	, speed{ 566.0f }
 {
 	position = { 0.0f, 0.0f };
-	
-	direction = Direction::up;
-	mainImages.resize(State::END);
+
 	mainImages[IDLE] = new GLImage("Entity/Character-level1_idle", 22, 8);
 	imageAniOffset[IDLE] = { 0.0f, 43.0f };
 	mainImages[RUNNING] = new GLImage("Entity/Character-level1_running", 22, 8);
@@ -17,10 +21,9 @@ HRESULT Character::Init()
 	mainImages[MINING] = new GLImage("Entity/Character-level1_mining_tool", 26, 8);
 	imageAniOffset[MINING] = { 0.0f, 33.0f };
 
-	shadowImages.resize(State::END);
 	shadowImages[IDLE] = new GLImage("Entity/Character-level1_idle_shadow", 22, 8);
 	shadowImages[IDLE]->SetAlpha(0.6f);
-	shadowAniOffset[IDLE] = {60.0f, 1.0f};
+	shadowAniOffset[IDLE] = { 60.0f, 1.0f };
 	shadowImages[RUNNING] = new GLImage("Entity/Character-level1_running_shadow", 22, 8);
 	shadowImages[RUNNING]->SetAlpha(0.6f);
 	shadowAniOffset[RUNNING] = { 60.0f, 1.0f };
@@ -31,7 +34,7 @@ HRESULT Character::Init()
 	animationSpeed[IDLE] = 0.105f;
 	animationSpeed[RUNNING] = 0.025f;
 	animationSpeed[MINING] = 0.022f;
-	
+
 	inventory = new Inventory();
 
 	inventory->AddItem(ItemInfo(COAL, 500));
@@ -50,15 +53,12 @@ HRESULT Character::Init()
 	{
 		inventory->AddItem(ItemInfo(i, 200));
 	}
-
-	speed = 566.0f;
-	return S_OK;
 }
 
-void Character::Release()
+Character::~Character()
 {
 	SAFE_DELETE(inventory);
-	
+
 	for (auto& image : mainImages)
 	{
 		SAFE_DELETE(image);
@@ -94,8 +94,7 @@ void Character::Update()
 	Structure* structure = TileManager::GetSingleton()->GetLpTile(coord.x, coord.y)->GetLpSturcture();
 	if (structure && TransportBelt::IsTransportBelt(structure->GetItemId()))
 	{
-		TransportBelt* belt = (TransportBelt*)structure;
-		belt->FlowItem(this, false);
+		static_cast<TransportBelt*>(structure)->FlowItem(this, false);
 	}
 
 	while (accumulateTime > animationSpeed[state])
@@ -123,58 +122,17 @@ void Character::ChangeState(State _state)
 
 void Character::Idle()
 {
-	float scaledspeed = speed * TimerManager::GetSingleton()->GetTimeElapsed();
-	glm::vec2 deltaPos{};
-	if (KeyManager::GetSingleton()->IsStayKeyDown('W'))
-		deltaPos.y += scaledspeed;
+	glm::vec2 delta{ GetPositionDelta(speed * TimerManager::GetSingleton()->GetTimeElapsed()) };
+	position += delta;
 
-	if (KeyManager::GetSingleton()->IsStayKeyDown('S'))
-		deltaPos.y -= scaledspeed;
-
-	if (KeyManager::GetSingleton()->IsStayKeyDown('A'))
-		deltaPos.x -= scaledspeed;
-
-	if (KeyManager::GetSingleton()->IsStayKeyDown('D'))
-		deltaPos.x += scaledspeed;
-
-	if (deltaPos.x != 0 && deltaPos.y != 0)
-		position += deltaPos / 1.4142135623f;
-	else
-		position += deltaPos;
-
-	if (deltaPos.x != 0 || deltaPos.y != 0)
-	{
-		Direction newDirection;
-		if (deltaPos.x > 0)
-		{
-			if (deltaPos.y > 0)
-				newDirection = Direction::rightup;
-			else if (deltaPos.y < 0)
-				newDirection = Direction::rightdown;
-			else
-				newDirection = Direction::right;
-		}
-		else if (deltaPos.x < 0)
-		{
-			if (deltaPos.y > 0)
-				newDirection = Direction::leftup;
-			else if (deltaPos.y < 0)
-				newDirection = Direction::leftdown;
-			else
-				newDirection = Direction::left;
-		}
-		else
-		{
-			if (deltaPos.y > 0)
-				newDirection = Direction::up;
-			else
-				newDirection = Direction::down;
-		}
-		direction = newDirection;
+	if (delta != glm::vec2{})
+	{	
+		direction = GetDirection(delta.x, delta.y);
 		ChangeState(State::RUNNING);
 	}
 
 	/*
+	* // TODO: 광석 채굴 구현
 	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RBUTTON))
 	{
 		ChangeState(State::MINING);
@@ -184,58 +142,16 @@ void Character::Idle()
 
 void Character::Running()
 {
-	float scaledspeed = speed * TimerManager::GetSingleton()->GetTimeElapsed();
-	glm::vec2 deltaPos{};
-	if (KeyManager::GetSingleton()->IsStayKeyDown('W'))
-		deltaPos.y += scaledspeed;
+	glm::vec2 delta{ GetPositionDelta(speed * TimerManager::GetSingleton()->GetTimeElapsed()) };
+	position += delta;
 
-	if (KeyManager::GetSingleton()->IsStayKeyDown('S'))
-		deltaPos.y -= scaledspeed;
-
-	if (KeyManager::GetSingleton()->IsStayKeyDown('A'))
-		deltaPos.x -= scaledspeed;
-
-	if (KeyManager::GetSingleton()->IsStayKeyDown('D'))
-		deltaPos.x += scaledspeed;
-
-	if (deltaPos.x != 0 && deltaPos.y != 0)
-		position += deltaPos / 1.4142135623f;
-	else
-		position += deltaPos;
-
-	Direction newDirection = direction;
-	if (deltaPos.x > 0)
+	if (delta != glm::vec2{})
 	{
-		if (deltaPos.y > 0)
-			newDirection = Direction::rightup;
-		else if (deltaPos.y < 0)
-			newDirection = Direction::rightdown;
-		else
-			newDirection = Direction::right;
-	}
-	else if (deltaPos.x < 0)
-	{
-		if (deltaPos.y > 0)
-			newDirection = Direction::leftup;
-		else if (deltaPos.y < 0)
-			newDirection = Direction::leftdown;
-		else
-			newDirection = Direction::left;
+		direction = GetDirection(delta.x, delta.y);
 	}
 	else
 	{
-		if (deltaPos.y > 0)
-			newDirection = Direction::up;
-		else if (deltaPos.y < 0)
-			newDirection = Direction::down;
-		else
-			ChangeState(State::IDLE);
-	}
-	direction = newDirection;
-
-	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RBUTTON))
-	{
-		ChangeState(State::MINING);
+		ChangeState(State::IDLE);
 	}
 }
 
@@ -249,22 +165,22 @@ void Character::Mining()
 
 FRECT Character::GetCollisionFRect()
 {
-	FRECT rect;
-	rect.left =	position.x - (TILE_SIZE / 4 * (4.0f / 5.0f));
-	rect.right =	position.x + (TILE_SIZE / 4 * (4.0f / 5.0f));
-	rect.top =	position.y + (TILE_SIZE / 4 * (4.0f / 5.0f));
-	rect.bottom =	position.y - (TILE_SIZE / 4 * (4.0f / 5.0f));
-	return rect;
+	return FRECT{
+		.left = position.x - (TILE_SIZE / 4 * (4.0f / 5.0f)),
+		.top = position.y + (TILE_SIZE / 4 * (4.0f / 5.0f)),
+		.right = position.x + (TILE_SIZE / 4 * (4.0f / 5.0f)),
+		.bottom = position.y - (TILE_SIZE / 4 * (4.0f / 5.0f)),
+	};
 }
 
-FRECT Character::GetPickUpFRect()
+FRECT Character::GetPickUpFRect() const
 {
-	FRECT rect;
-	rect.left =	position.x - (TILE_SIZE / 2);
-	rect.right =	position.x + (TILE_SIZE / 2);
-	rect.top =	position.y + (TILE_SIZE / 2);
-	rect.bottom =	position.y - (TILE_SIZE / 2);
-	return rect;
+	return FRECT{
+		.left = position.x - (TILE_SIZE / 2),
+		.top = position.y + (TILE_SIZE / 2),
+		.right = position.x + (TILE_SIZE / 2),
+		.bottom = position.y - (TILE_SIZE / 2),
+	};
 }
 
 Inventory* Character::GetLpInventory()
@@ -272,9 +188,48 @@ Inventory* Character::GetLpInventory()
 	return inventory;
 }
 
-Character::Character()
+Character::Direction Character::GetDirection(float deltaX, float deltaY) const
 {
-	accumulateTime = 0.0f;
-	memset(animationCurrFrame, 0, sizeof(animationCurrFrame));
+	if (deltaX > 0)
+	{
+		if (deltaY > 0)
+			return Direction::rightup;
+		if (deltaY < 0)
+			return Direction::rightdown;
+		return Direction::right;
+	}
+	if (deltaX < 0)
+	{
+		if (deltaY > 0)
+			return Direction::leftup;
+		if (deltaY < 0)
+			return Direction::leftdown;
+		return Direction::left;
+	}
+	if (deltaY > 0)
+		return Direction::up;
 
+	return Direction::down;
+}
+
+glm::vec2 Character::GetPositionDelta(float distance) const
+{
+	glm::vec2 positionDelta{ 0.0f, 0.0f };
+
+	if (KeyManager::GetSingleton()->IsStayKeyDown('W'))
+		positionDelta.y += distance;
+
+	if (KeyManager::GetSingleton()->IsStayKeyDown('S'))
+		positionDelta.y -= distance;
+
+	if (KeyManager::GetSingleton()->IsStayKeyDown('A'))
+		positionDelta.x -= distance;
+
+	if (KeyManager::GetSingleton()->IsStayKeyDown('D'))
+		positionDelta.x += distance;
+
+	if (positionDelta.x != 0 && positionDelta.y != 0)
+		positionDelta /= 1.4142135623f;
+
+	return positionDelta;
 }
