@@ -13,7 +13,6 @@ HRESULT EntityManager::Init()
 
 	// item on ground
 	itemOnGrounds = new ItemOnGrounds();
-	itemOnGrounds->Init();
 
 	// structure builder
 	structureBuilder = new StructureBuilder();
@@ -25,7 +24,7 @@ HRESULT EntityManager::Init()
 void EntityManager::Release()
 {
 	SAFE_RELEASE(structureBuilder);
-	SAFE_RELEASE(itemOnGrounds);
+	SAFE_DELETE(itemOnGrounds);
 	SAFE_RELEASE(player);
 
 	it = mapEntitys.begin();
@@ -156,9 +155,9 @@ void EntityManager::DeleteEntity(Entity* entity)
 
 }
 
-void EntityManager::AddItemOnGround(ItemOnGround* item)
+void EntityManager::AddItemOnGround(int itemId, float positionX, float positionY)
 {
-	itemOnGrounds->AddItem(item);
+	itemOnGrounds->AddItem(itemId, positionX, positionY);
 }
 
 void EntityManager::DeleteItemOnGround(ItemOnGround* item)
