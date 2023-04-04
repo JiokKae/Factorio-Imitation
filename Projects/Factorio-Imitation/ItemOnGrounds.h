@@ -1,29 +1,26 @@
 #pragma once
-#include "../2DFramework/GameNode.h"
 #include "framework.h"
 
 class ItemOnGround;
-class ItemOnGrounds : public GameNode
+class ItemOnGrounds
 {
-	vector<ItemOnGround*> vecItems;
-	vector<ItemOnGround*>::iterator it;
+public:
+	ItemOnGrounds();
+	~ItemOnGrounds();
 
-	vector<ItemOnGround*> vecItemsInScreen;
+	virtual void Update(const FRECT& cameraFRect);
+	virtual void Render();
+
+	void AddItem(int itemId, float positionX, float positionY);
+	void DeleteItem(ItemOnGround* item);
+
+private:
+	std::vector<ItemOnGround*> items;
+	std::vector<ItemOnGround*> itemsInScreen;
 
 	GLImage* allItemsImage;
-
 	ShaderProgram* instancingShader;
 	VertexArrayObject* itemsVAO;
 
-public:
-	virtual HRESULT Init();
-	virtual void Release();
-	virtual void Update(FRECT cameraFRect);
-	virtual void Render();
-
-	void AddItem(ItemOnGround* item);
-	void DeleteItem(ItemOnGround* item);
-
-	ItemOnGrounds();
+	void PickUp();
 };
-

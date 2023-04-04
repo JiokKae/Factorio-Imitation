@@ -23,8 +23,7 @@ HRESULT TileManager::Init()
     {
         for (int x = -7; x < 7; x++)
         {
-            mapChunks[y][x] = new Chunk();
-            mapChunks[y][x]->Init(x, y);
+            mapChunks[y][x] = new Chunk(x, y);
         }
     }
 
@@ -103,6 +102,13 @@ void TileManager::Release()
 
     SAFE_ARR_DELETE(tileOffset);
     SAFE_ARR_DELETE(tileCurrFrame);
+    for (auto& chunks : mapChunks)
+    {
+	    for (auto& chunk : chunks.second)
+	    {
+		    SAFE_DELETE(chunk.second);
+	    }
+    }
     
     ReleaseSingleton();
 }

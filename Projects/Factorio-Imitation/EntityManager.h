@@ -34,7 +34,7 @@ public:
 	void AddEntity(Entity* entity);
 	void DeleteEntity(Entity* entity);
 
-	void AddItemOnGround(ItemOnGround* item);
+	void AddItemOnGround(int itemId, float positionX, float positionY);
 	void DeleteItemOnGround(ItemOnGround* item);
 
 

@@ -1,26 +1,19 @@
 #pragma once
 #include "framework.h"
-#include "2DFramework/GameNode.h"
 
 class Tile;
-class Shader;
-class Chunk : public GameNode
+class Chunk
 {
-	glm::ivec2 coord;
-	Tile* tiles;
-
 public:
-	virtual HRESULT Init(int x, int y);
-	virtual void Release();
-	virtual void Update();
-	virtual void Render(ShaderProgram* lpShader);
+	Chunk(int x, int y);
+	~Chunk();
 
-	RECT GetRect();
+	const RECT& GetRect() const;
 	Tile* GetLpTile(int x, int y);
-	glm::ivec2 GetCoord() { return coord; }
-
-	Chunk() 
-		: tiles(nullptr)
-	{};
+	const glm::ivec2& GetCoord() const;
+	
+private:
+	std::vector<Tile*> tiles;
+	RECT rect;
+	glm::ivec2 coord;
 };
-

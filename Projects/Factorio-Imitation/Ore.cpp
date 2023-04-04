@@ -1,62 +1,60 @@
 #include "Ore.h"
-#include "../GLFramework/Image/GLImage.h"
-#include "../GLFramework/ShaderProgram/ShaderProgram.h"
 #include "ItemEnum.h"
 #include "framework.h"
+#include <array>
 
-HRESULT Ore::Init(int x, int y)
-{
-	if (rand() % 2)
-	{
-		if ((x / CHUNK_IN_TILE + y / CHUNK_IN_TILE) % 6 == 1)
-			itemEnum = STONE;
-		else if (x / CHUNK_IN_TILE % 2 ^ y / CHUNK_IN_TILE % 2)
-			itemEnum = IRON_ORE;
-		else
-			itemEnum = COPPER_ORE;
-	}
-	else
-		itemEnum = COAL;
-
-	amount = int(10.0f - glm::distance(glm::vec2(16, 16), glm::vec2(abs(x%32), abs(y%32)))) * (300 + rand() % 200);
-	if (amount < 0)
-		amount = 0;
-
-	randFrameX = rand() % 8;
-	frameYByAmount = AmountToImageFrameY();
-	return S_OK;
-}
-
-void Ore::Release()
+Ore::Ore(int x, int y)
+	: itemEnum{ RandomItemEnum(x, y) }
+	, amount{ RandomAmount(x, y) }
+	, randFrameX{ std::rand() % 8 }
 {
 }
 
-void Ore::Update()
+int Ore::GetItemEnum() const
 {
+	return itemEnum;
+}
+
+int Ore::GetAmount() const
+{
+	return amount;
+}
+
+int Ore::GetRandFrameX() const
+{
+	return randFrameX;
+}
+
+int Ore::GetFrameY() const
+{
+	constexpr static array<int, 7> AMOUNTS = { 10000, 8000, 6000, 4000, 1500, 300, 200 };
+
+	for (int i = 0; i < AMOUNTS.size(); ++i)
+		if (amount > AMOUNTS[i])
+			return static_cast<int>(AMOUNTS.size()) - i;
+	return 0;
 }
 
 void Ore::AddAmount(int value)
 {
 	this->amount += value;
-	this->frameYByAmount = AmountToImageFrameY();
-}	
+}
 
-int Ore::AmountToImageFrameY()
+int Ore::RandomAmount(int x, int y) const
 {
-	if (amount > 10000)
-		return 7;
-	else if (amount > 8000)
-		return 6;
-	else if (amount > 6000)
-		return 5;
-	else if (amount > 4000)
-		return 4;
-	else if (amount > 1500)
-		return 3;
-	else if (amount > 300)
-		return 2;
-	else if (amount > 200)
-		return 1;
-	else
-		return 0;
+	return std::max(0, int(10.0f - glm::distance(glm::vec2(16, 16), glm::vec2(std::abs(x % 32), std::abs(y % 32)))) * (300 + std::rand() % 200));
+}
+
+int Ore::RandomItemEnum(int x, int y) const
+{
+	if (std::rand() % 2)
+		return COAL;
+
+	if ((x / CHUNK_IN_TILE + y / CHUNK_IN_TILE) % 6 == 1)
+		return STONE;
+
+	if (x / CHUNK_IN_TILE % 2 ^ y / CHUNK_IN_TILE % 2)
+		return IRON_ORE;
+
+	return COPPER_ORE;
 }

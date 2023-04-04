@@ -1,26 +1,22 @@
 #pragma once
-#include "../2DFramework/GameNode.h"
-#include "ItemEnum.h"
-class Ore : public GameNode
+
+class Ore
 {
+public:
+	Ore(int x, int y);
+
+	int GetItemEnum() const;
+	int GetAmount() const;
+	int GetRandFrameX() const;
+	int GetFrameY() const;
+	
+	void AddAmount(int value);
+
 private:
 	int itemEnum;
 	int amount;
 	int randFrameX;
-	int frameYByAmount;
 
-public:
-	virtual HRESULT Init(int x, int y);
-	virtual void Release();
-	virtual void Update();
-
-	int GetItemEnum()		{ return itemEnum; }
-	int GetAmount()			{ return amount; }
-	int GetRandFrameX()		{ return randFrameX; }
-	int GetFrameY()			{ return frameYByAmount; }
-	void AddAmount(int value); 
-
-	int AmountToImageFrameY();
-
+	int RandomAmount(int x, int y) const;
+	int RandomItemEnum(int x, int y) const;
 };
-

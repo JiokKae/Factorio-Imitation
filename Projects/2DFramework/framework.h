@@ -57,7 +57,6 @@ typedef struct tagFRECT
 	float right;
 	float bottom;
 
-	tagFRECT(float left = 0, float top = 0, float right = 0, float bottom = 0);
 	const tagFRECT operator+(const tagFRECT& rect) const;
 	template<typename T>
 	const tagFRECT operator*(const T& scalar);

@@ -1,19 +1,17 @@
 #pragma once
 #include "framework.h"
-#include "2DFramework/GameNode.h"
 #include "ItemEnum.h"
 
-class Inventory : public GameNode
+class Inventory
 {
-	map<ItemEnum, ItemInfo*> mapInventory;
-
 public:
-	virtual HRESULT Init();
-	virtual void Release();
+	Inventory();
+	~Inventory();
 
-	void AddItem(ItemInfo* itemInfo);
+	void AddItem(const ItemInfo& itemInfo);
 	vector<ItemInfo*> GetItemInfoArray();
 	bool GetItem(int itemId, ItemInfo* destItemInfo);
 	ItemInfo* FindItem(int itemId);
+private:
+	std::map<ItemEnum, ItemInfo*> inventory;
 };
-

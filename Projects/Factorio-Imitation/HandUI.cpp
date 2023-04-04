@@ -56,7 +56,7 @@ void HandUI::Update()
 		// 손 비우기 기능
 		else
 		{
-			EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->AddItem(new ItemInfo(*handItem));
+			EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->AddItem(ItemInfo(*handItem));
 			handItem->amount = 0;
 		}
 	}
@@ -76,9 +76,7 @@ void HandUI::Update()
 			{
 				handItem->IncreaseAmount(-1);
 
-				ItemOnGround* item = new ItemOnGround();
-				item->Init((ItemEnum)handItem->id, g_cursorPosition);
-				EntityManager::GetSingleton()->AddItemOnGround(item);
+				EntityManager::GetSingleton()->AddItemOnGround(handItem->id, g_cursorPosition.x, g_cursorPosition.y);
 			}
 		}
 
@@ -133,7 +131,7 @@ void HandUI::Render(ShaderProgram* shader)
 					{
 						if (dismantlePercent >= 0.6f)
 						{
-							EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->AddItem(new ItemInfo(dismantleStructure->GetItemId(), 1));
+							EntityManager::GetSingleton()->GetLpPlayer()->GetLpInventory()->AddItem(ItemInfo(dismantleStructure->GetItemId(), 1));
 							EntityManager::GetSingleton()->DeleteEntity(dismantleStructure);
 							glm::vec2 coordSize = dismantleStructure->GetCoordSize();
 							// rotate sound

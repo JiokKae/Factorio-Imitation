@@ -1,59 +1,43 @@
 #include "Chunk.h"
 #include "Tile.h"
-#include "Ore.h"
-HRESULT Chunk::Init(int _x, int _y)
-{
-    coord = { _x, _y };
-    tiles = new Tile[CHUNK_IN_TILE * CHUNK_IN_TILE]();
-    for (int y = 0; y < CHUNK_IN_TILE; y++)
-    {
-        for (int x = 0; x < CHUNK_IN_TILE; x++)
-        {
-            tiles[y * CHUNK_IN_TILE + x].Init(x + coord.x * CHUNK_IN_TILE, y + coord.y * CHUNK_IN_TILE);
-        }
-    }
 
-	return S_OK;
+Chunk::Chunk(int x, int y)
+	: rect{ .left = x * 2048,
+		.top = (y + 1) * 2048,
+		.right = (x + 1) * 2048,
+		.bottom = y * 2048,
+	}
+	, coord(x, y)
+{
+	tiles.reserve(CHUNK_IN_TILE * CHUNK_IN_TILE);
+	for (int _y = 0; _y < CHUNK_IN_TILE; _y++)
+	{
+		for (int _x = 0; _x < CHUNK_IN_TILE; _x++)
+		{
+			tiles.push_back(new Tile(_x + coord.x * CHUNK_IN_TILE, _y + coord.y * CHUNK_IN_TILE));
+		}
+	}
 }
 
-void Chunk::Release()
+Chunk::~Chunk()
 {
-    if (tiles)
-    {
-        for (int i = 0; i < CHUNK_IN_TILE * CHUNK_IN_TILE; i++)
-        {
-            tiles[i].Release();
-        }
-    }
-    SAFE_ARR_DELETE(tiles);
+	for (Tile* tile : tiles)
+	{
+		SAFE_DELETE(tile);
+	}
 }
 
-void Chunk::Update()
+const RECT& Chunk::GetRect() const
 {
-    for (int i = 0; i < CHUNK_IN_TILE * CHUNK_IN_TILE; i++)
-    {
-        tiles[i].Update();
-    }
-}
-
-void Chunk::Render(ShaderProgram* /*lpShaderProgram*/)
-{
-
-}
-
-RECT Chunk::GetRect()
-{
-    RECT rect;
-
-    rect.left = coord.x * 2048;
-    rect.right = (coord.x + 1) * 2048;
-    rect.top = (coord.y + 1) * 2048;
-    rect.bottom = coord.y * 2048;
-
-    return rect;
+	return rect;
 }
 
 Tile* Chunk::GetLpTile(int x, int y)
 {
-    return &tiles[y * CHUNK_IN_TILE + x];
+    return tiles[y * CHUNK_IN_TILE + x];
+}
+
+const glm::ivec2& Chunk::GetCoord() const
+{
+	return coord;
 }

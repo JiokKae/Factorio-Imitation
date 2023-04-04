@@ -260,21 +260,6 @@
     <ClCompile Include="WoodenChest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader/1.colors.frag" />
-    <None Include="shader/1.colors.vert" />
-    <None Include="shader/1.light_cube.frag" />
-    <None Include="shader/1.light_cube.vert" />
-    <None Include="shader/InstancingVertexShader.glsl" />
-    <None Include="shader/SimpleFragmentShader.glsl" />
-    <None Include="shader/SimpleVertexShader.glsl" />
-    <None Include="shader/StandardFragmentShader.glsl" />
-    <None Include="shader/StandardVertexShader.glsl" />
-    <None Include="shader/Text2DFragmentShader.glsl" />
-    <None Include="shader/Text2DVertexShader.glsl" />
-    <None Include="shader/UIFragmentShader.glsl" />
-    <None Include="shader/UIVertexShader.glsl" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\2DFramework\2DFramework.vcxproj">
       <Project>{47e2ab28-a0d2-4caa-95eb-dd3e1542e795}</Project>
     </ProjectReference>
