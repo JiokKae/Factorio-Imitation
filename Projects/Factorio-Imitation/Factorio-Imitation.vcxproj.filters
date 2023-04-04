@@ -15,9 +15,6 @@
     <Filter Include="MainGame\Scene">
       <UniqueIdentifier>{da98538c-e337-4357-b2c4-b1f8aec531ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Shader">
-      <UniqueIdentifier>{f328a868-77ea-4aa0-97ae-30a1463613d3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainGame\Character">
       <UniqueIdentifier>{65ea402a-7da0-47ca-9f02-cc6c540403f0}</UniqueIdentifier>
     </Filter>
@@ -373,46 +370,5 @@
     <ClCompile Include="..\..\Librarys\tinyxml2\tinyxml2.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="shader/1.colors.frag">
-      <Filter>MainGame\Shader</Filter>
-    </None>
-    <None Include="shader/1.colors.vert">
-      <Filter>MainGame\Shader</Filter>
-    </None>
-    <None Include="shader/1.light_cube.frag">
-      <Filter>MainGame\Shader</Filter>
-    </None>
-    <None Include="shader/1.light_cube.vert">
-      <Filter>MainGame\Shader</Filter>
-    </None>
-    <None Include="shader/InstancingVertexShader.glsl">
-      <Filter>MainGame\Shader</Filter>
-    </None>
-    <None Include="shader/SimpleFragmentShader.glsl">
-      <Filter>MainGame\Shader</Filter>
-    </None>
-    <None Include="shader/SimpleVertexShader.glsl">
-      <Filter>MainGame\Shader</Filter>
-    </None>
-    <None Include="shader/StandardFragmentShader.glsl">
-      <Filter>MainGame\Shader</Filter>
-    </None>
-    <None Include="shader/StandardVertexShader.glsl">
-      <Filter>MainGame\Shader</Filter>
-    </None>
-    <None Include="shader/Text2DFragmentShader.glsl">
-      <Filter>MainGame\Shader</Filter>
-    </None>
-    <None Include="shader/Text2DVertexShader.glsl">
-      <Filter>MainGame\Shader</Filter>
-    </None>
-    <None Include="shader/UIFragmentShader.glsl">
-      <Filter>MainGame\Shader</Filter>
-    </None>
-    <None Include="shader/UIVertexShader.glsl">
-      <Filter>MainGame\Shader</Filter>
-    </None>
   </ItemGroup>
 </Project>

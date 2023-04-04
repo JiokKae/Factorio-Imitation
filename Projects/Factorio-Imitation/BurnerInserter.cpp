@@ -138,7 +138,7 @@ void BurnerInserter::Update()
 		if(lpDirectionTile->GetItems().size())
 		{
 			ItemOnGround* item = lpDirectionTile->GetItems().at(0);
-			handItem.id = item->GetItemEnum();
+			handItem.id = item->GetItemId();
 			handItem.amount = 1;
 			EntityManager::GetSingleton()->DeleteItemOnGround(item);
 			status = WORKING;

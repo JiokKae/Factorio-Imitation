@@ -61,7 +61,7 @@ void main()
 vec3 CalcDirLight(DirLight light)
 {
     vec3 matDiffuse = vec3(texture(material.diffuse, IN.TexCoords)) * material.diffuseColor;
-    // °á°úµéÀ» °áÇÕ
+    // ê²°ê³¼ë“¤ì„ ê²°í•©
     vec3 ambient  = light.ambient * matDiffuse;
     vec3 diffuse  = light.diffuse * matDiffuse;
     return (ambient + diffuse);
@@ -70,14 +70,14 @@ vec3 CalcDirLight(DirLight light)
 // calculates the color when using a point light.
 vec3 CalcPointLight(PointLight light, vec3 fragPos)
 {
-    // °Å¸®¿¡ µû¸¥ °¨¼è
+    // ê±°ë¦¬ì— ë”°ë¥¸ ê°ì‡ 
     float distance    = length(light.position - fragPos) / 100;
     float attenuation = 1.0 / (light.constant + light.linear * distance + 
   			     light.quadratic * (distance * distance));    
 
     vec3 matDiffuse = vec3(texture(material.diffuse, IN.TexCoords)) * material.diffuseColor;
 
-    // °á°úµéÀ» °áÇÕ
+    // ê²°ê³¼ë“¤ì„ ê²°í•©
     vec3 ambient  = light.ambient * matDiffuse;
     vec3 diffuse  = light.diffuse * matDiffuse;
 

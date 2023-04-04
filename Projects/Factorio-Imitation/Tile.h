@@ -1,10 +1,9 @@
 #pragma once
 #include "framework.h"
-#include "2DFramework/GameNode.h"
 
 class Ore;
 class Structure;
-class Tile : public GameNode
+class Tile
 {
 public:
 	enum class KIND {
@@ -12,31 +11,24 @@ public:
 		END,
 	};
 
-private:
-	glm::ivec2 coord;
-	KIND kind;
-	Ore* ore;
-	Structure* structure;
-	vector<ItemOnGround*> items;
+	Tile(int x, int y);
+	~Tile();
 
-public:
-	virtual HRESULT Init(int x, int y);
-	virtual void Release();
-	virtual void Update();
-
-	const glm::ivec2& GetCoord() const		{ return coord; }
-	KIND GetKind() const				{ return kind; }
-	Ore* GetLpOre()					{ return ore; }
-	Structure* GetLpSturcture()			{ return structure; }
-	const auto& GetItems() const			{ return items; }
-	void LinkStructure(Structure* _structure)	{ structure = _structure; }
-	void UnlinkStructure()				{ structure = nullptr; }
+	const glm::ivec2& GetCoord() const;
+	KIND GetKind() const;
+	Ore* GetLpOre();
+	Structure* GetLpSturcture();
+	const std::vector<ItemOnGround*>& GetItems() const;
+	void LinkStructure(Structure* _structure);
+	void UnlinkStructure();
 	Tile* GetAroundTile(DIRECTION direction);
 	void LinkItemOnGround(ItemOnGround* item);
 	void UnlinkItemOnGround(ItemOnGround* item);
 
-	Tile()
-		: ore(nullptr)
-		, structure(nullptr)
-	{};
+private:
+	std::vector<ItemOnGround*> items;
+	glm::ivec2 coord;
+	Structure* structure;
+	Ore* ore;
+	KIND kind;
 };

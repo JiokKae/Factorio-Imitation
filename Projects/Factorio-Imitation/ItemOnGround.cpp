@@ -3,21 +3,16 @@
 #include "Structure.h"
 #include "TransportBelt.h"
 
-void ItemOnGround::Init(ItemEnum _itemId, float _positionX, float _positionY)
+ItemOnGround::ItemOnGround(ItemEnum itemId, float _positionX, float _positionY)
+	: itemId{ itemId }
 {
-	itemId = _itemId;
 	position.x = _positionX;
 	position.y = _positionY;
 	parentTile = TileManager::GetSingleton()->GetLpTile(position.x, position.y);
 	parentTile->LinkItemOnGround(this);
 }
 
-void ItemOnGround::Init(ItemEnum _itemId, glm::vec2 _position)
-{
-	Init(_itemId, _position.x, _position.y);
-}
-
-void ItemOnGround::Release()
+ItemOnGround::~ItemOnGround()
 {
 	parentTile->UnlinkItemOnGround(this);
 }
@@ -52,14 +47,17 @@ void ItemOnGround::SetPosition(Vec2 _position)
 	positionChange = true;
 }
 
+ItemEnum ItemOnGround::GetItemId() const
+{
+	return itemId;
+}
+
 FRECT ItemOnGround::GetCollisionFRect()
 {
-	FRECT frect;
-
-	frect.left		= position.x - 16.0f;
-	frect.right		= position.x + 16.0f;
-	frect.bottom	= position.y - 16.0f;
-	frect.top		= position.y + 16.0f;
-
-	return frect;
+	return FRECT {
+		.left = position.x - 16.0f,
+		.top = position.y + 16.0f,
+		.right = position.x + 16.0f,
+		.bottom = position.y - 16.0f,
+	};
 }

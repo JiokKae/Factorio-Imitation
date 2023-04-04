@@ -252,9 +252,8 @@ bool BurnerMiningDrill::OutputItem()
 		glm::vec2 outTilePos = glm::vec2(COORD_TO_POS(outCoord));
 		targetTile->GetLpOre()->AddAmount(-1);
 
-		ItemOnGround* item = new ItemOnGround();
-		item->Init((ItemEnum)targetTile->GetLpOre()->GetItemEnum(), outTilePos + outputPos);
-		EntityManager::GetSingleton()->AddItemOnGround(item);
+		glm::vec2 newPos = outTilePos + outputPos;
+		EntityManager::GetSingleton()->AddItemOnGround(targetTile->GetLpOre()->GetItemEnum(), newPos.x, newPos.y);
 
 		productionPercent -= 1.0f;
 
