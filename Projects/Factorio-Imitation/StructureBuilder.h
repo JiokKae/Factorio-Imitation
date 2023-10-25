@@ -6,31 +6,26 @@ using namespace glm;
 
 class Shader;
 class Structure;
-class EntityManager;
 class StructureBuilder : public GameNode
 {
-	bool buildable;				// 구조물을 지을수 있는지?
-	float canBuildDistance;		// 구조물의 건설 거리 제한
-	ivec2 buildPos;				// 건설할 포지션
-	bool active;				// SB의 활성화 여부
-	int itemId;
-	Structure* tempStructure;	// 임시 구조물 객체
-
-	// 참조용
-	EntityManager* entityManager;
 public:
 	virtual HRESULT Init();
 	virtual void Release();
 	virtual void Update(vec2* playerPos);
 	virtual void Render(ShaderProgram* shader);
 
-	void Active(int itemId);
-	void Deactive();
-	bool CheckCanBuild(ivec2 coord, ivec2 coordSize);
+	void Activate(int itemId);
+	void Deactivate();
 	bool IsActive() { return active; }
-	StructureBuilder() 
-		: tempStructure(nullptr)
-	{};
-	virtual ~StructureBuilder() {};
-};
 
+private:
+	bool CheckCanBuild(ivec2 coord, ivec2 coordSize);
+	bool IsOddNumber(int num) const;
+	std::string GetBuildSoundName(const glm::ivec2& coordSize) const;
+
+	float canBuildDistance;			// 구조물의 건설 거리 제한
+	Structure* tempStructure = nullptr;
+	int itemId;
+	bool buildable;				// 구조물을 지을수 있는지?
+	bool active;				// StructureBuilder의 활성화 여부
+};

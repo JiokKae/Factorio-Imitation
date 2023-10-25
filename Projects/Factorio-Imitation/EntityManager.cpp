@@ -56,12 +56,12 @@ void EntityManager::Update(FRECT cameraFrect)
 	{
 		ItemInfo* info = UIManager::GetSingleton()->GetLpHandUI()->GetHandItem();
 		if (info->amount && g_itemSpecs[info->id].buildable)
-			structureBuilder->Active(info->id);
+			structureBuilder->Activate(info->id);
 		else
-			structureBuilder->Deactive();
+			structureBuilder->Deactivate();
 	}
 	else
-		structureBuilder->Deactive();
+		structureBuilder->Deactivate();
 
 	structureBuilder->Update(player->GetLpPosition());
 }
