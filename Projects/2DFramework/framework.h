@@ -35,19 +35,18 @@ enum class Argument_Kind {
 
 struct ChangeSceneArgument
 {
-	string sceneName;
-	string loadingSceneName;
+	ChangeSceneArgument(const std::string& sceneName, const std::string& loadingSceneName);
 
-	ChangeSceneArgument(string sceneName, string loadingSceneName);
+	std::string sceneName;
+	std::string loadingSceneName;
 };
 
 typedef struct tagTile TILE_INFO;
 struct TileInfoArgument
 {
-	TILE_INFO* tileInfo;
-
 	TileInfoArgument(TILE_INFO* lpTileInfo);
 
+	TILE_INFO* tileInfo;
 };
 
 typedef struct tagFRECT
@@ -57,20 +56,22 @@ typedef struct tagFRECT
 	float right;
 	float bottom;
 
-	const tagFRECT operator+(const tagFRECT& rect) const;
+	tagFRECT operator+(const tagFRECT& rect) const;
 	template<typename T>
-	const tagFRECT operator*(const T& scalar);
+	tagFRECT operator*(const T& scalar);
 
 } FRECT, * LPFRECT;
 
 inline RECT GetWindowRect()
 {
 	RECT rc;
-	POINT lt, rb;
 	GetClientRect(g_hWnd, &rc);
 	// 클라이언트 크기를 받아옴
+	POINT lt{};
 	lt.x = rc.left;
 	lt.y = rc.top;
+
+	POINT rb{};
 	rb.x = rc.right;
 	rb.y = rc.bottom;
 	// 받아온 클라이언트 크기를좌표로 입력
@@ -86,7 +87,7 @@ inline RECT GetWindowRect()
 }
 
 template <typename T>
-inline T Clamp(T value, T min, T max)
+inline T Clamp(const T& value, const T& min, const T& max)
 {
 	if (value > max) return max;
 	else if (value < min) return min;

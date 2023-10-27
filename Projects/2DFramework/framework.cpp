@@ -1,8 +1,8 @@
 #include "framework.h"
 
-const tagFRECT tagFRECT::operator+(const tagFRECT& rect) const
+tagFRECT tagFRECT::operator+(const tagFRECT& rect) const
 {
-	tagFRECT ret;
+	tagFRECT ret{};
 	ret.left = left + rect.left;
 	ret.top = top + rect.top;
 	ret.right = right + rect.right;
@@ -12,12 +12,12 @@ const tagFRECT tagFRECT::operator+(const tagFRECT& rect) const
 }
 
 TileInfoArgument::TileInfoArgument(TILE_INFO* lpTileInfo)
+	: tileInfo{ lpTileInfo }
 {
-	this->tileInfo = lpTileInfo;
 }
 
-ChangeSceneArgument::ChangeSceneArgument(string sceneName, string loadingSceneName)
+ChangeSceneArgument::ChangeSceneArgument(const std::string& sceneName, const std::string& loadingSceneName)
+	: sceneName{ sceneName }
+	, loadingSceneName{ loadingSceneName }
 {
-	this->sceneName = sceneName;
-	this->loadingSceneName = loadingSceneName;
 }

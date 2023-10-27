@@ -45,26 +45,22 @@ struct Vec2 : public glm::vec2
 	bool operator>(const Vec2& vec) const;
 };
 
-struct ItemInfo {
+struct ItemInfo
+{
 	int id;
 	int amount;
-	vector<int> vecAbleItems;
+	std::vector<int> vecAbleItems;
 
-	bool IsEmpty();
+	bool IsEmpty() const;
 
-	void IncreaseAmount(int value)
-	{
-		amount += value;
-		if (amount < 0)
-			amount = 0;
-	}
+	// 아이템이 들어올 수 있는 종류인지 확인하는 함수
+	bool CanInput(int itemId) const;
 
-	void SetAbleItems(vector<int> vecAbleItems);
+	void IncreaseAmount(int value);
+
+	void SetAbleItems(const std::vector<int>& vecAbleItems);
 
 	void AddAbleItem(int itemEnum);
-
-	// 아이템이 들어올 수 있는 종류인지 알아내는 함수
-	bool CanInput(int itemId);
 	
 	// 아이템을 목적지 아이템으로 옮기는 함수
 	bool MoveAllItemTo(ItemInfo* destItemInfo);
@@ -72,11 +68,7 @@ struct ItemInfo {
 	// 아이템을 목적지 아이템과 바꾸는 함수
 	void SwapItemWith(ItemInfo* destItemInfo);
 
-	ItemInfo(int id = 0, int amount = 0)
-	{
-		this->id = id;
-		this->amount = amount;
-	}
+	ItemInfo(int id = 0, int amount = 0);
 
 	bool operator>(const ItemInfo& info) const;
 	bool operator<(const ItemInfo& info) const;
@@ -120,7 +112,7 @@ struct ItemInfo {
 #define SLOT_SIZE	(SLOT_X * SLOT_Y)
 
 struct ItemSpec {
-	string name;
+	std::string name;
 	bool buildable;
 	glm::ivec2 coordSize;
 	int directionCount;
@@ -157,11 +149,12 @@ extern const ItemSpec	g_itemSpecs[];
 inline void SetWindowSize(int startX, int startY, int sizeX, int sizeY)
 {
 	// 윈도우 작업영역 지정
-	RECT rc;
-	rc.left = 0;
-	rc.top = 0;
-	rc.right = sizeX;
-	rc.bottom = sizeY;
+	RECT rc{
+		.left = 0,
+		.top = 0,
+		.right = sizeX,
+		.bottom = sizeY,
+	};
 
 	// 실제 윈도우 크기 받아오기
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
@@ -199,7 +192,7 @@ inline bool IntersectFRect(LPFRECT lpfrcDst, const FRECT* lpfrcSrc1, const FRECT
 	return true;
 }
 
-inline bool CheckRectCollision(FRECT rc1, FRECT rc2)
+inline bool CheckRectCollision(const FRECT& rc1, const FRECT& rc2)
 {
 	if (rc1.right < rc2.left ||
 		rc1.left > rc2.right ||
@@ -212,7 +205,7 @@ inline bool CheckRectCollision(FRECT rc1, FRECT rc2)
 	return true;
 }
 
-inline bool CheckRectCollision(RECT rc1, RECT rc2)
+inline bool CheckRectCollision(const RECT& rc1, const RECT& rc2)
 {
 	if (rc1.right < rc2.left ||
 		rc1.left > rc2.right ||
@@ -225,7 +218,7 @@ inline bool CheckRectCollision(RECT rc1, RECT rc2)
 	return true;
 }
 
-inline bool PtInRect(RECT rc, glm::vec2 pt)
+inline bool PtInRect(const RECT& rc, const glm::vec2& pt)
 {
 	if (rc.right < pt.x ||
 		rc.left > pt.x ||
@@ -238,7 +231,7 @@ inline bool PtInRect(RECT rc, glm::vec2 pt)
 	return true;
 }
 
-inline bool PtInFRect(FRECT rc, glm::vec2 pt)
+inline bool PtInFRect(const FRECT& rc, const glm::vec2& pt)
 {
 	if (rc.right < pt.x ||
 		rc.left > pt.x ||
@@ -252,13 +245,12 @@ inline bool PtInFRect(FRECT rc, glm::vec2 pt)
 }
 
 template<typename T>
-inline const tagFRECT tagFRECT::operator*(const T& scalar)
+inline tagFRECT tagFRECT::operator*(const T& scalar)
 {
-	tagFRECT ret;
-	ret.left = left * scalar;
-	ret.top = top * scalar;
-	ret.right = right * scalar;
-	ret.bottom = bottom * scalar;
-
-	return ret;
+	return tagFRECT{
+		.left = left * scalar,
+		.top = top * scalar,
+		.right = right * scalar,
+		.bottom = bottom * scalar,
+	};
 }
