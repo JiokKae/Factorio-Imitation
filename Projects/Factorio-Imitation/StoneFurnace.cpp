@@ -8,7 +8,7 @@
 HRESULT StoneFurnace::Init(int x, int y, DIRECTION _direction, bool _temp)
 {
 	usingClickEvent = true;
-	itemId = ItemEnum::STONE_FURNACE;
+	itemId = ItemId::STONE_FURNACE;
 	Structure::Init(x, y, _direction, _temp);
 
 	// 이미지 초기화
@@ -22,7 +22,7 @@ HRESULT StoneFurnace::Init(int x, int y, DIRECTION _direction, bool _temp)
 	craftingSpeed = 1.0f;
 
 	// 레시피 세팅
-	vecRecipes = RecipeManager::GetSingleton()->FindRecipes(STONE_FURNACE);
+	vecRecipes = RecipeManager::GetSingleton()->FindRecipePreset(STONE_FURNACE);
 
 	// 아이템 슬롯 세팅
 	fuel = new ItemInfo();

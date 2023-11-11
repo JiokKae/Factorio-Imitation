@@ -1,20 +1,23 @@
 #pragma once
 #include "framework.h"
+#include <string>
+#include <vector>
 
 class Recipe;
 class RecipeManager : public Singleton<RecipeManager>
 {
-private:
-	map<string, Recipe*> mapRecipes;
-	map<int, vector<Recipe*>> presetRecipes;
 public:
 	HRESULT Init();
 	void Release();
 
-	Recipe* AddRecipe(string strKey, ItemInfo output, float craftingTime, vector<ItemInfo> vecIngredients);
-	void DeleteRecipe(string strKey);
-	Recipe* FindRecipe(string strKey);
-	Recipe* FindRecipe(int enumKey);
-	vector<Recipe*>* FindRecipes(int itemIdKey);
-};
+	std::vector<Recipe*>* FindRecipePreset(int itemId);
+private:
+	Recipe* AddRecipe(const std::string& key, const ItemInfo& output, float craftingTime, const std::vector<ItemInfo>& ingredients);
+	Recipe* FindRecipe(const std::string& key);
+	Recipe* FindRecipe(int itemId);
 
+	void AddRecipePreset(int itemId, const std::vector<int>& recipeKeys);
+
+	std::map<std::string, Recipe*> recipes;
+	std::map<int, std::vector<Recipe*>> recipePresets;
+};

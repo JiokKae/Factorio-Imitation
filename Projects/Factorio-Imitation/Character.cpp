@@ -49,7 +49,7 @@ Character::Character()
 	inventory->AddItem(ItemInfo(SOLID_FUEL, 30));
 	inventory->AddItem(ItemInfo(ROCKER_FUEL, 20));
 	inventory->AddItem(ItemInfo(NUCLEAR_FUEL, 15));
-	for (int i = 0; i < ItemEnum::END; i++)
+	for (int i = 0; i < ItemId::END; i++)
 	{
 		inventory->AddItem(ItemInfo(i, 200));
 	}

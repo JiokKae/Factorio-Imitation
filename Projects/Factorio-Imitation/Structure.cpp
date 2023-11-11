@@ -101,7 +101,7 @@ void Structure::Update()
 
 }
 
-Structure* Structure::CreateStructure(ItemEnum itemId)
+Structure* Structure::CreateStructure(ItemId itemId)
 {
 	switch (itemId)
 	{

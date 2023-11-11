@@ -7,7 +7,7 @@
 #include "Chunk.h"
 #include "../GLFramework/VertexDataObject/VertexArrayObject.h"
 #include "../GLFramework/VertexDataObject/VertexBufferObject.h"
-#include "ItemEnum.h"
+#include "ItemId.h"
 
 HRESULT TileManager::Init()
 {

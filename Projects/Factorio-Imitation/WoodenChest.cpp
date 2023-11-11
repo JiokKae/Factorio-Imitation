@@ -2,7 +2,7 @@
 
 HRESULT WoodenChest::Init(int x, int y, DIRECTION _direction, bool _temp)
 {
-	itemId = ItemEnum::WOODEN_CHEST;
+	itemId = ItemId::WOODEN_CHEST;
 	inventorySize = 16;
 
 	mainImage = new GLImage("Entity/WoodenChest");

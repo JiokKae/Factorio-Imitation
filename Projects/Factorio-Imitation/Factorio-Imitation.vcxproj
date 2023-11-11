@@ -192,7 +192,7 @@
     <ClInclude Include="InventorySlotUI.h" />
     <ClInclude Include="InventoryUI.h" />
     <ClInclude Include="ItemOnGround.h" />
-    <ClInclude Include="ItemEnum.h" />
+    <ClInclude Include="ItemId.h" />
     <ClInclude Include="ItemOnGrounds.h" />
     <ClInclude Include="MainGameUIFactory.h" />
     <ClInclude Include="Ore.h" />

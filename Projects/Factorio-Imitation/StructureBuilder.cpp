@@ -1,7 +1,7 @@
 ﻿#include "StructureBuilder.h"
 #include "EntityManager.h"
 #include "HandUI.h"
-#include "ItemEnum.h"
+#include "ItemId.h"
 #include "Structure.h"
 #include "Tile.h"
 #include "../GLFramework/Image/GLImage.h"
@@ -73,7 +73,7 @@ void StructureBuilder::Update(vec2* playerPos)
 			SoundManager::GetSingleton()->Play(GetBuildSoundName(tempStructure->GetCoordSize()), 0.6f);
 
 			UIManager::GetSingleton()->GetLpHandUI()->GetHandItem()->amount--;
-			Structure* structure = Structure::CreateStructure((ItemEnum)itemId);
+			Structure* structure = Structure::CreateStructure((ItemId)itemId);
 
 			structure->Init(buildPos.x, buildPos.y, tempStructure->GetDirection());
 			EntityManager::GetSingleton()->AddEntity(structure);
@@ -115,7 +115,7 @@ void StructureBuilder::Activate(int _itemId)
 		SAFE_RELEASE(tempStructure);
 	}
 
-	tempStructure = Structure::CreateStructure((ItemEnum)itemId);
+	tempStructure = Structure::CreateStructure((ItemId)itemId);
 	tempStructure->Init(0, 0, NORTH, true);
 }
 

@@ -21,7 +21,7 @@ void Inventory::AddItem(const ItemInfo& item)
 		return;
 	}
 
-	inventory.emplace(static_cast<ItemEnum>(item.id), new ItemInfo(item.id, item.amount));
+	inventory.emplace(static_cast<ItemId>(item.id), new ItemInfo(item.id, item.amount));
 }
 
 vector<ItemInfo*> Inventory::GetItemInfoArray()
@@ -55,7 +55,7 @@ bool Inventory::GetItem(int itemId, ItemInfo* destItem)
 
 ItemInfo* Inventory::FindItem(int itemId)
 {
-	auto it = inventory.find(static_cast<ItemEnum>(itemId));
+	auto it = inventory.find(static_cast<ItemId>(itemId));
 	if (it == inventory.end())
 	{
 		return nullptr;

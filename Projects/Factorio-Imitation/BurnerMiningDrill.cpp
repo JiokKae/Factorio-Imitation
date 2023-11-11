@@ -6,7 +6,7 @@
 
 HRESULT BurnerMiningDrill::Init(int _x, int _y, DIRECTION _direction, bool _temp)
 {
-	itemId = ItemEnum::BURNER_MINING_DRILL;
+	itemId = ItemId::BURNER_MINING_DRILL;
 	usingClickEvent = true;
 	Structure::Init(_x, _y, _direction, _temp);
 
@@ -56,7 +56,7 @@ HRESULT BurnerMiningDrill::Init(int _x, int _y, DIRECTION _direction, bool _temp
 	if (targetTile == nullptr)
 		status = NO_MINABLE_RESOURCES;
 
-	waitingItemInfo = new ItemInfo(ItemEnum::COAL, 0);
+	waitingItemInfo = new ItemInfo(ItemId::COAL, 0);
 
 
 	return S_OK;

@@ -1,5 +1,5 @@
 #include "Ore.h"
-#include "ItemEnum.h"
+#include "ItemId.h"
 #include "framework.h"
 #include <array>
 

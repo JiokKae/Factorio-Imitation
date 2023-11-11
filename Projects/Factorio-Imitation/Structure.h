@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "Entity.h"
-#include "ItemEnum.h"
+#include "ItemId.h"
 
 class Structure : public Entity
 {
@@ -24,7 +24,7 @@ protected:
 	glm::ivec2 coord;	// 건축물의 기준 좌표
 	glm::ivec2 coordSize;	// 건축물의 좌표상 크기
 	DIRECTION direction;	// 건축물의 방향
-	ItemEnum itemId;	// 건축물의 아이템 번호
+	ItemId itemId;	// 건축물의 아이템 번호
 	STATUS status;		// 건축물의 상태
 
 	bool temp;		// 임시 건물인지
@@ -38,7 +38,7 @@ public:
 	virtual void Render(ShaderProgram* lpShader) = 0;
 	virtual void RenderInScreen(ShaderProgram* shader, float x, float y) = 0;
 
-	static Structure* CreateStructure(ItemEnum itemId);
+	static Structure* CreateStructure(ItemId itemId);
 
 	void Rotate();
 	virtual void ClickEvent() {};
@@ -51,7 +51,7 @@ public:
 	virtual string ToString();
 
 	FRECT GetFRect();
-	ItemEnum GetItemId()			{ return itemId; }
+	ItemId GetItemId()			{ return itemId; }
 	DIRECTION GetDirection()		{ return direction; }
 	glm::ivec2 GetCoordSize()		{ return coordSize; }
 	virtual FRECT GetCollisionFRect() override;

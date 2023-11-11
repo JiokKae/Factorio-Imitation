@@ -1,6 +1,6 @@
 #pragma once
 
-enum ItemEnum {
+enum ItemId {
 	ASSEMBLING_MACHINE_1,
 	BURNER_MINING_DRILL,
 	IRON_PLATE,

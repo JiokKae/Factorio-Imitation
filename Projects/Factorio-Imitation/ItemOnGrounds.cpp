@@ -103,7 +103,7 @@ void ItemOnGrounds::Render()
 
 void ItemOnGrounds::AddItem(int itemId, float positionX, float positionY)
 {
-	items.push_back(new ItemOnGround(static_cast<ItemEnum>(itemId), positionX, positionY));
+	items.push_back(new ItemOnGround(static_cast<ItemId>(itemId), positionX, positionY));
 }
 
 void ItemOnGrounds::DeleteItem(ItemOnGround* item)

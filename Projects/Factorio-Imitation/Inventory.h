@@ -1,6 +1,6 @@
 #pragma once
 #include "framework.h"
-#include "ItemEnum.h"
+#include "ItemId.h"
 
 class Inventory
 {
@@ -13,5 +13,5 @@ public:
 	bool GetItem(int itemId, ItemInfo* destItemInfo);
 	ItemInfo* FindItem(int itemId);
 private:
-	std::map<ItemEnum, ItemInfo*> inventory;
+	std::map<ItemId, ItemInfo*> inventory;
 };

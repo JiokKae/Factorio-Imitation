@@ -2,7 +2,7 @@
 
 HRESULT IronChest::Init(int x, int y, DIRECTION _direction, bool _temp)
 {
-	itemId = ItemEnum::IRON_CHEST;
+	itemId = ItemId::IRON_CHEST;
 	inventorySize = 32;
 
 	mainImage = new GLImage("Entity/IronChest");

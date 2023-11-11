@@ -4,7 +4,7 @@
 
 HRESULT BurnerInserter::Init(int x, int y, DIRECTION _direction, bool _temp)
 {
-	itemId = ItemEnum::BURNER_INSERTER;
+	itemId = ItemId::BURNER_INSERTER;
 	Structure::Init(x, y, _direction, _temp);
 	status = WORKING;
 

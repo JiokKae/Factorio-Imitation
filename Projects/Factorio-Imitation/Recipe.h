@@ -1,6 +1,6 @@
 #pragma once
 #include "framework.h"
-#include "ItemEnum.h"
+#include "ItemId.h"
 
 class Recipe
 {

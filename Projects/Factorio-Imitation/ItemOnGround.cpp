@@ -3,7 +3,7 @@
 #include "Structure.h"
 #include "TransportBelt.h"
 
-ItemOnGround::ItemOnGround(ItemEnum itemId, float _positionX, float _positionY)
+ItemOnGround::ItemOnGround(ItemId itemId, float _positionX, float _positionY)
 	: itemId{ itemId }
 {
 	position.x = _positionX;
@@ -47,7 +47,7 @@ void ItemOnGround::SetPosition(Vec2 _position)
 	positionChange = true;
 }
 
-ItemEnum ItemOnGround::GetItemId() const
+ItemId ItemOnGround::GetItemId() const
 {
 	return itemId;
 }

@@ -1,11 +1,11 @@
 #pragma once
 #include "Entity.h"
-#include "ItemEnum.h"
+#include "ItemId.h"
 
 class ItemOnGround : public Entity
 {
 public:
-	ItemOnGround(ItemEnum itemId, float positionX, float positionY);
+	ItemOnGround(ItemId itemId, float positionX, float positionY);
 	~ItemOnGround();
 
 	void Update() override;
@@ -13,9 +13,9 @@ public:
 	
 	virtual void SetPosition(Vec2 position) override;
 	virtual FRECT GetCollisionFRect() override;
-	ItemEnum GetItemId() const;
+	ItemId GetItemId() const;
 private:
-	ItemEnum itemId;
+	ItemId itemId;
 	Tile* parentTile;
 	bool positionChange;
 };

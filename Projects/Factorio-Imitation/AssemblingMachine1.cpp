@@ -4,7 +4,7 @@
 
 HRESULT AssemblingMachine1::Init(int x, int y, DIRECTION _direction, bool _temp)
 {
-	itemId = ItemEnum::ASSEMBLING_MACHINE_1;
+	itemId = ItemId::ASSEMBLING_MACHINE_1;
 	usingClickEvent = true;
 	Structure::Init(x, y, _direction, _temp);
 
@@ -21,7 +21,7 @@ HRESULT AssemblingMachine1::Init(int x, int y, DIRECTION _direction, bool _temp)
 	craftingSpeed = 0.5f;
 	status = NO_RECIPE;
 
-	vecRecipes = RecipeManager::GetSingleton()->FindRecipes(ASSEMBLING_MACHINE_1);
+	vecRecipes = RecipeManager::GetSingleton()->FindRecipePreset(ASSEMBLING_MACHINE_1);
 	currRecipeIndex = 0;
 	currRecipe = vecRecipes->at(currRecipeIndex);
 	ingredients.Init(currRecipe); 

@@ -3,7 +3,7 @@
 
 HRESULT ExpressTransportBelt::Init(int x, int y, DIRECTION _direction, bool _temp)
 {
-	itemId = ItemEnum::EXPRESS_TRANSPORT_BELT;
+	itemId = ItemId::EXPRESS_TRANSPORT_BELT;
 	speed = 135.0f;
 	image = new GLImage("Entity/ExpressTransportBelt", 32, 20);
 

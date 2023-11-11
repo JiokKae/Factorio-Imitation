@@ -20,80 +20,88 @@ HRESULT RecipeManager::Init()
 	AddRecipe("Iron Chest",			ItemInfo(IRON_CHEST, 1),			0.5f,	{ ItemInfo(IRON_PLATE, 8) });
 	AddRecipe("Steel Chest",		ItemInfo(STEEL_CHEST, 1),			0.5f,	{ ItemInfo(STEEL_PLATE, 8) });
 
-	presetRecipes[STONE_FURNACE].push_back(FindRecipe(IRON_PLATE));
-	presetRecipes[STONE_FURNACE].push_back(FindRecipe(COPPER_PLATE));
-	presetRecipes[STONE_FURNACE].push_back(FindRecipe(STONE_BRICK));
-	presetRecipes[STONE_FURNACE].push_back(FindRecipe(STEEL_PLATE));
-
-	presetRecipes[ASSEMBLING_MACHINE_1].push_back(FindRecipe(IRON_GEAR_WHEEL));
-	presetRecipes[ASSEMBLING_MACHINE_1].push_back(FindRecipe(COPPER_CABLE));
-	presetRecipes[ASSEMBLING_MACHINE_1].push_back(FindRecipe(ELECTRONIC_CIRCUIT));
-	presetRecipes[ASSEMBLING_MACHINE_1].push_back(FindRecipe(TRANSPORT_BELT));
-	presetRecipes[ASSEMBLING_MACHINE_1].push_back(FindRecipe(FAST_TRANSPORT_BELT));
-	presetRecipes[ASSEMBLING_MACHINE_1].push_back(FindRecipe(EXPRESS_TRANSPORT_BELT));
-	presetRecipes[ASSEMBLING_MACHINE_1].push_back(FindRecipe(BURNER_INSERTER));
-	presetRecipes[ASSEMBLING_MACHINE_1].push_back(FindRecipe(ASSEMBLING_MACHINE_1));
-	presetRecipes[ASSEMBLING_MACHINE_1].push_back(FindRecipe(STONE_FURNACE));
-	presetRecipes[ASSEMBLING_MACHINE_1].push_back(FindRecipe(IRON_CHEST));
-	presetRecipes[ASSEMBLING_MACHINE_1].push_back(FindRecipe(STEEL_CHEST));
+	AddRecipePreset(STONE_FURNACE, { 
+		IRON_PLATE, 
+		COPPER_PLATE, 
+		STONE_BRICK, 
+		STEEL_PLATE 
+	});
+	AddRecipePreset(ASSEMBLING_MACHINE_1, { 
+		IRON_GEAR_WHEEL, 
+		COPPER_CABLE, 
+		ELECTRONIC_CIRCUIT, 
+		TRANSPORT_BELT, 
+		FAST_TRANSPORT_BELT, 
+		EXPRESS_TRANSPORT_BELT, 
+		BURNER_INSERTER,
+		ASSEMBLING_MACHINE_1,
+		STONE_FURNACE,
+		IRON_CHEST,
+		STEEL_CHEST,
+	});
 
 	return S_OK;
 }
 
 void RecipeManager::Release()
 {
-	map<string, Recipe*>::iterator it = mapRecipes.begin();
-	while (it != mapRecipes.end())
+	auto iter = recipes.begin();
+	while (iter != recipes.end())
 	{
-		SAFE_DELETE(it->second);
-		it = mapRecipes.erase(it);
+		SAFE_DELETE(iter->second);
+		iter = recipes.erase(iter);
 	}
-	mapRecipes.clear();
+	recipes.clear();
+	recipePresets.clear();
 
 	ReleaseSingleton();
 }
 
-Recipe* RecipeManager::AddRecipe(string strKey, ItemInfo output, float craftingTime, vector<ItemInfo> vecIngredients)
+std::vector<Recipe*>* RecipeManager::FindRecipePreset(int itemId)
 {
-	Recipe* recipe = FindRecipe(strKey);
-	if (recipe)
+	if (recipePresets.contains(itemId) == true)
 	{
-		return recipe;
-	}
-	recipe = new Recipe(vecIngredients, craftingTime, output);
-
-	mapRecipes.emplace(strKey, recipe);
-
-	return recipe;
-}
-
-void RecipeManager::DeleteRecipe(string strKey)
-{
-	map<string, Recipe*>::iterator it = mapRecipes.find(strKey);
-	if (it != mapRecipes.end())
-	{
-		SAFE_DELETE(it->second);
-		mapRecipes.erase(it);
-	}
-}
-
-Recipe* RecipeManager::FindRecipe(string strKey)
-{
-	map<string, Recipe*>::iterator it = mapRecipes.find(strKey);
-	if (it != mapRecipes.end())
-	{
-		return it->second;
+		return &recipePresets[itemId];
 	}
 
 	return nullptr;
 }
 
-Recipe* RecipeManager::FindRecipe(int enumKey)
+Recipe* RecipeManager::AddRecipe(const std::string& key, const ItemInfo& output, float craftingTime, const std::vector<ItemInfo>& ingredients)
 {
-	return FindRecipe(string(g_itemSpecs[enumKey].name));
+	if (recipes.contains(key) == false)
+	{
+		recipes.emplace(key, new Recipe(ingredients, craftingTime, output));
+	}
+
+	return recipes[key];
 }
 
-vector<Recipe*>* RecipeManager::FindRecipes(int itemIdKey)
+Recipe* RecipeManager::FindRecipe(const std::string& key)
 {
-	return &presetRecipes[itemIdKey];
+	if (recipes.contains(key) == true)
+	{
+		return recipes[key];
+	}
+
+	return nullptr;
+}
+
+Recipe* RecipeManager::FindRecipe(int itemId)
+{
+	return FindRecipe(g_itemSpecs[itemId].name);
+}
+
+void RecipeManager::AddRecipePreset(int itemId, const std::vector<int>& recipeKeys)
+{
+	std::vector<Recipe*> recipes;
+	for (auto& recipeKey : recipeKeys)
+	{
+		if (Recipe* recipe = FindRecipe(recipeKey))
+		{
+			recipes.push_back(recipe);
+		}
+	}
+
+	recipePresets.emplace(itemId, recipes);
 }

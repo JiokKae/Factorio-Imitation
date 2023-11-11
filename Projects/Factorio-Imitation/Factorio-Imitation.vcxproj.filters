@@ -122,7 +122,7 @@
     <ClInclude Include="UIManager.h">
       <Filter>MainGame\UI</Filter>
     </ClInclude>
-    <ClInclude Include="ItemEnum.h">
+    <ClInclude Include="ItemId.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="EntityManager.h">

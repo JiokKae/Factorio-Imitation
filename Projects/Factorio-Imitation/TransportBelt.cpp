@@ -19,7 +19,7 @@ glm::ivec2 TransportBelt::imageTopPosOffset[DIRECTION_END] = {
 
 HRESULT TransportBelt::Init(int x, int y, DIRECTION _direction, bool _temp)
 {
-	itemId = ItemEnum::TRANSPORT_BELT;
+	itemId = ItemId::TRANSPORT_BELT;
 	speed = 45.0f;
 	image = new GLImage("Entity/TransportBelt", 16, 20);
 
