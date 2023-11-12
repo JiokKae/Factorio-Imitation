@@ -39,7 +39,7 @@ public:
 	void UnlinkAroundBelts();
 
 	void FlowItem(Entity* item, bool isItem);
-	virtual bool InputItem(ItemInfo* item, glm::vec2 pos);
+	virtual bool InputItem(ItemInfo* item, glm::vec2 position);
 
 	virtual void SetPosition(Vec2 position) override;
 	void SetAroundBelts(DIRECTION direction, TransportBelt* aroundBelt);

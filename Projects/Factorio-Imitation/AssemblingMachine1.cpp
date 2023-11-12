@@ -118,7 +118,7 @@ void AssemblingMachine1::LateRender(ShaderProgram* shader)
 		altModeIcon->Render(shader, position.x, position.y + 16, currRecipe->GetOutput().id % 8, 7 - currRecipe->GetOutput().id / 8);
 }
 
-bool AssemblingMachine1::InputItem(ItemInfo* inputItem, glm::vec2 /*pos*/)
+bool AssemblingMachine1::InputItem(ItemInfo* inputItem, glm::vec2 /*position*/)
 {
 	if (currRecipe->IsIngredient(inputItem->id) == false)
 	{

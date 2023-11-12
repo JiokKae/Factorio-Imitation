@@ -169,33 +169,13 @@ void BurnerMiningDrill::RenderInScreen(ShaderProgram* shader, float posX, float 
 	images[direction]->Render(shader, posX, posY, frameX, frameY);
 }
 
-bool BurnerMiningDrill::InputItem(ItemInfo* inputItem, glm::vec2 /*pos*/)
+bool BurnerMiningDrill::InputItem(ItemInfo* inputItem, glm::vec2 /*position*/)
 {
-	// 받는 아이템이 연료라면
-	if (g_itemSpecs[inputItem->id].fuel)
+	if (g_itemSpecs[inputItem->id].fuel == true)
 	{
-		// 연료 슬롯에 연료가 있다면
-		if (waitingItemInfo->amount)
-		{
-			// 연료 종류가 같을 때만
-			if (waitingItemInfo->id == inputItem->id)
-			{
-				waitingItemInfo->amount += inputItem->amount;
-				SAFE_DELETE(inputItem);
-				return true;
-			}
-		}
-		// 연료 슬롯에 연료가 없다면
-		else
-		{
-			waitingItemInfo->id = inputItem->id;
-			waitingItemInfo->amount = inputItem->amount;
-			SAFE_DELETE(inputItem);
-			return true;
-		}
+		return inputItem->MoveAllItemTo(waitingItemInfo);
 	}
 
-	SAFE_DELETE(inputItem);
 	return false;
 }
 
@@ -225,7 +205,8 @@ bool BurnerMiningDrill::OutputItem()
 
 	if (outputTile->GetLpSturcture())
 	{
-		if (outputTile->GetLpSturcture()->InputItem(new ItemInfo(targetTile->GetLpOre()->GetItemEnum(), 1), outputPos))
+		ItemInfo minedOre(targetTile->GetLpOre()->GetItemEnum(), 1);
+		if (outputTile->GetLpSturcture()->InputItem(&minedOre, outputPos))
 		{
 			targetTile->GetLpOre()->AddAmount(-1);
 			productionPercent -= 1.0f;

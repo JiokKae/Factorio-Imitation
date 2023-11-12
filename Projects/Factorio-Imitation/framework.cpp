@@ -61,22 +61,27 @@ bool ItemInfo::CanInput(int itemId) const
 
 bool ItemInfo::MoveAllItemTo(ItemInfo* destItemInfo)
 {
-	// 목적지가 비어있거나 같은 종류라면 이동 가능
-	if (destItemInfo->IsEmpty())
+	if (destItemInfo->CanInput(id) == false)
+	{
+		return false;
+	}
+
+	if (destItemInfo->IsEmpty() == true)
 	{
 		destItemInfo->id = id;
 		destItemInfo->amount = amount;
 		amount = 0;
 		return true;
 	}
-	else if (destItemInfo->id == id)
+
+	if (destItemInfo->id == id)
 	{
 		destItemInfo->amount += amount;
 		amount = 0;
 		return true;
 	}
-	else
-		return false;
+
+	return false;
 }
 
 void ItemInfo::SwapItemWith(ItemInfo* destItemInfo)

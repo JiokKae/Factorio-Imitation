@@ -38,7 +38,7 @@ public:
 
 	// 아이템을 받는 함수
 	// 레시피에 존재하는 재료를 받아온다.
-	virtual bool InputItem(ItemInfo* inputItem, glm::vec2 pos) override;
+	virtual bool InputItem(ItemInfo* inputItem, glm::vec2 position) override;
 
 	// 아이템을 반출하는 함수 
 	// 생산품을 반출한다.

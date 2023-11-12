@@ -208,7 +208,7 @@ void StoneFurnace::RenderInScreen(ShaderProgram* shader, float posX, float posY)
 	}
 }
 
-bool StoneFurnace::InputItem(ItemInfo* inputItem, glm::vec2 /*pos*/)
+bool StoneFurnace::InputItem(ItemInfo* inputItem, glm::vec2 /*position*/)
 {
 	// 받는 아이템이 연료라면
 	if (g_itemSpecs[inputItem->id].fuel)
@@ -220,8 +220,7 @@ bool StoneFurnace::InputItem(ItemInfo* inputItem, glm::vec2 /*pos*/)
 			if (fuel->id == inputItem->id)
 			{
 				fuel->amount += inputItem->amount;
-
-				SAFE_DELETE(inputItem);
+				inputItem->amount = 0;
 				return true;
 			}
 		}
@@ -230,8 +229,7 @@ bool StoneFurnace::InputItem(ItemInfo* inputItem, glm::vec2 /*pos*/)
 		{
 			fuel->id = inputItem->id;
 			fuel->amount = inputItem->amount;
-
-			SAFE_DELETE(inputItem);
+			inputItem->amount = 0;
 			return true;
 		}
 	}
@@ -244,8 +242,7 @@ bool StoneFurnace::InputItem(ItemInfo* inputItem, glm::vec2 /*pos*/)
 			if (resource->id == inputItem->id)
 			{
 				resource->amount += inputItem->amount;
-
-				SAFE_DELETE(inputItem);
+				inputItem->amount = 0;
 				return true;
 			}
 		}
@@ -254,14 +251,12 @@ bool StoneFurnace::InputItem(ItemInfo* inputItem, glm::vec2 /*pos*/)
 		{
 			resource->id = inputItem->id;
 			resource->amount = inputItem->amount;
-
-			SAFE_DELETE(inputItem);
+			inputItem->amount = 0;
 			return true;
 		}
 		
 	}
 
-	SAFE_DELETE(inputItem);
 	return false;
 }
 

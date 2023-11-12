@@ -43,7 +43,7 @@ public:
 	virtual void Render(ShaderProgram* lpShader) override;
 	virtual void RenderInScreen(ShaderProgram* shader, float posX, float posY) override;
 
-	virtual bool InputItem(ItemInfo* inputItem, glm::vec2 pos) override;
+	virtual bool InputItem(ItemInfo* inputItem, glm::vec2 position) override;
 	virtual bool TakeOutItem(ItemInfo* outItem) override;
 	virtual void ClickEvent() override;
 	
