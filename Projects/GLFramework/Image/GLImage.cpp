@@ -5,7 +5,7 @@
 #include "../VertexDataObject/VertexArrayObject.h"
 #include "../VertexDataObject/VertexBufferObject.h"
 
-GLImage::GLImage(const std::string& textureKey, int maxFrameX, int maxFrameY, float marginX, float marginY, int width, int height)
+GLImage::GLImage(const std::string& textureKey, int maxFrameX /*= 1*/, int maxFrameY /*= 1*/, float marginX /*= 0*/, float marginY /*= 0*/, int width /*= -1*/, int height /*= -1*/)
 	: offset(0.0f, 0.0f)
 	, scale(1.0f, 1.0f)
 	, margin(marginX, marginY)

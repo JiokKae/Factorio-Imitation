@@ -3,12 +3,13 @@
 
 typedef class VertexBufferObject
 {
-	GLuint ID;
-
 public:
-	GLuint GetID() { return ID; }
-	void SetData(GLsizeiptr size, const void *data, GLenum usage);
 	VertexBufferObject();
 	~VertexBufferObject();
-} VBO;
 
+	GLuint GetID() const { return ID; }
+	void SetData(GLsizeiptr size, const void *data, GLenum usage);
+
+private:
+	GLuint ID;
+} VBO;
