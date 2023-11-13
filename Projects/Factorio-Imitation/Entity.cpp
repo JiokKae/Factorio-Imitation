@@ -12,7 +12,3 @@ void Entity::Release()
 void Entity::Update()
 {
 }
-
-void Entity::Render(ShaderProgram* /*lpShaderProgram*/)
-{
-}

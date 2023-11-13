@@ -13,7 +13,7 @@ public:
 	virtual void Release();
 	virtual void Update();
 	virtual void FirstRender(ShaderProgram* /*lpShaderProgram*/) {};
-	virtual void Render(ShaderProgram* lpShader) = 0;
+	virtual void Render(ShaderProgram* lpShaderProgram) {};
 	virtual void LateRender(ShaderProgram* /*lpShaderProgram*/) {};
 
 	bool IsPassable()			{ return passable; }
@@ -21,7 +21,7 @@ public:
 	virtual FRECT GetCollisionFRect()	{ return FRECT(); }
 	virtual FRECT GetFRect()		{ return FRECT(); }
 
-	virtual void SetPosition(Vec2 value)	{ position = value; }
+	virtual void SetPosition(const Vec2& value)	{ position = value; }
 
 	Entity()
 		: passable(false)

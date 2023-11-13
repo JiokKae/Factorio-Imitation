@@ -41,7 +41,7 @@ void ItemOnGround::Update()
 	}
 }
 
-void ItemOnGround::SetPosition(Vec2 _position)
+void ItemOnGround::SetPosition(const Vec2& _position)
 {
 	this->position = _position;
 	positionChange = true;

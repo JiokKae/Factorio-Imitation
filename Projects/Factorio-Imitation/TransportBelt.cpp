@@ -272,7 +272,7 @@ bool TransportBelt::InputItem(ItemInfo* inputItem, glm::vec2 position)
 	return true;
 }
 
-void TransportBelt::SetPosition(Vec2 _position)
+void TransportBelt::SetPosition(const Vec2& _position)
 {
 	Entity::SetPosition(_position);
 	coord = glm::ivec2(POS_TO_COORD(this->position));
