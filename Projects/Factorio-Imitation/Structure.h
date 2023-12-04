@@ -54,7 +54,7 @@ public:
 	ItemId GetItemId()			{ return itemId; }
 	DIRECTION GetDirection()		{ return direction; }
 	glm::ivec2 GetCoordSize()		{ return coordSize; }
-	virtual FRECT GetCollisionFRect() override;
+	virtual FRECT GetCollisionFRect() const override;
 
 	Structure() {};
 	~Structure() {};

@@ -39,7 +39,7 @@ void WoodenChest::RenderInScreen(ShaderProgram* shader, float posX, float posY)
 	mainImage->Render(shader, posX, posY);
 }
 
-FRECT WoodenChest::GetCollisionFRect()
+FRECT WoodenChest::GetCollisionFRect() const
 {
 	FRECT rect;
 	rect.left = position.x - (coordSize.x * TILE_SIZE / 2.0f);

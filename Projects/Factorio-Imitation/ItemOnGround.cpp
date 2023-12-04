@@ -52,7 +52,7 @@ ItemId ItemOnGround::GetItemId() const
 	return itemId;
 }
 
-FRECT ItemOnGround::GetCollisionFRect()
+FRECT ItemOnGround::GetCollisionFRect() const
 {
 	return FRECT {
 		.left = position.x - 16.0f,

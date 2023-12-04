@@ -4,27 +4,27 @@
 
 class Entity : public GameNode
 {
-protected:
-	Vec2 position;	// 엔티티의 위치
-	bool passable;	// 캐릭터가 지나갈 수 있는지 여부
-
 public:
-	virtual HRESULT Init();
-	virtual void Release();
-	virtual void Update();
-	virtual void FirstRender(ShaderProgram* /*lpShaderProgram*/) {};
+	Entity();
+	virtual ~Entity();
+
+	virtual HRESULT Init() override;
+	virtual void Release() override;
+	virtual void Update() override;
+
+	virtual void FirstRender(ShaderProgram* lpShaderProgram) {};
 	virtual void Render(ShaderProgram* lpShaderProgram) {};
-	virtual void LateRender(ShaderProgram* /*lpShaderProgram*/) {};
+	virtual void LateRender(ShaderProgram* lpShaderProgram) {};
 
-	bool IsPassable()			{ return passable; }
-	const Vec2& GetPosition()		{ return position; }
-	virtual FRECT GetCollisionFRect()	{ return FRECT(); }
-	virtual FRECT GetFRect()		{ return FRECT(); }
+	virtual void SetPosition(const Vec2& newPosition);
 
-	virtual void SetPosition(const Vec2& value)	{ position = value; }
+	virtual FRECT GetCollisionFRect() const;
+	virtual FRECT GetFRect() const;
 
-	Entity()
-		: passable(false)
-	{};
-	~Entity() {};
+	const Vec2& GetPosition() const;
+	bool IsPassable() const;
+
+protected:
+	Vec2 position;
+	bool passable;
 };

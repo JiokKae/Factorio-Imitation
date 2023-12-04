@@ -11,7 +11,7 @@ public:
 	void Update() override;
 	
 	virtual void SetPosition(const Vec2& position) override;
-	virtual FRECT GetCollisionFRect() override;
+	virtual FRECT GetCollisionFRect() const override;
 	ItemId GetItemId() const;
 private:
 	ItemId itemId;

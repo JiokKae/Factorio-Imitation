@@ -13,6 +13,6 @@ public:
 	virtual void Render(ShaderProgram* shader) override;
 	virtual void RenderInScreen(ShaderProgram* shader, float posX, float posY) override;
 
-	virtual FRECT GetCollisionFRect() override;
+	virtual FRECT GetCollisionFRect() const override;
 };
 

@@ -135,7 +135,7 @@ FRECT Structure::GetFRect()
 	return rect;
 }
 
-FRECT Structure::GetCollisionFRect()
+FRECT Structure::GetCollisionFRect() const
 {
 	FRECT rect;
 	rect.left =	position.x - (coordSize.x * TILE_SIZE / 2.0f - TILE_SIZE * 0.3f);

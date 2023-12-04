@@ -33,7 +33,7 @@ public:
 	void Mining();
 
 	glm::vec2* GetLpPosition() { return &position; }
-	FRECT GetCollisionFRect() override;
+	FRECT GetCollisionFRect() const override;
 	FRECT GetPickUpFRect() const;
 	Inventory* GetLpInventory();
 

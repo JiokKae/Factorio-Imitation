@@ -163,7 +163,7 @@ void Character::Mining()
 	}
 }
 
-FRECT Character::GetCollisionFRect()
+FRECT Character::GetCollisionFRect() const
 {
 	return FRECT{
 		.left = position.x - (TILE_SIZE / 4 * (4.0f / 5.0f)),
