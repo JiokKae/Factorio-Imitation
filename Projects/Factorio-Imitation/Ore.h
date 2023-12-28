@@ -3,7 +3,7 @@
 class Ore
 {
 public:
-	Ore(int x, int y);
+	Ore(int itemEnum, int amount);
 
 	int GetItemEnum() const;
 	int GetAmount() const;
@@ -12,11 +12,10 @@ public:
 	
 	void AddAmount(int value);
 
+	static int RandomAmount(int x, int y);
+	static int RandomItemEnum(int x, int y);
 private:
 	int itemEnum;
 	int amount;
 	int randFrameX;
-
-	int RandomAmount(int x, int y) const;
-	int RandomItemEnum(int x, int y) const;
 };

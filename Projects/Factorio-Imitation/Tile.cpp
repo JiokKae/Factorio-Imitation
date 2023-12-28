@@ -4,7 +4,7 @@
 Tile::Tile(int x, int y)
 	: coord(x, y)
 	, structure{ nullptr }
-	, ore{ new Ore(x, y) }
+	, ore{ new Ore(Ore::RandomItemEnum(x, y), Ore::RandomAmount(x, y)) }
 	, kind{ KIND::DIRT_1 }
 {
 }

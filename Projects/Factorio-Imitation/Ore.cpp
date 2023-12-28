@@ -3,9 +3,9 @@
 #include "framework.h"
 #include <array>
 
-Ore::Ore(int x, int y)
-	: itemEnum{ RandomItemEnum(x, y) }
-	, amount{ RandomAmount(x, y) }
+Ore::Ore(int itemEnum, int amount)
+	: itemEnum{ itemEnum }
+	, amount{ amount }
 	, randFrameX{ std::rand() % 8 }
 {
 }
@@ -27,11 +27,15 @@ int Ore::GetRandFrameX() const
 
 int Ore::GetFrameY() const
 {
-	constexpr static array<int, 7> AMOUNTS = { 10000, 8000, 6000, 4000, 1500, 300, 200 };
+	constexpr std::array<int, 7> AMOUNTS{ 10000, 8000, 6000, 4000, 1500, 300, 200 };
 
 	for (int i = 0; i < AMOUNTS.size(); ++i)
+	{
 		if (amount > AMOUNTS[i])
+		{
 			return static_cast<int>(AMOUNTS.size()) - i;
+		}
+	}
 	return 0;
 }
 
@@ -40,12 +44,12 @@ void Ore::AddAmount(int value)
 	this->amount += value;
 }
 
-int Ore::RandomAmount(int x, int y) const
+int Ore::RandomAmount(int x, int y)
 {
 	return std::max(0, int(10.0f - glm::distance(glm::vec2(16, 16), glm::vec2(std::abs(x % 32), std::abs(y % 32)))) * (300 + std::rand() % 200));
 }
 
-int Ore::RandomItemEnum(int x, int y) const
+int Ore::RandomItemEnum(int x, int y)
 {
 	if (std::rand() % 2)
 		return COAL;
