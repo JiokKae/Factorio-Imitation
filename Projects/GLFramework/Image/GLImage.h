@@ -15,17 +15,13 @@ public:
 
 	void SetAngle(float value)			{ angle = value; }
 	void SetAlpha(float value)			{ alpha = value; }
-	void SetScale(glm::vec2 value)			{ scale = value; }
-	void SetOffset(glm::vec2 value)			{ offset = value; }
-	void SetSourceTexture(Texture* texture)		{ sourceTexture = texture; }
+	void SetScale(const glm::vec2& value)		{ scale = value; }
+	void SetOffset(const glm::vec2& value)		{ offset = value; }
 
-	glm::vec2 GetScale()				{ return scale; }
-	float GetFrameWidth()				{ return frameWidth; }
-	float GetFrameHeight()				{ return frameHeight; }
-	glm::vec2 GetMargin()				{ return margin; }
-	glm::ivec2 GetMaxFrame()			{ return maxFrame; }
-	float GetZoomedFrameWidth()			{ return frameWidth * scale.x; }
-	float GetZoomedFrameHeight()			{ return frameHeight * scale.y; }
+	float GetFrameWidth() const			{ return frameWidth; }
+	float GetFrameHeight() const			{ return frameHeight; }
+	const glm::vec2& GetMargin() const		{ return margin; }
+	const glm::ivec2& GetMaxFrame() const		{ return maxFrame; }
 	Texture* GetLpSourceTexture()			{ return sourceTexture; }
 
 private:
