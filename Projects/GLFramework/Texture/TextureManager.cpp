@@ -8,50 +8,30 @@ HRESULT TextureManager::Init()
 
 void TextureManager::Release()
 {
-	map<string, Texture*>::iterator it;
-	for (it = mapTextureDatas.begin(); it != mapTextureDatas.end(); )
+	for (auto& textureData : mapTextureData)
 	{
-		if (it->second)
+		if (textureData.second)
 		{
-			delete (it->second);
-			it = mapTextureDatas.erase(it);
-		}
-		else
-		{
-			it++;
+			delete textureData.second;
+			textureData.second = nullptr;
 		}
 	}
-	mapTextureDatas.clear();
+	mapTextureData.clear();
 
 	ReleaseSingleton();
 }
 
-GLint TextureManager::GetFilterInt(const std::string& filter)
+void TextureManager::AddTexture(const std::string& key, char const* path, bool mipmap, bool flip, const std::string& filterName)
 {
-	const static std::map<std::string, GLint> filters{ 
-		{"GL_NEAREST", GL_NEAREST},
-		{"GL_LINEAR", GL_LINEAR},
-		{"GL_NEAREST_MIPMAP_NEAREST", GL_NEAREST_MIPMAP_NEAREST},
-		{"GL_LINEAR_MIPMAP_NEAREST", GL_LINEAR_MIPMAP_NEAREST},
-		{"GL_NEAREST_MIPMAP_LINEAR", GL_NEAREST_MIPMAP_LINEAR},
-		{"GL_LINEAR_MIPMAP_LINEAR", GL_LINEAR_MIPMAP_LINEAR},
-	};
-	
-	auto itr = filters.find(filter);
-	return itr != filters.end() ? itr->second : GL_LINEAR;
+	AddTexture(key, path, mipmap, flip, GetFilterInt(filterName));
 }
 
-Texture* TextureManager::AddTexture(string strKey, char const* path, bool mipmap, bool flip, const std::string& filter)
+void TextureManager::AddTexture(const std::string& key, char const* path, bool mipmap /*= true*/, bool flip /*= true*/, GLint filter /*= GL_LINEAR*/)
 {
-	return AddTexture(strKey, path, mipmap, flip, GetFilterInt(filter));
-}
-
-Texture* TextureManager::AddTexture(string strKey, char const* path, bool mipmap, bool flip, GLint filter)
-{
-	Texture* texture{ FindTexture(strKey) };
+	Texture* texture{ FindTexture(key) };
 	if (texture)
 	{
-		return texture;
+		return;
 	}
 
 	try
@@ -60,32 +40,33 @@ Texture* TextureManager::AddTexture(string strKey, char const* path, bool mipmap
 	}
 	catch (Texture::LoadImageException e)
 	{
-		return nullptr;
+		return;
 	}
 
-	mapTextureDatas.emplace(strKey, texture);
-
-	return texture;
+	mapTextureData.emplace(key, texture);
 }
 
-void TextureManager::DeleteTexture(string strKey)
+Texture* TextureManager::FindTexture(const std::string& key)
 {
-	map<string, Texture*>::iterator it = mapTextureDatas.find(strKey);
-	if (it != mapTextureDatas.end())
+	auto iter = mapTextureData.find(key);
+	if (iter != mapTextureData.end())
 	{
-		delete it->second;
-
-		mapTextureDatas.erase(it);
+		return iter->second;
 	}
-}
-
-Texture* TextureManager::FindTexture(string strKey)
-{
-	map<string, Texture*>::iterator it = mapTextureDatas.find(strKey);
-	if (it != mapTextureDatas.end())
-	{
-		return it->second;
-	}
-
 	return nullptr;
+}
+
+GLint TextureManager::GetFilterInt(const std::string& filterName) const
+{
+	const static std::map<std::string, GLint> filters{
+		{"GL_NEAREST", GL_NEAREST},
+		{"GL_LINEAR", GL_LINEAR},
+		{"GL_NEAREST_MIPMAP_NEAREST", GL_NEAREST_MIPMAP_NEAREST},
+		{"GL_LINEAR_MIPMAP_NEAREST", GL_LINEAR_MIPMAP_NEAREST},
+		{"GL_NEAREST_MIPMAP_LINEAR", GL_NEAREST_MIPMAP_LINEAR},
+		{"GL_LINEAR_MIPMAP_LINEAR", GL_LINEAR_MIPMAP_LINEAR},
+	};
+
+	auto itr = filters.find(filterName);
+	return itr != filters.end() ? itr->second : GL_LINEAR;
 }
