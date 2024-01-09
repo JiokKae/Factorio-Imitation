@@ -5,7 +5,7 @@
 #include "../VertexDataObject/VertexArrayObject.h"
 #include "../VertexDataObject/VertexBufferObject.h"
 
-GLImage::GLImage(const std::string& textureKey, int maxFrameX /*= 1*/, int maxFrameY /*= 1*/, float marginX /*= 0*/, float marginY /*= 0*/, int width /*= -1*/, int height /*= -1*/)
+GLImage::GLImage(const std::string& textureKey, int maxFrameX /*= 1*/, int maxFrameY /*= 1*/, float marginX /*= 0*/, float marginY /*= 0*/, int width /*= USE_BASE_SIZE*/, int height /*= USE_BASE_SIZE*/)
 	: offset(0.0f, 0.0f)
 	, scale(1.0f, 1.0f)
 	, margin(marginX, marginY)
@@ -19,9 +19,9 @@ GLImage::GLImage(const std::string& textureKey, int maxFrameX /*= 1*/, int maxFr
 {
 	if (sourceTexture == nullptr)
 		return;
-	// Load base width, height;
-	width = (width == -1) ? sourceTexture->GetWidth() : width;
-	height = (height == -1) ? sourceTexture->GetHeight() : height;
+	
+	width = (width == USE_BASE_SIZE) ? sourceTexture->GetWidth() : width;
+	height = (height == USE_BASE_SIZE) ? sourceTexture->GetHeight() : height;
 
 	frameWidth = static_cast<float>(width / maxFrame.x);
 	frameHeight = static_cast<float>(height / maxFrame.y);
@@ -45,7 +45,11 @@ GLImage::GLImage(const std::string& textureKey, int maxFrameX /*= 1*/, int maxFr
 
 GLImage::~GLImage()
 {
-	SAFE_DELETE(imageVAO);
+	if (imageVAO) 
+	{
+		delete imageVAO;
+		imageVAO = nullptr;
+	}
 }
 
 void GLImage::Render(ShaderProgram* shader, float destX, float destY, int currFrameX, int currFrameY)

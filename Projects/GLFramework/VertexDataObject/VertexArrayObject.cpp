@@ -13,7 +13,11 @@ VertexArrayObject::~VertexArrayObject()
 	for (auto& vbo : VBOs)
 	{
 		glDisableVertexAttribArray(vbo.first);
-		SAFE_DELETE(vbo.second);
+		if (vbo.second)
+		{
+			delete vbo.second;
+			vbo.second = nullptr;
+		}
 	}
 
 	glBindVertexArray(0);

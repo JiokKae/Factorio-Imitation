@@ -2,13 +2,15 @@
 #include <glm/vec2.hpp>
 #include <string>
 
+constexpr int USE_BASE_SIZE = -1;
+
 class ShaderProgram;
 class Texture;
 class VertexArrayObject;
 class GLImage final
 {
 public:
-	GLImage(const std::string& textureKey, int maxFrameX = 1, int maxFrameY = 1, float marginX = 0, float marginY = 0, int width = -1, int height = -1);
+	GLImage(const std::string& textureKey, int maxFrameX = 1, int maxFrameY = 1, float marginX = 0, float marginY = 0, int width = USE_BASE_SIZE, int height = USE_BASE_SIZE);
 	~GLImage();
 
 	void Render(ShaderProgram* shader, float destX, float destY, int currFrameX = 0, int currFrameY = 0);

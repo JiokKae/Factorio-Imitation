@@ -9,6 +9,9 @@
 #include "../GLFramework/VertexDataObject/VertexBufferObject.h"
 #include "ItemId.h"
 
+constexpr GLuint CURRFRAME_VBO_INDEX{ 1 };
+constexpr GLuint OFFSET_VBO_INDEX{ 2 };
+
 HRESULT TileManager::Init()
 {
 	tileImages[static_cast<int>(Tile::KIND::DIRT_1)] = new GLImage("Terrain/Dirt_1", 4096, 576, 64, 9);
@@ -67,9 +70,9 @@ HRESULT TileManager::Init()
 
     tileCurrFrame = new glm::vec2[CHUNK_IN_TILE * CHUNK_IN_TILE];
     tileOffset = new glm::vec2[CHUNK_IN_TILE * CHUNK_IN_TILE];
-    for (int y = 0; y < 32; y++)
+    for (int y = 0; y < CHUNK_IN_TILE; y++)
     {
-        for (int x = 0; x < 32; x++)
+        for (int x = 0; x < CHUNK_IN_TILE; x++)
         {
             tileCurrFrame[y * CHUNK_IN_TILE + x] = { x % 64, y % 4 };
             /*
@@ -141,8 +144,8 @@ void TileManager::Render(RECT cameraRect)
     {
         instancingShader->setVec2("offset", (*vecChunkIt)->GetCoord() * 2048);
 
-        tilesVAO->SetVBOData(1, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
-        tilesVAO->SetVBOData(2, sizeof(glm::vec2) * 1024, &tileOffset[0], GL_DYNAMIC_DRAW);
+        tilesVAO->SetVBOData(CURRFRAME_VBO_INDEX, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
+        tilesVAO->SetVBOData(OFFSET_VBO_INDEX, sizeof(glm::vec2) * 1024, &tileOffset[0], GL_DYNAMIC_DRAW);
         for (int kind = 0; kind < int(Tile::KIND::END); kind++)
         {
             glActiveTexture(GL_TEXTURE0);
@@ -176,8 +179,8 @@ void TileManager::Render(RECT cameraRect)
                     }
                 }
             }
-            tilesVAO->SetVBOData(1, sizeof(glm::vec2) * count, &oreCurrFrame[0], GL_DYNAMIC_DRAW);
-            tilesVAO->SetVBOData(2, sizeof(glm::vec2) * count, &oreOffset[0], GL_DYNAMIC_DRAW);
+            tilesVAO->SetVBOData(CURRFRAME_VBO_INDEX, sizeof(glm::vec2) * count, &oreCurrFrame[0], GL_DYNAMIC_DRAW);
+            tilesVAO->SetVBOData(OFFSET_VBO_INDEX, sizeof(glm::vec2) * count, &oreOffset[0], GL_DYNAMIC_DRAW);
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, it->second->GetLpSourceTexture()->GetID());
             glDrawArraysInstanced(GL_TRIANGLES, 0, 6, count);
