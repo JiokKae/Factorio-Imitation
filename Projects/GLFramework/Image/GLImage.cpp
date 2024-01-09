@@ -36,11 +36,8 @@ GLImage::GLImage(const std::string& textureKey, int maxFrameX /*= 1*/, int maxFr
 		-frameWidth / 2, -frameHeight / 2,  0.0f, 0.0f,
 	};
 
-	// TODO: VBO할당 해제 잘 하고 있는지 확인
 	imageVAO = new VAO();
-	VBO* posTexcoordVBO = new VBO();
-	posTexcoordVBO->SetData(sizeof(vertices), vertices, GL_STATIC_DRAW);
-	imageVAO->AddVBO(0, posTexcoordVBO, 4);
+	imageVAO->AddVBO(0, new VBO(sizeof(vertices), vertices, GL_STATIC_DRAW), 4);
 }
 
 GLImage::~GLImage()

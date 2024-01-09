@@ -43,8 +43,7 @@ HRESULT TileManager::Init()
     tilesVAO = new VAO();
 
     // tileQuadVBO Init (사각형 버텍스들을 저장하는 VBO)
-    VBO* tileQuadVBO = new VBO();   // 사각형 버텍스들을 저장하는 VBO
-    float vertices[] = {
+    constexpr float vertices[] = {
         // positions       // texture coords
         -64 / 2, -64 / 2,  0.0f, 0.0f,
          64 / 2, -64 / 2,  1.0f, 0.0f,
@@ -53,20 +52,18 @@ HRESULT TileManager::Init()
         -64 / 2,  64 / 2,  0.0f, 1.0f,
         -64 / 2, -64 / 2,  0.0f, 0.0f,
     };
-    tileQuadVBO->SetData(sizeof(float) * 4 * 6, vertices, GL_STATIC_DRAW); // vec4(vec2 pos, vec2 texCoord) * 6
+    VBO* tileQuadVBO = new VBO(sizeof(float) * 4 * 6, vertices, GL_STATIC_DRAW);   // vec4(vec2 pos, vec2 texCoord) * 6
     tilesVAO->AddVBO(0, tileQuadVBO, 4);
 
     // currFrameVBO Init (각 인스턴스의 현재 프레임을 저장하는 VBO)
-    VBO* currFrameVBO = new VBO();
-    currFrameVBO->SetData(sizeof(glm::vec2) * 1024, NULL, GL_DYNAMIC_DRAW); // vec2(currFrame.x, currFrame.y) * 1024
-    tilesVAO->AddVBO(1, currFrameVBO, 2);
-    tilesVAO->SetDivisor(1, 1);
+    VBO* currFrameVBO = new VBO(sizeof(glm::vec2) * 1024, NULL, GL_DYNAMIC_DRAW); // vec2(currFrame.x, currFrame.y) * 1024
+    tilesVAO->AddVBO(CURRFRAME_VBO_INDEX, currFrameVBO, 2);
+    tilesVAO->SetDivisor(CURRFRAME_VBO_INDEX, 1);
     
     // offsetVBO Init (각 인스턴스의 위치 오프셋을 저장하는 VBO)
-    VBO* offsetVBO = new VBO();
-    offsetVBO->SetData(sizeof(glm::vec2) * 1024, NULL, GL_DYNAMIC_DRAW); // vec2(currFrame.x, currFrame.y) * 1024
-    tilesVAO->AddVBO(2, offsetVBO, 2);
-    tilesVAO->SetDivisor(2, 1);
+    VBO* offsetVBO = new VBO(sizeof(glm::vec2) * 1024, NULL, GL_DYNAMIC_DRAW); // vec2(offset.x, offset.y) * 1024
+    tilesVAO->AddVBO(OFFSET_VBO_INDEX, offsetVBO, 2);
+    tilesVAO->SetDivisor(OFFSET_VBO_INDEX, 1);
 
     tileCurrFrame = new glm::vec2[CHUNK_IN_TILE * CHUNK_IN_TILE];
     tileOffset = new glm::vec2[CHUNK_IN_TILE * CHUNK_IN_TILE];

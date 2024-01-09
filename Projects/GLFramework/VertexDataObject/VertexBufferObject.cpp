@@ -6,6 +6,13 @@ VertexBufferObject::VertexBufferObject()
 	glGenBuffers(1, &this->ID);
 }
 
+VertexBufferObject::VertexBufferObject(GLsizeiptr size, const void* data, GLenum usage)
+	: ID{}
+{
+	glGenBuffers(1, &this->ID);
+	SetData(size, data, usage);
+}
+
 VertexBufferObject::~VertexBufferObject()
 {
 	glDeleteBuffers(1, &this->ID);
