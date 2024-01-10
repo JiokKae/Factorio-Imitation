@@ -118,74 +118,75 @@ void TileManager::Update()
 
 }
 
-void TileManager::Render(RECT cameraRect)
+void TileManager::Render(const RECT& cameraRect)
 {
-    vecChunkInScreen.clear();
-    for (bigIt = mapChunks.begin(); bigIt != mapChunks.end(); bigIt++)
-    {
-        for (smallIt = bigIt->second.begin(); smallIt != bigIt->second.end(); smallIt++)
-        {
-            Chunk* currChunk = smallIt->second;
-            if (currChunk == nullptr)
-                continue;
-            if (CheckRectCollision(currChunk->GetRect(), cameraRect))
-                vecChunkInScreen.push_back(currChunk);
-        }
-    }
+	vecChunkInScreen.clear();
+	for (auto& [y, xChunks] : mapChunks)
+	{
+		for (auto& [x, chunk] : xChunks)
+		{
+			if (chunk && CheckRectCollision(chunk->GetRect(), cameraRect))
+			{
+				vecChunkInScreen.push_back(chunk);
+			}
+		}
+	}
 
-    instancingShader->use();
-    glBindVertexArray(tilesVAO->GetID());
-    instancingShader->setFloat("vertexScale", 1.0f);
-    instancingShader->setVec2("maxFrame", glm::vec2(64, 9));
-    for (vecChunkIt = vecChunkInScreen.begin() ; vecChunkIt != vecChunkInScreen.end(); ++vecChunkIt)
-    {
-        instancingShader->setVec2("offset", (*vecChunkIt)->GetCoord() * 2048);
+	instancingShader->use();
+	glBindVertexArray(tilesVAO->GetID());
+	instancingShader->setFloat("vertexScale", 1.0f);
+	instancingShader->setVec2("maxFrame", glm::vec2(64, 9));
 
-        tilesVAO->SetVBOData(CURRFRAME_VBO_INDEX, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
-        tilesVAO->SetVBOData(OFFSET_VBO_INDEX, sizeof(glm::vec2) * 1024, &tileOffset[0], GL_DYNAMIC_DRAW);
-        for (int kind = 0; kind < int(Tile::KIND::END); kind++)
-        {
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, tileImages[kind]->GetLpSourceTexture()->GetID());
-            glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 1024);
-        }
-    }
-    DebugHelper::GetSingleton()->SetFloat("2.1. tileRender", TimerManager::GetSingleton()->CheckTime());
+	for (Chunk* chunk : vecChunkInScreen)
+	{
+		instancingShader->setVec2("offset", chunk->GetCoord() * 2048);
 
-    instancingShader->setFloat("vertexScale", 2.0f);
-    instancingShader->setVec2("maxFrame", glm::vec2(8, 8));
-    for (vecChunkIt = vecChunkInScreen.begin(); vecChunkIt != vecChunkInScreen.end(); ++vecChunkIt)
-    {
-        instancingShader->setVec2("offset", (*vecChunkIt)->GetCoord() * 2048);
+		tilesVAO->SetVBOData(CURRFRAME_VBO_INDEX, sizeof(glm::vec2) * 1024, &tileCurrFrame[0], GL_DYNAMIC_DRAW);
+		tilesVAO->SetVBOData(OFFSET_VBO_INDEX, sizeof(glm::vec2) * 1024, &tileOffset[0], GL_DYNAMIC_DRAW);
+		for (int kind = 0; kind < int(Tile::KIND::END); kind++)
+		{
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, tileImages[kind]->GetLpSourceTexture()->GetID());
+			glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 1024);
+		}
+	}
 
-        map<int, GLImage*>::iterator it;
-        for (it = mapOreImages.begin(); it != mapOreImages.end(); ++it)
-        {
-            int count = 0;
+	DebugHelper::GetSingleton()->SetFloat("2.1. tileRender", TimerManager::GetSingleton()->CheckTime());
 
-            for (int y = 0; y < 32; y++)
-            {
-                for (int x = 0; x < 32; x++)
-                {
-                    Ore* ore = (*vecChunkIt)->GetLpTile(x, y)->GetLpOre();
-                    if (ore->GetItemEnum() == it->first && ore->GetAmount() > 0)
-                    {
-                        oreCurrFrame[count] = { ore->GetRandFrameX(), ore->GetFrameY() };
-                        oreOffset[count] = { x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2 };
-                        count++;
-                    }
-                }
-            }
-            tilesVAO->SetVBOData(CURRFRAME_VBO_INDEX, sizeof(glm::vec2) * count, &oreCurrFrame[0], GL_DYNAMIC_DRAW);
-            tilesVAO->SetVBOData(OFFSET_VBO_INDEX, sizeof(glm::vec2) * count, &oreOffset[0], GL_DYNAMIC_DRAW);
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, it->second->GetLpSourceTexture()->GetID());
-            glDrawArraysInstanced(GL_TRIANGLES, 0, 6, count);
-        }
-    }
-    DebugHelper::GetSingleton()->SetFloat("2.2. oreRender", TimerManager::GetSingleton()->CheckTime());
+	instancingShader->setFloat("vertexScale", 2.0f);
+	instancingShader->setVec2("maxFrame", glm::vec2(8, 8));
+	for (Chunk* chunk : vecChunkInScreen)
+	{
+		instancingShader->setVec2("offset", chunk->GetCoord() * 2048);
 
-    glBindVertexArray(0);
+		for (auto& [itemId, oreImage] : mapOreImages)
+		{
+			int count = 0;
+
+			for (int y = 0; y < CHUNK_IN_TILE; y++)
+			{
+				for (int x = 0; x < CHUNK_IN_TILE; x++)
+				{
+					Ore* ore = chunk->GetLpTile(x, y)->GetLpOre();
+					if (ore->GetItemEnum() == itemId && ore->GetAmount() > 0)
+					{
+						oreCurrFrame[count] = { ore->GetRandFrameX(), ore->GetFrameY() };
+						oreOffset[count] = { x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2 };
+						count++;
+					}
+				}
+			}
+			tilesVAO->SetVBOData(CURRFRAME_VBO_INDEX, sizeof(glm::vec2) * count, &oreCurrFrame[0], GL_DYNAMIC_DRAW);
+			tilesVAO->SetVBOData(OFFSET_VBO_INDEX, sizeof(glm::vec2) * count, &oreOffset[0], GL_DYNAMIC_DRAW);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, oreImage->GetLpSourceTexture()->GetID());
+			glDrawArraysInstanced(GL_TRIANGLES, 0, 6, count);
+		}
+	}
+
+	DebugHelper::GetSingleton()->SetFloat("2.2. oreRender", TimerManager::GetSingleton()->CheckTime());
+
+	glBindVertexArray(0);
 }
 
 Tile* TileManager::GetLpTile(int coordX, int coordY)

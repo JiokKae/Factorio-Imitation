@@ -10,12 +10,9 @@ class VertexArrayObject;
 class TileManager : public Singleton<TileManager>
 {
 private:
-	map<int, map<int, Chunk*>> mapChunks;
-	map<int, map<int, Chunk*>>::iterator bigIt;
-	map<int, Chunk*>::iterator smallIt;
+	std::map<int, std::map<int, Chunk*>> mapChunks;
 
-	vector<Chunk*> vecChunkInScreen;
-	vector<Chunk*>::iterator vecChunkIt;
+	std::vector<Chunk*> vecChunkInScreen;
 
 	std::map<int, GLImage*> tileImages;
 
@@ -32,7 +29,7 @@ public:
 	virtual HRESULT Init();
 	virtual void Release();
 	virtual void Update();
-	virtual void Render(RECT cameraRect);
+	virtual void Render(const RECT& cameraRect);
 
 	Tile* GetLpTile(int coordX, int coordY);
 	Tile* GetLpTile(float positionX, float positionY);
