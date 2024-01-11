@@ -97,13 +97,13 @@ struct ItemInfo
 
 
 #define TILE_SIZE		64
-#define CHUNK_IN_TILE		32
+constexpr int TILE_IN_CHUNK_ROW{ 32 };
 
 #define POSX_TO_COORDX(x)				( (x < 0)? int(x) / TILE_SIZE - 1 : int(x) / TILE_SIZE )
 #define POS_TO_COORD(pos)				{ POSX_TO_COORDX(pos.x), POSX_TO_COORDX(pos.y) }
 #define COORDX_TO_POSX(x)				( x * TILE_SIZE + TILE_SIZE / 2 )
 #define COORD_TO_POS(coord)				{ COORDX_TO_POSX(coord.x), COORDX_TO_POSX(coord.y) }
-#define TILECOORDX_TO_CHUNKCOORDX(x)	( (x < 0)? int(x) / CHUNK_IN_TILE - 1 : int(x) / CHUNK_IN_TILE )
+#define TILECOORDX_TO_CHUNKCOORDX(x)	( (x < 0)? int(x) / TILE_IN_CHUNK_ROW - 1 : int(x) / TILE_IN_CHUNK_ROW )
 #define TILECOORD_TO_CHUNKCOORD(coord)	{ TILECOORDX_TO_CHUNKCOORDX(coord.x), TILECOORDX_TO_CHUNKCOORDX(coord.y) }
 
 // Inventory

@@ -54,10 +54,10 @@ int Ore::RandomItemEnum(int x, int y)
 	if (std::rand() % 2)
 		return COAL;
 
-	if ((x / CHUNK_IN_TILE + y / CHUNK_IN_TILE) % 6 == 1)
+	if ((x / TILE_IN_CHUNK_ROW + y / TILE_IN_CHUNK_ROW) % 6 == 1)
 		return STONE;
 
-	if (x / CHUNK_IN_TILE % 2 ^ y / CHUNK_IN_TILE % 2)
+	if (x / TILE_IN_CHUNK_ROW % 2 ^ y / TILE_IN_CHUNK_ROW % 2)
 		return IRON_ORE;
 
 	return COPPER_ORE;

@@ -65,13 +65,13 @@ HRESULT TileManager::Init()
     tilesVAO->AddVBO(OFFSET_VBO_INDEX, offsetVBO, 2);
     tilesVAO->SetDivisor(OFFSET_VBO_INDEX, 1);
 
-    tileCurrFrame = new glm::vec2[CHUNK_IN_TILE * CHUNK_IN_TILE];
-    tileOffset = new glm::vec2[CHUNK_IN_TILE * CHUNK_IN_TILE];
-    for (int y = 0; y < CHUNK_IN_TILE; y++)
+    tileCurrFrame = new glm::vec2[TILE_IN_CHUNK_ROW * TILE_IN_CHUNK_ROW];
+    tileOffset = new glm::vec2[TILE_IN_CHUNK_ROW * TILE_IN_CHUNK_ROW];
+    for (int y = 0; y < TILE_IN_CHUNK_ROW; y++)
     {
-        for (int x = 0; x < CHUNK_IN_TILE; x++)
+        for (int x = 0; x < TILE_IN_CHUNK_ROW; x++)
         {
-            tileCurrFrame[y * CHUNK_IN_TILE + x] = { x % 64, y % 4 };
+            tileCurrFrame[y * TILE_IN_CHUNK_ROW + x] = { x % 64, y % 4 };
             /*
             Tile* tile = currChunk->GetLpTile(x, y);
             if(tile->GetLpSturcture() != nullptr)
@@ -79,7 +79,7 @@ HRESULT TileManager::Init()
             else
                 tileCurrFrame[y * CHUNK_IN_TILE + x] = { 100, 100 };
             */
-            tileOffset[y * CHUNK_IN_TILE + x] = { x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2 };
+            tileOffset[y * TILE_IN_CHUNK_ROW + x] = { x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2 };
         }
     }
 	return S_OK;
@@ -163,9 +163,9 @@ void TileManager::Render(const RECT& cameraRect)
 		{
 			int count = 0;
 
-			for (int y = 0; y < CHUNK_IN_TILE; y++)
+			for (int y = 0; y < TILE_IN_CHUNK_ROW; y++)
 			{
-				for (int x = 0; x < CHUNK_IN_TILE; x++)
+				for (int x = 0; x < TILE_IN_CHUNK_ROW; x++)
 				{
 					Ore* ore = chunk->GetLpTile(x, y)->GetLpOre();
 					if (ore->GetItemEnum() == itemId && ore->GetAmount() > 0)
@@ -200,13 +200,13 @@ Tile* TileManager::GetLpTile(int coordX, int coordY)
     if (chunk != nullptr)
     {
         glm::ivec2 indexInChunk;
-        indexInChunk.x = coordX % CHUNK_IN_TILE;
-        indexInChunk.y = coordY % CHUNK_IN_TILE;
+        indexInChunk.x = coordX % TILE_IN_CHUNK_ROW;
+        indexInChunk.y = coordY % TILE_IN_CHUNK_ROW;
 
         if (indexInChunk.x < 0)
-            indexInChunk.x += CHUNK_IN_TILE;
+            indexInChunk.x += TILE_IN_CHUNK_ROW;
         if (indexInChunk.y < 0)
-            indexInChunk.y += CHUNK_IN_TILE;
+            indexInChunk.y += TILE_IN_CHUNK_ROW;
 
         return chunk->GetLpTile(indexInChunk.x, indexInChunk.y);
     }

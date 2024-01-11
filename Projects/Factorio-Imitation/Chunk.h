@@ -8,10 +8,11 @@ public:
 	Chunk(int x, int y);
 	~Chunk();
 
-	const RECT& GetRect() const;
 	Tile* GetLpTile(int x, int y);
+	const RECT& GetRect() const;
 	const glm::ivec2& GetCoord() const;
 	
+	static constexpr int CHUNK_SIZE{ TILE_IN_CHUNK_ROW * TILE_SIZE };
 private:
 	std::vector<Tile*> tiles;
 	RECT rect;
