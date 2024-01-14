@@ -2,7 +2,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "../../../Librarys/stb_image/stb_image.h"
 
-Texture::Texture(const std::string& path, bool mipmap, bool flip, GLint filter)
+Texture::Texture(const std::string& path, bool mipmap /*= true*/, bool flip /*= true*/, GLint filter /*= GL_NEAREST*/)
 {
 	stbi_set_flip_vertically_on_load(flip);
 
@@ -12,9 +12,11 @@ Texture::Texture(const std::string& path, bool mipmap, bool flip, GLint filter)
 	{
 		throw LoadImageException(path);
 	}
-	
+
 	if (nrComponents != 2)
+	{
 		data = stbi_load(path.c_str(), &width, &height, &nrComponents, nrComponents);
+	}
 
 	glGenTextures(1, &ID);
 
@@ -22,7 +24,9 @@ Texture::Texture(const std::string& path, bool mipmap, bool flip, GLint filter)
 	glTexImage2D(GL_TEXTURE_2D, 0, Format(nrComponents), width, height, 0, Format(nrComponents), GL_UNSIGNED_BYTE, data);
 
 	if (mipmap)
+	{
 		glGenerateMipmap(GL_TEXTURE_2D);
+	}
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -38,47 +42,51 @@ Texture::~Texture()
 	glDeleteTextures(1, &ID);
 }
 
-unsigned int Texture::GetID()
+unsigned int Texture::GetID() const
 {
 	return ID;
 }
 
-int Texture::GetWidth()
+int Texture::GetWidth() const
 {
 	return width;
 }
 
-int Texture::GetHeight()
+int Texture::GetHeight() const
 {
 	return height;
 }
 
 GLint Texture::MinFilter(GLint filter, bool mipmap)
 {
-	if (mipmap == false) 
+	if (mipmap == false)
+	{
 		return filter;
+	}
 
-	if (filter == GL_NEAREST) 
+	if (filter == GL_NEAREST)
+	{
 		return GL_NEAREST_MIPMAP_NEAREST; // GL_NEAREST_MIPMAP_LINEAR
+	}
 
 	return GL_LINEAR_MIPMAP_LINEAR;
 }
 
 GLenum Texture::Format(int nrComponents)
 {
-	if (nrComponents == 1) 
+	switch (nrComponents)
+	{
+	case 1:
 		return GL_RED;
-
-	if (nrComponents == 2) 
+	case 2:
 		return GL_RGBA;
-
-	if (nrComponents == 3) 
+	case 3:
 		return GL_RGB;
-
-	if (nrComponents == 4) 
+	case 4:
 		return GL_RGBA;
-
-	return GLenum{};
+	default:
+		return GLenum{};
+	}
 }
 
 Texture::LoadImageException::LoadImageException(const std::string& path)

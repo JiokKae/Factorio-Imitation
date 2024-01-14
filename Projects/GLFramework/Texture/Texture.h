@@ -5,7 +5,7 @@
 class Texture final
 {
 public:
-	class LoadImageException : public std::exception 
+	class LoadImageException : public std::exception
 	{
 	public:
 		LoadImageException(const std::string& path);
@@ -17,9 +17,9 @@ public:
 	Texture(const std::string& path, bool mipmap = true, bool flip = true, GLint filter = GL_NEAREST);
 	~Texture();
 
-	unsigned int GetID();
-	int GetWidth(); 
-	int GetHeight(); 
+	unsigned int GetID() const;
+	int GetWidth() const;
+	int GetHeight() const;
 
 private:
 	unsigned int ID;
@@ -29,4 +29,3 @@ private:
 	GLint MinFilter(GLint filter, bool mipmap);
 	GLenum Format(int nrComponents);
 };
-
