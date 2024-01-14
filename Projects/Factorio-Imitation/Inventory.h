@@ -9,7 +9,7 @@ public:
 	~Inventory();
 
 	void AddItem(const ItemInfo& itemInfo);
-	vector<ItemInfo*> GetItemInfoArray();
+	std::vector<ItemInfo*> GetItemInfoArray() const;
 	bool GetItem(int itemId, ItemInfo* destItemInfo);
 	ItemInfo* FindItem(int itemId);
 private:

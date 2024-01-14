@@ -24,13 +24,15 @@ void Inventory::AddItem(const ItemInfo& item)
 	inventory.emplace(static_cast<ItemId>(item.id), new ItemInfo(item.id, item.amount));
 }
 
-vector<ItemInfo*> Inventory::GetItemInfoArray()
+std::vector<ItemInfo*> Inventory::GetItemInfoArray() const
 {
-	vector<ItemInfo*> vecItemInfo;
+	std::vector<ItemInfo*> vecItemInfo;
 	for (auto& [id, item] : inventory)
 	{
 		if (item->IsEmpty() == false)
+		{
 			vecItemInfo.push_back(item);
+		}
 	}
 	return vecItemInfo;
 }
@@ -42,7 +44,7 @@ bool Inventory::GetItem(int itemId, ItemInfo* destItem)
 		return false;
 	}
 
-	auto item = FindItem(itemId);
+	ItemInfo* item = FindItem(itemId);
 	if (item == nullptr)
 	{
 		return false;
