@@ -20,6 +20,12 @@ public:
 	};
 	static const char* statusString[STATUS::END];
 
+	enum class SIZE_TYPE {
+		BIG,
+		MEDIUM,
+		SMALL,
+	};
+
 protected:
 	glm::ivec2 coord;	// 건축물의 기준 좌표
 	glm::ivec2 coordSize;	// 건축물의 좌표상 크기
@@ -41,6 +47,7 @@ public:
 	static Structure* CreateStructure(ItemId itemId);
 
 	void Rotate();
+	void PlayDeconstructSound() const;
 	virtual void ClickEvent() {};
 
 	// 모든 아이템이 투입되었을 때 True 반환
@@ -58,5 +65,7 @@ public:
 
 	Structure() {};
 	~Structure() {};
+private:
+	SIZE_TYPE SizeType() const;
 };
 

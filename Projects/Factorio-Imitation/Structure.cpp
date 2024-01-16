@@ -146,18 +146,54 @@ FRECT Structure::GetCollisionFRect() const
 	return rect;
 }
 
-void Structure::Rotate()
-{			
-	if (g_itemSpecs[itemId].directionCount > 1)
-	{
-		// rotate sound
-		if (coordSize.x + coordSize.y > 4)
-			SoundManager::GetSingleton()->Play("Rotate-big", 0.6f);
-		else if (coordSize.x + coordSize.y > 2)
-			SoundManager::GetSingleton()->Play("Rotate-medium", 0.6f);
-		else
-			SoundManager::GetSingleton()->Play("Rotate-small", 0.6f);
+Structure::SIZE_TYPE Structure::SizeType() const
+{
+	if (coordSize.x + coordSize.y > 4)
+		return SIZE_TYPE::BIG;
+	if (coordSize.x + coordSize.y < 2)
+		return SIZE_TYPE::MEDIUM;
+	return SIZE_TYPE::SMALL;
+}
 
-		direction = (DIRECTION)RIGHT_DIR(direction);
+void Structure::Rotate()
+{
+	if (g_itemSpecs[itemId].directionCount < 2)
+	{
+		return;
+	}
+		
+	switch (SizeType())
+	{
+	case SIZE_TYPE::BIG:
+		SoundManager::GetSingleton()->Play("Rotate-big", 0.6f);
+		break;
+
+	case SIZE_TYPE::MEDIUM:
+		SoundManager::GetSingleton()->Play("Rotate-medium", 0.6f);
+		break;
+
+	case SIZE_TYPE::SMALL:
+		SoundManager::GetSingleton()->Play("Rotate-small", 0.6f);
+		break;
+	}
+
+	direction = (DIRECTION)RIGHT_DIR(direction);
+}
+
+void Structure::PlayDeconstructSound() const
+{
+	switch (SizeType())
+	{
+	case SIZE_TYPE::BIG:
+		SoundManager::GetSingleton()->Play("Deconstruct-large", 0.6f);
+		break;
+
+	case SIZE_TYPE::MEDIUM:
+		SoundManager::GetSingleton()->Play("Deconstruct-medium", 0.6f);
+		break;
+
+	case SIZE_TYPE::SMALL:
+		SoundManager::GetSingleton()->Play("Deconstruct-small", 0.6f);
+		break;
 	}
 }

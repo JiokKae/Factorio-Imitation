@@ -497,9 +497,9 @@ void PlayScene::Update()
 
 	UIManager::GetSingleton()->Update();
 
-	entityManager->Update(camera->GetFRect(width, height));
-
 	UIManager::GetSingleton()->HandUpdate();
+
+	entityManager->Update(camera->GetFRect(width, height));
 
 	tileManager->Update();
 
@@ -575,7 +575,7 @@ void PlayScene::Render(HDC /*hdc*/)
 		textRenderer->RenderText(string(str), 10.0f, height - 100.0f);
 		sprintf_s(str, "Cursor: (%d, %d)", g_cursorCoord.x, g_cursorCoord.y);
 		textRenderer->RenderText(string(str), 10.0f, height - 130.0f);
-		Tile* tile = TileManager::GetSingleton()->GetLPTileUnderMouse();
+		Tile* tile = TileManager::GetSingleton()->GetLpCursorTile();
 		if (tile)
 		{
 			sprintf_s(str, "Ore Amount: %d", tile->GetLpOre()->GetAmount());

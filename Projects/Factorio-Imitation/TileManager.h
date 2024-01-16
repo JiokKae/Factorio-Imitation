@@ -5,6 +5,7 @@
 class Tile;
 class Chunk;
 class ShaderProgram;
+class Structure;
 class GLImage;
 class VertexArrayObject;
 class TileManager : public Singleton<TileManager>
@@ -33,7 +34,8 @@ public:
 
 	Tile* GetLpTile(int coordX, int coordY);
 	Tile* GetLpTile(float positionX, float positionY);
-	Tile* GetLPTileUnderMouse();
+	Tile* GetLpCursorTile();
+	Structure* GetLpCursorStructure();
 	Chunk* GetLpChunk(int x, int y);
 
 	TileManager() {};

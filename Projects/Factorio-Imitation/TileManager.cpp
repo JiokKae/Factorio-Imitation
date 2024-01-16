@@ -221,9 +221,14 @@ Tile* TileManager::GetLpTile(float positionX, float positionY)
     return GetLpTile(coord.x, coord.y);
 }
 
-Tile* TileManager::GetLPTileUnderMouse()
+Tile* TileManager::GetLpCursorTile()
 {
     return GetLpTile(g_cursorCoord.x, g_cursorCoord.y);
+}
+
+Structure* TileManager::GetLpCursorStructure()
+{
+	return GetLpCursorTile() ? GetLpCursorTile()->GetLpSturcture() : nullptr;
 }
 
 Chunk* TileManager::GetLpChunk(int x, int y)
