@@ -1,5 +1,4 @@
 #pragma once
-#include "../2DFramework/GameNode.h"
 #include "framework.h"
 #include <functional>
 
@@ -10,18 +9,10 @@ class ItemOnGrounds;
 class StructureBuilder;
 class EntityManager : public Singleton<EntityManager>
 {
-	multimap<Vec2, Entity*, greater<Vec2>> mapEntitys;
-	vector<Entity*> vecEntityInScreen;
-
-	multimap<Vec2, Entity*>::iterator it;
-
-	ItemOnGrounds* itemOnGrounds;
-
-	Character* player;
-
-	StructureBuilder* structureBuilder;
-
 public:
+	EntityManager();
+	~EntityManager();
+
 	virtual HRESULT Init();
 	virtual void Release();
 	virtual void Update(FRECT cameraFrect);
@@ -29,7 +20,7 @@ public:
 
 	Character* GetLpPlayer()			{ return player; }
 	StructureBuilder* GetLpStructureBuilder()	{ return structureBuilder; }
-	void Collision();
+	void PlayerCollision();
 
 	void AddEntity(Entity* entity);
 	void DeleteEntity(Entity* entity);
@@ -37,12 +28,13 @@ public:
 	void AddItemOnGround(int itemId, float positionX, float positionY);
 	void DeleteItemOnGround(ItemOnGround* item);
 
+private:
+	std::multimap<Vec2, Entity*, std::greater<Vec2>> orderedEntities;
+	std::vector<Entity*> entitiesInScreen;
 
-	EntityManager()
-		: player(nullptr)
-		, itemOnGrounds(nullptr)
-		, structureBuilder(nullptr)
-	{};
-	virtual ~EntityManager() {};
+	ItemOnGrounds* itemOnGrounds;
+
+	Character* player;
+
+	StructureBuilder* structureBuilder;
 };
-

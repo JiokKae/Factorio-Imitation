@@ -5,6 +5,19 @@
 #include "StructureBuilder.h"
 #include "HandUI.h"
 
+EntityManager::EntityManager()
+	: player(nullptr)
+	, itemOnGrounds(nullptr)
+	, structureBuilder(nullptr)
+{
+
+}
+
+EntityManager::~EntityManager()
+{
+
+}
+
 HRESULT EntityManager::Init()
 {
 	// player
@@ -27,107 +40,134 @@ void EntityManager::Release()
 	SAFE_DELETE(itemOnGrounds);
 	SAFE_RELEASE(player);
 
-	it = mapEntitys.begin();
-	while (it != mapEntitys.end())
+	for (auto& [coord, entity] : orderedEntities)
 	{
-		it = mapEntitys.erase(it);
+		SAFE_RELEASE(entity);
 	}
-	mapEntitys.clear();
+	orderedEntities.clear();
 
 	ReleaseSingleton();
 }
 
 void EntityManager::Update(FRECT cameraFrect)
 {
-	vecEntityInScreen.clear();
-	FRECT wideCamRect = cameraFrect + FRECT(-TILE_SIZE, TILE_SIZE, TILE_SIZE, -TILE_SIZE) * 2;
-	for (it = mapEntitys.begin(); it != mapEntitys.end(); ++it)
+	entitiesInScreen.clear();
+	const FRECT wideCamRect = cameraFrect + FRECT{ -TILE_SIZE, TILE_SIZE, TILE_SIZE, -TILE_SIZE } * 2;
+	for (auto& [coord, entity] : orderedEntities)
 	{
-		it->second->Update();
-		if (PtInFRect(wideCamRect, it->second->GetPosition()))
-			vecEntityInScreen.push_back(it->second);
+		entity->Update();
+		if (PtInFRect(wideCamRect, entity->GetPosition()))
+		{
+			entitiesInScreen.push_back(entity);
+		}
 	}
 	itemOnGrounds->Update(cameraFrect);
 	player->Update();
 
-	Collision();
+	PlayerCollision();
 
-	if (!UIManager::GetSingleton()->IsMouseOnUI())
+	if (UIManager::GetSingleton()->IsMouseOnUI() == false)
 	{
-		ItemInfo* info = UIManager::GetSingleton()->GetLpHandUI()->GetHandItem();
-		if (info->amount && g_itemSpecs[info->id].buildable)
-			structureBuilder->Activate(info->id);
-		else
+		const ItemInfo* handItem = UIManager::GetSingleton()->GetLpHandUI()->GetHandItem();
+		if (handItem->IsEmpty() == false && g_itemSpecs[handItem->id].buildable)
+		{
+			structureBuilder->Activate(handItem->id);
+		}
+		else 
+		{
 			structureBuilder->Deactivate();
+		}
 	}
 	else
+	{
 		structureBuilder->Deactivate();
+	}
 
 	structureBuilder->Update(player->GetLpPosition());
 }
 
 void EntityManager::Render(ShaderProgram* shader)
 {
-	vector<Entity*>::iterator entityItr;
-	for (entityItr = vecEntityInScreen.begin(); entityItr != vecEntityInScreen.end(); entityItr++)
+	for (Entity* entity : entitiesInScreen)
 	{
 		//그림자 렌더
-		(*entityItr)->FirstRender(shader);
+		entity->FirstRender(shader);
 	}
-	for (entityItr = vecEntityInScreen.begin(); entityItr != vecEntityInScreen.end(); entityItr++)
+	for (Entity* entity : entitiesInScreen)
 	{
-		if ((*entityItr)->IsPassable())
-			(*entityItr)->Render(shader);
+		if (entity->IsPassable())
+		{
+			entity->Render(shader);
+		}
 	}
+
 	itemOnGrounds->Render();
-	for (entityItr = vecEntityInScreen.begin(); entityItr != vecEntityInScreen.end(); entityItr++)
+
+	for (Entity* entity : entitiesInScreen)
 	{
-		if ((*entityItr)->GetPosition().y > player->GetPosition().y && !(*entityItr)->IsPassable())
-			(*entityItr)->Render(shader);
+		if (entity->GetPosition().y > player->GetPosition().y && entity->IsPassable() == false)
+		{
+			entity->Render(shader);
+		}
 	}
 
 	player->Render(shader);
 
-	for (entityItr = vecEntityInScreen.begin(); entityItr != vecEntityInScreen.end(); entityItr++)
+	for (Entity* entity : entitiesInScreen)
 	{
-		if ((*entityItr)->GetPosition().y <= player->GetPosition().y && !(*entityItr)->IsPassable())
-			(*entityItr)->Render(shader);
-		(*entityItr)->LateRender(shader);
+		if (entity->GetPosition().y <= player->GetPosition().y && entity->IsPassable() == false)
+		{
+			entity->Render(shader); 
+		}	
+		entity->LateRender(shader);
 	}
 
 	structureBuilder->Render(shader);
 }
 
-void EntityManager::Collision()
+void EntityManager::PlayerCollision()
 {
-	FRECT colRect;
-	FRECT entityRect;
-	FRECT playerRect = player->GetCollisionFRect();
-
-	for (auto entityItr = vecEntityInScreen.begin(); entityItr != vecEntityInScreen.end(); entityItr++)
+	for (const Entity* entity : entitiesInScreen)
 	{
-		Entity* entity = *entityItr;
 		if (entity->IsPassable())
-			continue;
-
-		entityRect = entity->GetCollisionFRect();
-		if (IntersectFRect(&colRect, &playerRect, &entityRect))
 		{
-			if (abs(colRect.right - colRect.left) < abs(colRect.top - colRect.bottom))
+			continue;
+		}
+
+		const FRECT playerRect = player->GetCollisionFRect();
+		const FRECT entityRect = entity->GetCollisionFRect();
+
+		FRECT collisionRect;
+		if (IntersectFRect(&collisionRect, &playerRect, &entityRect) == false)
+		{
+			continue;
+		}
+		
+		const float collisionWidth = std::fabs(collisionRect.right - collisionRect.left);
+		const float collisionHeight = std::fabs(collisionRect.top - collisionRect.bottom);
+
+		if (collisionWidth < collisionHeight)
+		{
+			// 우측 충돌일때
+			if (collisionRect.right == entityRect.right)
 			{
-				// 우측 충돌일때
-				if (colRect.right == entityRect.right)
-					player->GetLpPosition()->x += abs(colRect.right - colRect.left);
-				else
-					player->GetLpPosition()->x -= abs(colRect.right - colRect.left);
+				player->GetLpPosition()->x += collisionWidth;
 			}
 			else
 			{
-				// 아래측 충돌일 때
-				if (colRect.bottom == entityRect.bottom)
-					player->GetLpPosition()->y -= abs(colRect.top - colRect.bottom);
-				else
-					player->GetLpPosition()->y += abs(colRect.top - colRect.bottom);
+				player->GetLpPosition()->x -= collisionWidth;
+			}
+		}
+		else
+		{
+			// 아래측 충돌일 때
+			if (collisionRect.bottom == entityRect.bottom)
+			{
+				player->GetLpPosition()->y -= collisionHeight;
+			}
+			else
+			{
+				player->GetLpPosition()->y += collisionHeight;
 			}
 		}
 	}
@@ -135,24 +175,22 @@ void EntityManager::Collision()
 
 void EntityManager::AddEntity(Entity* entity)
 {
-	mapEntitys.insert(make_pair(entity->GetPosition(), entity));
+	orderedEntities.emplace(entity->GetPosition(), entity);
 }
 
 void EntityManager::DeleteEntity(Entity* entity)
 {
-	it = mapEntitys.begin();
-	while (it != mapEntitys.end())
+	auto it = orderedEntities.begin();
+	while (it != orderedEntities.end())
 	{
 		if (it->second == entity)
 		{
 			SAFE_RELEASE(entity);
-			mapEntitys.erase(it);
+			orderedEntities.erase(it);
 			break;
 		}
-		else
-			++it;
+		++it;
 	}
-
 }
 
 void EntityManager::AddItemOnGround(int itemId, float positionX, float positionY)
