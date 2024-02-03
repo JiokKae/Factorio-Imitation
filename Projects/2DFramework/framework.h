@@ -27,7 +27,8 @@ extern bool g_hWndFocus;
 #define SAFE_RELEASE(p) 		{ if (p) p->Release(), delete p, p = nullptr; }
 #define SAFE_ARR_RELEASE(p, size)	{ if (p) { for (int i = 0; i < size; i++) { p[i].Release(); } delete[] p, p = nullptr; } }
 
-enum class Argument_Kind {
+enum class Argument_Kind 
+{
 	None,
 	ChangeSceneArgument,
 	TileInfoArgument,
@@ -35,55 +36,47 @@ enum class Argument_Kind {
 
 struct ChangeSceneArgument
 {
-	ChangeSceneArgument(const std::string& sceneName, const std::string& loadingSceneName);
-
 	std::string sceneName;
 	std::string loadingSceneName;
 };
 
-typedef struct tagTile TILE_INFO;
+struct TILE_INFO;
 struct TileInfoArgument
 {
-	TileInfoArgument(TILE_INFO* lpTileInfo);
-
 	TILE_INFO* tileInfo;
 };
 
-typedef struct tagFRECT
+struct FRECT
 {
 	float left;
 	float top;
 	float right;
 	float bottom;
 
-	tagFRECT operator+(const tagFRECT& rect) const;
-	template<typename T>
-	tagFRECT operator*(const T& scalar);
-
-} FRECT, * LPFRECT;
+	FRECT operator+(const FRECT& rect) const;
+	FRECT operator*(float scalar) const;
+} ;
 
 inline RECT GetWindowRect()
 {
-	RECT rc;
-	GetClientRect(g_hWnd, &rc);
-	// 클라이언트 크기를 받아옴
-	POINT lt{};
-	lt.x = rc.left;
-	lt.y = rc.top;
+	RECT clientRect;
+	GetClientRect(g_hWnd, &clientRect);
 
-	POINT rb{};
-	rb.x = rc.right;
-	rb.y = rc.bottom;
-	// 받아온 클라이언트 크기를좌표로 입력
-	ClientToScreen(g_hWnd, &lt);
-	ClientToScreen(g_hWnd, &rb);
+	// 클라이언트 크기를 좌표로 입력
+	POINT leftTop{ clientRect.left , clientRect.top };
+
+	POINT rightBottom{ clientRect.right, clientRect.bottom };
+
 	// 클라이언트 내 좌표를 윈도우상 좌표로 변환
-	rc.left = lt.x;
-	rc.top = lt.y;
-	rc.right = rb.x;
-	rc.bottom = rb.y;
+	ClientToScreen(g_hWnd, &leftTop);
+	ClientToScreen(g_hWnd, &rightBottom);
 
-	return rc;
+	clientRect.left = leftTop.x;
+	clientRect.top = leftTop.y;
+	clientRect.right = rightBottom.x;
+	clientRect.bottom = rightBottom.y;
+
+	return clientRect;
 }
 
 template <typename T>

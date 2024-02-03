@@ -148,13 +148,13 @@ public:
 
 enum class TERRAIN { WALL, GRASS, EARTH, WATER, CEMENT, END };
 
-typedef struct tagTile
+struct TILE_INFO
 {
 	TERRAIN terrian;
 	RECT rc;
 	int frameX;
 	int frameY;
-} TILE_INFO;
+};
 
 typedef struct tagSampleTile
 {

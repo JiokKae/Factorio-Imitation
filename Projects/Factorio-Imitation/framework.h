@@ -163,7 +163,7 @@ inline void SetWindowSize(int startX, int startY, int sizeX, int sizeY)
 	MoveWindow(g_hWnd, startX, startY, rc.right - rc.left, rc.bottom - rc.top, true);
 }
 
-inline bool IntersectFRect(LPFRECT lpfrcDst, const FRECT* lpfrcSrc1, const FRECT* lpfrcSrc2)
+inline bool IntersectFRect(FRECT* lpfrcDst, const FRECT* lpfrcSrc1, const FRECT* lpfrcSrc2)
 {
 	if (lpfrcSrc1->right	< lpfrcSrc2->left ||
 		lpfrcSrc1->left		> lpfrcSrc2->right ||
@@ -242,15 +242,4 @@ inline bool PtInFRect(const FRECT& rc, const glm::vec2& pt)
 	}
 
 	return true;
-}
-
-template<typename T>
-inline tagFRECT tagFRECT::operator*(const T& scalar)
-{
-	return tagFRECT{
-		.left = left * scalar,
-		.top = top * scalar,
-		.right = right * scalar,
-		.bottom = bottom * scalar,
-	};
 }

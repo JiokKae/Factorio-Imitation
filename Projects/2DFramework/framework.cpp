@@ -1,23 +1,21 @@
 #include "framework.h"
 
-tagFRECT tagFRECT::operator+(const tagFRECT& rect) const
+FRECT FRECT::operator+(const FRECT& rect) const
 {
-	tagFRECT ret{};
-	ret.left = left + rect.left;
-	ret.top = top + rect.top;
-	ret.right = right + rect.right;
-	ret.bottom = bottom + rect.bottom;
-
-	return ret;
+	return FRECT{
+		left + rect.left,
+		top + rect.top,
+		right + rect.right,
+		bottom + rect.bottom,
+	};
 }
 
-TileInfoArgument::TileInfoArgument(TILE_INFO* lpTileInfo)
-	: tileInfo{ lpTileInfo }
+FRECT FRECT::operator*(float scalar) const
 {
-}
-
-ChangeSceneArgument::ChangeSceneArgument(const std::string& sceneName, const std::string& loadingSceneName)
-	: sceneName{ sceneName }
-	, loadingSceneName{ loadingSceneName }
-{
+	return FRECT{
+		left * scalar,
+		top * scalar,
+		right * scalar,
+		bottom * scalar,
+	};
 }
