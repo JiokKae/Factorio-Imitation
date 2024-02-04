@@ -22,6 +22,7 @@ public:
 
 	float GetFrameWidth() const			{ return frameWidth; }
 	float GetFrameHeight() const			{ return frameHeight; }
+	const glm::vec2& GetScale() const		{ return scale; }
 	const glm::vec2& GetMargin() const		{ return margin; }
 	const glm::ivec2& GetMaxFrame() const		{ return maxFrame; }
 	Texture* GetLpSourceTexture()			{ return sourceTexture; }

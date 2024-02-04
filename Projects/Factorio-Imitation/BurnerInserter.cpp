@@ -2,112 +2,136 @@
 #include "Tile.h"
 #include "ItemOnGround.h"
 
-HRESULT BurnerInserter::Init(int x, int y, DIRECTION _direction, bool _temp)
+float Degree::Sin(float degree)
+{
+	return sin(Rad(degree));
+}
+
+float Degree::Cos(float degree)
+{
+	return cos(Rad(degree));
+}
+
+float Degree::Rad(float degree)
+{
+	return glm::radians(degree);
+}
+
+BurnerInserter::HandPart::HandPart(const std::string& textureKey, const glm::vec2& scale, const glm::vec2& offset, float degree, float innerLength)
+	: image{ std::make_unique<GLImage>(textureKey) }
+	, degree{ degree }
+	, renderDegree{ 0.0f }
+	, innerLength{ innerLength }
+	, baseScaleY{ scale.y }
+{
+	image->SetScale(scale);
+	image->SetOffset(offset);
+}
+
+void BurnerInserter::HandPart::Update(float handDegree)
+{
+	renderDegree = handDegree - Degree::Sin(handDegree) * degree;
+
+	image->SetAngle(Degree::Rad(renderDegree));
+
+	const float sign = (degree > 0) ? 1.0f : -1.0f;
+	const float scaleY = (sign * Degree::Cos(renderDegree) * 0.25f + 0.65f) * baseScaleY;
+
+	image->SetScale({ image->GetScale().x, scaleY });
+}
+
+void BurnerInserter::HandPart::Render(ShaderProgram* shader, float posX, float posY)
+{
+	image->Render(shader, posX, posY);
+}
+
+float BurnerInserter::HandPart::EndpointPosX() const
+{
+	return -Degree::Sin(renderDegree) * innerLength * image->GetScale().y;
+}
+
+float BurnerInserter::HandPart::EndpointPosY() const
+{
+	return Degree::Cos(renderDegree) * innerLength * image->GetScale().y;
+}
+
+BurnerInserter::BurnerInserter()
+	: handBase("Entity/BurnerInserter-handBase", { 0.4f, 0.4f }, { 0.0f, 60.0f }, 45.0f, 120.0f)
+	, handOpen("Entity/BurnerInserter-handOpen", { 0.4f, 0.4f }, { 0.0f, 82.0f }, -45.0f, 136.0f)
+	, platformImage{ std::make_unique<GLImage>("Entity/BurnerInserter-platform", 4, 1) }
+	, allItemsImage{ std::make_unique<GLImage>("Icons/AllItems", 8, 8, 0.25f, 0.25f) }
+	, handDegreeSpeed{ 216.0f }
 {
 	itemId = ItemId::BURNER_INSERTER;
+
+	allItemsImage->SetScale({ 0.25f, 0.25f });
+}
+
+HRESULT BurnerInserter::Init(int x, int y, DIRECTION _direction, bool _temp)
+{
 	Structure::Init(x, y, _direction, _temp);
 	status = WORKING;
 
-	platformImage = new GLImage("Entity/BurnerInserter-platform", 4, 1);
-
-	handBaseImage = new GLImage("Entity/BurnerInserter-handBase");
-	handBaseScale = { 0.4f, 0.4f };
-	handBaseImage->SetScale(handBaseScale);
-	handBaseImage->SetOffset(glm::vec2(0.0f, 60.0f));
-	handBaseAngle = 45;
-
-	handOpenImage = new GLImage("Entity/BurnerInserter-handOpen");
-	handOpenScale = { 0.4f, 0.4f };
-	handOpenImage->SetScale(handOpenScale);
-	handOpenImage->SetOffset({ 0, 82 });
-	handOpenAngle = -45;
-
-	allItemsImage = new GLImage("Icons/AllItems", 8, 8, 0.25f, 0.25f);
-	allItemsImage->SetScale({0.25f, 0.25f});
-	
-	handAngle = -90.0f * static_cast<int>(_direction);
-	handAngleSpeed = 216.0f;
-
+	handDegree = -90.0f * static_cast<int>(_direction);
 
 	return S_OK;
-}
-
-void BurnerInserter::Release()
-{
-	Structure::Release();
-
-	SAFE_DELETE(handOpenImage);
-	SAFE_DELETE(handBaseImage);
-	SAFE_DELETE(platformImage);
-	SAFE_DELETE(allItemsImage);
 }
 
 void BurnerInserter::Update()
 {
 	Structure::Update();
+
 	switch (status)
 	{
-	case Structure::NO_POWER:
-		break;
 	case Structure::WORKING:
 	{
-		float destAngle;
+		float destDegree;
 		if (handItem.amount == 0)
-			destAngle = destAngles[direction];
+			destDegree = DESTINATION_ANGLES[direction];
 		else
-			destAngle = destAngles[OPPOSITE_DIR(direction)];
+			destDegree = DESTINATION_ANGLES[OPPOSITE_DIR(direction)];
 
-		float deltaAngle = handAngle - destAngle;
-		if (glm::abs(deltaAngle) <= handAngleSpeed * TimerManager::GetSingleton()->GetTimeElapsed())
+		const float remainedDegree = handDegree - destDegree;
+		const float deltaDegree = handDegreeSpeed * TimerManager::GetSingleton()->GetTimeElapsed();
+
+		if (glm::abs(remainedDegree) <= deltaDegree)
 		{
-			handAngle = destAngle;
+			handDegree = destDegree;
+
 			lpDirectionTile = TileManager::GetSingleton()->GetLpTile(position.x, position.y)->GetAroundTile(direction);
-			if(handItem.amount == 0)
+
+			if (handItem.IsEmpty() == true)
 				status = WAITING_SOURCE_ITEMS;
 			else
 				status = WAITING_SPACE;
 		}
-		else if (glm::abs(deltaAngle) > 181.0f && glm::abs(deltaAngle) < 361.0f)
+		else if (glm::abs(remainedDegree) > 181.0f && glm::abs(remainedDegree) < 361.0f)
 		{
-			if (handAngle < -269.0)
-				handAngle += 360;
+			if (handDegree < -269.0)
+				handDegree += 360.0f;
 			else
-				handAngle -= 360;
+				handDegree -= 360.0f;
 		}
-
-		else if (deltaAngle > 0)
-			handAngle -= handAngleSpeed * TimerManager::GetSingleton()->GetTimeElapsed();
+		else if (remainedDegree > 0)
+			handDegree -= deltaDegree;
 		else
-			handAngle += handAngleSpeed * TimerManager::GetSingleton()->GetTimeElapsed();
+			handDegree += deltaDegree;
 
-		// handbase 업데이트
-		handBaseRenderAngle = handAngle - sin(glm::radians(handAngle)) * handBaseAngle;
-		handBaseImage->SetAngle(glm::radians(handBaseRenderAngle));
-		
-		float scaleY = ((cos(glm::radians(handBaseRenderAngle)) + 1.0f) / 4.0f + 0.4f);
-		handBaseScale.y = 0.4f * scaleY;
-		handBaseImage->SetScale(handBaseScale);
+		handBase.Update(handDegree);
 
-		// handOpen 업데이트
-		handOpenRenderAngle = handAngle - sin(glm::radians(handAngle)) * handOpenAngle;
-		handOpenImage->SetAngle(glm::radians(handOpenRenderAngle));
-		if(handOpenAngle > 0)
-			handOpenScale.y = ((cos(glm::radians(handOpenRenderAngle)) + 1.0f) / 4.0f + 0.4f) * 0.4f;
-		else
-			handOpenScale.y = ((-cos(glm::radians(handOpenRenderAngle)) + 1.0f) / 4.0f + 0.4f) * 0.4f;
-		handOpenImage->SetScale(handOpenScale);
+		handOpen.Update(handDegree);
 
 		break;
 
 	}
 	case Structure::WAITING_SPACE:
-		if (glm::abs(handAngle - destAngles[OPPOSITE_DIR(direction)]) > glm::epsilon<float>())
+		if (glm::abs(handDegree - DESTINATION_ANGLES[OPPOSITE_DIR(direction)]) > glm::epsilon<float>())
 			status = WORKING;
 
-		lpDestTile = TileManager::GetSingleton()->GetLpTile(position.x, position.y)->GetAroundTile((DIRECTION)OPPOSITE_DIR(direction));
-		if (lpDestTile->GetLpSturcture())
+		Tile* lpDestTile = TileManager::GetSingleton()->GetLpTile(position.x, position.y)->GetAroundTile((DIRECTION)OPPOSITE_DIR(direction));
+		if (Structure* structure = lpDestTile->GetLpSturcture())
 		{
-			if (lpDestTile->GetLpSturcture()->InputItem(&handItem, glm::vec2(16, 16)))
+			if (structure->InputItem(&handItem, glm::vec2(16, 16)))
 			{
 				status = WORKING;
 			}
@@ -116,14 +140,13 @@ void BurnerInserter::Update()
 
 	case Structure::WAITING_SOURCE_ITEMS:
 	{
-		if (glm::abs(handAngle - destAngles[direction]) > glm::epsilon<float>())
+		if (glm::abs(handDegree - DESTINATION_ANGLES[direction]) > glm::epsilon<float>())
 			status = WORKING;
 
 		if (temp)
 			return;
 
-		Structure* lpDirectionStructure = lpDirectionTile->GetLpSturcture();
-		if (lpDirectionStructure)
+		if (Structure* lpDirectionStructure = lpDirectionTile->GetLpSturcture())
 		{
 			ItemInfo getItem;
 			getItem.amount = 1;
@@ -134,8 +157,7 @@ void BurnerInserter::Update()
 				status = WORKING;
 			}
 		}
-
-		if(lpDirectionTile->GetItems().size())
+		if (lpDirectionTile->GetItems().size())
 		{
 			ItemOnGround* item = lpDirectionTile->GetItems().at(0);
 			handItem.id = item->GetItemId();
@@ -145,44 +167,25 @@ void BurnerInserter::Update()
 		}
 		break;
 	}
-	
-	case Structure::NO_MINABLE_RESOURCES:
-		break;
-
-	case Structure::DESTORY:
-		break;
-
-	case Structure::ITEM_PRODUCTION_OVERLOAD:
-		break;
-
 	}
-
-
-}
-
-void BurnerInserter::FirstRender(ShaderProgram* /*lpShaderProgram*/)
-{
 }
 
 void BurnerInserter::Render(ShaderProgram* lpShader)
 {
 	platformImage->Render(lpShader, position.x, position.y, OPPOSITE_DIR(direction), 0);
-	
 }
 
 void BurnerInserter::LateRender(ShaderProgram* lpShader)
 {
-	handOpenImage->Render(lpShader, 
-		position.x - sin(glm::radians(handBaseRenderAngle)) * 120 * handBaseScale.y ,
-		position.y + cos(glm::radians(handBaseRenderAngle)) * 120 * handBaseScale.y + 10);
+	handOpen.Render(lpShader, position.x + handBase.EndpointPosX(), position.y + 10 + handBase.EndpointPosY());
 	
-	handBaseImage->Render(lpShader, position.x, position.y + 10);
+	handBase.Render(lpShader, position.x, position.y + 10);
 
-	if (handItem.amount != 0)
+	if (handItem.IsEmpty() == false)
 	{
 		allItemsImage->Render(lpShader,
-			position.x - sin(glm::radians(handBaseRenderAngle)) * 120 * handBaseScale.y - sin(glm::radians(handOpenRenderAngle)) * 136 * handOpenScale.y,
-			position.y + cos(glm::radians(handBaseRenderAngle)) * 120 * handBaseScale.y + cos(glm::radians(handOpenRenderAngle)) * 136 * handOpenScale.y + 10,
+			position.x + handBase.EndpointPosX() + handOpen.EndpointPosX(),
+			position.y + 10 + handBase.EndpointPosY() + handOpen.EndpointPosY(),
 			handItem.id % 8, 7 - handItem.id / 8);
 	}
 }
@@ -190,44 +193,23 @@ void BurnerInserter::LateRender(ShaderProgram* lpShader)
 void BurnerInserter::RenderInScreen(ShaderProgram* lpShader, float posX, float posY)
 {
 	platformImage->Render(lpShader, posX, posY, OPPOSITE_DIR(direction), 0);
+	
+	handOpen.Render(lpShader, posX + handBase.EndpointPosX(), posY + 10 + handBase.EndpointPosY());
 
-	handOpenImage->Render(lpShader,
-		posX - sin(glm::radians(handBaseRenderAngle)) * 120 * handBaseScale.y,
-		posY + cos(glm::radians(handBaseRenderAngle)) * 120 * handBaseScale.y + 10);
+	handBase.Render(lpShader, posX, posY + 10);
 
-	handBaseImage->Render(lpShader, posX, posY + 10);
-
-	if (handItem.amount != 0)
+	if (handItem.IsEmpty() == false)
 	{
 		allItemsImage->Render(lpShader,
-			posX - sin(glm::radians(handBaseRenderAngle)) * 120 * handBaseScale.y - sin(glm::radians(handOpenRenderAngle)) * 136 * handOpenScale.y,
-			posY + cos(glm::radians(handBaseRenderAngle)) * 120 * handBaseScale.y + cos(glm::radians(handOpenRenderAngle)) * 136 * handOpenScale.y + 10,
+			posX + handBase.EndpointPosX() + handOpen.EndpointPosX(),
+			posY + 10 + handBase.EndpointPosY() + handOpen.EndpointPosY(),
 			handItem.id % 8, 7 - handItem.id / 8);
 	}
 }
 
-string BurnerInserter::ToString()
+std::string BurnerInserter::ToString()
 {
 	char buf[128]; 
-	sprintf_s(buf, " Coord: (%d, %d)\n Status: %s\n HandAngle: %.1f", coord.x, coord.y, statusString[status], handAngle);
-	return string(buf);
+	sprintf_s(buf, " Coord: (%d, %d)\n Status: %s\n HandAngle: %.1f", coord.x, coord.y, statusString[status], handDegree);
+	return std::string(buf);
 }
-
-BurnerInserter::BurnerInserter()
-{
-	allItemsImage = nullptr;
-	platformImage = nullptr;
-	handOpenImage = nullptr;
-	handBaseImage = nullptr;
-	
-	lpDestTile = nullptr;
-	lpDirectionTile = nullptr;
-
-	handAngle = 0.0f;
-	handAngleSpeed = 0.0f;
-	handOpenAngle = 0.0f;
-	handOpenRenderAngle = 0.0f;
-	handBaseAngle = 0.0f;
-	handBaseRenderAngle = 0.0f;
-}
-
