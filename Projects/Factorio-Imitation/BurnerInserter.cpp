@@ -125,6 +125,7 @@ void BurnerInserter::Update()
 
 	}
 	case Structure::WAITING_SPACE:
+	{
 		if (glm::abs(handDegree - DESTINATION_ANGLES[OPPOSITE_DIR(direction)]) > glm::epsilon<float>())
 			status = WORKING;
 
@@ -137,7 +138,7 @@ void BurnerInserter::Update()
 			}
 		}
 		break;
-
+	}
 	case Structure::WAITING_SOURCE_ITEMS:
 	{
 		if (glm::abs(handDegree - DESTINATION_ANGLES[direction]) > glm::epsilon<float>())
