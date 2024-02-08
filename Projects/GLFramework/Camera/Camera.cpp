@@ -43,6 +43,13 @@ glm::mat4 Camera::GetViewMatrix() const
 	return glm::lookAt(position, position + front, up);
 }
 
+glm::mat4 Camera::GetProjectionMatrix(float width, float height) const
+{
+	const float halfWidth = (width * 0.5f) / GetZoom();
+	const float halfHeight = (height * 0.5f) / GetZoom();
+	return glm::ortho(-halfWidth, halfWidth, -halfHeight, halfHeight);
+}
+
 RECT Camera::GetRect(int winWidth, int winHeight) const
 {
 	return RECT {

@@ -14,6 +14,7 @@ public:
 
 	float GetZoom() const;
 	glm::mat4 GetViewMatrix() const;
+	glm::mat4 GetProjectionMatrix(float width, float height) const;
 	const glm::vec3& GetPosition() const;
 	RECT GetRect(int winWidth, int winHeight) const;
 	FRECT GetFRect(int winWidth, int winHeight) const;
