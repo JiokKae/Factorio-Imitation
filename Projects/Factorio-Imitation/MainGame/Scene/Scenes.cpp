@@ -339,9 +339,8 @@ HRESULT PlayScene::Init()
 
 	// camera
 	camera = new Camera();
-	camera->Init();
 	camera->SetPosition({ 0.0f, 0.0f, 1.0f });
-	camera->SetTarget(entityManager->GetLpPlayer()->GetLpPosition());
+	camera->SetFollowTarget(entityManager->GetLpPlayer()->GetLpPosition());
 
 	numOfPointLight = 4;
 
@@ -469,7 +468,7 @@ void PlayScene::Release()
 
 	SAFE_DELETE(UIShader);
 	SAFE_DELETE(lightingShader);
-	SAFE_RELEASE(camera);
+	SAFE_DELETE(camera);
 
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_DEPTH_TEST);
