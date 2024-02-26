@@ -6,8 +6,9 @@ class Tile;
 class Chunk;
 class ShaderProgram;
 class Structure;
-class GLImage;
+class Texture;
 class VertexArrayObject;
+
 class TileManager : public Singleton<TileManager>
 {
 private:
@@ -15,12 +16,12 @@ private:
 
 	std::vector<Chunk*> vecChunkInScreen;
 
-	std::map<int, GLImage*> tileImages;
+	std::map<int, Texture*> tileTextures;
 
 	glm::vec2 oreCurrFrame[1024];
 	glm::vec2 oreOffset[1024];
 
-	map<int, GLImage*> mapOreImages;
+	map<int, Texture*> mapOreTextures;
 
 	ShaderProgram* instancingShader;
 	VertexArrayObject* tilesVAO;

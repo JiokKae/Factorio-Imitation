@@ -26,9 +26,7 @@ public:
 	const glm::vec2& GetScale() const		{ return scale; }
 	const glm::vec2& GetMargin() const		{ return margin; }
 	const glm::ivec2& GetMaxFrame() const		{ return maxFrame; }
-	// TODO: Texture 까지 접근할 필요 없으니 제거
-	Texture* GetLpSourceTexture()			{ return sourceTexture; }
-
+	
 	static constexpr int USE_BASE_SIZE = -1;
 private:
 	glm::vec2 offset;

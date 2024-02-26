@@ -2,6 +2,8 @@
 #include "framework.h"
 
 class ItemOnGround;
+class Texture;
+
 class ItemOnGrounds
 {
 public:
@@ -18,7 +20,7 @@ private:
 	std::vector<ItemOnGround*> items;
 	std::vector<ItemOnGround*> itemsInScreen;
 
-	GLImage* allItemsImage;
+	Texture* allItemsTexture;
 	ShaderProgram* instancingShader;
 	VertexArrayObject* itemsVAO;
 

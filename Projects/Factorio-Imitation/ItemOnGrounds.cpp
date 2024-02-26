@@ -7,17 +7,17 @@
 #include "Inventory.h"
 
 ItemOnGrounds::ItemOnGrounds()
-	: allItemsImage{ new GLImage("Icons/AllItems", 8, 8, 0.25f, 0.25f) }
+	: allItemsTexture{ TextureManager::GetSingleton()->FindTexture("Icons/AllItems") }
 	, instancingShader{ new ShaderProgram("shader/InstancingVertexShader.glsl", "shader/StandardFragmentShader.glsl") }
 	, itemsVAO{ new VAO() }
 {
 	instancingShader->use();
 	
 	// VertexShader uniform var
-	instancingShader->setVec2("maxFrame", allItemsImage->GetMaxFrame());
-	instancingShader->setMat4("model", glm::mat4());
-	instancingShader->setVec2("offset", glm::vec2(0.0f, 0.0f));
-	instancingShader->setVec2("margin", allItemsImage->GetMargin());
+	instancingShader->setVec2("maxFrame", glm::vec2{ 8, 8 });
+	instancingShader->setMat4("model", glm::mat4{});
+	instancingShader->setVec2("offset", glm::vec2{ 0.0f, 0.0f });
+	instancingShader->setVec2("margin", glm::vec2{ 0.25f, 0.25f });
 	instancingShader->setFloat("vertexScale", 1.0f);
 
 	// FragmentShader uniform var
@@ -55,7 +55,6 @@ ItemOnGrounds::ItemOnGrounds()
 
 ItemOnGrounds::~ItemOnGrounds()
 {
-	SAFE_DELETE(allItemsImage);
 	SAFE_DELETE(instancingShader);
 	SAFE_DELETE(itemsVAO);
 }
@@ -95,7 +94,7 @@ void ItemOnGrounds::Render()
 	itemsVAO->SetVBOData(2, sizeof(glm::vec2) * infoData.size(), &infoData[0], GL_DYNAMIC_DRAW);
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, allItemsImage->GetLpSourceTexture()->GetID());
+	glBindTexture(GL_TEXTURE_2D, allItemsTexture->GetID());
 	glDrawArraysInstanced(GL_TRIANGLES, 0, 6, static_cast<GLsizei>(infoData.size()));
 
 	glBindVertexArray(0);

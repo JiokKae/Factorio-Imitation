@@ -14,12 +14,12 @@ constexpr GLuint OFFSET_VBO_INDEX{ 2 };
 
 HRESULT TileManager::Init()
 {
-	tileImages[static_cast<int>(Tile::KIND::DIRT_1)] = new GLImage("Terrain/Dirt_1", 4096, 576, 64, 9);
+	tileTextures[static_cast<int>(Tile::KIND::DIRT_1)] = TextureManager::GetSingleton()->FindTexture("Terrain/Dirt_1");
 
-	mapOreImages[COAL] = new GLImage("Entity/Coal", 8, 8);
-	mapOreImages[IRON_ORE] = new GLImage("Entity/IronOre", 8, 8);
-	mapOreImages[COPPER_ORE] = new GLImage("Entity/CopperOre", 8, 8);
-	mapOreImages[STONE] = new GLImage("Entity/Stone", 8, 8);
+	mapOreTextures[COAL] = TextureManager::GetSingleton()->FindTexture("Entity/Coal");
+	mapOreTextures[IRON_ORE] = TextureManager::GetSingleton()->FindTexture("Entity/IronOre");
+	mapOreTextures[COPPER_ORE] = TextureManager::GetSingleton()->FindTexture("Entity/CopperOre");
+	mapOreTextures[STONE] = TextureManager::GetSingleton()->FindTexture("Entity/Stone");
 
     // 14 * 14 청크 생성
     for (int y = -7; y < 7; y++)
@@ -90,15 +90,8 @@ void TileManager::Release()
     SAFE_DELETE(tilesVAO);
     SAFE_DELETE(instancingShader);
 
-	for (auto& image : tileImages)
-	{
-		SAFE_DELETE(image.second);
-	}
-  
-	for (auto& image : mapOreImages)
-	{
-		SAFE_DELETE(image.second);
-	}
+	tileTextures.clear();
+	mapOreTextures.clear();
 
     SAFE_ARR_DELETE(tileOffset);
     SAFE_ARR_DELETE(tileCurrFrame);
@@ -146,7 +139,7 @@ void TileManager::Render(const RECT& cameraRect)
 		for (int kind = 0; kind < int(Tile::KIND::END); kind++)
 		{
 			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, tileImages[kind]->GetLpSourceTexture()->GetID());
+			glBindTexture(GL_TEXTURE_2D, tileTextures[kind]->GetID());
 			glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 1024);
 		}
 	}
@@ -159,7 +152,7 @@ void TileManager::Render(const RECT& cameraRect)
 	{
 		instancingShader->setVec2("offset", chunk->GetCoord() * 2048);
 
-		for (auto& [itemId, oreImage] : mapOreImages)
+		for (auto& [itemId, oreTexture] : mapOreTextures)
 		{
 			int count = 0;
 
@@ -179,7 +172,7 @@ void TileManager::Render(const RECT& cameraRect)
 			tilesVAO->SetVBOData(CURRFRAME_VBO_INDEX, sizeof(glm::vec2) * count, &oreCurrFrame[0], GL_DYNAMIC_DRAW);
 			tilesVAO->SetVBOData(OFFSET_VBO_INDEX, sizeof(glm::vec2) * count, &oreOffset[0], GL_DYNAMIC_DRAW);
 			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, oreImage->GetLpSourceTexture()->GetID());
+			glBindTexture(GL_TEXTURE_2D, oreTexture->GetID());
 			glDrawArraysInstanced(GL_TRIANGLES, 0, 6, count);
 		}
 	}
