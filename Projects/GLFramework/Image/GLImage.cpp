@@ -1,4 +1,5 @@
 ﻿#include "GLImage.h"
+
 #include "../Texture/Texture.h"
 #include "../Texture/TextureManager.h"
 #include "../ShaderProgram/ShaderProgram.h"
@@ -6,10 +7,10 @@
 #include "../VertexDataObject/VertexBufferObject.h"
 
 GLImage::GLImage(const std::string& textureKey, int maxFrameX /*= 1*/, int maxFrameY /*= 1*/, float marginX /*= 0*/, float marginY /*= 0*/, int width /*= USE_BASE_SIZE*/, int height /*= USE_BASE_SIZE*/)
-	: offset(0.0f, 0.0f)
-	, scale(1.0f, 1.0f)
-	, margin(marginX, marginY)
-	, maxFrame(maxFrameX, maxFrameY)
+	: offset{ 0.0f, 0.0f }
+	, scale{ 1.0f, 1.0f }
+	, margin{ marginX, marginY }
+	, maxFrame{ maxFrameX, maxFrameY }
 	, sourceTexture{ TextureManager::GetSingleton()->FindTexture(textureKey) }
 	, imageVAO{ nullptr }
 	, frameWidth{ 0.0f }
@@ -26,7 +27,7 @@ GLImage::GLImage(const std::string& textureKey, int maxFrameX /*= 1*/, int maxFr
 	frameWidth = static_cast<float>(width / maxFrame.x);
 	frameHeight = static_cast<float>(height / maxFrame.y);
 
-	float vertices[] = {
+	const float vertices[] = {
 		// positions                        // texture coords
 		-frameWidth / 2, -frameHeight / 2,  0.0f, 0.0f,
 		 frameWidth / 2, -frameHeight / 2,  1.0f, 0.0f,
@@ -35,18 +36,12 @@ GLImage::GLImage(const std::string& textureKey, int maxFrameX /*= 1*/, int maxFr
 		-frameWidth / 2,  frameHeight / 2,  0.0f, 1.0f,
 		-frameWidth / 2, -frameHeight / 2,  0.0f, 0.0f,
 	};
-
-	imageVAO = new VAO();
+	imageVAO = std::make_unique<VertexArrayObject>();
 	imageVAO->AddVBO(0, new VBO(sizeof(vertices), vertices, GL_STATIC_DRAW), 4);
 }
 
 GLImage::~GLImage()
 {
-	if (imageVAO) 
-	{
-		delete imageVAO;
-		imageVAO = nullptr;
-	}
 }
 
 void GLImage::Render(ShaderProgram* shader, float destX, float destY, int currFrameX, int currFrameY)
@@ -61,11 +56,12 @@ void GLImage::Render(ShaderProgram* shader, float destX, float destY, int currFr
     shader->setVec2("margin", margin);
     shader->setFloat("alpha", alpha);
 
-    glm::vec3 position = glm::vec3(destX, destY, 0.0f);
+    const glm::vec3 position{ destX, destY, 0.0f };
+
     // world transformation
     glm::mat4 planeModel;
     planeModel = glm::translate(planeModel, position);
-    planeModel = glm::rotate(planeModel, angle, glm::vec3(0.0f, 0.0f, 1.0f));
+    planeModel = glm::rotate(planeModel, angle, glm::vec3{ 0.0f, 0.0f, 1.0f });
     planeModel = glm::scale(planeModel, glm::vec3(scale, 0.0f));
     planeModel = glm::translate(planeModel, glm::vec3(offset, 0.0f));
     shader->setMat4("model", planeModel);
@@ -74,7 +70,7 @@ void GLImage::Render(ShaderProgram* shader, float destX, float destY, int currFr
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, sourceTexture->GetID());
 
-    // render the cube
+    // render the plane
     glBindVertexArray(imageVAO->GetID());
     
     glDrawArrays(GL_TRIANGLES, 0, 6);
