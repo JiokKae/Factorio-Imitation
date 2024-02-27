@@ -6,12 +6,12 @@
 HRESULT InventoryUI::Init()
 {
 	slotUI = new InventorySlotUI[SLOT_SIZE]();
-	for (int y = 0; y < SLOT_Y; y++)
+	for (int y = 0; y < SLOT_COL; y++)
 	{
-		for (int x = 0; x < SLOT_X; x++)
+		for (int x = 0; x < SLOT_ROW; x++)
 		{
-			slotUI[y * SLOT_X + x].Init(x, y);
-			slotUI[y * SLOT_X + x].SetParent(this);
+			slotUI[y * SLOT_ROW + x].Init(x, y);
+			slotUI[y * SLOT_ROW + x].SetParent(this);
 		}
 	}
 	return S_OK;

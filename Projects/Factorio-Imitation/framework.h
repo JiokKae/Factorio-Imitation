@@ -106,11 +106,6 @@ constexpr int TILE_IN_CHUNK_ROW{ 32 };
 #define TILECOORDX_TO_CHUNKCOORDX(x)	( (x < 0)? int(x) / TILE_IN_CHUNK_ROW - 1 : int(x) / TILE_IN_CHUNK_ROW )
 #define TILECOORD_TO_CHUNKCOORD(coord)	{ TILECOORDX_TO_CHUNKCOORDX(coord.x), TILECOORDX_TO_CHUNKCOORDX(coord.y) }
 
-// Inventory
-#define SLOT_X	10
-#define SLOT_Y	9
-#define SLOT_SIZE	(SLOT_X * SLOT_Y)
-
 struct ItemSpec {
 	std::string name;
 	bool buildable;
