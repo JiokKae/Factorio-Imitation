@@ -158,33 +158,31 @@ inline void SetWindowSize(int startX, int startY, int sizeX, int sizeY)
 	MoveWindow(g_hWnd, startX, startY, rc.right - rc.left, rc.bottom - rc.top, true);
 }
 
-inline bool IntersectFRect(FRECT* lpfrcDst, const FRECT* lpfrcSrc1, const FRECT* lpfrcSrc2)
+namespace physics2D
 {
-	if (lpfrcSrc1->right	< lpfrcSrc2->left ||
-		lpfrcSrc1->left		> lpfrcSrc2->right ||
-		lpfrcSrc1->top		< lpfrcSrc2->bottom ||
-		lpfrcSrc1->bottom	> lpfrcSrc2->top)
+	inline bool IntersectFRect(FRECT& intersectRect, const FRECT& rect1, const FRECT& rect2)
 	{
-		return false;
+		if (rect1.right < rect2.left || rect1.left > rect2.right || rect1.top < rect2.bottom || rect1.bottom > rect2.top)
+		{
+			return false;
+		}
+
+		intersectRect = rect1;
+
+		if (rect2.left > rect1.left && rect2.left <= rect1.right)
+			intersectRect.left = rect2.left;
+
+		if (rect2.right >= rect1.left && rect2.right < rect1.right)
+			intersectRect.right = rect2.right;
+
+		if (rect2.top >= rect1.bottom && rect2.top < rect1.top)
+			intersectRect.top = rect2.top;
+
+		if (rect2.bottom > rect1.bottom && rect2.bottom <= rect1.top)
+			intersectRect.bottom = rect2.bottom;
+
+		return true;
 	}
-	else
-	{
-		*lpfrcDst = *lpfrcSrc1;
-		if (lpfrcSrc2->left > lpfrcSrc1->left && lpfrcSrc2->left <= lpfrcSrc1->right)
-			lpfrcDst->left = lpfrcSrc2->left;
-
-		if (lpfrcSrc2->right >= lpfrcSrc1->left && lpfrcSrc2->right < lpfrcSrc1->right)
-			lpfrcDst->right = lpfrcSrc2->right;
-
-		if (lpfrcSrc2->top >= lpfrcSrc1->bottom && lpfrcSrc2->top < lpfrcSrc1->top)
-			lpfrcDst->top = lpfrcSrc2->top;
-
-		if (lpfrcSrc2->bottom > lpfrcSrc1->bottom && lpfrcSrc2->bottom <= lpfrcSrc1->top)
-			lpfrcDst->bottom = lpfrcSrc2->bottom;
-	}
-	
-
-	return true;
 }
 
 inline bool CheckRectCollision(const FRECT& rc1, const FRECT& rc2)

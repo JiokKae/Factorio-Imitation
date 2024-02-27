@@ -138,7 +138,7 @@ void EntityManager::PlayerCollision()
 		const FRECT entityRect = entity->GetCollisionFRect();
 
 		FRECT collisionRect;
-		if (IntersectFRect(&collisionRect, &playerRect, &entityRect) == false)
+		if (physics2D::IntersectFRect(collisionRect, playerRect, entityRect) == false)
 		{
 			continue;
 		}
