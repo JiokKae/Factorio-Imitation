@@ -496,8 +496,6 @@ void PlayScene::Update()
 
 	UIManager::GetSingleton()->Update();
 
-	UIManager::GetSingleton()->HandUpdate();
-
 	entityManager->Update(camera->GetFRect(width, height));
 
 	tileManager->Update();
