@@ -18,7 +18,6 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
-#include "glew/glew.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include <string>

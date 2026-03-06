@@ -530,7 +530,7 @@ void PlayScene::Render(HDC /*hdc*/)
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
 	// 뷰/프로젝션 매트릭스 연산
-	glm::mat4 projection = camera->GetProjectionMatrix(width, height);
+	glm::mat4 projection = camera->GetProjectionMatrix(static_cast<float>(width), static_cast<float>(height));
 	glm::mat4 view = camera->GetViewMatrix();
 
 	// uniform buffer object 0번 바인딩 인덱스에 프로젝션과 뷰 매트릭스 설정
