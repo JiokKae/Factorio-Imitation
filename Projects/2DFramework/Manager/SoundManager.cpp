@@ -3,18 +3,21 @@
 HRESULT SoundManager::Init()
 {
 	// 사운드 시스템 생성
-	System_Create(&system);
+	FMOD::System_Create(&system);
 
 	// 채널 설정
-	system->init(SOUNDBUFFER, FMOD_INIT_NORMAL, NULL);
+	if (system)
+	{
+		system->init(SOUNDBUFFER, FMOD_INIT_NORMAL, NULL);
+	}
 
 	// 사운드, 채널 동적할당
-	sounds = new Sound*[SOUNDBUFFER];
-	channels = new Channel*[SOUNDBUFFER];
+	sounds = new FMOD::Sound*[SOUNDBUFFER];
+	channels = new FMOD::Channel*[SOUNDBUFFER];
 
-	memset(sounds, 0, sizeof(Sound*)* SOUNDBUFFER);
-	// ZeroMemory(sounds, sizeof(Sound*)* SOUNDBUFFER);
-	memset(channels, 0, sizeof(Sound*)* SOUNDBUFFER);
+	::memset(sounds, 0, sizeof(FMOD::Sound*)* SOUNDBUFFER);
+	// ZeroMemory(sounds, sizeof(FMOD::Sound*)* SOUNDBUFFER);
+	::memset(channels, 0, sizeof(FMOD::Sound*)* SOUNDBUFFER);
 	
 	return S_OK;
 }
@@ -24,19 +27,30 @@ void SoundManager::Release()
 	SAFE_ARR_DELETE(sounds);
 	SAFE_ARR_DELETE(channels);
 
-	system->close();
-	system->release();
+	if (system)
+	{
+		system->close();
+		system->release();
+	}
+
 	ReleaseSingleton();
 }
 
 void SoundManager::Update()
 {
 	if (system)
+	{
 		system->update();
+	}
 }
 
-void SoundManager::AddSound(string key, string fileName, bool isBGM, bool isLoop)
+void SoundManager::AddSound(const std::string& key, const std::string& fileName, bool isBGM, bool isLoop)
 {
+	if (system == nullptr)
+	{
+		return;
+	}
+
 	if (isLoop)
 	{
 		if (isBGM)
@@ -53,71 +67,83 @@ void SoundManager::AddSound(string key, string fileName, bool isBGM, bool isLoop
 		system->createSound(fileName.c_str(), FMOD_DEFAULT, 0, &sounds[mapSoundData.size()]);
 	}
 
-	mapSoundData.insert(make_pair(key, &sounds[mapSoundData.size()]));
+	mapSoundData.emplace(key, &sounds[mapSoundData.size()]);
 }
 
-void SoundManager::Play(string key, float volume)
+void SoundManager::Play(const std::string& key, float volume)
 {
-	map<string, Sound**>::iterator it;
-	int count = 0;
-	for (it = mapSoundData.begin(); it != mapSoundData.end(); it++, count++)
+	if (system == nullptr)
 	{
-		if (it->first == key)
-		{
-			system->playSound(FMOD_CHANNEL_FREE, (*mapSoundData[key]), false, &channels[count]);
-
-			channels[count]->setVolume(volume);
-			break;
-		}
+		return;
 	}
 
-}
+	int count{ 0 };
 
-void SoundManager::Stop(string key)
-{
-	map<string, Sound**>::iterator it;
-	int count = 0;
-	for (it = mapSoundData.begin(); it != mapSoundData.end(); it++, count++)
+	for (const std::pair<std::string, FMOD::Sound**>& pair : mapSoundData)
 	{
-		if (it->first == key)
+		if (pair.first == key)
 		{
-			channels[count]->stop();
+			system->playSound(FMOD_CHANNEL_FREE, *pair.second, false, &channels[count]);
+			if (channels[count])
+			{
+				channels[count]->setVolume(volume);
+			}
 			break;
 		}
+		count++;
 	}
 }
 
-void SoundManager::Pause(string key)
+void SoundManager::Stop(const std::string& key)
 {
-	map<string, Sound**>::iterator it;
-	int count = 0;
-	for (it = mapSoundData.begin(); it != mapSoundData.end(); it++, count++)
+	int count{ 0 };
+
+	for (const std::pair<std::string, FMOD::Sound**>& pair : mapSoundData)
 	{
-		if (it->first == key)
+		if (pair.first == key)
 		{
-			channels[count]->setPaused(true);
+			if (channels[count])
+			{
+				channels[count]->stop();
+			}
 			break;
 		}
+		count++;
 	}
 }
 
-void SoundManager::Resume(string key)
+void SoundManager::Pause(const std::string& key)
 {
-	map<string, Sound**>::iterator it;
-	int count = 0;
-	for (it = mapSoundData.begin(); it != mapSoundData.end(); it++, count++)
+	int count{ 0 };
+
+	for (const std::pair<std::string, FMOD::Sound**>& pair : mapSoundData)
 	{
-		if (it->first == key)
+		if (pair.first == key)
 		{
-			channels[count]->setPaused(false);
+			if (channels[count])
+			{
+				channels[count]->setPaused(true);
+			}
 			break;
 		}
+		count++;
 	}
 }
 
-SoundManager::SoundManager() :
-	system(nullptr),
-	sounds(nullptr),
-	channels(nullptr)
+void SoundManager::Resume(const std::string& key)
 {
+	int count{ 0 };
+
+	for (const std::pair<std::string, FMOD::Sound**>& pair : mapSoundData)
+	{
+		if (pair.first == key)
+		{
+			if (channels[count])
+			{
+				channels[count]->setPaused(false);
+			}
+			break;
+		}
+		count++;
+	}
 }
