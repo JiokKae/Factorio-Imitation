@@ -144,7 +144,7 @@ void BurnerInserter::Update()
 		if (glm::abs(handDegree - DESTINATION_ANGLES[direction]) > glm::epsilon<float>())
 			status = WORKING;
 
-		if (temp)
+		if (isSimulated == true)
 			return;
 
 		if (Structure* lpDirectionStructure = lpDirectionTile->GetLpSturcture())

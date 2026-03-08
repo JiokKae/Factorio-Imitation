@@ -31,13 +31,13 @@ HRESULT Structure::Init(int _x, int _y, DIRECTION _direction, bool _temp)
 {
 	this->position = { _x, _y };
 	this->direction = _direction;
-	this->temp = _temp;
+	this->isSimulated = _temp;
 	this->coord = ivec2(POS_TO_COORD(position));
 	this->passable = g_itemSpecs[itemId].passable;
 	this->coordSize = g_itemSpecs[itemId].coordSize;
 	this->status = NO_POWER;
 
-	if (this->temp)
+	if (isSimulated == true)
 		return S_OK;
 
 	for (int y = 0; y < coordSize.y; y++)
@@ -57,7 +57,7 @@ HRESULT Structure::Init(int _x, int _y, DIRECTION _direction, bool _temp)
 
 void Structure::Release()
 {
-	if (this->temp)
+	if (isSimulated == true)
 		return;
 
 	for (int y = 0; y < coordSize.y; y++)
@@ -77,7 +77,7 @@ void Structure::Update()
 {
 	if (EntityManager::GetSingleton()->GetLpStructureBuilder()->IsActive())
 	{
-		if (temp && KeyManager::GetSingleton()->IsOnceKeyDown('R'))
+		if (isSimulated == true && KeyManager::GetSingleton()->IsOnceKeyDown('R'))
 		{
 			Rotate();
 		}

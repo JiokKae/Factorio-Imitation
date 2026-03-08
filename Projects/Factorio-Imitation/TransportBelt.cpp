@@ -161,7 +161,7 @@ void TransportBelt::LinkAroundBelts()
 			if (structure && IsTransportBelt(structure->GetItemId()))
 			{
 				aroundBelts[dir] = (TransportBelt*)structure;
-				if (!temp)
+				if (isSimulated == false)
 					aroundBelts[dir]->SetAroundBelts((DIRECTION)OPPOSITE_DIR(dir), this);
 			}
 		}
@@ -170,7 +170,7 @@ void TransportBelt::LinkAroundBelts()
 
 void TransportBelt::UnlinkAroundBelts()
 {
-	if (temp)
+	if (isSimulated == true)
 		return;
 	if (!aroundBelts)
 		return;

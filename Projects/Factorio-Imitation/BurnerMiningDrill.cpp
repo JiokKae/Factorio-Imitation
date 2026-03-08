@@ -81,7 +81,7 @@ void BurnerMiningDrill::Update()
 {
 	Structure::Update();
 
-	if (temp)
+	if (isSimulated == true)
 		return;
 
 	switch (status)

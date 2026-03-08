@@ -33,7 +33,7 @@ protected:
 	ItemId itemId;	// 건축물의 아이템 번호
 	STATUS status;		// 건축물의 상태
 
-	bool temp;		// 임시 건물인지
+	bool isSimulated;
 	bool usingClickEvent;	// 클릭 이벤트를 사용하는지
 
 public:
